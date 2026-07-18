@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - College of Midwifery Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <!-- Premium Preloader Splash -->
+    <div class="preloader" id="preloader">
+      <div class="preloader-spinner"></div>
+      <div class="preloader-text">College of Midwifery</div>
+    </div>
+
+    <!-- Floating Dynamic Background Orbs -->
+    <div class="background-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Modern Toast Notifications Center -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Main Split-Screen Container -->
+    <div class="portal-container">
+      <!-- LEFT PRESTIGE PANEL (Academic Branding & Visuals) -->
+      <div class="prestige-panel">
+        <div class="prestige-header">
+          <div class="prestige-logo-wrapper">
+            <img
+              src="logo1.png"
+              alt="College of Midwifery Logo"
+              class="prestige-logo"
+            />
+            <div class="prestige-logo-divider"></div>
+            <img src="logo2.png" alt="BISU Logo" class="prestige-logo" />
+          </div>
+          <div class="prestige-header-text">
+            <h1>College of Midwifery</h1>
+            <p>Bohol Island State University</p>
+          </div>
+        </div>
+
+        <div class="prestige-body">
+          <h2 class="prestige-title">
+            Nurturing Excellence in <span>Maternity Care</span>
+          </h2>
+          <p class="prestige-desc">
+            Access the Bohol Island State University secure academic portal.
+            Track your clinical rotations, manage delivery logs, check academic
+            benchmarks, and connect with instructors.
+          </p>
+
+          <div class="prestige-features">
+            <div class="prestige-feature-card">
+              <i class="fas fa-graduation-cap"></i>
+              <h3>Student Dashboard</h3>
+              <p>
+                Log and review your clinical logs, deliveries, suturing, and IV
+                insertions seamlessly.
+              </p>
+            </div>
+            <div class="prestige-feature-card">
+              <i class="fas fa-user-md"></i>
+              <h3>Clinical Standards</h3>
+              <p>
+                Engineered to support global midwifery competencies and
+                institutional excellence.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="prestige-footer">
+          <div class="prestige-copyright">
+            &copy; 2026 Bohol Island State University. All rights reserved.
+          </div>
+          <div class="prestige-system-status">
+            <div class="status-dot"></div>
+            Portal Secure
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT AUTHENTICATION PANEL -->
+      <div class="auth-panel">
+        <!-- Mobile Header (Hidden on Desktop) -->
+        <div class="auth-header-mobile">
+          <div class="mobile-logo-container">
+            <img
+              src="logo1.png"
+              alt="College of Midwifery Logo"
+              class="mobile-logo"
+            />
+            <div class="mobile-logo-divider"></div>
+            <img src="logo2.png" alt="BISU Logo" class="mobile-logo" />
+          </div>
+          <h1>College of Midwifery</h1>
+          <p>Bohol Island State University</p>
+        </div>
+
+        <!-- Top Utility Bar (Admin Access) -->
+        <div class="auth-top-bar">
+          <button
+            type="button"
+            class="top-bar-btn"
+            id="adminBtn"
+            title="Admin Portal"
+            aria-label="Admin Portal"
+          >
+            <i class="fas fa-user-tie"></i>
+          </button>
+        </div>
+
+        <!-- Auth Form Card -->
+        <div class="auth-card" id="authCard">
+          <div class="auth-card-header">
+            <div class="auth-eyebrow"><i class="fas fa-shield-heart"></i> Secure portal access</div>
+            <h2>Welcome Back</h2>
+            <p>Sign in to manage your clinical requirements and academic progress.</p>
+          </div>
+
+          <form class="auth-form" id="studentLoginForm" novalidate>
+            <!-- Hidden error block to maintain original DOM references safely -->
+            <div id="message" style="display: none"></div>
+
+            <!-- Student ID Field -->
+            <div class="input-container" id="studentIdContainer">
+              <div class="input-field-wrapper">
+                <i class="fas fa-id-card input-icon"></i>
+                <input
+                  type="text"
+                  id="studentid"
+                  placeholder=" "
+                  maxlength="6"
+                  minlength="6"
+                  pattern="\d{6}"
+                  inputmode="numeric"
+                  required
+                  autocomplete="username"
+                />
+                <label for="studentid">Student ID (6 digits)</label>
+              </div>
+              <div class="validation-helper" id="studentIdHelper">
+                Student ID must be exactly 6 digits.
+              </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="input-container" id="passwordContainer">
+              <div class="input-field-wrapper">
+                <i class="fas fa-lock input-icon"></i>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder=" "
+                  required
+                  autocomplete="current-password"
+                />
+                <label for="password">Password</label>
+                <button
+                  type="button"
+                  class="password-toggle-btn"
+                  id="toggleLoginPassword"
+                  aria-label="Toggle Password Visibility"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="validation-helper" id="passwordHelper">
+                Please enter your password.
+              </div>
+            </div>
+
+            <!-- Form Controls -->
+            <div class="form-options">
+              <label class="remember-me-container">
+                <input type="checkbox" id="rememberMe" />
+                <span>Remember my Student ID</span>
+              </label>
+              <a href="#" class="forgot-password-link" id="forgotPasswordLink"
+                >Forgot Password?</a
+              >
+            </div>
+
+            <!-- Primary Button -->
+            <button type="button" id="loginBtn" class="btn btn-primary">
+              <div class="btn-spinner"></div>
+              <span class="btn-text">Sign in to student portal</span>
+              <i class="fas fa-arrow-right btn-arrow" aria-hidden="true"></i>
+            </button>
+
+            <!-- Signup helper -->
+            <div class="signup-link">
+              <span>Faculty member?</span>
+              <a href="#" id="instructorLink">Sign in as instructor</a>
+            </div>
+
+            <div class="security-note">
+              <i class="fas fa-lock" aria-hidden="true"></i>
+              <span>Your credentials are protected and used only to verify portal access.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL POPUPS (Frosted Glass Layouts) -->
+
+    <!-- 1. Instructor Modal -->
+    <div class="modal-overlay" id="instructorModal">
+      <div class="modal-content">
+        <span
+          class="modal-close close-modal"
+          id="closeInstructorModal"
+          aria-label="Close modal"
+          >&times;</span
+        >
+        <h2>Login as Instructor</h2>
+        <p>Sign in using your authorized department credentials.</p>
+
+        <div id="instructorAuthMessage" style="display: none"></div>
+
+        <div class="input-container" id="instructorUsernameContainer">
+          <div class="input-field-wrapper">
+            <i class="fas fa-user-circle input-icon"></i>
+            <input
+              type="text"
+              id="instructorUsernameInput"
+              placeholder=" "
+              autocomplete="username"
+              required
+            />
+            <label for="instructorUsernameInput">Instructor Username</label>
+          </div>
+        </div>
+
+        <div class="input-container" id="instructorPasswordContainer">
+          <div class="input-field-wrapper">
+            <i class="fas fa-lock input-icon"></i>
+            <input
+              type="password"
+              id="instructorPasswordInput"
+              placeholder=" "
+              autocomplete="current-password"
+              required
+              data-is-password="true"
+            />
+            <label for="instructorPasswordInput">Instructor Password</label>
+            <button
+              type="button"
+              class="password-toggle-btn"
+              id="toggleInstructorPassword"
+              aria-label="Toggle Password Visibility"
+            >
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary modal-btn"
+          id="instructorSubmitBtn"
+        >
+          <div class="btn-spinner"></div>
+          <span class="btn-text">Continue Access</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Admin Modal -->
+    <div class="modal-overlay" id="adminModal">
+      <div class="modal-content">
+        <span
+          class="modal-close close-modal"
+          id="closeAdminModal"
+          aria-label="Close modal"
+          >&times;</span
+        >
+        <h2>Admin Access</h2>
+        <p>Enter the secure administrative PIN to verify credentials.</p>
+
+        <div id="adminPinMessage" style="display: none"></div>
+
+        <div class="input-container" id="adminPinContainer">
+          <div class="input-field-wrapper">
+            <i class="fas fa-shield-halved input-icon"></i>
+            <input
+              type="password"
+              id="adminPinInput"
+              placeholder=" "
+              maxlength="12"
+              inputmode="numeric"
+              required
+              data-is-password="true"
+            />
+            <label for="adminPinInput">Admin PIN</label>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary modal-btn"
+          id="adminSubmitBtn"
+        >
+          <div class="btn-spinner"></div>
+          <span class="btn-text">Unlock Dashboard</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. Incorrect Password Modal -->
+    <div class="modal-overlay" id="incorrectPasswordModal">
+      <div class="modal-content">
+        <span
+          class="modal-close close-modal"
+          id="closePasswordModal"
+          aria-label="Close modal"
+          >&times;</span
+        >
+        <h2>Security Verification Failed</h2>
+        <p>
+          The password you entered is incorrect. Please try again or select an
+          action.
+        </p>
+
+        <div class="modal-actions-list">
+          <button
+            type="button"
+            class="btn btn-primary modal-btn"
+            id="tryAgainBtn"
+          >
+            Try Again
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary modal-btn"
+            id="resetPasswordBtn"
+            style="
+              background: rgba(239, 68, 68, 0.08);
+              border-color: rgba(239, 68, 68, 0.2);
+              color: var(--error);
+            "
+          >
+            Reset Password
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary modal-btn"
+            id="goBackBtn"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Notice/Info Modal -->
+    <div class="modal-overlay" id="infoModal">
+      <div class="modal-content">
+        <span
+          class="modal-close close-modal"
+          id="closeInfoModal"
+          aria-label="Close modal"
+          >&times;</span
+        >
+        <h2 id="infoModalTitle">Notice</h2>
+        <p id="infoModalMessage"></p>
+        <button
+          type="button"
+          class="btn btn-primary modal-btn"
+          id="infoModalOkBtn"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="api-client.js?v=20260413"></script>
+    <script>
+      // DOM Elements Configuration
+      const studentIdInput = document.getElementById("studentid");
+      const passwordInput = document.getElementById("password");
+      const loginBtn = document.getElementById("loginBtn");
+      const messageBox = document.getElementById("message");
+      const toggleLoginPassword = document.getElementById(
+        "toggleLoginPassword",
+      );
+      const instructorLink = document.getElementById("instructorLink");
+
+      const adminBtn = document.getElementById("adminBtn");
+      const instructorModal = document.getElementById("instructorModal");
+      const closeInstructorModal = document.getElementById(
+        "closeInstructorModal",
+      );
+      const instructorUsernameInput = document.getElementById(
+        "instructorUsernameInput",
+      );
+      const instructorPasswordInput = document.getElementById(
+        "instructorPasswordInput",
+      );
+      const toggleInstructorPassword = document.getElementById(
+        "toggleInstructorPassword",
+      );
+      const instructorSubmitBtn = document.getElementById(
+        "instructorSubmitBtn",
+      );
+      const instructorAuthMessage = document.getElementById(
+        "instructorAuthMessage",
+      );
+
+      const adminModal = document.getElementById("adminModal");
+      const closeAdminModal = document.getElementById("closeAdminModal");
+      const adminPinInput = document.getElementById("adminPinInput");
+      const adminSubmitBtn = document.getElementById("adminSubmitBtn");
+      const adminPinMessage = document.getElementById("adminPinMessage");
+
+      const incorrectPasswordModal = document.getElementById(
+        "incorrectPasswordModal",
+      );
+      const closePasswordModal = document.getElementById("closePasswordModal");
+      const tryAgainBtn = document.getElementById("tryAgainBtn");
+      const resetPasswordBtn = document.getElementById("resetPasswordBtn");
+      const goBackBtn = document.getElementById("goBackBtn");
+
+      const infoModal = document.getElementById("infoModal");
+      const infoModalTitle = document.getElementById("infoModalTitle");
+      const infoModalMessage = document.getElementById("infoModalMessage");
+      const closeInfoModal = document.getElementById("closeInfoModal");
+      const infoModalOkBtn = document.getElementById("infoModalOkBtn");
+
+      /* ==========================================================================
+           MICRO-INTERACTIONS, TOASTS & PRELOADER JS
+           ========================================================================== */
+
+      // Splash Loader Fade-out
+      window.addEventListener("load", () => {
+        const preloader = document.getElementById("preloader");
+        if (preloader) {
+          preloader.classList.add("fade-out");
+          setTimeout(() => {
+            preloader.remove();
+          }, 450);
+        }
+      });
+
+      // Elegant Toast System
+      function showToast(message, type = "info") {
+        const container = document.getElementById("toastContainer");
+        if (!container) return;
+
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type}`;
+
+        let icon = "fa-info-circle";
+        if (type === "success") icon = "fa-check-circle";
+        if (type === "error") icon = "fa-exclamation-circle";
+        if (type === "warning") icon = "fa-exclamation-triangle";
+
+        toast.innerHTML = `
+                <div class="toast-icon"><i class="fas ${icon}"></i></div>
+                <div class="toast-content">
+                    <div class="toast-message">${message}</div>
+                </div>
+                <div class="toast-close" aria-label="Close Notification"><i class="fas fa-times"></i></div>
+            `;
+
+        container.appendChild(toast);
+
+        // Bind click to remove
+        toast.querySelector(".toast-close").addEventListener("click", () => {
+          dismissToast(toast);
+        });
+
+        // Auto dismiss
+        setTimeout(() => {
+          dismissToast(toast);
+        }, 4500);
+      }
+
+      function dismissToast(toast) {
+        toast.classList.add("toast-fade-out");
+        toast.addEventListener("transitionend", () => {
+          toast.remove();
+        });
+      }
+
+      // Card Shake Microinteraction
+      function shakeCard() {
+        const card = document.getElementById("authCard");
+        if (!card) return;
+        card.classList.remove("shake");
+        void card.offsetWidth; // Reflow to reset CSS transition
+        card.classList.add("shake");
+        setTimeout(() => {
+          card.classList.remove("shake");
+        }, 600);
+      }
+
+      // Unified Message Box router (Legacy compat + Toasts)
+      function showMessage(text, type) {
+        if (messageBox) {
+          messageBox.textContent = text;
+          messageBox.className = "message" + (type ? " " + type : "");
+        }
+        if (text) {
+          const toastType =
+            type === "error"
+              ? "error"
+              : type === "success"
+                ? "success"
+                : "info";
+          showToast(text, toastType);
+        }
+      }
+
+      // Live Floating label validations & formatting
+      function validateStudentId() {
+        const val = studentIdInput.value.trim();
+        const container = document.getElementById("studentIdContainer");
+        if (!val) {
+          container.classList.remove("is-valid", "is-invalid");
+          return false;
+        }
+        if (/^\d{6}$/.test(val)) {
+          container.classList.add("is-valid");
+          container.classList.remove("is-invalid");
+          return true;
+        } else {
+          container.classList.add("is-invalid");
+          container.classList.remove("is-valid");
+          return false;
+        }
+      }
+
+      if (studentIdInput) {
+        studentIdInput.addEventListener("input", () => {
+          // Filter non-digits instantly
+          studentIdInput.value = studentIdInput.value.replace(/\D/g, "");
+          validateStudentId();
+        });
+        studentIdInput.addEventListener("blur", validateStudentId);
+      }
+
+      if (passwordInput) {
+        passwordInput.addEventListener("input", () => {
+          const val = passwordInput.value;
+          const container = document.getElementById("passwordContainer");
+          if (!val) {
+            container.classList.remove("is-valid", "is-invalid");
+          } else {
+            container.classList.add("is-valid");
+            container.classList.remove("is-invalid");
+          }
+        });
+      }
+
+      // Remember Me Feature
+      function checkRememberedUser() {
+        const rememberedId = localStorage.getItem("rememberedStudentId");
+        if (rememberedId && studentIdInput) {
+          studentIdInput.value = rememberedId;
+          document.getElementById("rememberMe").checked = true;
+          // Timeout to trigger floating label transition nicely
+          setTimeout(() => {
+            validateStudentId();
+          }, 50);
+        }
+      }
+      document.addEventListener("DOMContentLoaded", checkRememberedUser);
+
+      // Forgot Password Action
+      const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+      if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          showInfoModal(
+            "Student Identity Help",
+            "Please consult with your College of Midwifery academic coordinator or visit the Registrar's office for credential recovery assistance.",
+          );
+        });
+      }
+
+      /* ==========================================================================
+           LEGACY FUNCTIONALITY & API AUTHENTICATION BINDINGS
+           ========================================================================== */
+
+      function isValidStudentId(id) {
+        return /^\d{6}$/.test(id);
+      }
+
+      function openPasswordErrorModal() {
+        if (incorrectPasswordModal) {
+          incorrectPasswordModal.classList.add("active");
+        }
+      }
+
+      function closePasswordErrorModal() {
+        if (incorrectPasswordModal) {
+          incorrectPasswordModal.classList.remove("active");
+        }
+      }
+
+      function showInfoModal(title, message) {
+        if (!infoModal) return;
+        infoModalTitle.textContent = title || "Notice";
+        infoModalMessage.textContent = message || "";
+        infoModal.classList.add("active");
+      }
+
+      function closeInfoPane() {
+        if (infoModal) {
+          infoModal.classList.remove("active");
+        }
+      }
+
+      function handleLogin() {
+        const id = studentIdInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!isValidStudentId(id)) {
+          showMessage("Student ID must be exactly 6 numbers.", "error");
+          shakeCard();
+          return;
+        }
+
+        if (!password) {
+          showMessage("Please enter your password.", "error");
+          shakeCard();
+          return;
+        }
+
+        // Set Premium Button Loading State
+        loginBtn.classList.add("is-loading");
+        loginBtn.disabled = true;
+
+        // Call existing API Authentication mechanics
+        ApiClient.authenticateStudent(id, password)
+          .then((data) => {
+            console.log("Login response:", data);
+            if (data.ok && data.student) {
+              console.log(
+                "Authentication successful, saving student:",
+                data.student,
+              );
+
+              // Keep existing session logic
+              sessionStorage.setItem(
+                "currentStudent",
+                JSON.stringify(data.student),
+              );
+              localStorage.setItem("currentStudentId", data.student.student_id);
+
+              // Handle Remember Me state persistence
+              const isRememberEnabled =
+                document.getElementById("rememberMe").checked;
+              if (isRememberEnabled) {
+                localStorage.setItem("rememberedStudentId", id);
+              } else {
+                localStorage.removeItem("rememberedStudentId");
+              }
+
+              showToast("Credentials verified. Opening portal...", "success");
+
+              setTimeout(() => {
+                window.location.href = "student.html";
+              }, 800);
+            } else {
+              console.log("Authentication failed:", data.message);
+              loginBtn.classList.remove("is-loading");
+              loginBtn.disabled = false;
+
+              shakeCard();
+              closePasswordErrorModal();
+              setTimeout(() => openPasswordErrorModal(), 100);
+            }
+          })
+          .catch((error) => {
+            console.error("Login error:", error);
+            showToast(
+              "Network error connection lost. Please try again.",
+              "error",
+            );
+            loginBtn.classList.remove("is-loading");
+            loginBtn.disabled = false;
+            shakeCard();
+          });
+      }
+
+      if (loginBtn) {
+        loginBtn.addEventListener("click", handleLogin);
+      }
+
+      if (toggleLoginPassword) {
+        toggleLoginPassword.addEventListener("click", () => {
+          const icon = toggleLoginPassword.querySelector("i");
+          if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            icon.className = "fas fa-eye-slash";
+          } else {
+            passwordInput.type = "password";
+            icon.className = "fas fa-eye";
+          }
+        });
+      }
+
+      if (studentIdInput) {
+        studentIdInput.addEventListener("keyup", (e) => {
+          if (e.key === "Enter") handleLogin();
+        });
+      }
+
+      if (passwordInput) {
+        passwordInput.addEventListener("keyup", (e) => {
+          if (e.key === "Enter") handleLogin();
+        });
+      }
+
+      function openInstructorModal() {
+        if (!instructorModal) return;
+        instructorModal.classList.add("active");
+        if (instructorUsernameInput) {
+          instructorUsernameInput.value = "";
+          instructorUsernameInput.focus();
+        }
+        if (instructorPasswordInput) {
+          instructorPasswordInput.value = "";
+        }
+        if (instructorAuthMessage) {
+          instructorAuthMessage.textContent = "";
+          instructorAuthMessage.className = "message";
+        }
+      }
+
+      function closeInstructor() {
+        if (!instructorModal) return;
+        instructorModal.classList.remove("active");
+      }
+
+      function openAdminModal() {
+        if (!adminModal) return;
+        adminModal.classList.add("active");
+        if (adminPinInput) {
+          adminPinInput.value = "";
+          adminPinInput.focus();
+        }
+        if (adminPinMessage) {
+          adminPinMessage.textContent = "";
+          adminPinMessage.className = "message";
+        }
+      }
+
+      function closeAdminModalPane() {
+        if (!adminModal) return;
+        adminModal.classList.remove("active");
+      }
+
+      async function handleInstructorSubmit() {
+        if (!instructorUsernameInput || !instructorPasswordInput) return;
+        const username = instructorUsernameInput.value.trim();
+        const password = instructorPasswordInput.value;
+
+        if (!username || !password) {
+          showToast("Please enter both username and password.", "warning");
+          return;
+        }
+
+        instructorSubmitBtn.classList.add("is-loading");
+        instructorSubmitBtn.disabled = true;
+
+        try {
+          const result = await ApiClient.authenticateInstructor(
+            username,
+            password,
+          );
+          if (result && result.ok) {
+            sessionStorage.setItem(
+              "currentInstructor",
+              JSON.stringify(result.instructor || { username }),
+            );
+            showToast("Access authorized. Welcome, Instructor.", "success");
+            setTimeout(() => {
+              window.location.href = "instructor.html";
+            }, 800);
+          } else {
+            instructorSubmitBtn.classList.remove("is-loading");
+            instructorSubmitBtn.disabled = false;
+            showToast("Invalid credentials. Please verify and retry.", "error");
+          }
+        } catch (error) {
+          instructorSubmitBtn.classList.remove("is-loading");
+          instructorSubmitBtn.disabled = false;
+          showToast(
+            "Server communications disrupted. Try again later.",
+            "error",
+          );
+        }
+      }
+
+      async function handleAdminSubmit() {
+        if (!adminPinInput) return;
+        const pin = adminPinInput.value.trim();
+        if (!pin) {
+          showToast(
+            "Please specify the administrator authorization PIN.",
+            "warning",
+          );
+          return;
+        }
+
+        adminSubmitBtn.classList.add("is-loading");
+        adminSubmitBtn.disabled = true;
+
+        try {
+          // Keep original validation
+          const isValid = pin === "123456";
+          if (isValid) {
+            sessionStorage.removeItem("currentInstructor");
+            sessionStorage.setItem("thesis_admin_authenticated", "1");
+            showToast(
+              "PIN verified. Establishing administrator connection...",
+              "success",
+            );
+            setTimeout(() => {
+              window.location.href = "admin-dashboard.html";
+            }, 700);
+          } else {
+            adminSubmitBtn.classList.remove("is-loading");
+            adminSubmitBtn.disabled = false;
+            showToast("Unauthorized PIN. Access denied.", "error");
+          }
+        } catch (error) {
+          adminSubmitBtn.classList.remove("is-loading");
+          adminSubmitBtn.disabled = false;
+          showToast("Validation connection failure. Try again.", "error");
+        }
+      }
+
+      // Setup All Modal Click Handlers and Closures
+      if (adminBtn) {
+        adminBtn.addEventListener("click", openAdminModal);
+      }
+      if (instructorLink) {
+        instructorLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          openInstructorModal();
+        });
+      }
+      if (closeInstructorModal) {
+        closeInstructorModal.addEventListener("click", closeInstructor);
+      }
+      if (instructorSubmitBtn) {
+        instructorSubmitBtn.addEventListener("click", handleInstructorSubmit);
+      }
+
+      if (toggleInstructorPassword) {
+        toggleInstructorPassword.addEventListener("click", () => {
+          const icon = toggleInstructorPassword.querySelector("i");
+          if (instructorPasswordInput.type === "password") {
+            instructorPasswordInput.type = "text";
+            icon.className = "fas fa-eye-slash";
+          } else {
+            instructorPasswordInput.type = "password";
+            icon.className = "fas fa-eye";
+          }
+        });
+      }
+      if (instructorModal) {
+        instructorModal.addEventListener("click", (e) => {
+          if (e.target === instructorModal) {
+            closeInstructor();
+          }
+        });
+      }
+      if (closeAdminModal) {
+        closeAdminModal.addEventListener("click", closeAdminModalPane);
+      }
+      if (adminSubmitBtn) {
+        adminSubmitBtn.addEventListener("click", handleAdminSubmit);
+      }
+      if (adminModal) {
+        adminModal.addEventListener("click", (e) => {
+          if (e.target === adminModal) {
+            closeAdminModalPane();
+          }
+        });
+      }
+      if (instructorUsernameInput) {
+        instructorUsernameInput.addEventListener("keyup", (e) => {
+          if (e.key === "Enter") handleInstructorSubmit();
+        });
+      }
+      if (adminPinInput) {
+        adminPinInput.addEventListener("keyup", (e) => {
+          if (e.key === "Enter") handleAdminSubmit();
+        });
+      }
+      if (instructorPasswordInput) {
+        instructorPasswordInput.addEventListener("keyup", (e) => {
+          if (e.key === "Enter") handleInstructorSubmit();
+        });
+      }
+
+      // Incorrect Credentials Modal Actions
+      if (closePasswordModal) {
+        closePasswordModal.addEventListener("click", closePasswordErrorModal);
+      }
+
+      if (tryAgainBtn) {
+        tryAgainBtn.addEventListener("click", () => {
+          closePasswordErrorModal();
+          passwordInput.value = "";
+          passwordInput.focus();
+        });
+      }
+
+      if (resetPasswordBtn) {
+        resetPasswordBtn.addEventListener("click", () => {
+          closePasswordErrorModal();
+          showInfoModal(
+            "Password Reset Assistance",
+            "Automated password resetting is currently locked for academic safety. Please request password recovery directly from your administrative supervisor.",
+          );
+        });
+      }
+
+      if (goBackBtn) {
+        goBackBtn.addEventListener("click", () => {
+          closePasswordErrorModal();
+          studentIdInput.value = "";
+          passwordInput.value = "";
+          studentIdInput.focus();
+        });
+      }
+
+      if (incorrectPasswordModal) {
+        incorrectPasswordModal.addEventListener("click", (e) => {
+          if (e.target === incorrectPasswordModal) {
+            closePasswordErrorModal();
+          }
+        });
+      }
+
+      if (closeInfoModal) {
+        closeInfoModal.addEventListener("click", closeInfoPane);
+      }
+
+      if (infoModalOkBtn) {
+        infoModalOkBtn.addEventListener("click", closeInfoPane);
+      }
+
+      if (infoModal) {
+        infoModal.addEventListener("click", (e) => {
+          if (e.target === infoModal) {
+            closeInfoPane();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

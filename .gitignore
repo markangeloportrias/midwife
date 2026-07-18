@@ -1,0 +1,14 @@
+# Local development environments
+.venv/
+.vscode/
+.agents/
+
+# Local/private working files
+vars.txt
+*.backup
+
+# Generated caches and operating-system files
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db

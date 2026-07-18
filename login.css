@@ -1,0 +1,1544 @@
+/* ==========================================================================
+   COLLEGE OF MIDWIFERY - PREMIUM STYLING SYSTEM (login.css)
+   Designed with Glassmorphism + Soft Neumorphism Hybrid Aesthetics
+   ========================================================================== */
+
+/* --- GOOGLE FONTS IMPORT --- */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+:root {
+  /* --- FONTS --- */
+  --font-primary: "Poppins", sans-serif;
+  --font-secondary: "Inter", sans-serif;
+
+  /* --- LIGHT MODE THEME TOKENS --- */
+  --bg-gradient-1: #f0f4ff;
+  --bg-gradient-2: #e8eff8;
+  --primary: #1a1e6f;
+  --primary-light: #2a309f;
+  --secondary: #0f1140;
+  --accent: #ffc300;
+  --accent-hover: #e6b000;
+  --accent-glow: rgba(255, 195, 0, 0.45);
+  --text-main: #0f1140;
+  --text-muted: #5c677d;
+  --text-light: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(26, 30, 111, 0.1);
+  --glass-shadow:
+    0 20px 50px rgba(15, 17, 64, 0.06), 0 1px 3px rgba(15, 17, 64, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --input-border: rgba(26, 30, 111, 0.15);
+  --input-focus: #1a1e6f;
+  --input-focus-shadow: rgba(26, 30, 111, 0.1);
+  --left-panel-bg: linear-gradient(135deg, #0f1140 0%, #1a1e6f 100%);
+  --card-glow: rgba(26, 30, 111, 0.02);
+
+  /* --- STATUS COLORS --- */
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+
+  /* --- TRANSITIONS --- */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* --- ORB COLORS --- */
+  --orb-color-1: rgba(224, 232, 247, 0.65);
+  --orb-color-2: rgba(208, 216, 240, 0.6);
+  --orb-color-3: rgba(245, 247, 252, 0.7);
+}
+
+/* ==========================================================================
+   BASE & RESET STYLES
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-secondary);
+  background-color: var(--bg-gradient-1);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  line-height: 1.5;
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-gradient-1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(26, 30, 111, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
+
+/* ==========================================================================
+   LOADING SCREEN (SPLASH SCREEN)
+   ========================================================================== */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--secondary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition:
+    opacity var(--transition-smooth) ease,
+    visibility var(--transition-smooth) ease;
+}
+
+.preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.preloader-spinner {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(255, 195, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--accent);
+  animation: spin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
+  margin-bottom: 20px;
+}
+
+.preloader-text {
+  font-family: var(--font-primary);
+  color: #fff1c1;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   DYNAMIC BACKGROUND ANIMATION ORBS
+   ========================================================================== */
+.background-orbs {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+.orb-1 {
+  width: 450px;
+  height: 450px;
+  background: var(--orb-color-1);
+  top: -10%;
+  left: -10%;
+  animation: floatOrb1 15s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+  width: 550px;
+  height: 550px;
+  background: var(--orb-color-2);
+  bottom: -15%;
+  right: -10%;
+  animation: floatOrb2 20s infinite alternate ease-in-out;
+}
+
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: var(--orb-color-3);
+  top: 35%;
+  left: 35%;
+  animation: floatOrb3 25s infinite alternate ease-in-out;
+}
+
+@keyframes floatOrb1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(60px, 80px) scale(1.15);
+  }
+}
+
+@keyframes floatOrb2 {
+  0% {
+    transform: translate(0, 0) scale(1.1);
+  }
+  100% {
+    transform: translate(-80px, -60px) scale(0.9);
+  }
+}
+
+@keyframes floatOrb3 {
+  0% {
+    transform: translate(0, 0) scale(0.9);
+  }
+  50% {
+    transform: translate(100px, -80px) scale(1.2);
+  }
+  100% {
+    transform: translate(-40px, 50px) scale(1);
+  }
+}
+
+/* ==========================================================================
+   MAIN SYSTEM LAYOUT (SPLIT PANEL)
+   ========================================================================== */
+.portal-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- LEFT PRESTIGE PANEL --- */
+.prestige-panel {
+  flex: 1.2;
+  background: var(--left-panel-bg);
+  position: relative;
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  color: white;
+  z-index: 3;
+  box-shadow: 10px 0 40px rgba(15, 17, 64, 0.15);
+}
+
+/* Interactive light lines illustration in background */
+.prestige-panel::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 195, 0, 0.05) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.prestige-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  animation: fadeInDown var(--transition-slow) forwards;
+}
+
+.prestige-logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 12px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.prestige-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.prestige-logo-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.prestige-header-text h1 {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff1c1;
+  line-height: 1.2;
+}
+
+.prestige-header-text p {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.prestige-body {
+  margin: auto 0;
+  max-width: 580px;
+  animation: fadeInLeft var(--transition-slow) 0.2s forwards;
+  opacity: 0;
+}
+
+.prestige-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 195, 0, 0.12);
+  border: 1px solid rgba(255, 195, 0, 0.35);
+  color: var(--accent);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.prestige-tag i {
+  font-size: 12px;
+}
+
+.prestige-title {
+  font-family: var(--font-primary);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 18px;
+  color: #ffffff;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.prestige-title span {
+  color: var(--accent);
+  position: relative;
+  display: inline-block;
+}
+
+.prestige-desc {
+  font-family: var(--font-secondary);
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+/* Glass metrics card inside Prestige panel */
+.prestige-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.prestige-feature-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 20px;
+  border-radius: 20px;
+  transition: all var(--transition-smooth);
+}
+
+.prestige-feature-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.prestige-feature-card i {
+  font-size: 24px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.prestige-feature-card h3 {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.prestige-feature-card p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+.prestige-footer {
+  animation: fadeInUp var(--transition-slow) 0.4s forwards;
+  opacity: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+}
+
+.prestige-copyright {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.prestige-system-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--success);
+  animation: flashDot 2s infinite;
+}
+
+@keyframes flashDot {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* --- RIGHT AUTH PANEL --- */
+.auth-panel {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+  position: relative;
+  z-index: 3;
+}
+
+.auth-header-mobile {
+  display: none; /* Shown only on mobile instead of left panel */
+}
+
+/* Top utility bar inside Auth Panel (Theme Toggle / VIP Access) */
+.auth-top-bar {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 10;
+  animation: fadeInDown var(--transition-slow) forwards;
+}
+
+.top-bar-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--glass-shadow);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.top-bar-btn:hover {
+  transform: translateY(-2px);
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.top-bar-btn:active {
+  transform: translateY(0);
+}
+
+.top-bar-btn i {
+  font-size: 16px;
+}
+
+/* Toggle Sun/Moon Icon states */
+html[data-theme="dark"] #themeToggleBtn i::before {
+  content: "\f185"; /* Sun Icon */
+}
+
+/* ==========================================================================
+   AUTHENTICATION GLASS CARD
+   ========================================================================== */
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 28px;
+  padding: 48px 40px;
+  position: relative;
+  transition:
+    all var(--transition-smooth),
+    transform var(--transition-fast);
+  animation: slideUpFade var(--transition-slow) forwards;
+  z-index: 5;
+}
+
+/* Animated interactive shadow overlay */
+.auth-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 28px;
+  box-shadow: 0 0 40px var(--card-glow);
+  pointer-events: none;
+  transition: box-shadow var(--transition-smooth);
+}
+
+.auth-card:focus-within::after {
+  box-shadow: 0 0 60px rgba(26, 30, 111, 0.08);
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-card-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-card-header h2 {
+  font-family: var(--font-primary);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.auth-card-header p {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   FORM INPUTS & FLOATING LABELS
+   ========================================================================== */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-field-wrapper {
+  position: relative;
+}
+
+.input-field-wrapper input {
+  width: 100%;
+  padding: 20px 48px 6px 48px; /* Extra padding top for floating label, padding left for icon */
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  color: var(--text-main);
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 14px;
+  outline: none;
+  transition: all var(--transition-fast);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* Special padding for password with eye toggle */
+.input-field-wrapper input[type="password"],
+.input-field-wrapper input[data-is-password="true"] {
+  padding-right: 48px;
+}
+
+/* Input Icon */
+.input-field-wrapper .input-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 16px;
+  pointer-events: none;
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+/* Password Toggle Icon Button */
+.password-toggle-btn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.password-toggle-btn:hover {
+  color: var(--primary);
+  background: rgba(26, 30, 111, 0.05);
+}
+
+/* CSS Floating Labels */
+.input-container label {
+  position: absolute;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: all var(--transition-fast);
+  transform-origin: left top;
+}
+
+/* Active floating label style */
+.input-field-wrapper input:focus ~ label,
+.input-field-wrapper input:not(:placeholder-shown) ~ label {
+  top: 14px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Input Focus States */
+.input-field-wrapper input:focus {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 4px var(--input-focus-shadow);
+  background: var(--glass-bg);
+}
+
+.input-field-wrapper input:focus ~ .input-icon {
+  color: var(--input-focus);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Inline validation cues (Success/Error borders) */
+.input-container.is-valid .input-field-wrapper input {
+  border-color: var(--success);
+}
+.input-container.is-valid .input-field-wrapper .input-icon {
+  color: var(--success);
+}
+.input-container.is-invalid .input-field-wrapper input {
+  border-color: var(--error);
+}
+.input-container.is-invalid .input-field-wrapper .input-icon {
+  color: var(--error);
+}
+
+.validation-helper {
+  font-size: 11px;
+  color: var(--error);
+  margin-top: 4px;
+  padding-left: 12px;
+  display: none;
+  animation: fadeIn var(--transition-fast) forwards;
+}
+
+.input-container.is-invalid .validation-helper {
+  display: block;
+}
+
+/* Form Shake Animation for failed inputs */
+.shake {
+  animation: shakeKeyframes 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shakeKeyframes {
+  10%,
+  90% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(6px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-8px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(8px, 0, 0);
+  }
+}
+
+/* ==========================================================================
+   FORM CONTROLS (Remember, Forgot)
+   ========================================================================== */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  font-size: 13px;
+}
+
+.remember-me-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.remember-me-container input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--input-border);
+  border-radius: 5px;
+  background: var(--input-bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.remember-me-container input[type="checkbox"]::after {
+  content: "\f00c";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 10px;
+  color: white;
+  display: none;
+}
+
+.remember-me-container input[type="checkbox"]:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.remember-me-container input[type="checkbox"]:checked::after {
+  display: block;
+}
+
+.remember-me-container input[type="checkbox"]:focus {
+  box-shadow: 0 0 0 3px var(--input-focus-shadow);
+}
+
+.forgot-password-link {
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.forgot-password-link:hover {
+  color: var(--primary-light);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+.btn {
+  width: 100%;
+  padding: 16px 24px;
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Core premium primary gradient button */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  box-shadow: 0 8px 24px rgba(26, 30, 111, 0.22);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(26, 30, 111, 0.32);
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 0%,
+    var(--secondary) 100%
+  );
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(26, 30, 111, 0.2);
+}
+
+/* Secondary Button with clean glass borders */
+.btn-secondary {
+  background: rgba(26, 30, 111, 0.05);
+  border: 1px solid rgba(26, 30, 111, 0.15);
+  color: var(--primary);
+  margin-top: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 30, 111, 0.08);
+  border-color: rgba(26, 30, 111, 0.25);
+  color: var(--primary-light);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* Button Loading Overlay Spinner */
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+
+.btn.is-loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.btn.is-loading .btn-spinner {
+  display: block;
+}
+
+.btn.is-loading .btn-text {
+  opacity: 0.7;
+}
+
+/* Divider inside forms */
+.form-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  margin: 20px 0;
+}
+
+.form-divider::before,
+.form-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.form-divider:not(:empty)::before {
+  margin-right: 14px;
+}
+
+.form-divider:not(:empty)::after {
+  margin-left: 14px;
+}
+
+/* Signup Link */
+.signup-link {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.signup-link a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.signup-link a:hover {
+  color: var(--primary-light);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   MODAL DIALOG OVERLAYS (FROSTED GLASS EFFECT)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 17, 64, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-smooth),
+    visibility var(--transition-smooth);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow:
+    0 25px 60px rgba(15, 17, 64, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  padding: 44px 36px;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 440px;
+  text-align: center;
+  transform: scale(0.9) translateY(20px);
+  transition: transform var(--transition-smooth)
+    cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: var(--text-main);
+  background: rgba(26, 30, 111, 0.05);
+  transform: rotate(90deg);
+}
+
+.modal-content h2 {
+  font-family: var(--font-primary);
+  color: var(--text-main);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.modal-content p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.modal-content .input-container {
+  text-align: left;
+}
+
+.modal-btn {
+  margin-top: 10px;
+}
+
+/* Specific styling for incorrect password options buttons inside modal */
+.modal-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal-actions-list .btn {
+  padding: 14px 20px;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   MODERN TOAST NOTIFICATIONS CENTER
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 10px 30px rgba(15, 17, 64, 0.12);
+  border-radius: 14px;
+  padding: 16px 20px;
+  width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  pointer-events: auto;
+  animation: toastSlideIn var(--transition-smooth) forwards;
+  transition: all var(--transition-smooth);
+}
+
+.toast.toast-fade-out {
+  opacity: 0;
+  transform: translateX(100px) scale(0.9);
+}
+
+@keyframes toastSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.toast-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.toast-success .toast-icon {
+  color: var(--success);
+}
+.toast-error .toast-icon {
+  color: var(--error);
+}
+.toast-info .toast-icon {
+  color: var(--primary-light);
+}
+.toast-warning .toast-icon {
+  color: var(--warning);
+}
+
+.toast-content {
+  flex-grow: 1;
+}
+
+.toast-message {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.toast-close {
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  transition: color var(--transition-fast);
+}
+
+.toast-close:hover {
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   ENTRANCE TRANSITIONS & KEYFRAME ANIMATIONS
+   ========================================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ========================================================================== */
+
+/* Laptop / Medium Desktop */
+@media (max-width: 1200px) {
+  .prestige-panel {
+    padding: 48px;
+  }
+  .prestige-title {
+    font-size: 36px;
+  }
+  .auth-panel {
+    padding: 36px;
+  }
+}
+
+/* Tablet (Landscape and Portrait) */
+@media (max-width: 992px) {
+  .portal-container {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .prestige-panel {
+    flex: none;
+    width: 100%;
+    padding: 40px;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .prestige-body {
+    margin: 20px 0;
+    max-width: 100%;
+  }
+
+  .prestige-features {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .prestige-footer {
+    margin-top: 20px;
+  }
+
+  .auth-panel {
+    flex: none;
+    width: 100%;
+    padding: 40px 24px;
+    background: transparent;
+  }
+
+  .auth-top-bar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
+
+  .auth-card {
+    padding: 40px 28px;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 576px) {
+  /* Hide the huge prestige left panel on mobile to optimize load & focus */
+  .prestige-panel {
+    display: none;
+  }
+
+  /* Modern header for mobile authentication panel */
+  .auth-header-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 24px;
+    gap: 12px;
+    animation: fadeInDown var(--transition-slow) forwards;
+  }
+
+  .mobile-logo-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    padding: 10px 16px;
+    border-radius: 12px;
+  }
+
+  .mobile-logo {
+    height: 38px;
+    width: auto;
+  }
+
+  .mobile-logo-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--glass-border);
+  }
+
+  .auth-header-mobile h1 {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .auth-header-mobile p {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .auth-panel {
+    padding: 72px 16px 36px 16px;
+    min-height: 100vh;
+    justify-content: flex-start;
+  }
+
+  .auth-top-bar {
+    top: 16px;
+    right: 16px;
+  }
+
+  .auth-card {
+    padding: 32px 20px;
+    border-radius: 20px;
+  }
+
+  .auth-card-header {
+    margin-bottom: 24px;
+  }
+
+  .auth-card-header h2 {
+    font-size: 24px;
+  }
+
+  .input-field-wrapper input {
+    padding: 18px 44px 6px 44px;
+    font-size: 14.5px;
+  }
+
+  .input-container label {
+    left: 44px;
+    font-size: 13px;
+  }
+
+  .input-field-wrapper input:focus ~ label,
+  .input-field-wrapper input:not(:placeholder-shown) ~ label {
+    top: 12px;
+    font-size: 9px;
+  }
+
+  .input-field-wrapper .input-icon {
+    left: 16px;
+    font-size: 14px;
+  }
+
+  .password-toggle-btn {
+    right: 12px;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .remember-me-container {
+    font-size: 13.5px;
+  }
+
+  .prestige-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================================================== 
+   2026 PORTAL REFINEMENT — calm, clinical, and institution-first
+   ========================================================================== */
+body {
+  background:
+    radial-gradient(circle at 78% 12%, rgba(255, 195, 0, 0.08), transparent 25%),
+    linear-gradient(145deg, #f8faff 0%, #edf2fb 100%);
+}
+
+.prestige-panel {
+  flex: 1.08;
+  padding: clamp(36px, 4.5vw, 72px);
+  background:
+    linear-gradient(145deg, rgba(15, 17, 64, 0.97), rgba(26, 30, 111, 0.96)),
+    var(--left-panel-bg);
+}
+
+.prestige-panel::after {
+  content: "";
+  position: absolute;
+  right: -130px;
+  bottom: -160px;
+  width: 440px;
+  height: 440px;
+  border: 1px solid rgba(255, 195, 0, 0.16);
+  border-radius: 50%;
+  box-shadow: 0 0 0 70px rgba(255, 255, 255, 0.025), 0 0 0 140px rgba(255, 255, 255, 0.018);
+  pointer-events: none;
+}
+
+.prestige-logo-wrapper {
+  padding: 10px 16px;
+  border-radius: 14px;
+}
+
+.prestige-title {
+  max-width: 650px;
+  font-size: clamp(34px, 4vw, 54px);
+  letter-spacing: -1.7px;
+}
+
+.prestige-desc { max-width: 610px; }
+
+.prestige-feature-card {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.auth-panel { flex: 0.92; padding: 56px; }
+
+.auth-top-bar { top: 28px; right: 32px; }
+
+.top-bar-btn {
+  width: 44px;
+  padding: 0;
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.auth-card {
+  max-width: 470px;
+  padding: 46px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(26, 30, 111, 0.12);
+  box-shadow: 0 28px 70px rgba(15, 17, 64, 0.11), 0 2px 8px rgba(15, 17, 64, 0.04);
+}
+
+.auth-card-header { text-align: left; margin-bottom: 30px; }
+
+.auth-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 14px;
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.auth-eyebrow i { color: var(--accent-hover); font-size: 13px; }
+
+.auth-card-header h2 { font-size: 32px; letter-spacing: -1px; }
+.auth-card-header p { max-width: 360px; line-height: 1.65; font-weight: 400; }
+
+.input-field-wrapper input {
+  min-height: 58px;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.btn { border-radius: 12px; min-height: 54px; }
+.btn-arrow { margin-left: auto; transition: transform var(--transition-fast); }
+.btn-primary:hover .btn-arrow { transform: translateX(4px); }
+.btn.is-loading .btn-arrow { display: none; }
+
+.signup-link {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding: 20px 0;
+  margin-top: 4px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.security-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding-top: 18px;
+  color: var(--text-muted);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.security-note i { color: var(--success); margin-top: 3px; }
+
+:focus-visible { outline: 3px solid rgba(255, 195, 0, 0.55); outline-offset: 3px; }
+
+@media (max-width: 992px) and (min-width: 577px) {
+  .prestige-body { display: none; }
+  .prestige-panel { padding: 28px 40px; }
+  .prestige-footer { margin-top: 0; }
+}
+
+@media (max-width: 576px) {
+  .auth-panel { padding: 78px 16px 30px; }
+  .top-bar-btn span { display: none; }
+  .top-bar-btn { width: 44px; padding: 0; }
+  .auth-card { padding: 30px 22px; border-radius: 18px; }
+  .auth-card-header { text-align: left; }
+  .auth-card-header h2 { font-size: 27px; }
+  .signup-link { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
