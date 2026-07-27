@@ -9,6 +9,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 CREATE TABLE IF NOT EXISTS admins (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   pin_number VARCHAR(50) NOT NULL,
+  archived_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -17,10 +18,12 @@ CREATE TABLE IF NOT EXISTS students (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   student_id VARCHAR(50) NOT NULL UNIQUE,
   student_name VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  parent_name VARCHAR(255) NULL,
-  contact_number VARCHAR(50) NULL,
+  password VARCHAR(255) NOT NULL COMMENT 'Student initial login password (store a secure hash)',
+  parent_name VARCHAR(255) NOT NULL,
+  contact_number VARCHAR(50) NOT NULL,
   profile_photo LONGTEXT NULL,
+  status ENUM('active', 'inactive', 'archived') NOT NULL DEFAULT 'active',
+  archived_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_students_name (student_name)
@@ -33,8 +36,85 @@ CREATE TABLE IF NOT EXISTS instructor_accounts (
   password VARCHAR(255) NOT NULL,
   display_name VARCHAR(255) NOT NULL,
   pin_number VARCHAR(50) NULL,
+  contact_number VARCHAR(50) NULL,
+  profile_photo LONGTEXT NULL,
+  role_title VARCHAR(120) NOT NULL DEFAULT 'Clinical Instructor',
+  status ENUM('active', 'inactive', 'archived') NOT NULL DEFAULT 'active',
+  archived_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE instructor_accounts ADD COLUMN IF NOT EXISTS profile_photo LONGTEXT NULL AFTER contact_number;
+
+CREATE TABLE IF NOT EXISTS school_years (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  label VARCHAR(20) NOT NULL UNIQUE,
+  start_year SMALLINT UNSIGNED NOT NULL,
+  end_year SMALLINT UNSIGNED NOT NULL,
+  status ENUM('active', 'inactive', 'archived') NOT NULL DEFAULT 'active',
+  created_by VARCHAR(80) NULL,
+  archived_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CHECK (end_year = start_year + 1),
+  INDEX idx_school_year_status (status, archived_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS student_blocks (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  school_year_id INT UNSIGNED NOT NULL,
+  label VARCHAR(120) NOT NULL,
+  status ENUM('active', 'inactive', 'archived') NOT NULL DEFAULT 'active',
+  created_by VARCHAR(80) NULL,
+  archived_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_block_year_label (school_year_id, label),
+  CONSTRAINT fk_blocks_school_year FOREIGN KEY (school_year_id) REFERENCES school_years(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS student_block_assignments (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  student_id VARCHAR(50) NOT NULL,
+  block_id INT UNSIGNED NOT NULL,
+  assigned_by VARCHAR(80) NULL,
+  archived_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_student_block (student_id),
+  INDEX idx_assignment_block (block_id, archived_at),
+  CONSTRAINT fk_assignment_student FOREIGN KEY (student_id) REFERENCES students(student_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_assignment_block FOREIGN KEY (block_id) REFERENCES student_blocks(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS api_sessions (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  token_hash CHAR(64) NOT NULL UNIQUE,
+  role ENUM('admin', 'instructor', 'student') NOT NULL,
+  user_uid VARCHAR(80) NOT NULL,
+  expires_at DATETIME NOT NULL,
+  revoked_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_session_lookup (token_hash, expires_at, revoked_at),
+  INDEX idx_session_user (role, user_uid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS audit_trail (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  actor_role ENUM('admin', 'instructor', 'student', 'system') NOT NULL,
+  actor_uid VARCHAR(80) NULL,
+  action_name VARCHAR(80) NOT NULL,
+  entity_type VARCHAR(80) NOT NULL,
+  entity_uid VARCHAR(120) NULL,
+  details JSON NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_audit_created (created_at),
+  INDEX idx_audit_entity (entity_type, entity_uid),
+  INDEX idx_audit_actor (actor_role, actor_uid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS procedures (
@@ -69,6 +149,8 @@ CREATE TABLE IF NOT EXISTS case_records (
   teacher_remarks TEXT NULL,
   checked_by VARCHAR(255) NULL,
   checked_at DATETIME NULL,
+  record_status ENUM('submitted', 'reviewed', 'verified', 'needs_revision', 'archived') NOT NULL DEFAULT 'submitted',
+  archived_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_cases_student (student_id),
@@ -77,7 +159,7 @@ CREATE TABLE IF NOT EXISTS case_records (
   INDEX idx_cases_date (date_time_performed),
   CONSTRAINT fk_cases_student_public
     FOREIGN KEY (student_id) REFERENCES students(student_id)
-    ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_cases_procedure_key
     FOREIGN KEY (procedure_key) REFERENCES procedures(procedure_key)
     ON UPDATE CASCADE ON DELETE RESTRICT
@@ -94,13 +176,14 @@ CREATE TABLE IF NOT EXISTS edit_requests (
   requested_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   approved_at DATETIME NULL,
   rejected_at DATETIME NULL,
+  archived_at DATETIME NULL,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_edit_requests_student (student_id),
   INDEX idx_edit_requests_status (status),
   INDEX idx_edit_requests_procedure (procedure_key),
   CONSTRAINT fk_edit_requests_student_public
     FOREIGN KEY (student_id) REFERENCES students(student_id)
-    ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_edit_requests_procedure_key
     FOREIGN KEY (procedure_key) REFERENCES procedures(procedure_key)
     ON UPDATE CASCADE ON DELETE RESTRICT
@@ -117,7 +200,7 @@ CREATE TABLE IF NOT EXISTS edit_permissions (
   UNIQUE KEY uq_edit_permission (student_id, procedure_key),
   CONSTRAINT fk_edit_permissions_student_public
     FOREIGN KEY (student_id) REFERENCES students(student_id)
-    ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_edit_permissions_procedure_key
     FOREIGN KEY (procedure_key) REFERENCES procedures(procedure_key)
     ON UPDATE CASCADE ON DELETE RESTRICT
@@ -134,6 +217,7 @@ CREATE TABLE IF NOT EXISTS notification_history (
   message TEXT NULL,
   remarks TEXT NULL,
   meta JSON NULL,
+  archived_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_notifications_created (created_at),
   INDEX idx_notifications_student (student_id),
@@ -141,29 +225,35 @@ CREATE TABLE IF NOT EXISTS notification_history (
   INDEX idx_notifications_request (request_id),
   CONSTRAINT fk_notifications_student_public
     FOREIGN KEY (student_id) REFERENCES students(student_id)
-    ON UPDATE CASCADE ON DELETE SET NULL,
+    ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_notifications_request
     FOREIGN KEY (request_id) REFERENCES edit_requests(id)
-    ON UPDATE CASCADE ON DELETE SET NULL
+    ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS chat_messages (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   student_id VARCHAR(50) NOT NULL,
   student_name VARCHAR(255) NULL,
+  instructor_id VARCHAR(80) NULL,
+  instructor_name VARCHAR(255) NULL,
   sender_role ENUM('student', 'instructor') NOT NULL DEFAULT 'student',
   sender_name VARCHAR(255) NOT NULL,
   message TEXT NOT NULL,
   read_by_student TINYINT(1) NOT NULL DEFAULT 0,
   read_by_instructor TINYINT(1) NOT NULL DEFAULT 0,
+  archived_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_chat_student_created (student_id, created_at),
   INDEX idx_chat_unread_student (student_id, read_by_student),
   INDEX idx_chat_unread_instructor (student_id, read_by_instructor),
   CONSTRAINT fk_chat_student_public
     FOREIGN KEY (student_id) REFERENCES students(student_id)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS instructor_id VARCHAR(80) NULL AFTER student_name;
+ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS instructor_name VARCHAR(255) NULL AFTER instructor_id;
 
 CREATE TABLE IF NOT EXISTS school_year_archives (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -187,7 +277,7 @@ CREATE TABLE IF NOT EXISTS school_year_archive_procedures (
   UNIQUE KEY uq_archive_procedure (archive_id, procedure_key),
   CONSTRAINT fk_archive_procedures_archive
     FOREIGN KEY (archive_id) REFERENCES school_year_archives(id)
-    ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_archive_procedures_key
     FOREIGN KEY (procedure_key) REFERENCES procedures(procedure_key)
     ON UPDATE CASCADE ON DELETE RESTRICT
@@ -201,10 +291,10 @@ CREATE TABLE IF NOT EXISTS school_year_archive_records (
   UNIQUE KEY uq_archive_case (archive_procedure_id, case_record_id),
   CONSTRAINT fk_archive_records_procedure
     FOREIGN KEY (archive_procedure_id) REFERENCES school_year_archive_procedures(id)
-    ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_archive_records_case
     FOREIGN KEY (case_record_id) REFERENCES case_records(id)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS system_meta (
@@ -352,14 +442,6 @@ BEGIN
   WHERE school_year = p_school_year
   LIMIT 1;
 
-  DELETE arp
-  FROM school_year_archive_records arp
-  JOIN school_year_archive_procedures app ON app.id = arp.archive_procedure_id
-  WHERE app.archive_id = v_archive_id;
-
-  DELETE FROM school_year_archive_procedures
-  WHERE archive_id = v_archive_id;
-
   INSERT INTO school_year_archive_procedures (archive_id, procedure_key, procedure_name, folder_name, records_count)
   SELECT
     v_archive_id,
@@ -370,9 +452,13 @@ BEGIN
   FROM case_records c
   WHERE c.academic_year = p_school_year
      OR YEAR(c.date_time_performed) IN (v_start, v_end)
-  GROUP BY c.procedure_key, c.procedure_name;
+  GROUP BY c.procedure_key, c.procedure_name
+  ON DUPLICATE KEY UPDATE
+    procedure_name = VALUES(procedure_name),
+    folder_name = VALUES(folder_name),
+    records_count = VALUES(records_count);
 
-  INSERT INTO school_year_archive_records (archive_procedure_id, case_record_id)
+  INSERT IGNORE INTO school_year_archive_records (archive_procedure_id, case_record_id)
   SELECT
     app.id,
     c.id
@@ -396,7 +482,7 @@ END$$
 CREATE PROCEDURE sp_register_student(
   IN p_student_id VARCHAR(50),
   IN p_student_name VARCHAR(255),
-  IN p_password VARCHAR(255),
+  IN p_initial_password VARCHAR(255),
   IN p_parent_name VARCHAR(255),
   IN p_contact_number VARCHAR(50)
 )
@@ -405,8 +491,17 @@ BEGIN
     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Student ID must be exactly 6 digits.';
   END IF;
 
+  IF p_initial_password IS NULL OR CHAR_LENGTH(TRIM(p_initial_password)) = 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'An initial password is required.';
+  END IF;
+
+  IF p_parent_name IS NULL OR CHAR_LENGTH(TRIM(p_parent_name)) = 0 OR
+     p_contact_number IS NULL OR CHAR_LENGTH(TRIM(p_contact_number)) = 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Parent/guardian and contact number are required.';
+  END IF;
+
   INSERT INTO students (student_id, student_name, password, parent_name, contact_number)
-  VALUES (p_student_id, p_student_name, p_password, p_parent_name, p_contact_number);
+  VALUES (p_student_id, p_student_name, p_initial_password, p_parent_name, p_contact_number);
 
   SELECT id, student_id, student_name, parent_name, contact_number
   FROM students

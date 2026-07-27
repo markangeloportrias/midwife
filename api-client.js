@@ -1,6 +1,7 @@
 /*
- * Frontend-only data layer for student, instructor, and case-record flows.
- * Stores all data in browser localStorage/sessionStorage.
+ * MySQL data layer for student, instructor, and case-record flows.
+ * Business records live in the XAMPP database. Browser storage is retained
+ * only for authentication/session state and harmless UI preferences.
  */
 (function () {
   'use strict';
@@ -98,7 +99,9 @@
           username: normalize(acc && acc.username),
           password: normalize(acc && acc.password),
           display_name: normalize(acc && acc.display_name),
-          created_at: normalize(acc && acc.created_at)
+          created_at: normalize(acc && acc.created_at),
+          archived: !!(acc && acc.archived),
+          archived_at: normalize(acc && acc.archived_at)
         };
       })
       .filter(function (acc) {
@@ -126,7 +129,9 @@
   }
 
   function getStoredInstructorAuth() {
-    var accounts = getInstructorAccountsInternal();
+    var accounts = getInstructorAccountsInternal().filter(function (account) {
+      return !account.archived;
+    });
     if (accounts.length > 0) {
       return {
         username: accounts[0].username,
@@ -152,7 +157,7 @@
     var pass = normalize(password);
     var accounts = getInstructorAccountsInternal();
     for (var i = 0; i < accounts.length; i += 1) {
-      if (normalize(accounts[i].username).toLowerCase() === user && normalize(accounts[i].password) === pass) {
+      if (!accounts[i].archived && normalize(accounts[i].username).toLowerCase() === user && normalize(accounts[i].password) === pass) {
         return accounts[i];
       }
     }
@@ -368,6 +373,11 @@
     if (!Array.isArray(blocks)) {
       blocks = [];
     }
+    // A fresh installation must not invent a school year or default blocks.
+    // This migration only applies to actual legacy block data.
+    if (!blocks.length) {
+      return;
+    }
     var targetYear = '';
     var years = getAllSchoolYears();
     if (years.length) {
@@ -446,25 +456,14 @@
   }
 
   function getAllSchoolYears() {
-    var merged = {};
+    var registered = {};
     getSchoolYearsStored().forEach(function (year) {
       var normalized = normalizeSchoolYearRange(year);
-      if (normalized) merged[normalized] = true;
+      if (normalized) registered[normalized] = true;
     });
-    getStudentBlocks().forEach(function (block) {
-      var normalized = normalizeSchoolYearRange(block.school_year || '');
-      if (normalized) merged[normalized] = true;
-    });
-    collectSchoolYearRangesFromCases().forEach(function (year) {
-      merged[year] = true;
-    });
-    var result = Object.keys(merged).sort(function (a, b) {
+    return Object.keys(registered).sort(function (a, b) {
       return Number(b.split('-')[0]) - Number(a.split('-')[0]);
     });
-    if (!result.length) {
-      result.push(getCurrentSchoolYearLabel());
-    }
-    return result;
   }
 
   function getStudentEnrollments(student) {
@@ -597,7 +596,7 @@
     var id = normalize(blockId);
     var sy = normalizeSchoolYearRange(schoolYear);
     return getStudents().filter(function (student) {
-      return isStudentRegisteredForYear(student, sy) && getStudentBlockAssignment(student, sy) === id;
+      return !student.archived && isStudentRegisteredForYear(student, sy) && getStudentBlockAssignment(student, sy) === id;
     });
   }
 
@@ -645,7 +644,7 @@
 
   function getCases() {
     ensureStorage();
-    return readJson(STORAGE_KEYS.cases, []);
+    return readJson(STORAGE_KEYS.cases, []).filter(function (record) { return !record.archived; });
   }
 
   function saveCases(casesList) {
@@ -778,6 +777,17 @@
   }
 
   var ApiClient = {
+    async getSyncState() {
+      var keys = [
+        STORAGE_KEYS.students, STORAGE_KEYS.studentBlocks, STORAGE_KEYS.schoolYears,
+        STORAGE_KEYS.cases, 'editRequests', 'editPermissions', 'thesis_chat_messages_v1'
+      ];
+      return {
+        ok: true,
+        version: keys.map(function (key) { return localStorage.getItem(key) || ''; }).join('|')
+      };
+    },
+
     apiUrl: 'frontend-localstorage',
 
     async request(action) {
@@ -803,8 +813,8 @@
       if (!/^\d{6}$/.test(id)) {
         return { ok: false, message: 'Student ID must be exactly 6 digits.' };
       }
-      if (!name || !pwd) {
-        return { ok: false, message: 'Student name and password are required.' };
+      if (!name || !pwd || !pName || !pContact) {
+        return { ok: false, message: 'All student fields are required.' };
       }
 
       var students = getStudents();
@@ -813,7 +823,10 @@
         if (!sy) {
           return { ok: false, message: 'This Student ID is already registered. Select a school year to enroll the student.' };
         }
-        if (isStudentRegisteredForYear(existing, sy)) {
+        if (
+          isStudentRegisteredForYear(existing, sy) &&
+          (!blockId || getStudentBlockAssignment(existing, sy))
+        ) {
           return { ok: false, message: 'This student is already registered for school year ' + sy + '.' };
         }
         var enrolled = setStudentEnrollmentRecord(existing, sy, blockId);
@@ -892,6 +905,7 @@
           student_name: student.student_name,
           parent_name: student.parent_name || '',
           contact_number: student.contact_number || '',
+          profile_photo: student.profile_photo || '',
           registered_school_year: getStudentActiveSchoolYear(student),
           active_school_year: getStudentActiveSchoolYear(student)
         }
@@ -913,9 +927,20 @@
           student_name: student.student_name,
           parent_name: student.parent_name || '',
           contact_number: student.contact_number || '',
+          profile_photo: student.profile_photo || '',
           registered_school_year: getStudentActiveSchoolYear(student),
           active_school_year: getStudentActiveSchoolYear(student)
         }
+      };
+    },
+
+    async getAllStudents() {
+      ensureStorage();
+      return {
+        ok: true,
+        students: getStudents().filter(function (student) {
+          return student && !student.archived;
+        })
       };
     },
 
@@ -970,11 +995,8 @@
     async getJoinedCases(studentId, procedureName, searchTerm) {
       ensureStorage();
       var id = normalize(studentId);
-      var student = findStudentByPublicId(id);
-      var activeYear = student ? getStudentActiveSchoolYear(student) : '';
       var rows = getCases()
         .filter(function (rec) { return normalize(rec.student_id) === id; })
-        .filter(function (rec) { return caseMatchesStudentSchoolYear(rec, activeYear); })
         .filter(function (rec) { return matchCaseFilters(rec, procedureName, searchTerm); })
         .sort(function (a, b) { return b.id - a.id; })
         .map(toCaseRow);
@@ -993,11 +1015,39 @@
       ensureStorage();
       var id = normalize(studentId);
       var numericId = Number(caseId);
-      var casesList = getCases();
-      var filtered = casesList.filter(function (rec) {
-        return !(rec.id === numericId && normalize(rec.student_id) === id);
+      var casesList = readJson(STORAGE_KEYS.cases, []);
+      casesList = casesList.map(function (rec) {
+        if (rec.id === numericId && normalize(rec.student_id) === id) {
+          return Object.assign({}, rec, { archived: true, archived_at: new Date().toISOString() });
+        }
+        return rec;
       });
-      saveCases(filtered);
+      saveCases(casesList);
+      return { ok: true };
+    },
+
+    async restoreCaseRecord(studentId, caseId) {
+      ensureStorage();
+      var id = normalize(studentId);
+      var numericId = Number(caseId);
+      var casesList = readJson(STORAGE_KEYS.cases, []);
+      casesList = casesList.map(function (rec) {
+        if (rec.id === numericId && normalize(rec.student_id) === id) {
+          return Object.assign({}, rec, { archived: false, archived_at: null });
+        }
+        return rec;
+      });
+      saveCases(casesList);
+      return { ok: true };
+    },
+
+    async permanentlyDeleteCaseRecord(studentId, caseId) {
+      ensureStorage();
+      var id = normalize(studentId);
+      var numericId = Number(caseId);
+      saveCases(readJson(STORAGE_KEYS.cases, []).filter(function (rec) {
+        return !(rec.id === numericId && normalize(rec.student_id) === id);
+      }));
       return { ok: true };
     },
 
@@ -1023,10 +1073,13 @@
       var procedure = canonicalProcedureName(procedureName);
       var requests = getEditRequests();
 
+      console.log('[API_CLIENT_DEBUG] requestEditApproval called with:', {studentId, procedureName, caseNumbers, id, procedure});
+
       var hasPending = requests.some(function (req) {
         return normalize(req.studentId) === id && normalize(req.type) === procedure && req.status === 'pending';
       });
       if (hasPending) {
+        console.log('[API_CLIENT_DEBUG] Already has pending request, rejecting');
         return { ok: false, message: 'You already have a pending edit request.' };
       }
 
@@ -1043,6 +1096,9 @@
       requests.push(request);
       saveEditRequests(requests);
 
+      console.log('[API_CLIENT_DEBUG] Saved edit request:', request);
+      console.log('[API_CLIENT_DEBUG] All edit requests now:', requests);
+
       meta.nextEditRequestId += 1;
       saveMeta(meta);
 
@@ -1051,13 +1107,16 @@
 
     async getPendingEditRequests() {
       ensureStorage();
-      var pending = getEditRequests()
+      var allRequests = getEditRequests();
+      console.log('[API_CLIENT_DEBUG] getPendingEditRequests: All requests:', allRequests);
+      var pending = allRequests
         .filter(function (req) { return req.status === 'pending'; })
         .sort(function (a, b) {
           var ta = new Date(a.requestedAt || 0).getTime();
           var tb = new Date(b.requestedAt || 0).getTime();
           return tb - ta;
         });
+      console.log('[API_CLIENT_DEBUG] getPendingEditRequests: Filtered pending:', pending);
       return pending;
     },
 
@@ -1154,7 +1213,7 @@
 
     async getInstructorAccounts() {
       ensureStorage();
-      var accounts = getInstructorAccountsInternal().map(function (acc) {
+      var accounts = getInstructorAccountsInternal().filter(function (acc) { return !acc.archived; }).map(function (acc) {
         return {
           id: acc.id,
           username: acc.username,
@@ -1247,13 +1306,23 @@
         return { ok: false, message: 'At least one instructor account must remain.' };
       }
 
-      var filtered = accounts.filter(function (acc) { return normalize(acc.id) !== id; });
-      if (filtered.length === accounts.length) {
+      var activeCount = accounts.filter(function (acc) { return !acc.archived; }).length;
+      if (activeCount <= 1) {
+        return { ok: false, message: 'At least one active instructor account must remain.' };
+      }
+      var found = false;
+      var filtered = accounts.map(function (acc) {
+        if (normalize(acc.id) !== id) return acc;
+        found = true;
+        return Object.assign({}, acc, { archived: true, archived_at: new Date().toISOString() });
+      });
+      if (!found) {
         return { ok: false, message: 'Instructor not found.' };
       }
       saveInstructorAccountsInternal(filtered);
-      if (filtered.length) {
-        saveLegacyInstructorAuth(filtered[0].username, filtered[0].password);
+      var firstActive = filtered.find(function (account) { return !account.archived; });
+      if (firstActive) {
+        saveLegacyInstructorAuth(firstActive.username, firstActive.password);
       } else {
         saveLegacyInstructorAuth('', '');
       }
@@ -1262,7 +1331,9 @@
 
     async getInstructorAccount() {
       ensureStorage();
-      var accounts = getInstructorAccountsInternal();
+      var accounts = getInstructorAccountsInternal().filter(function (account) {
+        return !account.archived;
+      });
       var first = accounts[0] || getDefaultInstructorAccount();
       return {
         ok: true,
@@ -1460,6 +1531,7 @@
       var studentId = normalize(body.student_id || body.studentId);
       var message = normalize(body.message);
       var senderRole = normalize(body.sender_role || body.senderRole || 'student').toLowerCase();
+      var instructorId = normalize(body.instructor_id || body.instructorId);
       var student = findStudentByPublicId(studentId);
 
       if (!studentId) {
@@ -1478,6 +1550,8 @@
         id: meta.nextChatMessageId,
         student_id: studentId,
         student_name: normalize(body.student_name || body.studentName) || (student ? student.student_name : ''),
+        instructor_id: instructorId,
+        instructor_name: normalize(body.instructor_name || body.instructorName),
         sender_role: senderRole,
         sender_name: normalize(body.sender_name || body.senderName) || (senderRole === 'student' ? (student ? student.student_name : 'Student') : 'Instructor'),
         message: message,
@@ -1497,9 +1571,12 @@
       ensureStorage();
       var opts = filters || {};
       var studentId = normalize(opts.student_id || opts.studentId);
+      var instructorId = normalize(opts.instructor_id || opts.instructorId);
       return getChatMessages()
         .filter(function (item) {
-          return !studentId || normalize(item.student_id) === studentId;
+          if (studentId && normalize(item.student_id) !== studentId) return false;
+          if (instructorId && normalize(item.instructor_id) !== instructorId) return false;
+          return true;
         })
         .sort(function (a, b) {
           var ta = new Date(a.created_at || 0).getTime();
@@ -1508,10 +1585,13 @@
         });
     },
 
-    async getChatThreads() {
+    async getChatThreads(filters) {
       ensureStorage();
+      var opts = filters || {};
+      var instructorId = normalize(opts.instructor_id || opts.instructorId);
       var threads = {};
       getChatMessages().forEach(function (msg) {
+        if (instructorId && normalize(msg.instructor_id) !== instructorId) return;
         var id = normalize(msg.student_id);
         if (!id) return;
         if (!threads[id]) {
@@ -1627,8 +1707,15 @@
           var blocks = getStudentBlocks().filter(function (block) {
             return normalizeSchoolYearRange(block.school_year || '') === label;
           });
+          var blockIds = blocks.map(function (block) {
+            return normalize(block.id);
+          });
           var studentCount = getStudents().filter(function (student) {
-            return isStudentRegisteredForYear(student, label);
+            var assignedBlockId = getStudentBlockAssignment(student, label);
+            return !student.archived &&
+              isStudentRegisteredForYear(student, label) &&
+              !!assignedBlockId &&
+              blockIds.indexOf(normalize(assignedBlockId)) !== -1;
           }).length;
           return {
             label: label,
@@ -1760,25 +1847,7 @@
     },
 
     async deleteStudentBlock(blockId) {
-      ensureStorage();
-      var id = normalize(blockId);
-      var blocks = getStudentBlocks();
-      var target = null;
-      for (var i = 0; i < blocks.length; i += 1) {
-        if (normalize(blocks[i].id) === id) {
-          target = blocks[i];
-          break;
-        }
-      }
-      var nextBlocks = blocks.filter(function (block) {
-        return normalize(block.id) !== id;
-      });
-      if (nextBlocks.length === blocks.length) {
-        return { ok: false, message: 'Block not found.' };
-      }
-      clearBlockFromStudents(id, target ? target.school_year : '');
-      saveStudentBlocks(nextBlocks);
-      return { ok: true };
+      return { ok: false, message: 'Permanent block deletion is disabled. Keep the block for historical records.' };
     },
 
     async assignStudentToBlock(studentId, blockId, schoolYear) {
@@ -1865,6 +1934,59 @@
       };
     },
 
+    async archiveStudent(studentId) {
+      ensureStorage();
+      var sid = normalize(studentId);
+      var students = getStudents();
+      var found = false;
+      students = students.map(function (student) {
+        if (normalize(student.student_id) !== sid) return student;
+        found = true;
+        return Object.assign({}, student, {
+          archived: true,
+          archived_at: new Date().toISOString()
+        });
+      });
+      if (!found) return { ok: false, message: 'Student not found.' };
+      saveStudents(students);
+      return { ok: true };
+    },
+
+    async restoreStudent(studentId) {
+      ensureStorage();
+      var sid = normalize(studentId);
+      var students = getStudents();
+      var found = false;
+      students = students.map(function (student) {
+        if (normalize(student.student_id) !== sid) return student;
+        found = true;
+        var restored = Object.assign({}, student, { archived: false });
+        delete restored.archived_at;
+        return restored;
+      });
+      if (!found) return { ok: false, message: 'Archived student not found.' };
+      saveStudents(students);
+      return { ok: true };
+    },
+
+    async getArchivedStudents() {
+      ensureStorage();
+      return {
+        ok: true,
+        students: getStudents()
+          .filter(function (student) { return !!student.archived; })
+          .map(function (student) {
+            return {
+              student_id: student.student_id,
+              student_name: student.student_name,
+              parent_name: student.parent_name || '',
+              contact_number: student.contact_number || '',
+              archived_at: student.archived_at || ''
+            };
+          })
+      };
+    },
+
     async getUnassignedStudents(schoolYear) {
       ensureStorage();
       var sy = normalizeSchoolYearRange(schoolYear);
@@ -1920,16 +2042,12 @@
 
     async clearCaseDataOnly() {
       ensureStorage();
-      saveCases([]);
-      saveEditRequests([]);
-      saveEditPermissions([]);
-      saveNotificationHistory([]);
-      var meta = getMeta();
-      meta.nextCaseId = 1;
-      meta.nextEditRequestId = 1;
-      meta.nextNotificationId = 1;
-      saveMeta(meta);
-      return { ok: true };
+      var now = new Date().toISOString();
+      var allCases = readJson(STORAGE_KEYS.cases, []).map(function (item) {
+        return Object.assign({}, item, { archived: true, archived_at: item.archived_at || now });
+      });
+      saveCases(allCases);
+      return { ok: true, archived: allCases.length };
     }
   };
 
@@ -2216,7 +2334,416 @@
     }
   };
 
-  ensureStorage();
+  function mapRecordStatus(value) {
+    var raw = normalize(value).toLowerCase();
+    if (!raw) return '';
+    if (raw === 'verified') return 'Verified';
+    if (raw === 'reviewed' || raw === 'under review') return 'Under Review';
+    if (raw === 'needs_revision' || raw === 'changes requested') return 'Changes Requested';
+    if (raw === 'resubmitted') return 'Resubmitted';
+    if (raw === 'invalid') return 'Invalid';
+    if (raw === 'archived') return 'Archived';
+    if (raw === 'draft') return 'Draft';
+    if (raw === 'submitted') return 'Submitted';
+    return normalize(value);
+  }
+
+  function fromApiCaseRow(record) {
+    var status = record.status || mapRecordStatus(record.record_status);
+    if (!status && record.checked_by) status = 'Verified';
+    if (!status) status = 'Submitted';
+    return {
+      id: record.id,
+      student_id: record.student_id,
+      student_name: record.student_name,
+      instructor_id: record.instructor_uid || record.instructor_id || '',
+      instructor_name: record.instructor_name || '',
+      patient_name: record.patient_name || '',
+      patient_address: record.patient_address || '',
+      case_no: record.case_no || '',
+      academic_year: record.academic_year || '',
+      school_year: record.academic_year || '',
+      complete_diagnosis: record.complete_diagnosis || '',
+      date_time_performed: record.date_time_performed || '',
+      facility_name: record.facility_name || '',
+      facility_address: record.facility_address || '',
+      facility_contact_number: record.facility_contact_number || '',
+      supervisor_printed_name: record.supervisor_printed_name || '',
+      supervisor_contact_number: record.supervisor_contact_number || '',
+      supervisor_position_designation: record.supervisor_position_designation || '',
+      supervisor_license_no: record.supervisor_license_no || '',
+      supervisor_license_expiry_date: record.supervisor_license_expiry_date || '',
+      procedure_name: record.procedure_name || record.procedure_key || '',
+      procedure_key: record.procedure_key || canonicalProcedureName(record.procedure_name),
+      teacher_remarks: record.teacher_remarks || '',
+      checked_by: record.checked_by || '',
+      checked_at: record.checked_at || '',
+      status: status,
+      submitted_at: record.created_at || record.submitted_at || ''
+    };
+  }
+
+  function filterApiCases(rows, procedureName, searchTerm) {
+    var procedure = canonicalProcedureName(procedureName);
+    var term = normalize(searchTerm).toLowerCase();
+    return (rows || [])
+      .map(fromApiCaseRow)
+      .filter(function (record) {
+        if (procedure && canonicalProcedureName(record.procedure_key || record.procedure_name) !== procedure) {
+          return false;
+        }
+        if (!term) return true;
+        return createSearchBlob(record).indexOf(term) !== -1;
+      })
+      .sort(function (a, b) { return Number(b.id) - Number(a.id); });
+  }
+
+  async function syncLegacyCasesToApi(studentId) {
+    // Legacy data is migrated explicitly through migrate-local-to-mysql.php.
+    // Never import browser records silently during normal application use.
+    return;
+    /* istanbul ignore next */
+    var sid = normalize(studentId);
+    var syncKey = 'thesis_cases_synced_v1' + (sid ? '_' + sid : '');
+    if (localStorage.getItem(syncKey)) return;
+    if (!sessionStorage.getItem('thesis_api_token')) return;
+
+    var legacyCases = readJson(STORAGE_KEYS.cases, []).filter(function (rec) {
+      if (rec.archived) return false;
+      if (sid && normalize(rec.student_id) !== sid) return false;
+      return !!normalize(rec.student_id) && !!canonicalProcedureName(rec.procedure_name);
+    });
+    if (!legacyCases.length) {
+      localStorage.setItem(syncKey, '1');
+      return;
+    }
+
+    for (var i = 0; i < legacyCases.length; i += 1) {
+      var rec = legacyCases[i];
+      try {
+        await mysqlRequest('cases', {
+          method: 'POST',
+          body: JSON.stringify({
+            student_id: rec.student_id,
+            procedure_key: canonicalProcedureName(rec.procedure_name),
+            academic_year: rec.academic_year || rec.school_year || getCurrentSchoolYearLabel(),
+            case_no: rec.case_no || null,
+            complete_diagnosis: rec.complete_diagnosis || null,
+            date_time_performed: rec.date_time_performed || null,
+            patient_name: rec.patient_name || null,
+            patient_address: rec.patient_address || null,
+            facility_name: rec.facility_name || null,
+            facility_address: rec.facility_address || null,
+            facility_contact_number: rec.facility_contact_number || null,
+            supervisor_printed_name: rec.supervisor_printed_name || null,
+            supervisor_contact_number: rec.supervisor_contact_number || null,
+            supervisor_position_designation: rec.supervisor_position_designation || null,
+            supervisor_license_no: rec.supervisor_license_no || null,
+            supervisor_license_expiry_date: rec.supervisor_license_expiry_date || null,
+            instructor_uid: rec.instructor_id || null,
+            instructor_name: rec.instructor_name || null
+          })
+        });
+      } catch (err) {
+        // Ignore individual migration failures (duplicate rows, missing student, etc.).
+      }
+    }
+    localStorage.setItem(syncKey, '1');
+  }
+
+  // MySQL-backed API overrides. Browser storage is never a business-data source.
+  async function mysqlRequest(path, options) {
+    options = options || {};
+    var headers = Object.assign({ 'Content-Type': 'application/json' }, options.headers || {});
+    var token = sessionStorage.getItem('thesis_api_token') || '';
+    if (token) headers.Authorization = 'Bearer ' + token;
+    var apiBase = location.protocol === 'file:' ? 'http://localhost/THESIS6/api/' : 'api/';
+    var response = await fetch(apiBase + path, Object.assign({}, options, { headers: headers, cache: 'no-store' }));
+    var result = await response.json().catch(function () { return {}; });
+    if (!response.ok) throw new Error(result.message || 'Database request failed.');
+    return result;
+  }
+
+  async function mysqlLogin(role, credentials) {
+    try {
+      var result = await mysqlRequest('auth/' + role, { method: 'POST', body: JSON.stringify(credentials) });
+      if (result.token) sessionStorage.setItem('thesis_api_token', result.token);
+      return result;
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  }
+
+  ApiClient.apiUrl = location.protocol === 'file:' ? 'http://localhost/THESIS6/api' : 'api';
+  ApiClient.storageMode = 'mysql-only';
+  ApiClient.request = mysqlRequest;
+  ApiClient.ensureSchema = async function () { return mysqlRequest('health'); };
+  ApiClient.authenticateStudent = async function (studentId, password) {
+    var result = await mysqlLogin('student', { student_id: normalize(studentId), password: normalize(password) });
+    return result.ok ? { ok: true, student: result.user } : result;
+  };
+  ApiClient.authenticateInstructor = async function (username, password) {
+    var result = await mysqlLogin('instructor', { username: normalize(username), password: normalize(password) });
+    return result.ok ? { ok: true, instructor: result.user } : result;
+  };
+  ApiClient.authenticateAdmin = async function (pin) {
+    return mysqlLogin('admin', { pin_number: normalize(pin) });
+  };
+  ApiClient.getSchoolYears = async function () {
+    var result;
+    try { result = await mysqlRequest('school-years'); }
+    catch (error) { result = await mysqlRequest('school-year-directory'); }
+    return { ok: true, school_years: result.years || [] };
+  };
+  ApiClient.createSchoolYear = async function (value) {
+    try { return await mysqlRequest('school-years', { method: 'POST', body: JSON.stringify({ label: normalize(value) }) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.getStudentBlocks = async function (schoolYear) {
+    var query='school_year='+encodeURIComponent(normalize(schoolYear));
+    try { return await mysqlRequest('blocks?' + query); }
+    catch (error) { return mysqlRequest('block-directory?' + query); }
+  };
+  ApiClient.createStudentBlock = async function (label, createdBy, schoolYear) {
+    try { return await mysqlRequest('blocks', { method: 'POST', body: JSON.stringify({ label: normalize(label), school_year: normalize(schoolYear) }) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.updateStudentBlockLabel = async function (blockId, label) {
+    try { return await mysqlRequest('blocks/' + encodeURIComponent(blockId), { method: 'PATCH', body: JSON.stringify({ label: normalize(label) }) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.getBlockStudents = async function (blockId, schoolYear) {
+    var query='block_id='+encodeURIComponent(blockId)+'&school_year='+encodeURIComponent(normalize(schoolYear));
+    try { return await mysqlRequest('assignments?' + query); }
+    catch (error) { return mysqlRequest('assignment-directory?' + query); }
+  };
+  ApiClient.getAllAssignedStudents = async function () {
+    try { return await mysqlRequest('assignments'); }
+    catch (error) { return mysqlRequest('assignment-directory'); }
+  };
+  ApiClient.saveCaseRecord = async function (studentId, procedureName, caseData) {
+    try {
+      caseData = caseData || {};
+      var student = findStudentByPublicId(studentId);
+      var activeYear = normalizeSchoolYearRange(caseData.academic_year) ||
+        (student ? getStudentActiveSchoolYear(student) : getCurrentSchoolYearLabel());
+      var result = await mysqlRequest('cases', {
+        method: 'POST',
+        body: JSON.stringify({
+          student_id: normalize(studentId),
+          procedure_key: canonicalProcedureName(procedureName),
+          academic_year: activeYear || null,
+          instructor_uid: normalize(caseData.instructor_id),
+          instructor_name: normalize(caseData.instructor_name),
+          case_no: normalize(caseData.case_no) || null,
+          complete_diagnosis: normalize(caseData.complete_diagnosis) || null,
+          date_time_performed: normalize(caseData.date_time_performed) || null,
+          patient_name: normalize(caseData.patient_name) || null,
+          patient_address: normalize(caseData.patient_address) || null,
+          facility_name: normalize(caseData.facility_name) || null,
+          facility_address: normalize(caseData.facility_address) || null,
+          facility_contact_number: normalize(caseData.facility_contact_number) || null,
+          supervisor_printed_name: normalize(caseData.supervisor_printed_name) || null,
+          supervisor_contact_number: normalize(caseData.supervisor_contact_number) || null,
+          supervisor_position_designation: normalize(caseData.supervisor_position_designation) || null,
+          supervisor_license_no: normalize(caseData.supervisor_license_no) || null,
+          supervisor_license_expiry_date: normalize(caseData.supervisor_license_expiry_date) || null
+        })
+      });
+      return { ok: !!result.ok, case_id: result.id, message: result.message };
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  };
+  ApiClient.getJoinedCases = async function (studentId, procedureName, searchTerm) {
+    var query = 'cases';
+    if (normalize(studentId)) {
+      query += '?student_id=' + encodeURIComponent(normalize(studentId));
+    }
+    var result = await mysqlRequest(query);
+    return filterApiCases(result.cases || [], procedureName, searchTerm);
+  };
+  ApiClient.deleteCaseRecord = async function (studentId, caseId) {
+    try {
+      var result = await mysqlRequest('cases/' + encodeURIComponent(caseId) + '/archive', {
+        method: 'PATCH',
+        body: '{}'
+      });
+      return { ok: !!result.ok, message: result.message };
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  };
+  ApiClient.restoreCaseRecord = async function (studentId, caseId) {
+    try {
+      var result = await mysqlRequest('cases/' + encodeURIComponent(caseId) + '/restore', {
+        method: 'PATCH',
+        body: '{}'
+      });
+      return { ok: !!result.ok, message: result.message };
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  };
+  ApiClient.permanentlyDeleteCaseRecord = async function (studentId, caseId) {
+    try {
+      var result = await mysqlRequest('cases/' + encodeURIComponent(caseId), { method: 'DELETE' });
+      return { ok: !!result.ok, message: result.message };
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  };
+  ApiClient.getStudentCaseCount = async function (studentId) {
+    var rows = await ApiClient.getJoinedCases(studentId, '', '');
+    return rows.length;
+  };
+  ApiClient.getAllCasesForInstructor = async function (procedureName, searchTerm) {
+    var result = await mysqlRequest('cases');
+    return filterApiCases(result.cases || [], procedureName, searchTerm);
+  };
+  ApiClient.getUnassignedStudents = async function (schoolYear) {
+    return mysqlRequest('assignments?unassigned=1&school_year=' + encodeURIComponent(normalize(schoolYear)));
+  };
+  ApiClient.assignStudentToBlock = async function (studentId, blockId) {
+    try { return await mysqlRequest('assignments', { method: 'POST', body: JSON.stringify({ student_id: normalize(studentId), block_id: blockId }) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.removeStudentFromBlock = async function (studentId) {
+    // Legacy compatibility: removing a student now means pausing and archiving
+    // the account, never silently removing only the block assignment.
+    return ApiClient.archiveStudent(studentId);
+  };
+  ApiClient.registerStudentInBlock = async function (blockId, schoolYear, payload) {
+    try {
+      await mysqlRequest('students', { method: 'POST', body: JSON.stringify(payload || {}) });
+      return await ApiClient.assignStudentToBlock(payload.student_id, blockId, schoolYear);
+    } catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.archiveStudent = async function (studentId) {
+    try { return await mysqlRequest('students/' + encodeURIComponent(studentId) + '/archive', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.restoreStudent = async function (studentId) {
+    try { return await mysqlRequest('students/' + encodeURIComponent(studentId) + '/restore', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.getArchivedStudents = async function () {
+    return mysqlRequest('students?archived=1');
+  };
+  ApiClient.getAllStudents = async function () {
+    return mysqlRequest('students');
+  };
+  ApiClient.getStudent = async function (studentId) {
+    try{return await mysqlRequest('students/'+encodeURIComponent(normalize(studentId)));}catch(error){return {ok:false,student:null,message:error.message};}
+  };
+  ApiClient.updateStudent = async function (studentId,payload) {
+    try{return await mysqlRequest('students/'+encodeURIComponent(normalize(studentId)),{method:'PATCH',body:JSON.stringify(payload||{})});}catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.getSyncState = async function () {
+    return mysqlRequest('sync-state');
+  };
+  ApiClient.getInstructorAccounts = async function () {
+    try { return await mysqlRequest('instructors'); }
+    catch (error) { return mysqlRequest('instructor-directory'); }
+  };
+  ApiClient.createInstructorAccount = async function (username, password, displayName) {
+    try { return await mysqlRequest('instructors', { method: 'POST', body: JSON.stringify({ username: username, password: password, display_name: displayName }) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.updateInstructorAccount = async function (accountId, payload) {
+    try { return await mysqlRequest('instructors/' + encodeURIComponent(accountId), { method: 'PATCH', body: JSON.stringify(payload || {}) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.setInstructorStatus = async function (accountId, status) {
+    var next=normalize(status).toLowerCase();
+    if (next!=='active'&&next!=='inactive') return {ok:false,message:'Invalid instructor status.'};
+    return ApiClient.updateInstructorAccount(accountId,{status:next});
+  };
+  ApiClient.deleteInstructorAccount = async function (accountId) {
+    try { return await mysqlRequest('instructors/' + encodeURIComponent(accountId) + '/archive', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.getArchivedInstructorAccounts = async function () { return mysqlRequest('instructors?archived=1'); };
+  ApiClient.restoreInstructorAccount = async function (accountId) {
+    try { return await mysqlRequest('instructors/' + encodeURIComponent(accountId) + '/restore', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.getArchivedCaseRecords = async function (studentId) {
+    var query='cases?archived=1';
+    if (normalize(studentId)) query += '&student_id=' + encodeURIComponent(normalize(studentId));
+    var result=await mysqlRequest(query);return result.cases||[];
+  };
+  ApiClient.requestEditApproval = async function (studentId, procedureName, caseNumbers) {
+    try {
+      var key=canonicalProcedureName(procedureName);
+      var result=await mysqlRequest('edit-requests',{method:'POST',body:JSON.stringify({procedure_key:key,procedure_name:procedureName||key,case_numbers:Array.isArray(caseNumbers)?caseNumbers:[]})});
+      return {ok:!!result.ok,request_id:result.id,message:result.message};
+    } catch(error) { return {ok:false,message:error.message}; }
+  };
+  ApiClient.getPendingEditRequests = async function () {
+    var result=await mysqlRequest('edit-requests');
+    return (result.requests||[]).filter(function(r){return r.status==='pending';}).map(function(r){
+      return Object.assign({},r,{studentId:r.student_id,type:r.procedure_key,caseNumbers:typeof r.case_numbers==='string'?JSON.parse(r.case_numbers||'[]'):r.case_numbers,requestedAt:r.requested_at});
+    });
+  };
+  ApiClient.getEditRequests = async function () {
+    var result=await mysqlRequest('edit-requests');
+    return (result.requests||[]).map(function(r){var numbers=r.case_numbers;if(typeof numbers==='string'){try{numbers=JSON.parse(numbers||'[]');}catch(e){numbers=[];}}numbers=Array.isArray(numbers)?numbers:[];return Object.assign({},r,{studentId:r.student_id,type:r.procedure_key,procedureKey:r.procedure_key,procedure:r.procedure_name,caseNumbers:numbers,caseNo:numbers[0]||'',caseKey:String(r.id),requestedAt:r.requested_at});});
+  };
+  ApiClient.archiveEditRequest = async function (requestId) {
+    try{return await mysqlRequest('edit-requests/'+encodeURIComponent(requestId)+'/archive',{method:'PATCH',body:'{}'});}catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.cancelEditRequest = async function (requestId) {
+    return ApiClient.archiveEditRequest(requestId);
+  };
+  ApiClient.approveEditRequest = async function (requestId) {
+    try { return await mysqlRequest('edit-requests/'+encodeURIComponent(requestId)+'/approve',{method:'PATCH',body:'{}'}); }
+    catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.rejectEditRequest = async function (requestId, remarks) {
+    try { return await mysqlRequest('edit-requests/'+encodeURIComponent(requestId)+'/reject',{method:'PATCH',body:JSON.stringify({remarks:remarks||''})}); }
+    catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.getNotificationHistory = async function (filters) {
+    var result=await mysqlRequest('notifications');var list=result.notifications||[];var f=filters||{};
+    return list.filter(function(n){
+      if ((f.student_id||f.studentId) && String(n.student_id)!==String(f.student_id||f.studentId)) return false;
+      if ((f.event_type||f.eventType) && String(n.event_type)!==String(f.event_type||f.eventType)) return false;
+      return true;
+    });
+  };
+  ApiClient.archiveNotification = async function (notificationId) {
+    try { return await mysqlRequest('notifications/' + encodeURIComponent(notificationId) + '/archive', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.sendChatMessage = async function (payload) {
+    try { return await mysqlRequest('chat',{method:'POST',body:JSON.stringify(payload||{})}); }
+    catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.getChatMessages = async function (filters) {
+    var f=filters||{};var query=[];
+    if (f.student_id||f.studentId) query.push('student_id='+encodeURIComponent(f.student_id||f.studentId));
+    if (f.instructor_id||f.instructorId) query.push('instructor_id='+encodeURIComponent(f.instructor_id||f.instructorId));
+    var result=await mysqlRequest('chat'+(query.length?'?'+query.join('&'):''));return result.messages||[];
+  };
+  ApiClient.getChatThreads = async function (filters) {
+    var messages=await ApiClient.getChatMessages(filters||{});var threads={};
+    messages.forEach(function(m){if(!threads[m.student_id])threads[m.student_id]={student_id:m.student_id,student_name:m.student_name||m.student_id,last_message:'',last_message_at:'',unread_count:0};var t=threads[m.student_id];t.last_message=m.message;t.last_message_at=m.created_at;if(m.sender_role==='student'&&!Number(m.read_by_instructor))t.unread_count+=1;});
+    return Object.keys(threads).map(function(k){return threads[k];}).sort(function(a,b){return new Date(b.last_message_at)-new Date(a.last_message_at);});
+  };
+  ApiClient.addTeacherRemarks = async function (caseId,remarks,checkedBy,instructorId) {
+    return ApiClient.updateRecordStatus(caseId,'Under Review',{remarks:remarks,instructor_name:checkedBy,instructor_id:instructorId});
+  };
+  ApiClient.updateRecordStatus = async function (caseId,status,options) {
+    try {var body=Object.assign({},options||{},{status:status});return await mysqlRequest('cases/'+encodeURIComponent(caseId)+'/review',{method:'PATCH',body:JSON.stringify(body)});}catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.getRecordHistory = async function (caseId) {
+    try {var result=await mysqlRequest('audit?record_id='+encodeURIComponent(caseId));return {ok:true,history:result.entries||[]};}catch(error){return {ok:false,history:[],message:error.message};}
+  };
+  ApiClient.addNotificationHistory = async function (payload) {
+    try {var result=await mysqlRequest('notifications',{method:'POST',body:JSON.stringify(payload||{})});return {ok:!!result.ok,notification_id:result.id};}catch(error){return {ok:false,message:error.message};}
+  };
+
   window.ApiClient = ApiClient;
   window.SessionCache = SessionCache;
   window.AuthHelper = AuthHelper;

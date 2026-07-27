@@ -387,7 +387,7 @@
     </div>
 
     <!-- SCRIPTS -->
-    <script src="api-client.js?v=20260413"></script>
+    <script src="api-client.js?v=20260722-3"></script>
     <script>
       // DOM Elements Configuration
       const studentIdInput = document.getElementById("studentid");
@@ -627,7 +627,7 @@
 
       function handleLogin() {
         const id = studentIdInput.value.trim();
-        const password = passwordInput.value;
+        const password = passwordInput.value.trim();
 
         if (!isValidStudentId(id)) {
           showMessage("Student ID must be exactly 6 numbers.", "error");
@@ -677,13 +677,16 @@
                 window.location.href = "student.html";
               }, 800);
             } else {
-              console.log("Authentication failed:", data.message);
-              loginBtn.classList.remove("is-loading");
-              loginBtn.disabled = false;
+              const errorMessage = data.message || "Invalid student ID or password.";
+            console.log("Authentication failed:", errorMessage);
+            showMessage(errorMessage, "error");
+            showToast(errorMessage, "error");
+            loginBtn.classList.remove("is-loading");
+            loginBtn.disabled = false;
 
-              shakeCard();
-              closePasswordErrorModal();
-              setTimeout(() => openPasswordErrorModal(), 100);
+            shakeCard();
+            closePasswordErrorModal();
+            setTimeout(() => openPasswordErrorModal(), 100);
             }
           })
           .catch((error) => {
@@ -823,9 +826,8 @@
         adminSubmitBtn.disabled = true;
 
         try {
-          // Keep original validation
-          const isValid = pin === "123456";
-          if (isValid) {
+          const result = await ApiClient.authenticateAdmin(pin);
+          if (result && result.ok) {
             sessionStorage.removeItem("currentInstructor");
             sessionStorage.setItem("thesis_admin_authenticated", "1");
             showToast(
