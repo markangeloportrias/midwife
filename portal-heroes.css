@@ -1,0 +1,269 @@
+/* Shared compact hero contract for Admin, Instructor, and Student portals. */
+html body.role-student .dashboard,
+html body.role-instructor .dashboard,
+html body.role-admin .app-shell {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+html body :is(.admin-dashboard-hero, .dashboard-hero, .page-hero) {
+  position: relative !important;
+  min-height: 0 !important;
+  padding: 15px 98px 15px 28px !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(255,255,255,.14), transparent 24%),
+    linear-gradient(125deg, #12185d 0%, #263aab 67%, #4264df 100%) !important;
+  box-shadow: 0 8px 24px rgba(24, 35, 112, .14) !important;
+}
+
+html body :is(.admin-dashboard-hero, .dashboard-hero, .page-hero)::after {
+  display: none !important;
+}
+
+html body .shared-paper-illustration {
+  position: absolute !important;
+  right: 18px !important;
+  top: 50% !important;
+  width: 82px !important;
+  height: 104px !important;
+  display: block !important;
+  border: 2px solid rgba(151,169,226,.9) !important;
+  border-radius: 10px !important;
+  background: linear-gradient(145deg, #f3f6ff, #dbe4fb) !important;
+  box-shadow: 0 8px 18px rgba(7,13,75,.2), inset 0 1px 0 #fff !important;
+  transform: translateY(-50%) scale(.68) !important;
+  z-index: 4 !important;
+  pointer-events: none !important;
+}
+
+html body.role-instructor .dashboard-hero > .shared-paper-illustration,
+html body.role-student .page-hero > .shared-paper-illustration,
+html body.role-admin #dashboardCard > .admin-dashboard-hero > .shared-paper-illustration {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+html body .shared-paper-illustration .paper-clip {
+  position: absolute;
+  top: -9px;
+  left: 25px;
+  width: 32px;
+  height: 17px;
+  border: 1px solid #a8b8e6;
+  border-radius: 5px;
+  background: #bdc9ec;
+}
+
+html body .shared-paper-illustration :is(.paper-check, .paper-dot) {
+  position: absolute;
+  left: 17px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #becbef;
+}
+
+html body .shared-paper-illustration .paper-check::after {
+  content: "✓";
+  position: absolute;
+  left: 1px;
+  top: -3px;
+  color: #27358e;
+  font: 800 8px/1 sans-serif;
+}
+
+html body .shared-paper-illustration .check-one { top: 31px; }
+html body .shared-paper-illustration .check-two { top: 51px; }
+html body .shared-paper-illustration .dot-one { top: 71px; }
+html body .shared-paper-illustration .dot-two { top: 88px; }
+
+html body .shared-paper-illustration .paper-line {
+  position: absolute;
+  left: 33px;
+  height: 5px;
+  border-radius: 99px;
+  background: #b9c6e9;
+}
+
+html body .shared-paper-illustration .line-one { top: 33px; width: 33px; }
+html body .shared-paper-illustration .line-two { top: 53px; width: 27px; }
+html body .shared-paper-illustration .line-three { top: 73px; width: 35px; }
+html body .shared-paper-illustration .line-four { top: 90px; width: 23px; }
+
+html body .shared-paper-illustration .paper-status {
+  position: absolute;
+  right: -13px;
+  bottom: 12px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 3px solid #e5ebfb;
+  border-radius: 50%;
+  color: #fff;
+  background: #3a3c91;
+  font-size: 11px;
+  box-shadow: 0 4px 10px rgba(21,26,101,.22);
+}
+
+html body :is(.admin-dashboard-hero, .dashboard-hero, .page-hero) h1,
+html body .admin-dashboard-hero h2,
+html body .page-hero .hero-title {
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: clamp(24px, 2.5vw, 32px) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -.025em !important;
+}
+
+html body :is(.admin-dashboard-hero, .dashboard-hero, .page-hero) p,
+html body .page-hero .hero-subtitle {
+  max-width: 760px !important;
+  margin: 7px 0 0 !important;
+  color: rgba(255,255,255,.76) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+}
+
+html body :is(.dashboard-hero, .page-hero) .hero-illustration {
+  display: none !important;
+}
+
+html body .admin-dashboard-hero .dashboard-system-status {
+  margin-top: 12px !important;
+  border-color: rgba(255,255,255,.2) !important;
+  color: #fff !important;
+  background: rgba(255,255,255,.11) !important;
+}
+
+html body .admin-dashboard-hero .dashboard-system-status span {
+  background: #63e6a8 !important;
+  box-shadow: 0 0 0 3px rgba(99,230,168,.18) !important;
+}
+
+html body.role-admin #dashboardCard > .admin-dashboard-hero {
+  min-height: 0 !important;
+  margin-bottom: 12px !important;
+  padding: 15px 98px 15px 28px !important;
+}
+
+html body.role-admin #dashboardCard > .admin-dashboard-hero h2 {
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: clamp(24px, 2.5vw, 32px) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -.025em !important;
+}
+
+html body.role-admin #dashboardCard > .admin-dashboard-hero p {
+  max-width: 760px !important;
+  margin: 7px 0 0 !important;
+  color: rgba(255,255,255,.76) !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+html body.role-student .page-hero {
+  height: auto !important;
+  min-height: 0 !important;
+  grid-template-columns: 1fr !important;
+  align-items: center !important;
+  padding: 15px 98px 15px 28px !important;
+}
+
+html body.role-student .page-hero:not([style*="display: none"]) {
+  display: grid !important;
+}
+
+html body.role-instructor .dashboard-hero {
+  min-height: 0 !important;
+  padding: 15px 98px 15px 28px !important;
+}
+
+/* Compact metric-card scale shared by the three overview screens. */
+html body.role-admin #dashboardSummary .summary-box,
+html body.role-instructor #main-stats-grid .stat-card,
+html body.role-student .stats-row .stat-card-h {
+  min-height: 82px !important;
+  padding: 12px 14px !important;
+  border-radius: 10px !important;
+}
+
+html body.role-student .stats-row .stat-card-h {
+  align-items: center !important;
+}
+
+html body.role-student .stats-row .stat-icon-wrap,
+html body.role-instructor #main-stats-grid .stat-icon,
+html body.role-admin #dashboardSummary .summary-box .icon {
+  width: 36px !important;
+  height: 36px !important;
+  flex-basis: 36px !important;
+  border-radius: 8px !important;
+}
+
+html body.role-student .stats-row .stat-name,
+html body.role-instructor #main-stats-grid .stat-label,
+html body.role-admin #dashboardSummary .summary-box .label {
+  min-height: 0 !important;
+  font-size: 10px !important;
+}
+
+html body.role-student .stats-row .stat-num,
+html body.role-instructor #main-stats-grid .stat-value,
+html body.role-admin #dashboardSummary .summary-box .value {
+  font-size: 22px !important;
+}
+
+html body.role-student .stats-row .stat-sub,
+html body.role-instructor #main-stats-grid .stat-desc {
+  margin-top: 3px !important;
+  font-size: 9px !important;
+}
+
+html body.role-student .page-hero .hero-eyebrow,
+html body.role-instructor .dashboard-hero .hero-kicker {
+  margin-bottom: 7px !important;
+  color: #cbd5ff !important;
+  font-size: 9px !important;
+}
+
+html body.role-student .student-hero-actions,
+html body.role-instructor .hero-actions {
+  gap: 8px !important;
+  margin-top: 10px !important;
+}
+
+html body.role-student .student-hero-action,
+html body.role-instructor .hero-action {
+  min-height: 34px !important;
+  padding: 0 13px !important;
+  border-radius: 7px !important;
+  font-size: 11px !important;
+}
+
+@media (max-width: 700px) {
+  html body :is(.admin-dashboard-hero, .dashboard-hero, .page-hero) {
+    padding: 14px 20px !important;
+    border-radius: 13px !important;
+  }
+
+  html body.role-instructor .dashboard-hero > .shared-paper-illustration,
+  html body.role-student .page-hero > .shared-paper-illustration,
+  html body.role-admin #dashboardCard > .admin-dashboard-hero > .shared-paper-illustration {
+    display: none !important;
+  }
+
+  html body.role-admin #dashboardCard > .admin-dashboard-hero,
+  html body.role-student .page-hero,
+  html body.role-instructor .dashboard-hero {
+    padding: 14px 20px !important;
+  }
+}

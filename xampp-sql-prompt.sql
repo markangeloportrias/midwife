@@ -165,6 +165,22 @@ CREATE TABLE IF NOT EXISTS case_records (
     ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS case_comments (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  case_id INT UNSIGNED NOT NULL,
+  author_uid VARCHAR(80) NULL,
+  author_name VARCHAR(255) NOT NULL,
+  author_role ENUM('instructor','admin') NOT NULL DEFAULT 'instructor',
+  comment_text TEXT NOT NULL,
+  source_key VARCHAR(120) NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  archived_at DATETIME NULL,
+  archived_by VARCHAR(80) NULL,
+  UNIQUE KEY uq_case_comments_source (source_key),
+  INDEX idx_case_comments_case (case_id, archived_at, created_at),
+  CONSTRAINT fk_case_comments_case FOREIGN KEY (case_id) REFERENCES case_records(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 CREATE TABLE IF NOT EXISTS edit_requests (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   student_id VARCHAR(50) NOT NULL,

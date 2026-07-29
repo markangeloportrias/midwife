@@ -1,0 +1,201 @@
+/* Shared Admin and Instructor design system: compact, consistent, and responsive. */
+:root {
+  --portal-primary: #20267c;
+  --portal-primary-hover: #151b6c;
+  --portal-canvas: #eef2f8;
+  --portal-surface: #ffffff;
+  --portal-text: #172033;
+  --portal-muted: #64748b;
+  --portal-border: #dbe3f1;
+  --portal-radius: 10px;
+  --portal-shadow: 0 2px 8px rgba(30, 41, 59, .05);
+}
+
+/* Same page gutter and usable line length on every Admin/Instructor module. */
+.app-shell .main-content,
+.dashboard .main-content {
+  padding: 24px !important;
+  background: var(--portal-canvas) !important;
+}
+
+.app-shell .main-content > .grid,
+.dashboard .main-content > * {
+  width: min(100%, 1440px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Compact welcome header: useful context, not a page-consuming banner. */
+.app-shell .admin-dashboard-hero,
+.dashboard .dashboard-hero {
+  min-height: 120px !important;
+  margin-bottom: 16px !important;
+  padding: 20px 24px !important;
+  border-radius: 12px !important;
+}
+
+.app-shell .admin-dashboard-hero h2,
+.dashboard .dashboard-hero h1 {
+  font-size: clamp(24px, 2vw, 28px) !important;
+  line-height: 1.15 !important;
+}
+
+.app-shell .admin-dashboard-hero p,
+.dashboard .dashboard-hero p {
+  max-width: 720px;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+/* Shared statistic cards: equal height, balanced density. */
+.summary-grid,
+#main-stats-grid {
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+.summary-grid .summary-box,
+#main-stats-grid .stat-card {
+  min-height: 96px !important;
+  padding: 14px 16px !important;
+  border: 1px solid var(--portal-border) !important;
+  border-radius: var(--portal-radius) !important;
+  background: var(--portal-surface) !important;
+  box-shadow: var(--portal-shadow) !important;
+}
+
+.summary-grid .summary-box .icon,
+#main-stats-grid .stat-icon {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+}
+
+.summary-grid .summary-box .label,
+#main-stats-grid .stat-label {
+  font-size: 10px !important;
+  letter-spacing: .05em;
+}
+
+.summary-grid .summary-box .value,
+#main-stats-grid .stat-value {
+  font-size: 24px !important;
+  line-height: 1.1 !important;
+}
+
+/* A uniform hierarchy for standard workspace cards and page headings. */
+.app-shell .card:not(#dashboardCard),
+.dashboard :is(.content-section, .yearly-panel, .records-panel, .students-panel) {
+  border: 1px solid var(--portal-border) !important;
+  border-radius: var(--portal-radius) !important;
+  box-shadow: var(--portal-shadow) !important;
+}
+
+.workspace-title,
+.dashboard .section-title,
+.dashboard .yearly-context-header h3 {
+  color: var(--portal-text) !important;
+  font-size: 24px !important;
+  line-height: 1.2 !important;
+  font-weight: 750 !important;
+}
+
+.workspace-subtitle,
+.dashboard .yearly-context-header p {
+  color: var(--portal-muted) !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+}
+
+/* Controls follow one height, radius, and primary-action treatment. */
+.app-shell .btn,
+.dashboard :is(.btn, .mini-btn, .clinical-roster-action) {
+  min-height: 40px !important;
+  padding: 0 14px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.app-shell input:not([type="checkbox"]):not([type="radio"]),
+.app-shell select,
+.dashboard input:not([type="checkbox"]):not([type="radio"]),
+.dashboard select {
+  min-height: 42px !important;
+  border-color: var(--portal-border) !important;
+  border-radius: 8px !important;
+}
+
+.app-shell textarea,
+.dashboard textarea {
+  min-height: 100px;
+  border-color: var(--portal-border) !important;
+  border-radius: 8px !important;
+}
+
+/* Admin and Instructor data tables share header, row, and responsive behavior. */
+.app-shell :is(.table-wrap, .table-wrapper),
+.dashboard :is(.table-wrap, .table-wrapper) {
+  overflow-x: auto !important;
+  border: 1px solid var(--portal-border) !important;
+  border-radius: var(--portal-radius) !important;
+  background: #fff;
+}
+
+.app-shell :is(table.dashboard-data-table, table.admin-premium-table),
+.dashboard :is(table.dashboard-data-table, table.admin-premium-table) {
+  min-width: 720px;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.app-shell :is(table.dashboard-data-table, table.admin-premium-table) thead th,
+.dashboard :is(table.dashboard-data-table, table.admin-premium-table) thead th {
+  height: 46px !important;
+  padding: 10px 14px !important;
+  background: var(--portal-primary) !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  font-weight: 750 !important;
+  letter-spacing: .035em;
+}
+
+.app-shell :is(table.dashboard-data-table, table.admin-premium-table) tbody td,
+.dashboard :is(table.dashboard-data-table, table.admin-premium-table) tbody td {
+  height: 56px !important;
+  padding: 10px 14px !important;
+  border-color: var(--portal-border) !important;
+  color: var(--portal-text) !important;
+  font-size: 12px !important;
+}
+
+.app-shell :is(table.dashboard-data-table, table.admin-premium-table) tbody tr:hover td,
+.dashboard :is(table.dashboard-data-table, table.admin-premium-table) tbody tr:hover td {
+  background: #f7f9fd !important;
+}
+
+.app-shell .empty,
+.dashboard .empty {
+  min-height: 160px !important;
+  padding: 24px !important;
+  border: 1px dashed #cbd5e1 !important;
+  border-radius: var(--portal-radius) !important;
+  background: #f8fafc !important;
+  color: var(--portal-muted) !important;
+}
+
+@media (max-width: 1024px) {
+  .app-shell .main-content,
+  .dashboard .main-content { padding: 20px !important; }
+  .summary-grid,
+  #main-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 768px) {
+  .app-shell .main-content,
+  .dashboard .main-content { padding: 16px !important; }
+  .app-shell .admin-dashboard-hero,
+  .dashboard .dashboard-hero { min-height: 0 !important; padding: 18px 16px !important; }
+  .summary-grid,
+  #main-stats-grid { grid-template-columns: 1fr !important; }
+}

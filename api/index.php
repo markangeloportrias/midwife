@@ -22,6 +22,7 @@ try {
             ['student_blocks', 'updated_at'],
             ['student_block_assignments', 'updated_at'],
             ['case_records', 'updated_at'],
+            ['case_comments', 'COALESCE(archived_at,created_at)'],
             ['edit_requests', 'updated_at'],
             ['edit_permissions', 'updated_at'],
             ['notification_history', 'created_at'],
@@ -79,7 +80,7 @@ try {
             $stmt->execute([$data['student_id']]);
         } elseif ($role === 'instructor') {
             requireFields($data, ['username', 'password']);
-            $stmt = $pdo->prepare('SELECT account_uid AS uid, username, display_name, password FROM instructor_accounts WHERE username = ? AND archived_at IS NULL AND status = \'active\'');
+            $stmt = $pdo->prepare('SELECT account_uid AS uid, account_uid AS id, username, display_name, password FROM instructor_accounts WHERE username = ? AND archived_at IS NULL AND status = \'active\'');
             $stmt->execute([$data['username']]);
         } elseif ($role === 'admin') {
             requireFields($data, ['pin_number']);
@@ -181,8 +182,7 @@ try {
     if ($resource === 'instructors') {
         $user = currentUser($pdo, $method === 'GET' ? ['admin', 'student', 'instructor'] : ['admin']);
         if ($method === 'GET') {
-            $archived = ($_GET['archived'] ?? '0') === '1';
-            $rows = $pdo->query('SELECT account_uid AS id, username, display_name, contact_number, profile_photo, role_title AS role, status, archived_at, created_at FROM instructor_accounts WHERE ' . ($archived ? 'archived_at IS NOT NULL' : 'archived_at IS NULL') . ' ORDER BY display_name')->fetchAll();
+            $rows = $pdo->query('SELECT account_uid AS id, username, display_name, contact_number, profile_photo, role_title AS role, status, archived_at, created_at FROM instructor_accounts WHERE archived_at IS NULL ORDER BY display_name')->fetchAll();
             respond(['ok' => true, 'accounts' => $rows]);
         }
         if ($method === 'POST' && $id === '') {
@@ -192,16 +192,6 @@ try {
             $stmt->execute([$uid, $data['username'], password_hash((string)$data['password'], PASSWORD_DEFAULT), $data['display_name'], $data['contact_number'] ?? null, $data['role'] ?? 'Clinical Instructor']);
             audit($pdo, $user, 'create', 'instructor', $uid);
             respond(['ok' => true, 'id' => $uid], 201);
-        }
-        if ($method === 'PATCH' && $id !== '' && $action === 'archive') {
-            $stmt = $pdo->prepare('UPDATE instructor_accounts SET archived_at = NOW(), status = \'archived\' WHERE account_uid = ? AND archived_at IS NULL');
-            $stmt->execute([$id]); audit($pdo, $user, 'archive', 'instructor', $id);
-            respond(['ok' => $stmt->rowCount() > 0]);
-        }
-        if ($method === 'PATCH' && $id !== '' && $action === 'restore') {
-            $stmt = $pdo->prepare("UPDATE instructor_accounts SET archived_at=NULL,status='active' WHERE account_uid=? AND archived_at IS NOT NULL");
-            $stmt->execute([$id]); audit($pdo, $user, 'restore', 'instructor', $id);
-            respond(['ok' => $stmt->rowCount() > 0]);
         }
         if ($method === 'PATCH' && $id !== '' && $action === 'review') {
             if (!in_array($user['role'],['admin','instructor'],true)) respond(['ok'=>false,'message'=>'Access denied.'],403);
@@ -232,9 +222,32 @@ try {
         if ($method === 'POST') {
             requireFields($data, ['label']);
             if (!preg_match('/^(\d{4})-(\d{4})$/', (string)$data['label'], $m) || (int)$m[2] !== (int)$m[1] + 1) respond(['ok' => false, 'message' => 'Use a consecutive YYYY-YYYY school year.'], 422);
-            $stmt = $pdo->prepare('INSERT INTO school_years (label, start_year, end_year, status, created_by) VALUES (?, ?, ?, ?, ?)');
-            $stmt->execute([$data['label'], $m[1], $m[2], $data['status'] ?? 'active', $user['user_uid']]);
+            $pdo->beginTransaction();
+            $pdo->prepare("UPDATE school_years SET status='inactive' WHERE archived_at IS NULL AND status='active'")->execute();
+            $stmt = $pdo->prepare('INSERT INTO school_years (label, start_year, end_year, status, created_by) VALUES (?, ?, ?, \'active\', ?)');
+            $stmt->execute([$data['label'], $m[1], $m[2], $user['user_uid']]);
+            $pdo->commit();
             respond(['ok' => true, 'id' => $pdo->lastInsertId()], 201);
+        }
+        if ($method === 'PATCH' && $id !== '') {
+            $nextStatus = strtolower(trim((string)($data['status'] ?? '')));
+            if (!in_array($nextStatus, ['active', 'inactive'], true)) respond(['ok' => false, 'message' => 'Invalid academic year status.'], 422);
+            if ($nextStatus === 'inactive') {
+                $activeCount = (int)$pdo->query("SELECT COUNT(*) FROM school_years WHERE archived_at IS NULL AND status='active'")->fetchColumn();
+                $current = $pdo->prepare('SELECT status FROM school_years WHERE id=? AND archived_at IS NULL');
+                $current->execute([$id]);
+                if ($current->fetchColumn() === 'active' && $activeCount <= 1) respond(['ok' => false, 'message' => 'One academic year must remain active.'], 422);
+                $stmt = $pdo->prepare("UPDATE school_years SET status='inactive' WHERE id=? AND archived_at IS NULL");
+                $stmt->execute([$id]);
+            } else {
+                $pdo->beginTransaction();
+                $pdo->prepare("UPDATE school_years SET status='inactive' WHERE archived_at IS NULL AND status='active' AND id<>?")->execute([$id]);
+                $stmt = $pdo->prepare("UPDATE school_years SET status='active' WHERE id=? AND archived_at IS NULL");
+                $stmt->execute([$id]);
+                $pdo->commit();
+            }
+            audit($pdo, $user, 'update', 'school_year', $id, ['status' => $nextStatus]);
+            respond(['ok' => $stmt->rowCount() >= 0]);
         }
     }
 
@@ -286,6 +299,47 @@ try {
         }
     }
 
+    if ($resource === 'case-comments') {
+        $user = currentUser($pdo, ['admin', 'instructor', 'student']);
+        $caseId = trim((string)($_GET['case_id'] ?? ''));
+        if ($method === 'GET') {
+            if ($caseId === '') respond(['ok' => false, 'message' => 'case_id is required.'], 422);
+            $caseStmt = $pdo->prepare('SELECT id,student_id,instructor_uid,instructor_name,procedure_key,case_no,teacher_remarks FROM case_records WHERE id=?');
+            $caseStmt->execute([$caseId]); $case = $caseStmt->fetch();
+            if (!$case) respond(['ok' => false, 'message' => 'Case not found.'], 404);
+            if ($user['role'] === 'student' && $user['user_uid'] !== $case['student_id']) respond(['ok' => false, 'message' => 'Access denied.'], 403);
+
+            $legacy = trim((string)($case['teacher_remarks'] ?? ''));
+            $commentCountStmt=$pdo->prepare('SELECT COUNT(*) FROM case_comments WHERE case_id=?');$commentCountStmt->execute([$caseId]);$hasComments=(int)$commentCountStmt->fetchColumn()>0;
+            if (!$hasComments && $legacy !== '' && !preg_match('/^(none|n\/?a|not applicable|null|undefined|-)$/i', $legacy)) {
+                $legacyStmt = $pdo->prepare("INSERT IGNORE INTO case_comments (case_id,author_uid,author_name,author_role,comment_text,source_key) VALUES (?,?,?,?,?,?)");
+                $legacyStmt->execute([$caseId,$case['instructor_uid'] ?: null,$case['instructor_name'] ?: 'Clinical Instructor','instructor',$legacy,'legacy-case:'.$caseId]);
+            }
+
+            $requestStmt = $pdo->prepare("SELECT id,rejection_remarks,rejected_at FROM edit_requests WHERE student_id=? AND procedure_key=? AND status='rejected' AND rejection_remarks IS NOT NULL");
+            $requestStmt->execute([$case['student_id'],$case['procedure_key']]);
+            $insertRequestComment = $pdo->prepare("INSERT IGNORE INTO case_comments (case_id,author_uid,author_name,author_role,comment_text,source_key,created_at) VALUES (?,?,?,?,?,?,COALESCE(?,NOW()))");
+            foreach ($requestStmt->fetchAll() as $request) {
+                $numbersStmt = $pdo->prepare('SELECT case_numbers FROM edit_requests WHERE id=?'); $numbersStmt->execute([$request['id']]);
+                $numbers = json_decode((string)$numbersStmt->fetchColumn(), true); if (!is_array($numbers)) $numbers=[];
+                if (!in_array((string)$case['case_no'], array_map('strval',$numbers), true)) continue;
+                $remark = trim((string)$request['rejection_remarks']);
+                if ($remark === '' || preg_match('/^(none|n\/?a|not applicable|null|undefined|-)$/i', $remark)) continue;
+                $insertRequestComment->execute([$caseId,null,$case['instructor_name'] ?: 'Clinical Instructor','instructor',$remark,'edit-request:'.$request['id'],$request['rejected_at']]);
+            }
+
+            $archived = ($_GET['archived'] ?? '0') === '1';
+            $stmt = $pdo->prepare('SELECT id,case_id,author_uid,author_name,author_role,comment_text,created_at,archived_at FROM case_comments WHERE case_id=? AND '.($archived ? 'archived_at IS NOT NULL' : 'archived_at IS NULL').' ORDER BY created_at DESC,id DESC');
+            $stmt->execute([$caseId]); respond(['ok'=>true,'comments'=>$stmt->fetchAll()]);
+        }
+        if ($method === 'PATCH' && $id !== '' && in_array($action, ['archive','restore'], true)) {
+            $ownerStmt=$pdo->prepare('SELECT c.student_id FROM case_comments m JOIN case_records c ON c.id=m.case_id WHERE m.id=?');$ownerStmt->execute([$id]);$owner=$ownerStmt->fetchColumn();
+            if (!$owner) respond(['ok'=>false,'message'=>'Comment not found.'],404);
+            if ($user['role']==='student' && $user['user_uid']!==$owner) respond(['ok'=>false,'message'=>'Access denied.'],403);
+            $sql=$action==='archive'?'UPDATE case_comments SET archived_at=NOW(),archived_by=? WHERE id=? AND archived_at IS NULL':'UPDATE case_comments SET archived_at=NULL,archived_by=NULL WHERE id=? AND archived_at IS NOT NULL';
+            $stmt=$pdo->prepare($sql);$stmt->execute($action==='archive'?[$user['user_uid'],$id]:[$id]);audit($pdo,$user,$action,'case_comment',$id);respond(['ok'=>$stmt->rowCount()>0]);
+        }
+    }
     if ($resource === 'cases') {
         $user = currentUser($pdo, ['admin', 'instructor', 'student']);
         if ($method === 'GET') {
@@ -304,6 +358,22 @@ try {
             $stmt = $pdo->prepare('INSERT INTO case_records (student_id, student_name, instructor_uid, instructor_name, academic_year, procedure_key, procedure_name, case_no, complete_diagnosis, date_time_performed, patient_name, patient_address, facility_name, facility_address, facility_contact_number, supervisor_printed_name, supervisor_contact_number, supervisor_position_designation, supervisor_license_no, supervisor_license_expiry_date) SELECT s.student_id,s.student_name,?,?,?,p.procedure_key,p.procedure_name,?,?,?,?,?,?,?,?,?,?,?,?,? FROM students s JOIN procedures p ON p.procedure_key=? WHERE s.student_id=? AND s.archived_at IS NULL');
             $stmt->execute([$data['instructor_uid'] ?? null,$data['instructor_name'] ?? null,$data['academic_year'] ?? null,$data['case_no'] ?? null,$data['complete_diagnosis'] ?? null,$data['date_time_performed'] ?? null,$data['patient_name'] ?? null,$data['patient_address'] ?? null,$data['facility_name'] ?? null,$data['facility_address'] ?? null,$data['facility_contact_number'] ?? null,$data['supervisor_printed_name'] ?? null,$data['supervisor_contact_number'] ?? null,$data['supervisor_position_designation'] ?? null,$data['supervisor_license_no'] ?? null,$data['supervisor_license_expiry_date'] ?? null,$data['procedure_key'],$data['student_id']]);
             respond(['ok' => $stmt->rowCount() > 0, 'id' => $pdo->lastInsertId()], 201);
+        }
+        if ($method === 'PATCH' && $id !== '' && $action === 'comment') {
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok' => false, 'message' => 'Access denied.'], 403);
+            $remarks = trim((string)($data['remarks'] ?? ''));
+            if ($remarks === '') respond(['ok' => false, 'message' => 'A comment is required.'], 422);
+            $caseStmt=$pdo->prepare('SELECT instructor_name FROM case_records WHERE id=? AND archived_at IS NULL');$caseStmt->execute([$id]);$case=$caseStmt->fetch();
+            if (!$case) respond(['ok'=>false,'message'=>'Case not found.'],404);
+            $authorName=trim((string)($data['checked_by'] ?? '')) ?: ($case['instructor_name'] ?: 'Clinical Instructor');
+            $pdo->beginTransaction();
+            $stmt=$pdo->prepare('INSERT INTO case_comments (case_id,author_uid,author_name,author_role,comment_text) VALUES (?,?,?,?,?)');
+            $stmt->execute([$id,$user['user_uid'],$authorName,$user['role']==='admin'?'admin':'instructor',$remarks]);
+            $pdo->prepare('UPDATE case_records SET teacher_remarks=? WHERE id=?')->execute([$remarks,$id]);
+            $commentId=(string)$pdo->lastInsertId();
+            audit($pdo,$user,'comment','case',$id,['comment_id'=>$commentId,'remarks'=>$remarks]);
+            $pdo->commit();
+            respond(['ok'=>true,'id'=>$commentId]);
         }
         if ($method === 'PATCH' && $id !== '' && $action === 'archive') {
             $where = $user['role'] === 'student' ? ' AND student_id=?' : ''; $params = [$id]; if ($where) $params[] = $user['user_uid'];
@@ -379,7 +449,15 @@ try {
         if ($method === 'POST') {
             requireFields($data,['event_type']);$stmt=$pdo->prepare('INSERT INTO notification_history (event_type,student_id,procedure_key,procedure_type,case_no,request_id,message,remarks,meta) VALUES (?,?,?,?,?,?,?,?,?)');$stmt->execute([$data['event_type'],$data['student_id']??null,$data['procedure_key']??null,$data['procedure_type']??null,$data['case_no']??null,$data['request_id']??null,$data['message']??null,$data['remarks']??null,json_encode($data['meta']??null)]);respond(['ok'=>true,'id'=>$pdo->lastInsertId()],201);
         }
-        if ($method === 'PATCH' && $id !== '' && $action === 'archive') {$stmt=$pdo->prepare('UPDATE notification_history SET archived_at=NOW() WHERE id=? AND archived_at IS NULL');$stmt->execute([$id]);respond(['ok'=>$stmt->rowCount()>0]);}
+        if ($method === 'PATCH' && $id !== '' && $action === 'comment') {
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok' => false, 'message' => 'Access denied.'], 403);
+            $remarks = trim((string)($data['remarks'] ?? ''));
+            if ($remarks === '') respond(['ok' => false, 'message' => 'A comment is required.'], 422);
+            $stmt = $pdo->prepare('UPDATE case_records SET teacher_remarks=? WHERE id=? AND archived_at IS NULL');
+            $stmt->execute([$remarks, $id]);
+            audit($pdo, $user, 'comment', 'case', $id, ['remarks' => $remarks]);
+            respond(['ok' => $stmt->rowCount() >= 0]);
+        }        if ($method === 'PATCH' && $id !== '' && $action === 'archive') {$stmt=$pdo->prepare('UPDATE notification_history SET archived_at=NOW() WHERE id=? AND archived_at IS NULL');$stmt->execute([$id]);respond(['ok'=>$stmt->rowCount()>0]);}
     }
 
     if ($resource === 'audit') {

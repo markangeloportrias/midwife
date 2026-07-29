@@ -25,7 +25,7 @@
   });
   sidebar.addEventListener("mouseleave", function () {
     clearTimeout(collapseTimer);
-    collapseTimer = setTimeout(function () { setCollapsed(true); }, 140);
+    collapseTimer = setTimeout(function () { setCollapsed(true); }, 180);
   });
   sidebar.addEventListener("focusin", function () { setCollapsed(false); });
   sidebar.addEventListener("focusout", function (event) {

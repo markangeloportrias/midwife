@@ -1,0 +1,676 @@
+/* Student UI — uses the Admin dashboard sizing and component contract. */
+html body.role-student {
+  --admin-navy: #20267c;
+  --admin-text: #172033;
+  --admin-muted: #64748b;
+  --admin-line: #dbe3f1;
+  --admin-canvas: #eef2f8;
+  color: var(--admin-text);
+  background: var(--admin-canvas) !important;
+  font-family: "Inter", "Poppins", sans-serif !important;
+}
+
+html body.role-student .dashboard {
+  padding: 0 !important;
+  background: var(--admin-canvas) !important;
+}
+
+html body.role-student .main-content {
+  padding: 20px 20px 32px !important;
+  background: var(--admin-canvas) !important;
+}
+
+/* Compact Student overview while retaining the Admin page gutter. */
+html body.role-student .page-hero {
+  min-height: 0 !important;
+  padding: 14px 84px 14px 22px !important;
+  border-radius: 14px !important;
+  background: linear-gradient(125deg, #18226e 0%, #26378f 65%, #3d57c7 100%) !important;
+  box-shadow: 0 6px 18px rgba(25, 37, 112, .12) !important;
+}
+
+html body.role-student .page-hero .hero-title {
+  font-size: 26px !important;
+  line-height: 1.12 !important;
+  letter-spacing: -.02em !important;
+}
+
+html body.role-student .page-hero .hero-subtitle {
+  margin-top: 6px !important;
+  font-size: 12px !important;
+}
+
+html body.role-student .page-hero .hero-eyebrow {
+  margin-bottom: 6px !important;
+  font-size: 9px !important;
+}
+
+html body.role-student .student-hero-actions {
+  gap: 7px !important;
+  margin-top: 9px !important;
+}
+
+html body.role-student .student-hero-action {
+  min-height: 34px !important;
+  padding: 0 12px !important;
+  border-radius: 6px !important;
+  font-size: 10px !important;
+  border: 1px solid rgba(255,255,255,.28) !important;
+  color: #fff !important;
+  background: rgba(255,255,255,.1) !important;
+  box-shadow: none !important;
+}
+
+html body.role-student .student-hero-action.primary {
+  border-color: #fff !important;
+  color: #202f83 !important;
+  background: #fff !important;
+}
+
+html body.role-student :is(button, input, select, textarea) {
+  font-family: "Inter", "Poppins", sans-serif !important;
+}
+
+html body.role-student :is(button, a, [role="button"]):focus-visible {
+  outline: 3px solid rgba(255, 195, 0, .72) !important;
+  outline-offset: 2px !important;
+}
+
+/* Compact Admin summary-card metrics. */
+html body.role-student .stats-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin: 12px 0 !important;
+}
+
+html body.role-student .stat-card-h {
+  min-height: 74px !important;
+  display: grid !important;
+  grid-template-columns: 36px 1fr !important;
+  grid-template-rows: auto auto auto !important;
+  column-gap: 10px !important;
+  row-gap: 1px !important;
+  align-items: center !important;
+  padding: 10px 12px !important;
+  border: 1px solid var(--admin-line) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 5px rgba(30, 41, 59, .035) !important;
+  transform: none !important;
+}
+
+html body.role-student .stat-card-h:hover {
+  border-color: #bbc5df !important;
+  box-shadow: 0 8px 18px rgba(30, 41, 59, .08) !important;
+  transform: translateY(-2px) !important;
+}
+
+html body.role-student .stat-card-h .stat-icon-wrap {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 7px !important;
+  font-size: 12px !important;
+}
+
+html body.role-student .stat-card-h .stat-info { display: contents !important; }
+html body.role-student .stat-card-h .stat-name { grid-column: 2; min-height: 0 !important; color: var(--admin-muted) !important; font-size: 10px !important; font-weight: 750 !important; letter-spacing: .055em !important; text-transform: uppercase !important; }
+html body.role-student .stat-card-h .stat-num { grid-column: 2; color: var(--admin-navy) !important; font-size: 20px !important; font-weight: 800 !important; line-height: 1 !important; }
+html body.role-student .stat-card-h .stat-sub { grid-column: 2; margin: 1px 0 0 !important; color: #94a3b8 !important; font-size: 8px !important; }
+
+/* Same Admin cards, headers and controls. */
+html body.role-student :is(.recent-records-panel, .record-workspace, .settings-card, .summary-card) {
+  border: 1px solid var(--admin-line) !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 3px 12px rgba(30, 41, 59, .045) !important;
+}
+
+html body.role-student .recent-records-panel,
+html body.role-student .record-workspace {
+  padding: 14px 16px !important;
+}
+
+html body.role-student :is(.recent-records-title, .workspace-title) {
+  color: var(--admin-navy) !important;
+  font-size: 18px !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -.02em !important;
+}
+
+html body.role-student .workspace-subtitle {
+  margin-top: 4px !important;
+  color: var(--admin-muted) !important;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+
+html body.role-student :is(.btn-primary, .btn-secondary, .recent-view-all) {
+  min-height: 34px !important;
+  padding: 8px 13px !important;
+  border-radius: 6px !important;
+  font: 650 11px/1.2 "Inter", sans-serif !important;
+}
+
+html body.role-student .btn-primary {
+  border-color: var(--admin-navy) !important;
+  background: var(--admin-navy) !important;
+  box-shadow: 0 3px 9px rgba(37,43,132,.2) !important;
+}
+
+html body.role-student .procedure-tabs {
+  gap: 8px !important;
+  margin: 0 0 10px !important;
+  padding: 7px !important;
+  border: 1px solid var(--admin-line) !important;
+  border-radius: 10px !important;
+  background: #f5f7fb !important;
+  overflow-x: auto !important;
+}
+
+html body.role-student .procedure-tab {
+  min-height: 34px !important;
+  padding: 0 13px !important;
+  border: 1px solid #d7dfed !important;
+  border-radius: 6px !important;
+  color: #60708a !important;
+  background: #fff !important;
+  font: 650 11px/1 "Inter", sans-serif !important;
+  white-space: nowrap !important;
+}
+
+html body.role-student .procedure-tab.active {
+  border-color: var(--admin-navy) !important;
+  color: #fff !important;
+  background: var(--admin-navy) !important;
+  box-shadow: 0 3px 8px rgba(32,38,124,.18) !important;
+}
+
+html body.role-student .search-filter-bar {
+  gap: 10px !important;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html body.role-student :is(.search-input-wrap, .filter-input) {
+  min-height: 34px !important;
+  border: 1px solid #cfd7e6 !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+  font-size: 11px !important;
+}
+
+html body.role-student .workspace-header {
+  gap: 14px !important;
+  margin-bottom: 12px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid var(--admin-line) !important;
+}
+
+/* Admin clinical table geometry and type scale. */
+html body.role-student .clinical-form-table-container {
+  padding: 8px !important;
+  overflow-x: auto !important;
+  border: 1px solid var(--admin-line) !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+html body.role-student .clinical-form-table {
+  border: 1px solid #cbd5e1 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  color: #334155 !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+html body.role-student .clinical-form-table :is(thead, thead tr, thead th, thead tr:first-child th, thead tr:nth-child(2) th) {
+  background: #202f83 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+html body.role-student .clinical-form-table th {
+  height: 39px !important;
+  padding: 7px 9px !important;
+  border: 1px solid #7684c4 !important;
+  color: #fff !important;
+  font: 750 9px/1.25 "Inter", sans-serif !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  text-transform: none !important;
+}
+
+html body.role-student .clinical-form-table td {
+  height: 54px !important;
+  padding: 8px 10px !important;
+  border: 1px solid #cbd5e1 !important;
+  background: #fff !important;
+  color: #52617a !important;
+  font: 500 11px/1.35 "Inter", sans-serif !important;
+  vertical-align: middle !important;
+}
+
+html body.role-student .clinical-form-table tbody tr:hover td {
+  background: #f6f8ff !important;
+}
+
+html body.role-student .case-action-btn {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  font-size: 10px !important;
+}
+
+html body.role-student .recent-records-empty,
+html body.role-student .frontend-panel-empty,
+html body.role-student .modern-empty-state {
+  min-height: 0 !important;
+  padding: 24px 18px !important;
+  color: #8b98ad !important;
+  font-size: 11px !important;
+  text-align: center !important;
+}
+
+@media (max-width: 1100px) {
+  html body.role-student .stats-row { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+}
+
+@media (max-width: 800px) {
+  html body.role-student .dashboard { display: flex !important; flex-direction: column !important; padding-right: 0 !important; }
+  html body.role-student .dashboard > .sidebar { width: 100% !important; min-width: 0 !important; height: auto !important; padding: 9px 10px !important; border-radius: 0 !important; overflow-x: auto !important; }
+  html body.role-student :is(.sidebar-brand, .student-nav-group, .sidebar-user-card, .sidebar-bottom) { display: none !important; }
+  html body.role-student .sidebar-nav { display: flex !important; flex-direction: row !important; gap: 5px !important; }
+  html body.role-student .sidebar-nav-item { width: auto !important; min-width: max-content !important; }
+  html body.role-student .main-content { width: 100% !important; padding: 14px 12px 28px !important; }
+  html body.role-student .stats-row { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+}
+
+@media (max-width: 520px) {
+  html body.role-student .stats-row { grid-template-columns: 1fr !important; }
+  html body.role-student .record-workspace, html body.role-student .recent-records-panel { padding: 14px !important; }
+  html body.role-student .search-filter-bar, html body.role-student .workspace-header { flex-direction: column !important; align-items: stretch !important; }
+}
+
+/* Unread instructor feedback: noticeable, calm, and cleared when opened. */
+html body.role-student .clinical-form-table .case-action-btn.feedback-action.has-remarks {
+  position: relative !important;
+  border-color: #f59e0b !important;
+  background: #fff7e6 !important;
+  color: #9a4f08 !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, .12), 0 3px 9px rgba(146, 84, 8, .12) !important;
+  animation: feedback-attention 1.8s ease-in-out 2;
+}
+html body.role-student .clinical-form-table .case-action-btn.feedback-action.has-remarks::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 7px;
+  height: 7px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #dc2626;
+  box-sizing: content-box;
+}
+html body.role-student .clinical-form-table .case-action-btn.feedback-action.has-remarks:hover {
+  border-color: #d97706 !important;
+  background: #ffefd1 !important;
+}
+@keyframes feedback-attention {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body.role-student .clinical-form-table .case-action-btn.feedback-action.has-remarks {
+    animation: none !important;
+  }
+}
+/* Dedicated clinical feedback dialog. */
+html body.role-student .option-pane.remarks-dialog {
+  width: min(560px, calc(100vw - 32px)) !important;
+  max-width: 560px !important;
+  padding: 30px !important;
+  border: 1px solid #d8e0ef !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  text-align: left !important;
+  box-shadow: 0 28px 70px rgba(15, 29, 75, .28) !important;
+}
+html body.role-student .option-pane.remarks-dialog::before {
+  width: 150px !important;
+  height: 150px !important;
+  top: -86px !important;
+  right: -74px !important;
+  background: rgba(44, 58, 145, .06) !important;
+}
+html body.role-student .remarks-dialog .option-pane-icon {
+  width: 44px !important;
+  height: 44px !important;
+  margin: 0 0 14px !important;
+  border: 1px solid #d9def7 !important;
+  border-radius: 11px !important;
+  background: #eef1ff !important;
+  color: #29368f !important;
+  font-size: 17px !important;
+  box-shadow: none !important;
+}
+html body.role-student .remarks-dialog .option-pane-title {
+  margin: 0 0 5px !important;
+  color: #172052 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+}
+html body.role-student .remarks-dialog .option-pane-title::after {
+  content: "Correction request review";
+  display: block;
+  margin-top: 5px;
+  color: #71809b;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+html body.role-student .remarks-dialog .option-pane-message {
+  min-height: 0 !important;
+  margin: 22px 0 20px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+html body.role-student .feedback-review-card {
+  overflow: hidden;
+  border: 1px solid #dce3ef;
+  border-radius: 13px;
+  background: #fbfcff;
+}
+html body.role-student .feedback-review-context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 13px 15px;
+  border-bottom: 1px solid #e6ebf3;
+  background: #f4f6fb;
+}
+html body.role-student .feedback-review-context > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 4px 9px;
+  border: 1px solid #dbe2ee;
+  border-radius: 7px;
+  background: #fff;
+  color: #50607b;
+  font-size: 10px;
+  font-weight: 700;
+}
+html body.role-student .feedback-review-context i { color: #33439b; }
+html body.role-student .feedback-review-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 17px 0;
+  color: #283553;
+  font-size: 11px;
+  font-weight: 800;
+}
+html body.role-student .feedback-review-label > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+html body.role-student .feedback-review-label > span:first-child i { color: #33439b; }
+html body.role-student .feedback-read-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #16825d;
+  font-size: 10px;
+  font-weight: 700;
+}
+html body.role-student .feedback-review-quote {
+  position: relative;
+  margin: 12px 17px 17px;
+  padding: 15px 16px 15px 19px;
+  border: 0;
+  border-left: 3px solid #33439b;
+  border-radius: 0 9px 9px 0;
+  background: #fff;
+  color: #25324b;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+html body.role-student .feedback-review-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 15px;
+  border-top: 1px solid #e6ebf3;
+  background: #f8faff;
+  color: #687793;
+  font-size: 10px;
+  line-height: 1.5;
+}
+html body.role-student .feedback-review-note i { margin-top: 2px; color: #5264bc; }
+html body.role-student .remarks-dialog .option-pane-actions {
+  justify-content: flex-end !important;
+}
+html body.role-student .remarks-dialog .option-pane-btn.primary {
+  min-width: 142px !important;
+  min-height: 40px !important;
+  padding: 10px 18px !important;
+  border-radius: 8px !important;
+  background: #26358f !important;
+  box-shadow: 0 5px 14px rgba(38, 53, 143, .18) !important;
+}
+html body.role-student .remarks-dialog .option-pane-btn.primary:hover {
+  background: #1d2a79 !important;
+  box-shadow: 0 7px 18px rgba(38, 53, 143, .24) !important;
+}
+html body.role-student .remarks-dialog .option-pane-close {
+  top: 18px !important;
+  right: 18px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  color: #66738d !important;
+}
+@media (max-width: 600px) {
+  html body.role-student .option-pane.remarks-dialog { padding: 22px !important; }
+  html body.role-student .feedback-review-label { align-items: flex-start; }
+  html body.role-student .remarks-dialog .option-pane-btn.primary { width: 100% !important; }
+}
+/* Stacked feedback comments and recoverable archive. */
+html body.role-student .remarks-dialog .option-pane-message {
+  max-height: min(590px, calc(100vh - 255px)) !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: #b8c3da transparent;
+}
+html body.role-student .feedback-review-context {
+  align-items: center;
+  justify-content: space-between;
+}
+html body.role-student .feedback-context-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+html body.role-student .feedback-context-metadata > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 4px 9px;
+  border: 1px solid #dbe2ee;
+  border-radius: 7px;
+  background: #fff;
+  color: #50607b;
+  font-size: 10px;
+  font-weight: 700;
+}
+html body.role-student .feedback-context-metadata i { color: #33439b; }
+html body.role-student .feedback-archive-toggle {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border: 1px solid #ccd5e6;
+  border-radius: 7px;
+  background: #fff;
+  color: #33415d;
+  font: 700 10px "Inter", sans-serif;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+html body.role-student .feedback-archive-toggle:hover {
+  border-color: #aebbd3;
+  background: #eef2ff;
+  color: #26358f;
+}
+html body.role-student .feedback-stack-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  color: #26334f;
+  font-size: 11px;
+  font-weight: 800;
+}
+html body.role-student .feedback-stack-heading > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+html body.role-student .feedback-stack-heading i { color: #33439b; }
+html body.role-student .feedback-comment-count {
+  min-width: 24px;
+  height: 22px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 7px;
+  border-radius: 99px;
+  background: #e9edff;
+  color: #29388f;
+  font-size: 10px;
+}
+html body.role-student .feedback-comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 14px 15px;
+}
+html body.role-student .feedback-comment-item {
+  overflow: hidden;
+  border: 1px solid #dce3ef;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(24, 38, 85, .05);
+}
+html body.role-student .feedback-comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 12px;
+  border-bottom: 1px solid #edf0f5;
+  background: #fafbfe;
+}
+html body.role-student .feedback-comment-identity {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+html body.role-student .feedback-author-avatar {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  border-radius: 8px;
+  background: #e9edff;
+  color: #33439b;
+  font-size: 12px;
+}
+html body.role-student .feedback-comment-identity > span:last-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+html body.role-student .feedback-comment-identity strong {
+  overflow: hidden;
+  color: #26334e;
+  font-size: 11px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+html body.role-student .feedback-comment-identity small {
+  color: #7b879e;
+  font-size: 9px;
+  font-weight: 600;
+}
+html body.role-student .feedback-comment-action {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  padding: 0;
+  border: 1px solid #e0e5ee;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+html body.role-student .feedback-comment-action.trash { color: #dc3545; }
+html body.role-student .feedback-comment-action.trash:hover { border-color: #f2b8bf; background: #fff1f2; transform: translateY(-1px); }
+html body.role-student .feedback-comment-action.restore { color: #16825d; }
+html body.role-student .feedback-comment-action.restore:hover { border-color: #a9ddca; background: #effbf6; transform: translateY(-1px); }
+html body.role-student .feedback-comment-action:disabled { cursor: wait; opacity: .65; }
+html body.role-student .feedback-comment-body {
+  padding: 14px 15px 16px;
+  border-left: 3px solid #4051ad;
+  color: #33415b;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+html body.role-student .feedback-comments-empty {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 24px;
+  border: 1px dashed #ccd6e7;
+  border-radius: 10px;
+  background: #f9fbfe;
+  text-align: center;
+}
+html body.role-student .feedback-comments-empty > i { margin-bottom: 3px; color: #8b98b0; font-size: 22px; }
+html body.role-student .feedback-comments-empty strong { color: #34425d; font-size: 12px; }
+html body.role-student .feedback-comments-empty span { max-width: 310px; color: #7a879d; font-size: 10px; line-height: 1.5; }
+@media (max-width: 520px) {
+  html body.role-student .feedback-review-context { align-items: stretch; }
+  html body.role-student .feedback-archive-toggle { justify-content: center; }
+}

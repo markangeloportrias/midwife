@@ -2972,7 +2972,49 @@
       .clinical-form-table tbody td {
         vertical-align: middle !important;
       }
+
+      /* Hierarchical clinical-record form. Groups remain intact at every width. */
+      #deliveryInputPane .clinical-form-section {
+        grid-column: 1 / -1;
+        min-width: 0;
+        padding: 15px 16px 16px;
+        border: 1px solid #e3e9f4;
+        border-radius: 12px;
+        background: #fff;
+      }
+      #deliveryInputPane .clinical-form-section-title {
+        margin: 0 0 12px;
+        color: var(--primary);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      #deliveryInputPane .clinical-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 18px;
+      }
+      #deliveryInputPane .clinical-form-grid .form-group { min-width: 0; grid-column: auto !important; }
+      #deliveryInputPane .clinical-form-grid .form-group.full-span { grid-column: 1 / -1 !important; }
+      #deliveryInputPane .clinical-form-grid .form-group input,
+      #deliveryInputPane .clinical-form-grid .form-group textarea { width: 100%; }
+      .record-detail-cell .record-detail-primary,
+      .record-detail-cell .record-detail-secondary { display: block; }
+      .record-detail-cell .record-detail-secondary { margin-top: 3px; }
+      #deliveryAssistedWorkspace .clinical-form-table tbody td:nth-child(4),
+      #deliveryAssistedWorkspace .clinical-form-table tbody td:nth-child(8) {
+        white-space: normal !important;
+        overflow-wrap: anywhere;
+      }
+      @media (max-width: 560px) {
+        #deliveryInputPane .clinical-form-grid { grid-template-columns: 1fr; }
+        #deliveryInputPane .clinical-form-section { padding: 14px; }
+        #deliveryInputPane .clinical-form-grid .form-group.full-span { grid-column: auto; }
+      }
     </style>
+    <link rel="stylesheet" href="student-ux.css?v=20260728-admin-4" />
+    <link rel="stylesheet" href="portal-heroes.css?v=20260728-12" />
   </head>
   <body>
     <div class="dashboard">
@@ -3146,7 +3188,7 @@
             data-nav-key="records"
           >
             <i class="fas fa-folder-open"></i>
-            <span>Clinical Records</span>
+            <span>My Records</span>
             <span class="nav-badge" id="badge-summary">0</span>
           </a>
           <a
@@ -3156,10 +3198,10 @@
             data-nav-key="summary"
           >
             <i class="fas fa-chart-line"></i>
-            <span>Progress Reports</span>
+            <span>My Progress</span>
           </a>
           <a class="sidebar-nav-item sidebar-nav-jump" href="#edit-requests" data-nav-key="edit-requests">
-            <i class="fas fa-file-signature"></i><span>Edit Requests</span><span class="nav-badge" id="badge-requests" style="display:none">0</span>
+            <i class="fas fa-file-signature"></i><span>Correction Requests</span><span class="nav-badge" id="badge-requests" style="display:none">0</span>
           </a>
           <div class="student-nav-group">Workflow</div>
           <a class="sidebar-nav-item sidebar-nav-jump" href="#chat" data-nav-key="chat">
@@ -3167,7 +3209,7 @@
           </a>
           <div class="student-nav-group">Administration</div>
           <a class="sidebar-nav-item sidebar-nav-jump" href="#trash" data-nav-key="trash">
-            <i class="fas fa-trash-restore"></i><span>Archived Records</span>
+            <i class="fas fa-trash-restore"></i><span>Record Archive</span>
           </a>
           <a class="sidebar-nav-item sidebar-nav-jump" href="#settings" data-nav-key="settings">
             <i class="fas fa-user-cog"></i><span>Account Settings</span>
@@ -3199,13 +3241,32 @@
         <!-- Hero Section -->
         <header class="page-hero" aria-label="Student dashboard hero">
           <div class="hero-content">
-            <div class="hero-eyebrow">Welcome back!</div>
-            <h1 class="hero-title">Track your clinical experience</h1>
+            <div class="hero-eyebrow"><i class="fas fa-circle-check"></i> Student workspace</div>
+            <h1 class="hero-title">Keep your clinical logbook up to date</h1>
             <div class="hero-subtitle">
-              Manage and monitor your clinical activities and patient cases all
-              in one place.
+              Record each case, follow instructor feedback, and see your
+              progress toward clinical requirements.
             </div>
+            <div class="student-hero-actions" aria-label="Quick actions">
+              <button type="button" class="student-hero-action primary" data-student-quick-action="new-record">
+                <i class="fas fa-plus"></i><span>Add clinical record</span>
+              </button>
+              <button type="button" class="student-hero-action" data-student-quick-action="records">
+                <i class="fas fa-folder-open"></i><span>View my records</span>
+              </button>
+              <button type="button" class="student-hero-action" data-student-quick-action="summary">
+                <i class="fas fa-chart-line"></i><span>Check my progress</span>
+              </button>
+            </div>
+          </div>
 
+          <div class="shared-paper-illustration" aria-hidden="true">
+            <span class="paper-clip"></span>
+            <span class="paper-check check-one"></span><span class="paper-line line-one"></span>
+            <span class="paper-check check-two"></span><span class="paper-line line-two"></span>
+            <span class="paper-dot dot-one"></span><span class="paper-line line-three"></span>
+            <span class="paper-dot dot-two"></span><span class="paper-line line-four"></span>
+            <span class="paper-status"><i class="fas fa-briefcase-medical"></i></span>
           </div>
 
           <!-- Hero illustration (SVG) -->
@@ -3328,6 +3389,8 @@
             class="stat-card-h"
             onclick="switchTab('procedure', 'delivery-handled')"
             role="button"
+            tabindex="0"
+            data-procedure-shortcut="delivery-handled"
           >
             <div class="stat-icon-wrap"><i class="fas fa-baby"></i></div>
             <div class="stat-info">
@@ -3340,6 +3403,8 @@
             class="stat-card-h"
             onclick="switchTab('procedure', 'delivery-assisted')"
             role="button"
+            tabindex="0"
+            data-procedure-shortcut="delivery-assisted"
           >
             <div
               class="stat-icon-wrap"
@@ -3357,6 +3422,8 @@
             class="stat-card-h"
             onclick="switchTab('procedure', 'internal-exam')"
             role="button"
+            tabindex="0"
+            data-procedure-shortcut="internal-exam"
           >
             <div
               class="stat-icon-wrap"
@@ -3374,6 +3441,8 @@
             class="stat-card-h"
             onclick="switchTab('procedure', 'suturing')"
             role="button"
+            tabindex="0"
+            data-procedure-shortcut="suturing"
           >
             <div
               class="stat-icon-wrap"
@@ -3391,6 +3460,8 @@
             class="stat-card-h"
             onclick="switchTab('procedure', 'iv-insertion')"
             role="button"
+            tabindex="0"
+            data-procedure-shortcut="iv-insertion"
           >
             <div
               class="stat-icon-wrap"
@@ -3690,143 +3761,44 @@
         </div>
 
         <div class="input-pane" id="deliveryInputPane">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Patient Name</label>
-              <input
-                type="text"
-                id="inputPatientName"
-                placeholder="Full name of patient"
-              />
+          <section class="clinical-form-section">
+            <h3 class="clinical-form-section-title">Patient and case information</h3>
+            <div class="clinical-form-grid">
+              <div class="form-group"><label>Patient Name</label><input type="text" id="inputPatientName" placeholder="Full name of patient" /></div>
+              <div class="form-group"><label>Patient Address</label><input type="text" id="inputPatientAddress" placeholder="Address" /></div>
+              <div class="form-group"><label>Case Number</label><input type="text" id="inputCaseNo" placeholder="Case number" /></div>
+              <div class="form-group"><label>Date &amp; Time Performed</label><input type="datetime-local" id="inputDateTime" /></div>
             </div>
-            <div class="form-group">
-              <label>Patient Address</label>
-              <input
-                type="text"
-                id="inputPatientAddress"
-                placeholder="Address"
-              />
-            </div>
-          </div>
+          </section>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label>Case Number</label>
-              <input type="text" id="inputCaseNo" placeholder="Case number" />
+          <section class="clinical-form-section">
+            <h3 class="clinical-form-section-title">Clinical assessment</h3>
+            <div class="clinical-form-grid">
+              <div class="form-group full-span"><label>Complete Diagnosis</label><textarea id="inputDiagnosis" placeholder="Complete diagnosis"></textarea></div>
+              <div class="form-group" data-internal-exam-field style="display: none"><label>Cervical Dilation / Effacement</label><input type="text" id="inputDilation" placeholder="e.g. 4cm / 50%" /></div>
+              <div class="form-group" data-internal-exam-field style="display: none"><label>Station / BOW / Presentation</label><input type="text" id="inputStation" placeholder="e.g. -2 / Intact / Cephalic" /></div>
             </div>
-          </div>
+          </section>
 
-          <div class="form-row" id="internalExamFields" style="display: none">
-            <div class="form-group">
-              <label>Cervical Dilation / Effacement</label>
-              <input
-                type="text"
-                id="inputDilation"
-                placeholder="e.g. 4cm / 50%"
-              />
+          <section class="clinical-form-section">
+            <h3 class="clinical-form-section-title">Facility information</h3>
+            <div class="clinical-form-grid">
+              <div class="form-group"><label>Facility Name</label><input type="text" id="inputFacilityName" placeholder="Facility name" /></div>
+              <div class="form-group"><label>Facility Address</label><input type="text" id="inputFacilityAddress" placeholder="Facility address" /></div>
+              <div class="form-group"><label>Facility Contact</label><input type="text" id="inputFacilityContact" placeholder="Contact number" /></div>
             </div>
-            <div class="form-group">
-              <label>Station / BOW / Presentation</label>
-              <input
-                type="text"
-                id="inputStation"
-                placeholder="e.g. -2 / Intact / Cephalic"
-              />
-            </div>
-          </div>
+          </section>
 
-          <div class="form-row full">
-            <div class="form-group">
-              <label>Complete Diagnosis</label>
-              <textarea
-                id="inputDiagnosis"
-                placeholder="Complete diagnosis"
-              ></textarea>
+          <section class="clinical-form-section">
+            <h3 class="clinical-form-section-title">Supervisor and license details</h3>
+            <div class="clinical-form-grid">
+              <div class="form-group"><label>Supervisor Name</label><input type="text" id="inputSupervisorName" placeholder="Full name" /></div>
+              <div class="form-group"><label>Supervisor Contact</label><input type="text" id="inputSupervisorContact" placeholder="Contact number" /></div>
+              <div class="form-group"><label>Position / Designation</label><input type="text" id="inputSupervisorPosition" placeholder="Position" /></div>
+              <div class="form-group"><label>License Number</label><input type="text" id="inputLicenseNo" placeholder="License number" /></div>
+              <div class="form-group"><label>License Expiry Date</label><input type="date" id="inputLicenseExpiry" /></div>
             </div>
-          </div>
-
-          <div class="form-row date-performed-row">
-            <div class="form-group">
-              <label>Date &amp; Time Performed</label>
-              <input type="datetime-local" id="inputDateTime" />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Facility Name</label>
-              <input
-                type="text"
-                id="inputFacilityName"
-                placeholder="Facility name"
-              />
-            </div>
-            <div class="form-group">
-              <label>Facility Address</label>
-              <input
-                type="text"
-                id="inputFacilityAddress"
-                placeholder="Facility address"
-              />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Facility Contact</label>
-              <input
-                type="text"
-                id="inputFacilityContact"
-                placeholder="Contact number"
-              />
-            </div>
-            <div class="form-group">
-              <label>Supervisor Name</label>
-              <input
-                type="text"
-                id="inputSupervisorName"
-                placeholder="Full name"
-              />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Supervisor Contact</label>
-              <input
-                type="text"
-                id="inputSupervisorContact"
-                placeholder="Contact number"
-              />
-            </div>
-            <div class="form-group">
-              <label>Position / Designation</label>
-              <input
-                type="text"
-                id="inputSupervisorPosition"
-                placeholder="Position"
-              />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>License Number</label>
-              <input
-                type="text"
-                id="inputLicenseNo"
-                placeholder="License number"
-              />
-            </div>
-            <div class="form-group">
-              <label>License Expiry Date</label>
-              <input
-                type="date"
-                id="inputLicenseExpiry"
-              />
-            </div>
-          </div>
-
+          </section>
           <div class="pane-actions">
             <button class="secondary btn-back" id="deliveryModalBackBtn" type="button">
               <i class="fas fa-arrow-left"></i> Back
@@ -4069,6 +4041,20 @@
               display_name: account.display_name || account.username || "Instructor",
               role_title: account.role_title || account.role || "Clinical Instructor",
             }));
+
+        // Keep instructors with the most recent conversations at the top, like Messenger.
+        try {
+          const messages = await ApiClient.getChatMessages({ student_id: getCurrentStudentId() });
+          const lastActivity = {};
+          (Array.isArray(messages) ? messages : []).forEach((message) => {
+            const id = String(message.instructor_id || "");
+            const time = new Date(message.created_at || 0).getTime();
+            if (id && time > (lastActivity[id] || 0)) lastActivity[id] = time;
+          });
+          chatInstructorOptions.sort((left, right) => (lastActivity[String(right.id)] || 0) - (lastActivity[String(left.id)] || 0));
+        } catch (error) {
+          // The regular instructor directory remains available if chat activity cannot load.
+        }
 
         const storedId = getStoredChatInstructorId();
         const resolved = getResolvedChatInstructor(storedId);
@@ -4657,6 +4643,8 @@
       let deliveryEditingRecord = null;
       let editingRequestKey = null;
       let focusedCaseKey = null;
+      let liveEditRequestsCache = [];
+      let liveEditRequestsLoaded = false;
 
       function getCaseKey(rec) {
         return String(rec.id || `${activeProcedureKey}-${rec.caseNo || rec.patientName || "case"}`);
@@ -4665,8 +4653,13 @@
         const states = JSON.parse(localStorage.getItem("student_frontend_edit_states") || "{}");
         const studentId = String(getCurrentStudentId() || "");
         const caseNo = String(rec.caseNo || "");
-        const sharedRequest = JSON.parse(localStorage.getItem("editRequests") || "[]")
+        const requestSource = liveEditRequestsLoaded
+          ? liveEditRequestsCache
+          : JSON.parse(localStorage.getItem("editRequests") || "[]");
+        const sharedRequest = requestSource
           .filter((request) =>
+            !request.archived &&
+            !request.archived_at &&
             String(request.studentId || "") === studentId &&
             normalizeProcedureKey(request.type || request.procedure_name) === activeProcedureKey &&
             (request.caseNumbers || []).map(String).includes(caseNo),
@@ -4684,20 +4677,159 @@
         localStorage.setItem("student_frontend_edit_states", JSON.stringify(states));
       }
 
-      function getInstructorRemarks(rec) {
-        if (rec.teacherRemarks) return rec.teacherRemarks;
+      function clearCancelledEditRequest(request) {
+        const procedureKey = normalizeProcedureKey(request.procedureKey || request.procedure_name || request.type);
+        const caseNo = String(request.caseNo || request.case_no || "");
+        const frontendRequests = JSON.parse(localStorage.getItem("student_frontend_edit_requests") || "[]");
+        const cancelled = frontendRequests.filter((item) =>
+          (request.caseKey && item.caseKey === request.caseKey) ||
+          (
+            normalizeProcedureKey(item.procedureKey || item.procedure) === procedureKey &&
+            String(item.caseNo || "") === caseNo
+          ),
+        );
+        const cancelledKeys = new Set(cancelled.map((item) => item.caseKey).filter(Boolean));
+        if (request.caseKey) cancelledKeys.add(request.caseKey);
+
+        localStorage.setItem(
+          "student_frontend_edit_requests",
+          JSON.stringify(frontendRequests.filter((item) => !cancelled.includes(item))),
+        );
+
+        const states = JSON.parse(localStorage.getItem("student_frontend_edit_states") || "{}");
+        cancelledKeys.forEach((key) => delete states[key]);
+
+        deliveryRecords.forEach((record) => {
+          if (
+            normalizeProcedureKey(activeProcedureKey) === procedureKey &&
+            String(record.caseNo || "") === caseNo
+          ) {
+            delete states[getCaseKey(record)];
+            record.editRequestStatus = "";
+          }
+        });
+        localStorage.setItem("student_frontend_edit_states", JSON.stringify(states));
+
         const studentId = String(getCurrentStudentId() || "");
-        const caseNo = String(rec.caseNo || "");
-        const request = JSON.parse(localStorage.getItem("editRequests") || "[]")
-          .filter((item) =>
-            String(item.studentId || "") === studentId &&
-            normalizeProcedureKey(item.type || item.procedure_name) === activeProcedureKey &&
-            (item.caseNumbers || []).map(String).includes(caseNo),
-          )
-          .sort((a, b) => new Date(b.requestedAt || 0) - new Date(a.requestedAt || 0))[0];
-        return request?.rejectionRemarks || "";
+        const sharedRequests = JSON.parse(localStorage.getItem("editRequests") || "[]");
+        localStorage.setItem(
+          "editRequests",
+          JSON.stringify(sharedRequests.filter((item) => {
+            const sameId = String(item.id || "") === String(request.id || "");
+            const rawCaseNumbers = item.caseNumbers || item.case_numbers || [];
+            const caseNumbers = Array.isArray(rawCaseNumbers)
+              ? rawCaseNumbers
+              : (() => { try { return JSON.parse(rawCaseNumbers || "[]"); } catch (_) { return []; } })();
+            const sameCase =
+              String(item.studentId || item.student_id || "") === studentId &&
+              normalizeProcedureKey(item.type || item.procedure_key || item.procedure_name) === procedureKey &&
+              caseNumbers.map(String).includes(caseNo);
+            return !sameId && !sameCase;
+          })),
+        );
       }
 
+      async function reconcilePendingEditRequestStates() {
+        try {
+          const liveRequests = await ApiClient.getEditRequests();
+          liveEditRequestsCache = Array.isArray(liveRequests) ? liveRequests : [];
+          liveEditRequestsLoaded = true;
+          const studentId = String(getCurrentStudentId() || "");
+          const pendingCases = new Set();
+          (liveRequests || []).forEach((request) => {
+            if (String(request.studentId || request.student_id || "") !== studentId) return;
+            if (!['pending', 'Requested'].includes(request.status || 'pending')) return;
+            const procedureKey = normalizeProcedureKey(request.procedureKey || request.type || request.procedure_key);
+            const rawNumbers = request.caseNumbers || request.case_numbers || [];
+            const numbers = Array.isArray(rawNumbers)
+              ? rawNumbers
+              : (() => { try { return JSON.parse(rawNumbers || "[]"); } catch (_) { return []; } })();
+            numbers.forEach((caseNo) => pendingCases.add(`${procedureKey}::${String(caseNo)}`));
+          });
+
+          const states = JSON.parse(localStorage.getItem("student_frontend_edit_states") || "{}");
+          deliveryRecords.forEach((record) => {
+            const stateKey = getCaseKey(record);
+            const requestKey = `${normalizeProcedureKey(activeProcedureKey)}::${String(record.caseNo || "")}`;
+            if (states[stateKey] === "requested" && !pendingCases.has(requestKey)) {
+              delete states[stateKey];
+              record.editRequestStatus = "";
+            }
+          });
+          localStorage.setItem("student_frontend_edit_states", JSON.stringify(states));
+        } catch (error) {
+          console.warn("Unable to reconcile edit-request states:", error);
+        }
+      }
+      function normalizeInstructorFeedback(value) {
+        const feedback = String(value || "").trim();
+        return /^(none|n\/?a|not applicable|null|undefined|-)$/i.test(feedback) ? "" : feedback;
+      }
+      function getInstructorRemarks(rec) {
+        if (normalizeInstructorFeedback(rec.teacherRemarks)) return normalizeInstructorFeedback(rec.teacherRemarks);
+        const studentId = String(getCurrentStudentId() || "");
+        const caseNo = String(rec.caseNo || "");
+        const requestSource = liveEditRequestsLoaded
+          ? liveEditRequestsCache
+          : JSON.parse(localStorage.getItem("editRequests") || "[]");
+        const request = requestSource
+          .filter((item) =>
+            String(item.studentId || item.student_id || "") === studentId &&
+            normalizeProcedureKey(item.type || item.procedureKey || item.procedure_key || item.procedure_name) === activeProcedureKey &&
+            (item.caseNumbers || []).map(String).includes(caseNo),
+          )
+          .sort((a, b) => new Date(b.requestedAt || b.requested_at || 0) - new Date(a.requestedAt || a.requested_at || 0))[0];
+        return normalizeInstructorFeedback(request?.rejectionRemarks || request?.rejection_remarks);
+      }
+
+      function getInstructorComments(rec) {
+        if (rec.feedbackCommentsLoaded) return Array.isArray(rec.feedbackComments) ? rec.feedbackComments : [];
+        const fallback = getInstructorRemarks(rec);
+        return fallback ? [{ id: `legacy-${getCaseKey(rec)}`, author_name: "Clinical Instructor", comment_text: fallback, created_at: "" }] : [];
+      }
+
+      function getCommentReadToken(comments) {
+        return comments.map((comment) => `${comment.id}:${comment.comment_text || ""}`).join("|");
+      }
+
+      async function hydrateCaseComments() {
+        await Promise.all(deliveryRecords.map(async (record) => {
+          if (!record.id || typeof ApiClient.getCaseComments !== "function") return;
+          const result = await ApiClient.getCaseComments(record.id, false);
+          if (result?.ok) {
+            record.feedbackComments = result.comments || [];
+            record.feedbackCommentsLoaded = true;
+          }
+        }));
+      }
+
+      async function openInstructorFeedback(rec, archived = false) {
+        let comments = [];
+        if (rec.id && typeof ApiClient.getCaseComments === "function") {
+          const result = await ApiClient.getCaseComments(rec.id, archived);
+          if (result?.ok) comments = result.comments || [];
+        }
+        if (!archived && !comments.length) comments = getInstructorComments(rec);
+        if (!archived) {
+          rec.feedbackComments = comments;
+          rec.feedbackCommentsLoaded = true;
+          const token = getCommentReadToken(comments);
+          if (token) markInstructorRemarkRead(rec, token);
+          renderDeliveryRecordsTable();
+        }
+        showOptionPane({
+          title: archived ? "Archived Feedback" : "Instructor Feedback",
+          dialogStyle: "remarks",
+          feedback: {
+            comments,
+            archived,
+            record: rec,
+            procedure: activeProcedureConfig?.procedureName || "Clinical record",
+            caseNo: rec.caseNo || "Unnumbered case",
+          },
+          buttons: [{ label: "Close", variant: "primary" }],
+        });
+      }
       function isInstructorRemarkRead(rec, remarks) {
         const readRemarks = JSON.parse(localStorage.getItem("student_frontend_read_remarks") || "{}");
         return readRemarks[getCaseKey(rec)] === remarks;
@@ -4715,11 +4847,112 @@
 
       optionPaneClose?.addEventListener("click", closeOptionPane);
 
+      function renderInstructorFeedbackCard(config) {
+        optionPaneMessage.innerHTML = "";
+        const comments = Array.isArray(config.comments) ? config.comments : [];
+        const archived = Boolean(config.archived);
+        const card = document.createElement("div");
+        card.className = "feedback-review-card";
+
+        const context = document.createElement("div");
+        context.className = "feedback-review-context";
+        const metadata = document.createElement("div");
+        metadata.className = "feedback-context-metadata";
+        const procedure = document.createElement("span");
+        procedure.innerHTML = '<i class="fas fa-notes-medical" aria-hidden="true"></i>';
+        procedure.append(document.createTextNode(config.procedure || "Clinical record"));
+        const caseNumber = document.createElement("span");
+        caseNumber.innerHTML = '<i class="fas fa-hashtag" aria-hidden="true"></i>';
+        caseNumber.append(document.createTextNode(config.caseNo || "Unnumbered case"));
+        metadata.append(procedure, caseNumber);
+
+        const archiveButton = document.createElement("button");
+        archiveButton.type = "button";
+        archiveButton.className = "feedback-archive-toggle";
+        archiveButton.innerHTML = archived
+          ? '<i class="fas fa-arrow-left" aria-hidden="true"></i><span>Active comments</span>'
+          : '<i class="fas fa-box-archive" aria-hidden="true"></i><span>Archive</span>';
+        archiveButton.addEventListener("click", () => openInstructorFeedback(config.record, !archived));
+        context.append(metadata, archiveButton);
+
+        const heading = document.createElement("div");
+        heading.className = "feedback-stack-heading";
+        heading.innerHTML = `<span><i class="fas ${archived ? "fa-box-archive" : "fa-layer-group"}" aria-hidden="true"></i>${archived ? "Archived comments" : "Instructor comments"}</span><span class="feedback-comment-count">${comments.length}</span>`;
+
+        const list = document.createElement("div");
+        list.className = "feedback-comment-list";
+        if (!comments.length) {
+          const empty = document.createElement("div");
+          empty.className = "feedback-comments-empty";
+          empty.innerHTML = `<i class="fas ${archived ? "fa-box-open" : "fa-comment-slash"}" aria-hidden="true"></i><strong>${archived ? "Archive is empty" : "No instructor comments"}</strong><span>${archived ? "Comments moved to Trash will appear here." : "Your instructor has not added feedback for this case."}</span>`;
+          list.appendChild(empty);
+        } else {
+          comments.forEach((comment, index) => {
+            const item = document.createElement("article");
+            item.className = "feedback-comment-item";
+            const header = document.createElement("header");
+            header.className = "feedback-comment-header";
+            const identity = document.createElement("div");
+            identity.className = "feedback-comment-identity";
+            identity.innerHTML = '<span class="feedback-author-avatar"><i class="fas fa-user-shield" aria-hidden="true"></i></span>';
+            const author = document.createElement("span");
+            const authorName = document.createElement("strong");
+            authorName.textContent = comment.author_name || "Clinical Instructor";
+            const timestamp = document.createElement("small");
+            const created = comment.created_at ? new Date(String(comment.created_at).replace(" ", "T")) : null;
+            timestamp.textContent = created && !Number.isNaN(created.getTime())
+              ? created.toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric", hour: "numeric", minute: "2-digit" })
+              : `Comment ${comments.length - index}`;
+            author.append(authorName, timestamp);
+            identity.appendChild(author);
+
+            const action = document.createElement("button");
+            action.type = "button";
+            action.className = archived ? "feedback-comment-action restore" : "feedback-comment-action trash";
+            action.title = archived ? "Restore comment" : "Move comment to archive";
+            action.setAttribute("aria-label", action.title);
+            action.innerHTML = `<i class="fas ${archived ? "fa-rotate-left" : "fa-trash-can"}" aria-hidden="true"></i>`;
+            action.addEventListener("click", async () => {
+              if (String(comment.id || "").startsWith("legacy-")) return;
+              action.disabled = true;
+              action.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i>';
+              const result = archived
+                ? await ApiClient.restoreCaseComment(comment.id)
+                : await ApiClient.archiveCaseComment(comment.id);
+              if (!result?.ok) {
+                showOptionPane({ title: "Unable to Update Comment", message: result?.message || "The comment could not be updated." });
+                return;
+              }
+              await openInstructorFeedback(config.record, archived);
+            });
+            header.append(identity, action);
+
+            const body = document.createElement("div");
+            body.className = "feedback-comment-body";
+            body.textContent = normalizeInstructorFeedback(comment.comment_text) || "Comment unavailable.";
+            item.append(header, body);
+            list.appendChild(item);
+          });
+        }
+
+        const note = document.createElement("div");
+        note.className = "feedback-review-note";
+        note.innerHTML = archived
+          ? '<i class="fas fa-shield-halved" aria-hidden="true"></i><span>Archived comments are retained safely and can be restored at any time.</span>'
+          : '<i class="fas fa-circle-info" aria-hidden="true"></i><span>Comments are ordered newest first. Trash moves a comment to the archive without permanently deleting it.</span>';
+
+        card.append(context, heading, list, note);
+        optionPaneMessage.appendChild(card);
+      }
       function showOptionPane(config) {
         const paneConfig = config || {};
         optionPane?.classList.toggle("remarks-dialog", paneConfig.dialogStyle === "remarks");
         optionPaneTitle.textContent = paneConfig.title || "Notice";
-        optionPaneMessage.textContent = paneConfig.message || "";
+        if (paneConfig.dialogStyle === "remarks") {
+          renderInstructorFeedbackCard(paneConfig.feedback || { message: paneConfig.message || "" });
+        } else {
+          optionPaneMessage.textContent = paneConfig.message || "";
+        }
         optionPaneActions.innerHTML = "";
 
         const buttons =
@@ -4908,10 +5141,9 @@
         }
 
         // Dynamic Form Field Toggling
-        const ieFields = document.getElementById("internalExamFields");
-        if (ieFields)
-          ieFields.style.display =
-            procedureKey === "internal-exam" ? "grid" : "none";
+        document.querySelectorAll("[data-internal-exam-field]").forEach((field) => {
+          field.style.display = procedureKey === "internal-exam" ? "block" : "none";
+        });
 
         const emptyTitle = deliveryEmptyState?.querySelector(
           ".record-empty-state-title",
@@ -5153,14 +5385,18 @@
           });
           const actions = document.createElement("td");
           const requestStatus = getEditRequestStatus(rec);
-          const instructorRemarks = getInstructorRemarks(rec);
-          const remarksAvailable = Boolean(instructorRemarks);
-          const remarksRead = isInstructorRemarkRead(rec, instructorRemarks);
+          const instructorComments = getInstructorComments(rec);
+          const remarksAvailable = instructorComments.length > 0;
+          const remarksRead = isInstructorRemarkRead(rec, getCommentReadToken(instructorComments));
           const requestIcon = requestStatus === "requested" ? "fa-clock" : requestStatus === "accepted" ? "fa-pen" : requestStatus === "edited" ? "fa-check" : "fa-pen-to-square";
           const requestTitle = requestStatus === "requested" ? "Edit request pending" : requestStatus === "accepted" ? "Edit approved — edit once" : requestStatus === "edited" ? "Edit already used" : "Request edit";
+          const feedbackTitle = remarksAvailable
+            ? (remarksRead ? "Instructor feedback" : "New instructor feedback — open to read")
+            : "No instructor feedback";
+          const feedbackIcon = remarksAvailable && !remarksRead ? "fa-comment-medical" : "fa-comment-dots";
           actions.innerHTML = `
             <div class="case-actions">
-              <button class="case-action-btn ${remarksAvailable && !remarksRead ? "has-remarks" : ""}" type="button" title="${remarksAvailable ? (remarksRead ? "Instructor remarks read" : "Instructor remarks available") : "No instructor remarks"}" aria-label="View instructor remarks"><i class="fas fa-comment-dots"></i></button>
+              <button class="case-action-btn feedback-action ${remarksAvailable && !remarksRead ? "has-remarks" : ""}" type="button" title="${feedbackTitle}" aria-label="${feedbackTitle}" aria-live="polite"><i class="fas ${feedbackIcon}"></i></button>
               <button class="case-action-btn" type="button" title="${requestTitle}" aria-label="${requestTitle}"><i class="fas ${requestIcon}"></i></button>
               <button class="case-action-btn trash" type="button" title="Move to trash" aria-label="Move to trash"><i class="fas fa-trash-can"></i></button>
             </div>`;
@@ -5173,26 +5409,8 @@
 
           const buttons = actions.querySelectorAll("button");
           buttons[0]?.addEventListener("click", () => {
-            const markAsRead = remarksAvailable && !remarksRead;
-            showOptionPane({
-              title: "Instructor Remarks",
-              message: instructorRemarks || "No instructor remarks are available for this record yet.",
-              dialogStyle: "remarks",
-              buttons: markAsRead
-                ? [
-                    {
-                      label: "Mark as Read",
-                      variant: "primary",
-                      onClick: () => {
-                        markInstructorRemarkRead(rec, instructorRemarks);
-                        renderDeliveryRecordsTable();
-                      },
-                    },
-                  ]
-                : undefined,
-            });
-          });
-          buttons[1]?.addEventListener("click", () => {
+            openInstructorFeedback(rec, false);
+          });          buttons[1]?.addEventListener("click", () => {
             if (requestStatus === "requested" || requestStatus === "edited") return;
             if (requestStatus === "accepted") {
               editingRequestKey = getCaseKey(rec);
@@ -5312,6 +5530,8 @@
             editRequestStatus: rec.edit_request_status || "",
           }));
 
+          await reconcilePendingEditRequestStates();
+          await hydrateCaseComments();
           deliveryRecords.forEach((record) => {
             if (record.editRequestStatus) {
               setEditRequestStatus(record, record.editRequestStatus);
@@ -5719,6 +5939,10 @@
                         showOptionPane({ title: "Unable to Continue", message: result?.message || "The request could not be updated." });
                         return;
                       }
+                      if (isPendingRequest) {
+                        clearCancelledEditRequest(request);
+                        renderDeliveryRecordsTable();
+                      }
                       await renderEditRequests();
                     },
                   },
@@ -5935,7 +6159,19 @@
             records.forEach((record, index) => {
               const row = document.createElement("tr");
               const values = [`${record.patient_name || "-"}${record.patient_address ? `\n${record.patient_address}` : ""}`, record.case_no || "-", record.complete_diagnosis || "-", formatSummaryDateTime(record.date_time_performed), `${record.facility_name || "-"}${record.facility_address ? `\n${record.facility_address}` : ""}${record.facility_contact_number ? `\n${record.facility_contact_number}` : ""}`, `${record.supervisor_printed_name || "-"}${record.supervisor_contact_number ? `\n${record.supervisor_contact_number}` : ""}`, record.supervisor_position_designation || "-", `${record.supervisor_license_no || "-"}\n${formatSummaryDate(record.supervisor_license_expiry_date)}`];
-              values.forEach((value) => { const cell = document.createElement("td"); cell.textContent = value; cell.style.whiteSpace = "pre-line"; row.appendChild(cell); });
+              values.forEach((value, cellIndex) => {
+                const cell = document.createElement("td");
+                cell.className = "record-detail-cell";
+                const lines = String(value || "-").split("\n").filter(Boolean);
+                (lines.length ? lines : ["-"]).forEach((lineValue, lineIndex) => {
+                  const line = document.createElement("span");
+                  line.className = lineIndex === 0 ? "record-detail-primary" : "record-detail-secondary";
+                  if ([3, 7].includes(cellIndex)) line.classList.add("record-detail-numeric");
+                  line.textContent = lineValue;
+                  cell.appendChild(line);
+                });
+                row.appendChild(cell);
+              });
               body.appendChild(row);
             });
           }
@@ -6043,19 +6279,31 @@
         } else {
           emptyState.style.display = "none";
         }
+        const appendSummaryCell = (row, values, numeric = false) => {
+          const cell = document.createElement("td");
+          cell.className = "record-detail-cell";
+          const lines = values.filter(Boolean);
+          (lines.length ? lines : ["-"]).forEach((value, index) => {
+            const line = document.createElement("span");
+            line.className = index === 0 ? "record-detail-primary" : "record-detail-secondary";
+            if (numeric) line.classList.add("record-detail-numeric");
+            line.textContent = value;
+            cell.appendChild(line);
+          });
+          row.appendChild(cell);
+        };
+
         filtered.forEach((rec) => {
           const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td style="padding: 12px;">${formatPatientInfo(rec.patient_name, rec.patient_address)}</td>
-            <td style="padding: 12px; font-variant-numeric: tabular-nums;">${rec.case_no || "-"}</td>
-            <td style="padding: 12px;">${rec.complete_diagnosis || "-"}</td>
-            <td style="padding: 12px;">${rec.date_time_performed || "-"}</td>
-            <td style="padding: 12px;">${formatPatientInfo(rec.facility_name, rec.facility_address)}${rec.facility_contact_number ? `<br><small>${rec.facility_contact_number}</small>` : ""}</td>
-            <td style="padding: 12px;">${rec.supervisor_printed_name || "-"}${rec.supervisor_contact_number ? `<br><small>${rec.supervisor_contact_number}</small>` : ""}</td>
-            <td style="padding: 12px;">${rec.supervisor_position_designation || "-"}</td>
-            <td style="padding: 12px;">${rec.checked_by || "-"}</td>
-            <td style="padding: 12px;">${rec.supervisor_license_no || "-"}${rec.supervisor_license_expiry_date ? `<br><small>${rec.supervisor_license_expiry_date}</small>` : ""}</td>
-          `;
+          appendSummaryCell(tr, [rec.patient_name, rec.patient_address]);
+          appendSummaryCell(tr, [rec.case_no], true);
+          appendSummaryCell(tr, [rec.complete_diagnosis]);
+          appendSummaryCell(tr, [rec.date_time_performed], true);
+          appendSummaryCell(tr, [rec.facility_name, rec.facility_address, rec.facility_contact_number]);
+          appendSummaryCell(tr, [rec.supervisor_printed_name, rec.supervisor_contact_number]);
+          appendSummaryCell(tr, [rec.supervisor_position_designation]);
+          appendSummaryCell(tr, [rec.checked_by]);
+          appendSummaryCell(tr, [rec.supervisor_license_no, rec.supervisor_license_expiry_date], true);
           tbody.appendChild(tr);
         });
         appendStudentLogbookRow(tbody);
@@ -6112,6 +6360,26 @@
             }
           });
         });
+
+      document.querySelectorAll("[data-student-quick-action]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const action = button.getAttribute("data-student-quick-action");
+          if (action === "records") switchTab("procedure", "delivery-handled");
+          if (action === "summary") switchTab("summary");
+          if (action === "new-record") {
+            switchTab("procedure", "delivery-handled");
+            requestAnimationFrame(() => fabAddDeliveryBtn?.click());
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-procedure-shortcut]").forEach((card) => {
+        card.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          switchTab("procedure", card.getAttribute("data-procedure-shortcut"));
+        });
+      });
 
       document.getElementById("saveSettingsBtn")?.addEventListener("click", () => {
         const reminders = Boolean(document.getElementById("settingRecordReminders")?.checked);

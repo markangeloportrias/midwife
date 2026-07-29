@@ -467,10 +467,10 @@ body { background: #eef2f8 !important; }
 .sidebar-collapsed .sidebar-count,
 .sidebar-collapsed .nav-badge {
   transition:
-    opacity 80ms ease,
-    visibility 0s linear 160ms,
-    max-width 360ms cubic-bezier(.16, 1, .3, 1),
-    margin 360ms cubic-bezier(.16, 1, .3, 1) !important;
+    opacity 220ms ease,
+    visibility 0s linear 280ms,
+    max-width 440ms cubic-bezier(.16, 1, .3, 1),
+    margin 440ms cubic-bezier(.16, 1, .3, 1) !important;
 }
 
 /* Flat navigation list: no group titles and fixed-size icons in both states. */
@@ -1452,8 +1452,7 @@ body.role-instructor .review-modal-card {
 /* Instructor/Admin parity: raw menu text must disappear in compact mode. */
 .sidebar-collapsed .sidebar-nav-item,
 .sidebar-collapsed .sidebar-item {
-  font-size: 0 !important;
-  color: transparent !important;
+  font-size: 11px !important;
   text-shadow: none !important;
 }
 .sidebar-collapsed .sidebar-nav-item > i,
@@ -1603,7 +1602,7 @@ body.role-instructor .review-modal-card {
   padding: 5px 9px !important; font-size: 10px !important;
 }
 .record-workspace .search-filter-bar {
-  display: grid !important; grid-template-columns: minmax(0, 1fr) 112px;
+  display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(130px, 144px);
   gap: 6px !important; margin: 0 !important;
 }
 .record-workspace .search-input-wrap,
@@ -2334,4 +2333,15 @@ body.role-student .record-workspace table.clinical-form-table tbody td {
   border-color: #3347a3 !important;
   outline: 0 !important;
   box-shadow: 0 0 0 3px rgba(51, 71, 163, .14) !important;
+}
+
+/* Keep the Student My Records date filter inside its grid column. */
+.record-workspace #recordDateFilter {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 144px;
+}
+@media (max-width: 520px) {
+  .record-workspace .search-filter-bar { grid-template-columns: 1fr !important; }
+  .record-workspace #recordDateFilter { max-width: none; }
 }

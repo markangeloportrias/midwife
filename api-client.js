@@ -2499,6 +2499,12 @@
     try { return await mysqlRequest('school-years', { method: 'POST', body: JSON.stringify({ label: normalize(value) }) }); }
     catch (error) { return { ok: false, message: error.message }; }
   };
+  ApiClient.setSchoolYearStatus = async function (schoolYearId, status) {
+    var next = normalize(status).toLowerCase();
+    if (next !== 'active' && next !== 'inactive') return { ok: false, message: 'Invalid academic year status.' };
+    try { return await mysqlRequest('school-years/' + encodeURIComponent(schoolYearId), { method: 'PATCH', body: JSON.stringify({ status: next }) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
   ApiClient.getStudentBlocks = async function (schoolYear) {
     var query='school_year='+encodeURIComponent(normalize(schoolYear));
     try { return await mysqlRequest('blocks?' + query); }
@@ -2659,15 +2665,6 @@
     if (next!=='active'&&next!=='inactive') return {ok:false,message:'Invalid instructor status.'};
     return ApiClient.updateInstructorAccount(accountId,{status:next});
   };
-  ApiClient.deleteInstructorAccount = async function (accountId) {
-    try { return await mysqlRequest('instructors/' + encodeURIComponent(accountId) + '/archive', { method: 'PATCH', body: '{}' }); }
-    catch (error) { return { ok: false, message: error.message }; }
-  };
-  ApiClient.getArchivedInstructorAccounts = async function () { return mysqlRequest('instructors?archived=1'); };
-  ApiClient.restoreInstructorAccount = async function (accountId) {
-    try { return await mysqlRequest('instructors/' + encodeURIComponent(accountId) + '/restore', { method: 'PATCH', body: '{}' }); }
-    catch (error) { return { ok: false, message: error.message }; }
-  };
   ApiClient.getArchivedCaseRecords = async function (studentId) {
     var query='cases?archived=1';
     if (normalize(studentId)) query += '&student_id=' + encodeURIComponent(normalize(studentId));
@@ -2731,7 +2728,24 @@
     messages.forEach(function(m){if(!threads[m.student_id])threads[m.student_id]={student_id:m.student_id,student_name:m.student_name||m.student_id,last_message:'',last_message_at:'',unread_count:0};var t=threads[m.student_id];t.last_message=m.message;t.last_message_at=m.created_at;if(m.sender_role==='student'&&!Number(m.read_by_instructor))t.unread_count+=1;});
     return Object.keys(threads).map(function(k){return threads[k];}).sort(function(a,b){return new Date(b.last_message_at)-new Date(a.last_message_at);});
   };
-  ApiClient.addTeacherRemarks = async function (caseId,remarks,checkedBy,instructorId) {
+  ApiClient.addCaseComment = async function (caseId, remarks, checkedBy) {
+    try { return await mysqlRequest('cases/' + encodeURIComponent(caseId) + '/comment', { method: 'PATCH', body: JSON.stringify({ remarks: remarks || '', checked_by: checkedBy || 'Administrator' }) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.getCaseComments = async function (caseId, archived) {
+    try {
+      var result = await mysqlRequest('case-comments?case_id=' + encodeURIComponent(caseId) + '&archived=' + (archived ? '1' : '0'));
+      return { ok: true, comments: result.comments || [] };
+    } catch (error) { return { ok: false, comments: [], message: error.message }; }
+  };
+  ApiClient.archiveCaseComment = async function (commentId) {
+    try { return await mysqlRequest('case-comments/' + encodeURIComponent(commentId) + '/archive', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.restoreCaseComment = async function (commentId) {
+    try { return await mysqlRequest('case-comments/' + encodeURIComponent(commentId) + '/restore', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };  ApiClient.addTeacherRemarks = async function (caseId,remarks,checkedBy,instructorId) {
     return ApiClient.updateRecordStatus(caseId,'Under Review',{remarks:remarks,instructor_name:checkedBy,instructor_id:instructorId});
   };
   ApiClient.updateRecordStatus = async function (caseId,status,options) {
