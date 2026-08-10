@@ -1,0 +1,868 @@
+/* Student portal palette: #00296b, #003f88, #00509d, #fdc500, #ffd500. */
+html body.role-student {
+  --admin-navy: #00296b;
+  --admin-text: #00296b;
+  --admin-muted: #003f88;
+  --admin-line: rgba(0, 80, 157, .18);
+  --admin-canvas: #f7faff;
+  --primary: #00509d;
+  --primary-deep: #00296b;
+  --primary-soft: rgba(0, 80, 157, .10);
+  --canvas: #f7faff;
+  --canvas-muted: #eef5fb;
+  --surface: #ffffff;
+  --text-primary: #00296b;
+  --text-secondary: #003f88;
+  --text-light: #00509d;
+  --border: rgba(0, 80, 157, .18);
+  --app-color-primary: #00509d;
+  --app-color-canvas: #f7faff;
+  --app-color-text: #00296b;
+  --app-color-muted: #003f88;
+  --app-color-border: rgba(0, 80, 157, .18);
+  --portal-primary: #00509d;
+  --portal-primary-hover: #003f88;
+  --portal-canvas: #f7faff;
+  --portal-text: #00296b;
+  --portal-muted: #003f88;
+  --portal-border: rgba(0, 80, 157, .18);
+  --signal-blue: #00509d;
+  --signal-blue-hover: #003f88;
+  --signal-blue-soft: rgba(0, 80, 157, .10);
+  --signal-blue-line: rgba(0, 80, 157, .22);
+  --signal-canvas: #f7faff;
+  --signal-ink: #00296b;
+  --signal-muted: #003f88;
+  --signal-border: rgba(0, 80, 157, .18);
+}
+
+/* Canvas, top bar, and navigation */
+html body.role-student,
+html body.role-student .dashboard,
+html body.role-student .main-content {
+  background:
+    radial-gradient(circle at 88% 5%, rgba(255,213,0,.12), transparent 24%),
+    linear-gradient(135deg, rgba(0,80,157,.09), rgba(0,63,136,.035) 48%, rgba(255,213,0,.07)) !important;
+  color: #00296b !important;
+}
+
+html body.role-student .header {
+  background: linear-gradient(100deg, #00296b 0%, #003f88 58%, #00509d 100%) !important;
+  box-shadow: 0 3px 14px rgba(0, 41, 107, .24) !important;
+}
+html body.role-student .header-profile-container:hover { background: rgba(255, 213, 0, .13) !important; }
+html body.role-student .header-profile-info .profile-name,
+html body.role-student .header-photo-btn i.default-icon { color: #ffffff !important; }
+html body.role-student .header-profile-info .profile-id,
+html body.role-student .header-left .sub { color: rgba(255,255,255,.76) !important; }
+html body.role-student .header-photo-btn { border-color: #ffd500 !important; background: #003f88 !important; }
+
+html body.role-student .dashboard > .sidebar {
+  background: linear-gradient(180deg, #00296b 0%, #003f88 58%, #00296b 100%) !important;
+  border-right-color: rgba(255, 213, 0, .24) !important;
+  box-shadow: 5px 0 18px rgba(0, 41, 107, .18) !important;
+}
+html body.role-student .sidebar-brand { border-bottom-color: rgba(255, 213, 0, .23) !important; }
+html body.role-student .sidebar-brand-copy strong,
+html body.role-student .sidebar-user-copy strong { color: #ffffff !important; }
+html body.role-student .sidebar-brand-copy span,
+html body.role-student .sidebar-user-copy span,
+html body.role-student .sidebar .student-nav-group { color: rgba(255, 255, 255, .67) !important; }
+html body.role-student .sidebar .sidebar-nav-item { color: rgba(255,255,255,.88) !important; }
+html body.role-student .sidebar .sidebar-nav-item i { color: #ffd500 !important; }
+html body.role-student .sidebar .sidebar-nav-item:hover { background: rgba(255,255,255,.12) !important; color: #ffd500 !important; }
+html body.role-student .sidebar .sidebar-nav-item.active {
+  border-left-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+  box-shadow: 0 6px 14px rgba(0, 24, 72, .23) !important;
+}
+html body.role-student .sidebar .sidebar-nav-item.active i { color: #00296b !important; }
+html body.role-student .sidebar .nav-badge,
+html body.role-student .sidebar .sidebar-count { background: #fdc500 !important; color: #00296b !important; }
+html body.role-student .sidebar .active .nav-badge,
+html body.role-student .sidebar .active .sidebar-count { background: #00296b !important; color: #ffd500 !important; }
+html body.role-student .sidebar-user-card { border-color: rgba(255,255,255,.18) !important; background: rgba(255,255,255,.09) !important; }
+html body.role-student .sidebar-user-avatar { background: #ffd500 !important; color: #00296b !important; }
+
+/* Dashboard content and hero */
+html body.role-student .page-hero {
+  border: 1px solid rgba(255, 213, 0, .28) !important;
+  border-left: 5px solid #ffd500 !important;
+  background: linear-gradient(115deg, #00296b 0%, #003f88 62%, #00509d 100%) !important;
+  box-shadow: 0 9px 22px rgba(0, 41, 107, .18) !important;
+}
+/* Overrides the previous electric-blue student hero rule in the shared theme. */
+html body.role-student .main-content .student-dashboard-hero {
+  background-color: #00296b !important;
+  background-image: linear-gradient(115deg, #00296b 0%, #003f88 62%, #00509d 100%) !important;
+}
+html body.role-student .page-hero :is(.hero-title, h1, h2) { color: #ffffff !important; }
+html body.role-student .page-hero :is(.hero-subtitle, .hero-eyebrow, p) { color: rgba(255,255,255,.82) !important; }
+html body.role-student .page-hero .hero-eyebrow { color: #ffd500 !important; }
+html body.role-student .student-hero-action { border-color: rgba(255,255,255,.34) !important; background: rgba(255,255,255,.1) !important; color: #ffffff !important; }
+html body.role-student .student-hero-action:hover { border-color: #ffd500 !important; background: rgba(255,213,0,.16) !important; }
+html body.role-student .student-hero-action.primary { border-color: #fdc500 !important; background: #fdc500 !important; color: #00296b !important; }
+html body.role-student .student-hero-action.primary:hover { background: #ffd500 !important; }
+html body.role-student .shared-paper-illustration { border-color: #ffd500 !important; background: #ffffff !important; }
+html body.role-student .shared-paper-illustration :is(.paper-check, .paper-dot, .paper-line) { background: rgba(0,80,157,.2) !important; }
+html body.role-student .shared-paper-illustration .paper-check::after { color: #003f88 !important; }
+html body.role-student .shared-paper-illustration .paper-status { border-color: #ffffff !important; background: #ffd500 !important; color: #00296b !important; }
+
+html body.role-student :is(.stat-card-h, .recent-records-panel, .record-workspace, .settings-card, .summary-card, .content-section, .section) {
+  border-color: rgba(0,80,157,.18) !important;
+  background: rgba(255,255,255,.7) !important;
+  box-shadow: 0 5px 18px rgba(0,41,107,.06) !important;
+}
+html body.role-student :is(.stat-card-h:hover, .recent-record:hover) { border-color: #00509d !important; box-shadow: 0 8px 18px rgba(0,80,157,.13) !important; }
+html body.role-student :is(.stat-icon-wrap, .stat-icon, .recent-record-icon, .recent-records-title i) { background: rgba(0,80,157,.1) !important; color: #00509d !important; }
+html body.role-student :is(.workspace-title, .recent-records-title, .stat-num, .stat-value, .recent-record-name) { color: #00296b !important; }
+html body.role-student :is(.workspace-subtitle, .stat-name, .stat-sub, .recent-record-meta, .recent-record-details, .recent-record-date) { color: #003f88 !important; }
+html body.role-student .recent-record-status { background: rgba(255,213,0,.2) !important; color: #00296b !important; }
+html body.role-student .recent-records-panel { background: linear-gradient(135deg, rgba(0,80,157,.08), rgba(255,255,255,.55) 45%, rgba(255,213,0,.09)) !important; }
+html body.role-student:has(.dashboard) .main-content .recent-records-header {
+  border-bottom-color: rgba(0,80,157,.18) !important;
+  background: linear-gradient(90deg, rgba(0,41,107,.12), rgba(0,80,157,.08) 58%, rgba(255,213,0,.14)) !important;
+}
+html body.role-student:has(.dashboard) .main-content .recent-records-title > i {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 10px !important;
+  background: #00296b !important;
+  color: #ffd500 !important;
+  box-shadow: 0 4px 10px rgba(0,41,107,.18) !important;
+}
+html body.role-student .recent-view-all { border: 1px solid #00509d !important; background: #00509d !important; color: #ffffff !important; }
+html body.role-student .recent-view-all:hover { border-color: #003f88 !important; background: #003f88 !important; color: #ffd500 !important; }
+html body.role-student .recent-record { background: rgba(255,255,255,.56) !important; border-color: rgba(0,80,157,.18) !important; }
+html body.role-student .recent-record:nth-child(even) { background: rgba(0,80,157,.045) !important; }
+html body.role-student .recent-record:hover { background: rgba(255,213,0,.10) !important; }
+
+/* Controls, forms, icons, and focus state */
+html body.role-student :is(.btn-primary, .primary, .primary-btn, .chat-send-button, .option-pane-btn.primary) {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: 0 5px 12px rgba(0,80,157,.2) !important;
+}
+html body.role-student :is(.btn-primary, .primary, .primary-btn, .chat-send-button, .option-pane-btn.primary):hover { border-color: #003f88 !important; background: #003f88 !important; }
+html body.role-student :is(.btn-secondary, .secondary, .btn-filter, .recent-view-all, .case-action-btn) { border-color: rgba(0,80,157,.25) !important; background: #ffffff !important; color: #00509d !important; }
+html body.role-student :is(.btn-secondary, .secondary, .btn-filter, .recent-view-all, .case-action-btn):hover { border-color: #00509d !important; background: rgba(0,80,157,.08) !important; color: #003f88 !important; }
+html body.role-student :is(input, select, textarea, .filter-input, .option-pane-input) { border-color: rgba(0,80,157,.22) !important; background: #ffffff !important; color: #00296b !important; }
+html body.role-student :is(input, select, textarea, .filter-input, .option-pane-input):focus { border-color: #00509d !important; box-shadow: 0 0 0 3px rgba(0,80,157,.16) !important; }
+html body.role-student :focus-visible { outline-color: #ffd500 !important; }
+html body.role-student .case-action-btn.has-remarks { border-color: #fdc500 !important; background: rgba(255,213,0,.17) !important; color: #00296b !important; }
+html body.role-student .case-action-btn.has-remarks::after { background: #fdc500 !important; }
+
+/* Records and progress tables */
+html body.role-student :is(.table-wrapper, .table-wrap, .clinical-form-table-container) { border-color: rgba(0,80,157,.18) !important; background: #ffffff !important; }
+html body.role-student :is(.clinical-form-table, .procedure-records-table, .summary-records-table, .main-content table) thead th {
+  background: #003f88 !important;
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,.22) !important;
+}
+html body.role-student :is(.clinical-form-table, .procedure-records-table, .summary-records-table, .main-content table) tbody td { color: #00296b !important; border-color: rgba(0,80,157,.13) !important; }
+html body.role-student :is(.clinical-form-table, .procedure-records-table, .summary-records-table, .main-content table) tbody tr:hover td { background: rgba(0,80,157,.055) !important; }
+html body.role-student .procedure-tab.active { border-color: #ffd500 !important; background: #00509d !important; color: #ffffff !important; }
+html body.role-student .progress-bar-fill,
+html body.role-student .req-progress-bar-fill { background: linear-gradient(90deg, #003f88, #00509d) !important; }
+html body.role-student .progress-banner { background: rgba(0,80,157,.06) !important; border-color: rgba(0,80,157,.18) !important; }
+
+/* Messages, notices, and overlays retain readable semantic states. */
+html body.role-student :is(.chat-thread, .chat-conversation, #chatTab .chat-thread) { background: #f7faff !important; border-color: rgba(0,80,157,.16) !important; }
+html body.role-student :is(.chat-directory, .chat-conversation-header, #chatTab .chat-compose) { border-color: rgba(0,80,157,.18) !important; background: #ffffff !important; }
+html body.role-student .chat-message.student { background: linear-gradient(135deg, #003f88, #00509d) !important; }
+html body.role-student .chat-message.instructor { border-color: rgba(0,80,157,.16) !important; color: #00296b !important; }
+html body.role-student :is(.chat-directory-icon, .chat-instructor-avatar, .chat-conversation-avatar, .chat-thread-empty i) { background: rgba(0,80,157,.1) !important; color: #00509d !important; }
+html body.role-student .notification-icon { background: rgba(255,213,0,.2) !important; color: #00296b !important; }
+html body.role-student .edit-request-notification { border-left-color: #ffd500 !important; }
+html body.role-student :is(.modal, .modal-content, .option-pane, .profile-dropdown-menu) { border-color: rgba(0,80,157,.2) !important; background: #ffffff !important; }
+html body.role-student .remarks-dialog .option-pane-icon,
+html body.role-student .feedback-author-avatar,
+html body.role-student .feedback-comment-count { background: rgba(0,80,157,.1) !important; color: #00509d !important; }
+html body.role-student .feedback-review-quote,
+html body.role-student .feedback-comment-body { border-left-color: #ffd500 !important; }
+
+/* The dashboard overview has its own compact components in the shared theme. */
+html body.role-student .student-dashboard-hero .student-hero-action.primary {
+  border-color: #fdc500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}
+html body.role-student .student-hero-brief {
+  border-color: rgba(255,213,0,.36) !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.16), rgba(255,213,0,.08)) !important;
+}
+html body.role-student :is(.student-hero-brief-label, .student-hero-brief-footer, .student-hero-brief-main span) { color: rgba(255,255,255,.8) !important; }
+html body.role-student .student-hero-brief-label > span { background: #ffd500 !important; box-shadow: 0 0 0 3px rgba(255,213,0,.16) !important; }
+html body.role-student .student-hero-brief-main > i { background: #ffffff !important; color: #00509d !important; }
+html body.role-student .student-dashboard-kicker,
+html body.role-student .recent-records-eyebrow { color: #00509d !important; }
+html body.role-student .student-dashboard-section-heading h2 { color: #00296b !important; }
+html body.role-student .student-dashboard-section-heading p { color: #003f88 !important; }
+html body.role-student .student-dashboard-progress .stat-card-h:hover { border-color: #00509d !important; box-shadow: 0 14px 28px rgba(0,80,157,.13) !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(1) { background: rgba(0,41,107,.07) !important; border-top: 3px solid #00296b !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(2) { background: rgba(0,63,136,.07) !important; border-top: 3px solid #003f88 !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(3) { background: rgba(0,80,157,.07) !important; border-top: 3px solid #00509d !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(4) { background: rgba(253,197,0,.13) !important; border-top: 3px solid #fdc500 !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(5) { background: rgba(255,213,0,.15) !important; border-top: 3px solid #ffd500 !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(1) .stat-icon-wrap { background: #00296b !important; color: #ffffff !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(2) .stat-icon-wrap { background: #003f88 !important; color: #ffffff !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(3) .stat-icon-wrap { background: #00509d !important; color: #ffffff !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(4) .stat-icon-wrap { background: #fdc500 !important; color: #00296b !important; }
+html body.role-student #dashboardProgressSection .stats-row > .stat-card-h:nth-child(5) .stat-icon-wrap { background: #ffd500 !important; color: #00296b !important; }
+html body.role-student .recent-record:nth-child(odd) .recent-record-icon { background: #00509d !important; color: #ffffff !important; }
+html body.role-student .recent-record:nth-child(even) .recent-record-icon { background: #ffd500 !important; color: #00296b !important; }
+html body.role-student .student-dashboard-progress .stat-name { color: #003f88 !important; }
+html body.role-student .student-dashboard-progress .stat-num { color: #00296b !important; }
+html body.role-student .student-dashboard-progress .stat-sub { color: #00509d !important; }
+html body.role-student .recent-records-title-copy strong { color: #00296b !important; }
+html body.role-student .recent-records-empty,
+html body.role-student :is(.frontend-panel-empty, .modern-empty-state) { border-color: rgba(0,80,157,.2) !important; background: rgba(0,80,157,.04) !important; color: #003f88 !important; }
+
+/* Exact compact-record rules used by the clinical record views. */
+html body.role-student .procedure-tabs { border-color: rgba(0,80,157,.18) !important; background: rgba(0,80,157,.055) !important; }
+html body.role-student .procedure-tab { border-color: rgba(0,80,157,.22) !important; background: #ffffff !important; color: #003f88 !important; }
+html body.role-student .procedure-tab:hover { border-color: #00509d !important; color: #00509d !important; background: rgba(0,80,157,.08) !important; }
+html body.role-student .clinical-form-table { border-color: rgba(0,80,157,.2) !important; background: #ffffff !important; color: #00296b !important; }
+html body.role-student .clinical-form-table :is(thead, thead tr, thead th, thead tr:first-child th, thead tr:nth-child(2) th) { background: #003f88 !important; color: #ffffff !important; }
+html body.role-student .clinical-form-table th { border-color: rgba(255,255,255,.25) !important; }
+html body.role-student .clinical-form-table td,
+html body.role-student .clinical-form-table tbody td :where(span, small, div, input, textarea) { border-color: rgba(0,80,157,.15) !important; background: #ffffff !important; color: #00296b !important; }
+html body.role-student .clinical-form-table tbody tr:hover td { background: rgba(0,80,157,.055) !important; }
+html body.role-student .main-content table:not(.clinical-form-table):not(.procedure-records-table) thead th { background: #003f88 !important; color: #ffffff !important; }
+html body.role-student .main-content table:not(.clinical-form-table):not(.procedure-records-table) tbody td { color: #00296b !important; }
+html body.role-student .main-content table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover,
+html body.role-student .main-content table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td { background: rgba(0,80,157,.055) !important; }
+
+/* My Records and Progress workspaces: remove the remaining electric-blue and white treatment. */
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) {
+  border-color: rgba(0,80,157,.22) !important;
+  background: linear-gradient(145deg, rgba(0,41,107,.10), rgba(255,255,255,.46) 36%, rgba(255,213,0,.10)) !important;
+  box-shadow: 0 14px 30px rgba(0,41,107,.10) !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .procedure-tabs,
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .search-filter-bar {
+  border-color: rgba(0,80,157,.20) !important;
+  background: rgba(0,80,157,.075) !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .procedure-tab {
+  border-color: rgba(0,80,157,.22) !important;
+  background: rgba(255,255,255,.55) !important;
+  color: #003f88 !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .procedure-tab:hover {
+  border-color: #00509d !important;
+  background: rgba(0,80,157,.12) !important;
+  color: #00296b !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .procedure-tab.active {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 14px rgba(0,63,136,.22) !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) :is(.search-input-wrap, .filter-input) {
+  border-color: rgba(0,80,157,.25) !important;
+  background: rgba(255,255,255,.62) !important;
+  color: #00296b !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .search-input-wrap > i { color: #00509d !important; }
+html body.role-student #deliveryAssistedWorkspace .record-archive-button {
+  border-color: #00509d !important;
+  background: rgba(0,80,157,.10) !important;
+  color: #003f88 !important;
+}
+html body.role-student #deliveryAssistedWorkspace .record-archive-button:hover { background: #00509d !important; color: #ffffff !important; }
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .btn-primary {
+  border-color: #fdc500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 14px rgba(253,197,0,.24) !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .btn-primary:hover { border-color: #ffd500 !important; background: #ffd500 !important; }
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table-container {
+  border-color: rgba(0,80,157,.25) !important;
+  background: rgba(255,255,255,.45) !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table thead th,
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table thead tr:first-child th {
+  border-color: rgba(255,255,255,.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table thead tr:nth-child(2) th { background: #00296b !important; }
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody td,
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody tr:nth-child(even) td {
+  border-color: rgba(0,80,157,.15) !important;
+  background: rgba(255,255,255,.52) !important;
+  color: #00296b !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody tr:nth-child(odd) td { background: rgba(0,80,157,.055) !important; }
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody tr:hover td { background: rgba(255,213,0,.14) !important; }
+html body.role-student #deliveryAssistedWorkspace .case-action-btn {
+  border-color: rgba(0,80,157,.24) !important;
+  background: rgba(0,80,157,.10) !important;
+  color: #00509d !important;
+}
+html body.role-student #deliveryAssistedWorkspace .case-action-btn:hover { border-color: #00509d !important; background: #00509d !important; color: #ffffff !important; }
+html body.role-student #deliveryAssistedWorkspace .case-action-btn.feedback-action { border-color: #fdc500 !important; background: rgba(253,197,0,.18) !important; color: #00296b !important; }
+
+/* Keep every record row on one surface; values must not look like editable white fields. */
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody td,
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody tr:nth-child(even) td {
+  background: rgba(0,80,157,.065) !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody td :is(.record-detail-primary, .record-detail-secondary, span, small, div, input, textarea) {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-student :is(#deliveryAssistedWorkspace, #summaryTabSection) .clinical-form-table tbody td .record-detail-secondary { color: #003f88 !important; }
+
+/* Progress summary surfaces use the same palette rather than white report cards. */
+html body.role-student #summaryTabSection .summary-student-info {
+  border-color: rgba(0,80,157,.24) !important;
+  background: linear-gradient(120deg, rgba(0,41,107,.12), rgba(0,80,157,.08) 58%, rgba(255,213,0,.13)) !important;
+}
+html body.role-student #summaryTabSection .summary-student-info :is(div, strong) { color: #00296b !important; }
+html body.role-student #summaryTabSection .summary-procedure-section {
+  border-color: rgba(0,80,157,.20) !important;
+  background: rgba(0,80,157,.045) !important;
+}
+html body.role-student #summaryTabSection .summary-procedure-section:nth-child(even) { background: rgba(255,213,0,.08) !important; }
+html body.role-student #summaryTabSection .summary-procedure-section h3 { color: #00296b !important; }
+html body.role-student #summaryTabSection .summary-procedure-section h3::before { background: #fdc500 !important; }
+html body.role-student #summaryTabSection #studentProgressExportBtn {
+  border-color: #fdc500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+  box-shadow: 0 6px 14px rgba(253,197,0,.22) !important;
+}
+html body.role-student #summaryTabSection #studentProgressExportBtn:hover { border-color: #ffd500 !important; background: #ffd500 !important; }
+
+/* One consistent report surface: no alternating white or yellow spaces between procedures. */
+html body.role-student #summaryTabSection {
+  background: rgba(0,80,157,.075) !important;
+}
+html body.role-student #summaryTabSection .summary-student-info {
+  background: rgba(0,80,157,.12) !important;
+}
+html body.role-student #summaryProcedureTables,
+html body.role-student #summaryTabSection .summary-procedure-section,
+html body.role-student #summaryTabSection .summary-procedure-section:nth-child(even) {
+  background: rgba(0,80,157,.065) !important;
+}
+html body.role-student #summaryTabSection .clinical-form-table-container,
+html body.role-student #summaryTabSection .clinical-form-table {
+  background: rgba(0,80,157,.065) !important;
+}
+html body.role-student #summaryTabSection .clinical-form-table tbody td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(even) td {
+  background: rgba(0,80,157,.065) !important;
+}
+
+/* Blend the report components into one pale-blue canvas. */
+html body.role-student .main-content {
+  background: rgba(0,80,157,.09) !important;
+}
+html body.role-student #summaryTabSection,
+html body.role-student #summaryProcedureTables {
+  background: rgba(0,80,157,.10) !important;
+}
+html body.role-student #summaryTabSection .summary-student-info,
+html body.role-student #summaryTabSection .procedure-tabs,
+html body.role-student #summaryTabSection .summary-procedure-section,
+html body.role-student #summaryTabSection .summary-procedure-section:nth-child(even),
+html body.role-student #summaryTabSection .clinical-form-table-container {
+  background: rgba(0,80,157,.075) !important;
+}
+html body.role-student #summaryTabSection .clinical-form-table,
+html body.role-student #summaryTabSection .clinical-form-table tbody td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(even) td {
+  background: rgba(0,80,157,.10) !important;
+}
+
+/* Opaque palette surfaces: intentionally no white page, card, field, tab, or table fill. */
+html body.role-student,
+html body.role-student .dashboard,
+html body.role-student .main-content {
+  background: #d7e5f2 !important;
+}
+html body.role-student :is(.record-workspace, .recent-records-panel, .settings-card, .summary-card, .content-section, .section, .card-panel) {
+  background: #dce9f4 !important;
+}
+html body.role-student :is(input, select, textarea, .filter-input, .option-pane-input, .search-input-wrap),
+html body.role-student :is(.btn-secondary, .secondary, .btn-filter, .recent-view-all, .case-action-btn) {
+  background: #e3edf6 !important;
+}
+html body.role-student #summaryTabSection,
+html body.role-student #summaryProcedureTables {
+  background: #d7e5f2 !important;
+}
+html body.role-student #summaryTabSection .summary-student-info,
+html body.role-student #summaryTabSection .procedure-tabs,
+html body.role-student #summaryTabSection .summary-procedure-section,
+html body.role-student #summaryTabSection .summary-procedure-section:nth-child(even),
+html body.role-student #summaryTabSection .clinical-form-table-container {
+  background: #cbddec !important;
+}
+html body.role-student #summaryTabSection .procedure-tab,
+html body.role-student #summaryTabSection .clinical-form-table,
+html body.role-student #summaryTabSection .clinical-form-table tbody td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(even) td {
+  background: #d7e5f2 !important;
+}
+html body.role-student #deliveryAssistedWorkspace,
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table-container,
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table,
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody td,
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody tr:nth-child(even) td {
+  background: #d7e5f2 !important;
+}
+html body.role-student #deliveryAssistedWorkspace :is(.procedure-tabs, .search-filter-bar) { background: #cbddec !important; }
+html body.role-student #deliveryAssistedWorkspace .procedure-tab { background: #e3edf6 !important; }
+html body.role-student {
+  --surface: #dce9f4;
+}
+html body.role-student :is(.table-wrapper, .table-wrap, .clinical-form-table-container) { background: #d7e5f2 !important; }
+html body.role-student :is(.modal, .modal-content, .option-pane, .profile-dropdown-menu, .chat-directory, .chat-conversation-header, #chatTab .chat-compose) { background: #dce9f4 !important; }
+html body.role-student .shared-paper-illustration,
+html body.role-student .student-hero-brief-main > i { background: #dce9f4 !important; }
+
+/* Progress Summary hierarchy: pale-blue canvas, readable rows, navy data headers, and gold accents. */
+html body.role-student .main-content { background: #bdd5e8 !important; }
+html body.role-student #summaryTabSection {
+  border-color: #8fb8d8 !important;
+  background: #c7ddeb !important;
+  box-shadow: 0 12px 28px rgba(0,41,107,.12) !important;
+}
+html body.role-student #summaryTabSection .workspace-header { border-bottom-color: #9cbfdc !important; }
+html body.role-student #summaryTabSection .summary-student-info {
+  border-color: #8fb8d8 !important;
+  background: #b7d1e6 !important;
+}
+html body.role-student #summaryTabSection .procedure-tabs {
+  border-color: #8fb8d8 !important;
+  background: #b7d1e6 !important;
+}
+html body.role-student #summaryTabSection .procedure-tab {
+  border-color: #93b9d7 !important;
+  background: #d9e7f2 !important;
+  color: #003f88 !important;
+}
+html body.role-student #summaryTabSection .procedure-tab.active {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body.role-student #summaryTabSection .summary-procedure-section,
+html body.role-student #summaryTabSection .summary-procedure-section:nth-child(even) {
+  border-color: #8fb8d8 !important;
+  background: #c7ddeb !important;
+}
+html body.role-student #summaryTabSection .clinical-form-table-container {
+  border-color: #8fb8d8 !important;
+  background: #c7ddeb !important;
+}
+html body.role-student #summaryTabSection .clinical-form-table thead th,
+html body.role-student #summaryTabSection .clinical-form-table thead tr:first-child th,
+html body.role-student #summaryTabSection .clinical-form-table thead tr:nth-child(2) th {
+  border-color: #3e6b9d !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-student #summaryTabSection .clinical-form-table,
+html body.role-student #summaryTabSection .clinical-form-table tbody td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(even) td {
+  border-color: #a4c3dc !important;
+  background: #d9e7f2 !important;
+  color: #00296b !important;
+}
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:hover td { background: #c7ddeb !important; }
+
+/* Supplied pale blue: replace formerly white backgrounds while restoring brand colors to controls and headers. */
+html body.role-student,
+html body.role-student .dashboard,
+html body.role-student .main-content,
+html body.role-student :is(.record-workspace, .recent-records-panel, .settings-card, .summary-card, .content-section, .section, .card-panel),
+html body.role-student :is(input, select, textarea, .filter-input, .option-pane-input, .search-input-wrap),
+html body.role-student :is(.btn-secondary, .secondary, .btn-filter, .recent-view-all, .case-action-btn) {
+  background: #b5cfe3 !important;
+}
+html body.role-student #summaryTabSection,
+html body.role-student #summaryProcedureTables,
+html body.role-student #summaryTabSection .summary-student-info,
+html body.role-student #summaryTabSection .procedure-tabs,
+html body.role-student #summaryTabSection .summary-procedure-section,
+html body.role-student #summaryTabSection .summary-procedure-section:nth-child(even),
+html body.role-student #summaryTabSection .clinical-form-table-container,
+html body.role-student #summaryTabSection .procedure-tab,
+html body.role-student #summaryTabSection .clinical-form-table,
+html body.role-student #summaryTabSection .clinical-form-table tbody td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(even) td {
+  background: #b5cfe3 !important;
+}
+html body.role-student #deliveryAssistedWorkspace,
+html body.role-student #deliveryAssistedWorkspace :is(.procedure-tabs, .search-filter-bar, .procedure-tab, .clinical-form-table-container, .clinical-form-table, .clinical-form-table tbody td),
+html body.role-student :is(.table-wrapper, .table-wrap, .clinical-form-table-container),
+html body.role-student :is(.modal, .modal-content, .option-pane, .profile-dropdown-menu, .chat-directory, .chat-conversation-header, #chatTab .chat-compose) {
+  background: #b5cfe3 !important;
+}
+html body.role-student #summaryTabSection .procedure-tab.active,
+html body.role-student #deliveryAssistedWorkspace .procedure-tab.active { background: #00509d !important; color: #ffffff !important; }
+html body.role-student #summaryTabSection #studentProgressExportBtn,
+html body.role-student #deliveryAssistedWorkspace .btn-primary { background: #fdc500 !important; color: #00296b !important; }
+
+/* Restored white clinical workspace surfaces. Brand colors remain on headers, actions, and accents. */
+html body.role-student,
+html body.role-student .dashboard,
+html body.role-student .main-content {
+  background: #f6f9fc !important;
+}
+html body.role-student :is(.record-workspace, .recent-records-panel, .settings-card, .summary-card, .content-section, .section, .card-panel),
+html body.role-student :is(input, select, textarea, .filter-input, .option-pane-input, .search-input-wrap),
+html body.role-student :is(.btn-secondary, .secondary, .btn-filter, .recent-view-all, .case-action-btn) {
+  background: #ffffff !important;
+}
+html body.role-student #summaryTabSection,
+html body.role-student #summaryProcedureTables,
+html body.role-student #summaryTabSection .summary-procedure-section,
+html body.role-student #summaryTabSection .summary-procedure-section:nth-child(even),
+html body.role-student #summaryTabSection .clinical-form-table-container,
+html body.role-student #summaryTabSection .clinical-form-table,
+html body.role-student #summaryTabSection .clinical-form-table tbody td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student #summaryTabSection .clinical-form-table tbody tr:nth-child(even) td,
+html body.role-student #deliveryAssistedWorkspace,
+html body.role-student #deliveryAssistedWorkspace :is(.clinical-form-table-container, .clinical-form-table, .clinical-form-table tbody td) {
+  background: #ffffff !important;
+}
+html body.role-student #summaryTabSection .summary-student-info,
+html body.role-student #summaryTabSection .procedure-tabs,
+html body.role-student #deliveryAssistedWorkspace :is(.procedure-tabs, .search-filter-bar) {
+  background: #eef5fb !important;
+}
+html body.role-student :is(#summaryTabSection, #deliveryAssistedWorkspace) .procedure-tab { background: #ffffff !important; }
+html body.role-student :is(#summaryTabSection, #deliveryAssistedWorkspace) .clinical-form-table tbody tr:hover td { background: #f1f7fc !important; }
+html body.role-student :is(.table-wrapper, .table-wrap, .clinical-form-table-container),
+html body.role-student :is(.modal, .modal-content, .option-pane, .profile-dropdown-menu, .chat-directory, .chat-conversation-header, #chatTab .chat-compose) {
+  background: #ffffff !important;
+}
+html body.role-student { --surface: #ffffff; }
+
+/* Correction Requests: palette-based request states without changing the rest of the workspace. */
+html body.role-student #editRequestsTab {
+  border-color: rgba(0,80,157,.24) !important;
+  border-top: 4px solid #00296b !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 24px rgba(0,41,107,.09) !important;
+}
+html body.role-student #editRequestsTab .workspace-header { border-bottom-color: rgba(0,80,157,.20) !important; }
+html body.role-student #editRequestsTab .workspace-title { color: #00296b !important; }
+html body.role-student #editRequestsTab .workspace-subtitle { color: #003f88 !important; }
+html body.role-student #editRequestsTab .edit-request-notification {
+  border-color: rgba(0,80,157,.22) !important;
+  border-left: 4px solid #fdc500 !important;
+  background: rgba(0,80,157,.055) !important;
+  box-shadow: 0 4px 12px rgba(0,41,107,.06) !important;
+}
+html body.role-student #editRequestsTab .edit-request-notification:hover {
+  border-color: #00509d !important;
+  border-left-color: #ffd500 !important;
+  background: rgba(0,80,157,.09) !important;
+}
+html body.role-student #editRequestsTab .notification-icon {
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+html body.role-student #editRequestsTab .notification-title { color: #00296b !important; }
+html body.role-student #editRequestsTab .notification-meta { color: #003f88 !important; }
+html body.role-student #editRequestsTab .notification-time { color: #00509d !important; }
+html body.role-student #editRequestsTab .delete-edit-notification {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-student #editRequestsTab .delete-edit-notification:hover {
+  border-color: #00296b !important;
+  background: #00296b !important;
+  color: #ffd500 !important;
+}
+html body.role-student #editRequestsTab .approved .notification-icon { background: #00509d !important; color: #ffffff !important; }
+html body.role-student #editRequestsTab .rejected .notification-icon { background: #00296b !important; color: #ffd500 !important; }
+
+/* Messages, activity, and settings use the same navy / blue / gold system. */
+html body.role-student #chatTab.student-chat-panel,
+html body.role-student #activityLogTab,
+html body.role-student #settingsTab {
+  border-color: rgba(0,80,157,.24) !important;
+  border-top: 4px solid #00296b !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 24px rgba(0,41,107,.09) !important;
+}
+html body.role-student #chatTab .chat-directory {
+  border-right-color: rgba(0,80,157,.2) !important;
+  background: #eef5fb !important;
+}
+html body.role-student #chatTab :is(.chat-directory-title, .chat-conversation-title) { color: #00296b !important; }
+html body.role-student #chatTab :is(.chat-directory-subtitle, .chat-conversation-subtitle, .chat-directory-label) { color: #003f88 !important; }
+html body.role-student #chatTab :is(.chat-directory-icon, .chat-instructor-avatar, .chat-conversation-avatar) { background: rgba(0,80,157,.12) !important; color: #00509d !important; }
+html body.role-student #chatTab .chat-instructor-search input { border-color: rgba(0,80,157,.25) !important; background: #ffffff !important; color: #00296b !important; }
+html body.role-student #chatTab .chat-instructor-item { color: #00296b !important; }
+html body.role-student #chatTab .chat-instructor-item.active { border-color: #00509d !important; background: #ffffff !important; box-shadow: inset 3px 0 0 #fdc500 !important; }
+html body.role-student #chatTab .chat-conversation,
+html body.role-student #chatTab .chat-thread { background: #f6f9fc !important; }
+html body.role-student #chatTab .chat-conversation-header,
+html body.role-student #chatTab .chat-compose { border-color: rgba(0,80,157,.2) !important; background: #ffffff !important; }
+html body.role-student #chatTab .chat-message.student { background: #00509d !important; color: #ffffff !important; }
+html body.role-student #chatTab .chat-message.instructor { border-color: rgba(0,80,157,.22) !important; background: #ffffff !important; color: #00296b !important; }
+html body.role-student #chatTab .chat-compose textarea { border-color: rgba(0,80,157,.22) !important; background: #eef5fb !important; color: #00296b !important; }
+html body.role-student #chatTab .chat-send-button { background: #fdc500 !important; color: #00296b !important; box-shadow: 0 5px 12px rgba(253,197,0,.22) !important; }
+html body.role-student #chatTab .chat-send-button:disabled { background: rgba(0,80,157,.22) !important; color: #003f88 !important; }
+
+html body.role-student #activityLogTab .workspace-header,
+html body.role-student #settingsTab > .workspace-header { border-bottom-color: rgba(0,80,157,.20) !important; }
+html body.role-student :is(#activityLogTab, #settingsTab) :is(.workspace-title, .settings-section-heading strong, .settings-appearance-copy strong) { color: #00296b !important; }
+html body.role-student :is(#activityLogTab, #settingsTab) .workspace-subtitle { color: #003f88 !important; }
+html body.role-student #activityLogTab .frontend-panel-empty {
+  border-color: rgba(0,80,157,.25) !important;
+  background: #eef5fb !important;
+  color: #00509d !important;
+}
+html body.role-student #activityLogTab .frontend-panel-empty i { color: #fdc500 !important; }
+html body.role-student .activity-log-item { border-color: rgba(0,80,157,.2) !important; background: #eef5fb !important; }
+html body.role-student .activity-log-icon { background: #00509d !important; color: #ffffff !important; }
+html body.role-student .activity-log-item.archive .activity-log-icon { background: #ffd500 !important; color: #00296b !important; }
+html body.role-student .activity-log-item.restore .activity-log-icon { background: #003f88 !important; color: #ffffff !important; }
+
+html body.role-student #settingsTab .settings-section,
+html body.role-student #settingsTab .settings-appearance-card { border-color: rgba(0,80,157,.20) !important; background: #eef5fb !important; }
+html body.role-student #settingsTab .settings-kicker { color: #00509d !important; }
+html body.role-student #settingsTab .settings-avatar-shell { border-color: #ffd500 !important; background: #00296b !important; }
+html body.role-student #settingsTab .settings-avatar-placeholder { color: #ffd500 !important; }
+html body.role-student #settingsTab .form-group label { color: #003f88 !important; }
+html body.role-student #settingsTab :is(input, .readonly-value) { border-color: rgba(0,80,157,.25) !important; background: #ffffff !important; color: #00296b !important; }
+html body.role-student #settingsTab :is(.settings-photo-button, .appearance-toggle) { border-color: #00509d !important; background: #ffffff !important; color: #003f88 !important; }
+html body.role-student #settingsTab :is(.settings-photo-button, .appearance-toggle):hover { background: #00509d !important; color: #ffffff !important; }
+html body.role-student #settingsTab .pane-actions .primary { border-color: #fdc500 !important; background: #fdc500 !important; color: #00296b !important; }
+
+/* Premium procedure selector, used before opening the clinical-record form. */
+html body.role-student .option-pane-overlay.record-choice-overlay {
+  background: rgba(0, 41, 107, 0.7) !important;
+  backdrop-filter: blur(10px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.08) !important;
+}
+
+html body.role-student .option-pane.record-choice-dialog {
+  width: min(620px, calc(100vw - 32px)) !important;
+  max-width: 620px !important;
+  overflow: hidden;
+  padding: 40px 32px 30px !important;
+  border: 1px solid #bcd4ea !important;
+  border-radius: 22px !important;
+  background: linear-gradient(145deg, #ffffff 0%, #f5faff 100%) !important;
+  box-shadow: 0 28px 64px rgba(0, 41, 107, 0.3), inset 0 1px 0 #ffffff !important;
+}
+
+html body.role-student .option-pane.record-choice-dialog::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 5px;
+  content: "";
+  background: linear-gradient(90deg, #00296b 0%, #00509d 58%, #ffd500 100%);
+}
+
+html body.role-student .record-choice-dialog .option-pane-close {
+  top: 14px !important;
+  right: 14px !important;
+  width: 34px !important;
+  height: 34px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 50% !important;
+  background: #eef5fb !important;
+  color: #003f88 !important;
+  font-size: 26px !important;
+}
+
+html body.role-student .record-choice-dialog .option-pane-close:hover {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+
+html body.role-student .record-choice-dialog .option-pane-title {
+  margin: 6px 38px 10px !important;
+  color: #00296b !important;
+  font-size: 25px !important;
+  letter-spacing: -0.035em;
+}
+
+html body.role-student .record-choice-dialog .option-pane-message {
+  max-width: 430px;
+  margin: 0 auto 26px !important;
+  color: #003f88 !important;
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+}
+
+html body.role-student .record-choice-dialog .option-pane-actions {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px !important;
+  width: 100%;
+}
+
+html body.role-student .record-choice-dialog .option-pane-btn.primary {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 7px !important;
+  border: 1px solid #00509d !important;
+  border-top: 3px solid #ffd500 !important;
+  border-radius: 11px !important;
+  background: linear-gradient(145deg, #00509d 0%, #003f88 100%) !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  line-height: 1.18 !important;
+  text-align: center;
+  box-shadow: 0 7px 14px rgba(0, 41, 107, 0.2) !important;
+}
+
+html body.role-student .record-choice-dialog .option-pane-btn.primary:hover {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+  box-shadow: 0 10px 18px rgba(253, 197, 0, 0.3) !important;
+  transform: translateY(-3px) !important;
+}
+
+html body.role-student .record-choice-dialog .option-pane-btn.primary:focus-visible {
+  outline: 3px solid #ffd500 !important;
+  outline-offset: 2px !important;
+}
+
+@media (max-width: 620px) {
+  html body.role-student .option-pane.record-choice-dialog { padding: 38px 20px 22px !important; }
+  html body.role-student .record-choice-dialog .option-pane-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html body.role-student .record-choice-dialog .option-pane-btn.primary:last-child { grid-column: 1 / -1; }
+}
+
+/* My Records returns to the original white workspace surface; navy remains reserved for headers and active controls. */
+html body.role-student #deliveryAssistedWorkspace,
+html body.role-student #deliveryAssistedWorkspace :is(.procedure-tabs, .search-filter-bar, .clinical-form-table-container, .clinical-form-table),
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody tr,
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody td,
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody tr:nth-child(odd) td,
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody tr:nth-child(even) td {
+  background: #ffffff !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .procedure-tab:not(.active),
+html body.role-student #deliveryAssistedWorkspace :is(.search-input-wrap, .filter-input, #recordSearch) {
+  background: #ffffff !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody td :where(span, small, div, input, textarea) {
+  background: #ffffff !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .clinical-form-table tbody tr:hover td {
+  background: #f5f9fd !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace.card-panel,
+html body.role-student #deliveryAssistedWorkspace > #recordProcedureTabs,
+html body.role-student #deliveryAssistedWorkspace > .search-filter-bar {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+/* My Records follows the login balance: white workspace, blue navigation, and gold emphasis. */
+html body.role-student #deliveryAssistedWorkspace {
+  border-color: #c8d9ec !important;
+  box-shadow: 0 12px 28px rgba(0, 41, 107, 0.09) !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace > :is(#recordProcedureTabs, .search-filter-bar) {
+  border-color: #c8d9ec !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .procedure-tab:not(.active) {
+  border-color: #c8d9ec !important;
+  color: #003f88 !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .procedure-tab:not(.active):hover {
+  border-color: #00509d !important;
+  background: #eef5fb !important;
+  color: #00296b !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .procedure-tab.active {
+  border-color: #003f88 !important;
+  background: linear-gradient(135deg, #003f88 0%, #00509d 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 14px rgba(0, 41, 107, 0.18) !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace :is(.search-input-wrap, .filter-input, #recordSearch) {
+  border-color: #c8d9ec !important;
+  color: #00296b !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .search-input-wrap i {
+  color: #00509d !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .record-archive-button {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .record-archive-button:hover {
+  background: #eef5fb !important;
+  color: #00296b !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace #fabAddDeliveryBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 8px 18px rgba(253, 197, 0, 0.25) !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .search-filter-bar,
+html body.role-student #deliveryAssistedWorkspace .search-filter-bar::before,
+html body.role-student #deliveryAssistedWorkspace .search-filter-bar::after,
+html body.role-student #deliveryAssistedWorkspace .search-filter-bar > * {
+  background: #ffffff !important;
+  background-image: none !important;
+}
+
+/* Profile name is read-only, but it should retain the same compact field treatment as editable details. */
+html body.role-student:not(.student-dark) #settingsTab .readonly-value {
+  display: flex !important;
+  min-height: 42px !important;
+  height: 42px;
+  align-items: center;
+  padding: 0 13px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  font-weight: 600;
+  line-height: 1.2;
+}

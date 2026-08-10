@@ -3303,3 +3303,329 @@ html body.role-student.student-dark #deliveryInputPane :is(input, textarea, sele
   html body.role-student #deliveryInputPane .clinical-form-grid { grid-template-columns: 1fr !important; }
   html body.role-student #deliveryInputPane .pane-actions { margin: 2px 0 0 !important; padding: 9px 0 0 !important; }
 }
+
+/* Keep the administrator and instructor navigation rails aligned with the student workspace. */
+html body:is(.role-admin, .role-instructor) :is(.dashboard, .app-shell) > .sidebar {
+  background: linear-gradient(180deg, #00296b 0%, #003f88 54%, #00509d 100%) !important;
+  border-right-color: rgba(255, 213, 0, 0.24) !important;
+  box-shadow: 8px 0 24px rgba(0, 41, 107, 0.2) !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar-brand {
+  border-bottom-color: rgba(255, 213, 0, 0.28) !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-label, .sidebar-header, .sidebar-group-label) {
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-nav-item, .sidebar-item) {
+  color: rgba(255, 255, 255, 0.92) !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-nav-item i, .sidebar-item .sidebar-icon) {
+  color: #dcecff !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-nav-item, .sidebar-item):hover {
+  color: #ffffff !important;
+  background: rgba(0, 41, 107, 0.34) !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-nav-item, .sidebar-item).active {
+  color: #00296b !important;
+  background: #ffd500 !important;
+  border-color: #ffd500 !important;
+  box-shadow: 0 8px 18px rgba(0, 41, 107, 0.2) !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-nav-item, .sidebar-item).active :is(i, .sidebar-icon) {
+  color: #00296b !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-nav-item, .sidebar-item).active::before {
+  opacity: 0 !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.nav-badge, .sidebar-count) {
+  color: #00296b !important;
+  background: #fdc500 !important;
+  box-shadow: none !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar .active :is(.nav-badge, .sidebar-count) {
+  color: #ffffff !important;
+  background: #00296b !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar-user-card {
+  border-color: rgba(255, 213, 0, 0.32) !important;
+  background: rgba(0, 41, 107, 0.3) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar-user-avatar {
+  color: #00296b !important;
+  background: #fdc500 !important;
+  box-shadow: 0 6px 14px rgba(0, 41, 107, 0.24) !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-logout, .sidebar-logout-btn, #adminLogoutBtn) {
+  color: #ffffff !important;
+}
+
+html body:is(.role-admin, .role-instructor) .sidebar :is(.sidebar-nav-item, .sidebar-item):focus-visible {
+  outline-color: #ffd500 !important;
+}
+
+/* Login portal palette: the same navy clinical identity with gold calls to action. */
+body:has(.portal-container) {
+  --bg-gradient-1: #edf4fb;
+  --bg-gradient-2: #e4eef9;
+  --primary: #003f88;
+  --primary-light: #00509d;
+  --secondary: #00296b;
+  --accent: #ffd500;
+  --accent-hover: #fdc500;
+  --accent-glow: rgba(255, 213, 0, 0.28);
+  --text-main: #00296b;
+  --text-muted: #557092;
+  --glass-border: #c8d9ed;
+  --input-border: #bcd1e9;
+  --input-focus: #00509d;
+  --input-focus-shadow: rgba(0, 80, 157, 0.16);
+  --left-panel-bg: #00296b;
+}
+
+body:has(.portal-container),
+body:has(.portal-container) .portal-container,
+body:has(.portal-container) .auth-panel {
+  background: #edf4fb !important;
+}
+
+body:has(.portal-container) .prestige-panel {
+  background: linear-gradient(145deg, #00296b 0%, #003f88 55%, #00509d 100%) !important;
+  box-shadow: 10px 0 28px rgba(0, 41, 107, 0.2) !important;
+}
+
+body:has(.portal-container) .prestige-panel::before,
+body:has(.portal-container) .prestige-panel::after {
+  opacity: 0.22 !important;
+}
+
+body:has(.portal-container) .prestige-title span,
+body:has(.portal-container) .prestige-feature-card i,
+body:has(.portal-container) .prestige-system-status i {
+  color: #ffd500 !important;
+  text-shadow: 0 4px 12px rgba(0, 41, 107, 0.3) !important;
+}
+
+body:has(.portal-container) .prestige-feature-card {
+  border-color: rgba(255, 213, 0, 0.28) !important;
+  background: rgba(0, 41, 107, 0.22) !important;
+}
+
+body:has(.portal-container) .status-dot {
+  background: #ffd500 !important;
+  box-shadow: 0 0 0 4px rgba(255, 213, 0, 0.16) !important;
+}
+
+body:has(.portal-container) .auth-card,
+body:has(.portal-container) .modal-content {
+  border-color: #c8d9ed !important;
+  background: #ffffff !important;
+  box-shadow: 0 16px 38px rgba(0, 41, 107, 0.11) !important;
+}
+
+body:has(.portal-container) :is(.auth-card-header h2, .modal-content h2) {
+  color: #00296b !important;
+}
+
+body:has(.portal-container) .auth-eyebrow,
+body:has(.portal-container) .auth-eyebrow i {
+  color: #00509d !important;
+}
+
+body:has(.portal-container) .top-bar-btn {
+  color: #003f88 !important;
+  border-color: #bcd1e9 !important;
+  background: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(0, 41, 107, 0.08) !important;
+}
+
+body:has(.portal-container) .top-bar-btn:hover {
+  color: #00296b !important;
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+}
+
+body:has(.portal-container) .input-field-wrapper input {
+  color: #00296b !important;
+  border-color: #bcd1e9 !important;
+  background: #ffffff !important;
+}
+
+body:has(.portal-container) .input-field-wrapper input:focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 4px rgba(0, 80, 157, 0.16) !important;
+}
+
+body:has(.portal-container) :is(.input-field-wrapper .input-icon, .password-toggle-btn) {
+  color: #00509d !important;
+}
+
+body:has(.portal-container) .password-toggle-btn:hover {
+  color: #00296b !important;
+  background: rgba(255, 213, 0, 0.24) !important;
+}
+
+body:has(.portal-container) .input-container label,
+body:has(.portal-container) .remember-me-container,
+body:has(.portal-container) :is(.auth-card-header p, .modal-content p, .security-note) {
+  color: #557092 !important;
+}
+
+body:has(.portal-container) :is(.forgot-password-link, .signup-link a) {
+  color: #003f88 !important;
+}
+
+body:has(.portal-container) :is(.forgot-password-link, .signup-link a):hover {
+  color: #00509d !important;
+}
+
+body:has(.portal-container) .remember-me-container input[type="checkbox"]:checked {
+  border-color: #00509d !important;
+  background: #00509d !important;
+}
+
+body:has(.portal-container) .btn-primary {
+  color: #00296b !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  box-shadow: 0 10px 22px rgba(253, 197, 0, 0.26) !important;
+}
+
+body:has(.portal-container) .btn-primary:hover {
+  background: #ffd500 !important;
+  box-shadow: 0 12px 26px rgba(253, 197, 0, 0.34) !important;
+}
+
+body:has(.portal-container) .btn-secondary {
+  color: #003f88 !important;
+  border-color: #bcd1e9 !important;
+  background: #edf4fb !important;
+}
+
+body:has(.portal-container) .modal-overlay {
+  background: rgba(0, 41, 107, 0.58) !important;
+}
+
+body:has(.portal-container) :is(.preloader, .portal-splash) {
+  background: linear-gradient(145deg, #00296b 0%, #003f88 56%, #00509d 100%) !important;
+}
+
+body:has(.portal-container) .portal-splash-glow {
+  background: rgba(255, 213, 0, 0.24) !important;
+}
+
+body:has(.portal-container) .portal-splash-status i {
+  color: #ffd500 !important;
+}
+
+/* Student clinical-record form: use the portal palette without sacrificing form readability. */
+html body.role-student:not(.student-dark) .record-modal-overlay {
+  background: rgba(0, 41, 107, 0.68) !important;
+}
+
+html body.role-student:not(.student-dark) .record-modal {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  box-shadow: 0 22px 54px rgba(0, 41, 107, 0.3) !important;
+}
+
+html body.role-student:not(.student-dark) .record-modal-header {
+  border-bottom-color: rgba(0, 80, 157, 0.26) !important;
+  background: linear-gradient(100deg, #ffffff 0%, #eef5fb 100%) !important;
+}
+
+html body.role-student:not(.student-dark) .record-modal-title {
+  color: #00296b !important;
+}
+
+html body.role-student:not(.student-dark) .record-modal-type {
+  border-color: rgba(0, 80, 157, 0.24) !important;
+  background: rgba(0, 80, 157, 0.1) !important;
+  color: #003f88 !important;
+}
+
+html body.role-student:not(.student-dark) .record-modal-close {
+  border-color: rgba(0, 80, 157, 0.22) !important;
+  background: #eef5fb !important;
+  color: #003f88 !important;
+}
+
+html body.role-student:not(.student-dark) .record-modal-close:hover {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane .clinical-form-section {
+  border-color: rgba(0, 80, 157, 0.22) !important;
+  border-left: 3px solid #fdc500 !important;
+  background: #f7fbff !important;
+  box-shadow: none !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane .clinical-form-section-title {
+  color: #00509d !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane .form-group label {
+  color: #003f88 !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane :is(input, textarea, select) {
+  border-color: #bfd4e9 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane :is(input, textarea, select)::placeholder {
+  color: #8298b8 !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane :is(input, textarea, select):focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.16) !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane .pane-actions {
+  border-top-color: rgba(0, 80, 157, 0.22) !important;
+  background: #ffffff !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane .pane-actions .secondary {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane .pane-actions .secondary:hover {
+  background: #eef5fb !important;
+  color: #00296b !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane .pane-actions .primary {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 15px rgba(253, 197, 0, 0.24) !important;
+}
+
+html body.role-student:not(.student-dark) #deliveryInputPane .pane-actions .primary:hover {
+  background: #ffd500 !important;
+  box-shadow: 0 9px 18px rgba(253, 197, 0, 0.34) !important;
+}

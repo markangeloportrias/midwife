@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260729-12" />
     <link rel="stylesheet" href="assets/css/pages/student.css" />
     <link rel="stylesheet" href="assets/css/components/hero.css?v=20260728-12" />
-    <link rel="stylesheet" href="assets/css/base/theme.css" />
+    <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-22" />
+    <link rel="stylesheet" href="assets/css/pages/student-palette.css?v=20260810-27" />
   </head>
   <body>
     <div class="dashboard">
@@ -297,8 +298,8 @@
                 width="140"
                 height="170"
                 rx="14"
-                fill="#e8edf8"
-                stroke="#c5cef0"
+                fill="#ffffff"
+                stroke="#00509d"
                 stroke-width="2"
               />
               <rect
@@ -317,24 +318,24 @@
                 width="50"
                 height="22"
                 rx="6"
-                fill="#c5cef0"
-                stroke="#a0aede"
+                fill="#ffd500"
+                stroke="#003f88"
                 stroke-width="1.5"
               />
               <!-- Checklist lines -->
-              <circle cx="60" cy="80" r="7" fill="#1a1e6f" opacity="0.15" />
+              <circle cx="60" cy="80" r="7" fill="#00296b" opacity="0.15" />
               <polyline
                 points="56,80 59,83 65,77"
-                stroke="#1a1e6f"
+                stroke="#00296b"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
-              <rect x="75" y="76" width="65" height="7" rx="3" fill="#c5cef0" />
-              <circle cx="60" cy="105" r="7" fill="#1a1e6f" opacity="0.15" />
+              <rect x="75" y="76" width="65" height="7" rx="3" fill="#00509d" />
+              <circle cx="60" cy="105" r="7" fill="#00296b" opacity="0.15" />
               <polyline
                 points="56,105 59,108 65,102"
-                stroke="#1a1e6f"
+                stroke="#00296b"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -345,28 +346,28 @@
                 width="55"
                 height="7"
                 rx="3"
-                fill="#c5cef0"
+                fill="#00509d"
               />
-              <circle cx="60" cy="130" r="7" fill="#1a1e6f" opacity="0.15" />
+              <circle cx="60" cy="130" r="7" fill="#00296b" opacity="0.15" />
               <rect
                 x="75"
                 y="126"
                 width="70"
                 height="7"
                 rx="3"
-                fill="#dde3f5"
+                fill="#00509d"
               />
-              <circle cx="60" cy="155" r="7" fill="#1a1e6f" opacity="0.15" />
+              <circle cx="60" cy="155" r="7" fill="#00296b" opacity="0.15" />
               <rect
                 x="75"
                 y="151"
                 width="45"
                 height="7"
                 rx="3"
-                fill="#dde3f5"
+                fill="#00509d"
               />
               <!-- Medical cross badge -->
-              <circle cx="158" cy="148" r="28" fill="#1a1e6f" opacity="0.9" />
+              <circle cx="158" cy="148" r="28" fill="#00296b" opacity="0.9" />
               <rect
                 x="151"
                 y="136"
@@ -385,10 +386,10 @@
               />
               <defs>
                 <linearGradient id="clipboardGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#7B8CDE" stop-opacity="0.15" />
+                  <stop offset="0%" stop-color="#ffd500" stop-opacity="0.15" />
                   <stop
                     offset="100%"
-                    stop-color="#1a1e6f"
+                    stop-color="#00296b"
                     stop-opacity="0.05"
                   />
                 </linearGradient>
@@ -430,7 +431,7 @@
           >
             <div
               class="stat-icon-wrap"
-              style="background: rgba(16, 185, 129, 0.1); color: #059669"
+              style="background: rgba(0, 63, 136, 0.1); color: #003f88"
             >
               <i class="fas fa-user-nurse"></i>
             </div>
@@ -449,7 +450,7 @@
           >
             <div
               class="stat-icon-wrap"
-              style="background: rgba(245, 158, 11, 0.1); color: #d97706"
+              style="background: rgba(0, 80, 157, 0.1); color: #00509d"
             >
               <i class="fas fa-stethoscope"></i>
             </div>
@@ -468,7 +469,7 @@
           >
             <div
               class="stat-icon-wrap"
-              style="background: rgba(168, 85, 247, 0.1); color: #9333ea"
+              style="background: rgba(253, 197, 0, 0.18); color: #00296b"
             >
               <i class="fas fa-syringe"></i>
             </div>
@@ -487,7 +488,7 @@
           >
             <div
               class="stat-icon-wrap"
-              style="background: rgba(6, 182, 212, 0.1); color: #0891b2"
+              style="background: rgba(255, 213, 0, 0.2); color: #00296b"
             >
               <i class="fas fa-droplet"></i>
             </div>
@@ -537,7 +538,7 @@
             <button type="button" class="procedure-tab" data-record-procedure="internal-exam">Internal Examination</button>
           </div>
 
-          <div class="search-filter-bar">
+          <div class="search-filter-bar" style="background: #ffffff !important; background-image: none !important">
             <div class="search-input-wrap">
               <i class="fas fa-search"></i>
               <input
@@ -657,7 +658,7 @@
                 <button class="secondary settings-photo-button" id="settingsPhotoBtn" type="button"><i class="fas fa-camera" aria-hidden="true"></i>Change photo</button>
               </div>
               <div class="settings-grid">
-                <div class="form-group"><label>Student Name</label><div id="settingsDisplayName" class="readonly-value"><i class="fas fa-user"></i>Student</div></div>
+                <div class="form-group"><label>Student Name</label><div id="settingsDisplayName" class="readonly-value" style="box-sizing: border-box !important; height: 36px !important; min-height: 36px !important; padding: 0 12px !important; font-size: 11px !important"><i class="fas fa-user"></i>Student</div></div>
                 <div class="form-group"><label>Contact Number</label><input id="settingsContactNumber" type="tel" placeholder="Contact number" autocomplete="tel" /></div>
                 <div class="form-group"><label>Parent / Guardian Name</label><input id="settingsParentName" type="text" placeholder="Parent or guardian name" autocomplete="name" /></div>
                 <div class="form-group"><label>Parent / Guardian Contact</label><input id="settingsParentContact" type="tel" placeholder="Parent contact number" autocomplete="tel" /></div>
@@ -1929,6 +1930,8 @@
 
       function closeOptionPane() {
         optionPaneOverlay.classList.remove("open");
+        optionPaneOverlay.classList.remove("record-choice-overlay");
+        optionPane?.classList.remove("record-choice-dialog");
       }
 
       optionPaneClose?.addEventListener("click", closeOptionPane);
@@ -2033,6 +2036,8 @@
       function showOptionPane(config) {
         const paneConfig = config || {};
         optionPane?.classList.toggle("remarks-dialog", paneConfig.dialogStyle === "remarks");
+        optionPane?.classList.toggle("record-choice-dialog", paneConfig.dialogStyle === "record-choice");
+        optionPaneOverlay?.classList.toggle("record-choice-overlay", paneConfig.dialogStyle === "record-choice");
         optionPaneTitle.textContent = paneConfig.title || "Notice";
         if (paneConfig.dialogStyle === "remarks") {
           renderInstructorFeedbackCard(paneConfig.feedback || { message: paneConfig.message || "" });
@@ -3887,6 +3892,7 @@
           showOptionPane({
             title: "Add Clinical Record",
             message: "Choose the procedure for the record you want to add.",
+            dialogStyle: "record-choice",
             buttons: addRecordProcedures.map(([key, label]) => ({
               label,
               variant: "primary",
