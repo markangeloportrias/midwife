@@ -1,0 +1,11 @@
+/* Shared design tokens. Prefer these names for new reusable UI. */
+:root {
+  --app-color-primary: #20267c;
+  --app-color-surface: #ffffff;
+  --app-color-canvas: #eef2f8;
+  --app-color-text: #172033;
+  --app-color-muted: #64748b;
+  --app-color-border: #dbe3f1;
+  --app-radius: 10px;
+  --app-shadow: 0 2px 8px rgba(30, 41, 59, 0.05);
+}

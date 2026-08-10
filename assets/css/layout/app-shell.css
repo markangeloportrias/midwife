@@ -1,3 +1,8 @@
+@import url("../base/variables.css");
+@import url("../base/reset.css");
+@import url("../base/typography.css");
+@import url("./sidebar.css");
+
 /* Shared modern, headerless dashboard shell */
 :root { --modern-sidebar: 252px; --modern-navy: #10165f; --modern-blue: #1e2a8a; }
 
@@ -787,6 +792,27 @@ table tbody td {
   width: 72px !important; min-width: 72px !important; max-width: 72px !important;
 }
 .app-shell.sidebar-collapsed > .sidebar { flex-basis: 72px !important; }
+/* Student dashboard: let the animated grid track size the rail.  Animating
+   both the grid and a fixed sidebar width created two independent motions,
+   which made the workspace look detached as the rail closed. */
+@media (min-width: 1025px) {
+  .dashboard,
+  .dashboard.sidebar-collapsed {
+    transition: grid-template-columns 420ms cubic-bezier(.16, 1, .3, 1) !important;
+  }
+
+  .dashboard > .sidebar,
+  .dashboard.sidebar-collapsed > .sidebar {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    transition: padding 420ms cubic-bezier(.16, 1, .3, 1), box-shadow 420ms ease !important;
+  }
+
+  .dashboard > .main-content {
+    min-width: 0;
+  }
+}
 
 .summary-select-empty {
   min-height: 120px !important;

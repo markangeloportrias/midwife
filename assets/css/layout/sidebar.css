@@ -1,0 +1,9 @@
+/* Sidebar-specific extension point. Shared sidebar implementation is in app-shell.css. */
+:root {
+  --sidebar-focus-ring: rgba(255, 255, 255, 0.62);
+}
+
+.sidebar :focus-visible {
+  outline: 2px solid var(--sidebar-focus-ring);
+  outline-offset: 2px;
+}

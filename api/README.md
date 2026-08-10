@@ -3,7 +3,7 @@
 This is a dependency-free PHP 8 REST API for XAMPP/MariaDB.
 
 1. Place the project in `C:\xampp\htdocs\THESIS6`.
-2. Import `xampp-sql-prompt.sql` in phpMyAdmin.
+2. Import `database/schema.sql` in phpMyAdmin.
 3. Start Apache and MySQL in XAMPP.
 4. Open `http://localhost/THESIS6/api/health`.
 

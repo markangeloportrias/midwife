@@ -11,13 +11,29 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="assets/css/pages/login.css" />
+    <link rel="stylesheet" href="assets/css/base/theme.css" />
   </head>
   <body>
-    <!-- Premium Preloader Splash -->
-    <div class="preloader" id="preloader">
-      <div class="preloader-spinner"></div>
-      <div class="preloader-text">College of Midwifery</div>
+    <!-- Logo-first secure portal splash -->
+    <div class="preloader portal-splash" id="preloader" role="status" aria-live="polite">
+      <div class="portal-splash-glow portal-splash-glow-one"></div>
+      <div class="portal-splash-glow portal-splash-glow-two"></div>
+      <div class="portal-splash-card">
+        <div class="portal-splash-logo-wrap">
+          <img
+            class="portal-splash-logo"
+            src="assets/images/portal-mark-cropped.png"
+            alt="MIDWIFE Clinical Portal"
+          />
+        </div>
+        <span class="portal-splash-eyebrow">BISU College of Midwifery</span>
+        <strong class="portal-splash-title">MIDWIFE Clinical Portal</strong>
+        <span class="portal-splash-status">
+          <i class="fas fa-shield-heart" aria-hidden="true"></i>
+          Preparing your secure workspace
+        </span>
+      </div>
     </div>
 
     <!-- Floating Dynamic Background Orbs -->
@@ -37,12 +53,12 @@
         <div class="prestige-header">
           <div class="prestige-logo-wrapper">
             <img
-              src="logo1.png"
+              src="assets/images/logo1.png"
               alt="College of Midwifery Logo"
               class="prestige-logo"
             />
             <div class="prestige-logo-divider"></div>
-            <img src="logo2.png" alt="BISU Logo" class="prestige-logo" />
+            <img src="assets/images/logo2.png" alt="BISU Logo" class="prestige-logo" />
           </div>
           <div class="prestige-header-text">
             <h1>College of Midwifery</h1>
@@ -97,12 +113,12 @@
         <div class="auth-header-mobile">
           <div class="mobile-logo-container">
             <img
-              src="logo1.png"
+              src="assets/images/logo1.png"
               alt="College of Midwifery Logo"
               class="mobile-logo"
             />
             <div class="mobile-logo-divider"></div>
-            <img src="logo2.png" alt="BISU Logo" class="mobile-logo" />
+            <img src="assets/images/logo2.png" alt="BISU Logo" class="mobile-logo" />
           </div>
           <h1>College of Midwifery</h1>
           <p>Bohol Island State University</p>
@@ -387,7 +403,7 @@
     </div>
 
     <!-- SCRIPTS -->
-    <script src="api-client.js?v=20260722-3"></script>
+    <script src="assets/js/api-client.js?v=20260722-3"></script>
     <script>
       // DOM Elements Configuration
       const studentIdInput = document.getElementById("studentid");
@@ -444,14 +460,16 @@
            MICRO-INTERACTIONS, TOASTS & PRELOADER JS
            ========================================================================== */
 
-      // Splash Loader Fade-out
+      // Give the logo-first splash a brief moment before revealing the portal.
       window.addEventListener("load", () => {
         const preloader = document.getElementById("preloader");
         if (preloader) {
-          preloader.classList.add("fade-out");
           setTimeout(() => {
-            preloader.remove();
-          }, 450);
+            preloader.classList.add("fade-out");
+            setTimeout(() => {
+              preloader.remove();
+            }, 450);
+          }, 2200);
         }
       });
 

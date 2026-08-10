@@ -235,6 +235,56 @@ html body.role-instructor .dashboard-hero .hero-kicker {
   font-size: 9px !important;
 }
 
+
+/* Instructor dashboard quick actions. */
+html body.role-instructor .hero-actions {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+html body.role-instructor .hero-action {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, .38) !important;
+  background: rgba(255, 255, 255, .12) !important;
+  color: #fff !important;
+  font-family: inherit;
+  font-weight: 700 !important;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease !important;
+}
+
+html body.role-instructor .hero-action i {
+  font-size: 13px;
+}
+
+html body.role-instructor .hero-action:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, .78) !important;
+  background: rgba(255, 255, 255, .2) !important;
+  box-shadow: 0 5px 12px rgba(9, 17, 82, .16) !important;
+}
+
+html body.role-instructor .hero-action:focus-visible {
+  outline: 3px solid rgba(255, 195, 0, .72);
+  outline-offset: 2px;
+}
+
+html body.role-instructor .hero-action-primary {
+  border-color: #fff !important;
+  background: #fff !important;
+  color: #1a237e !important;
+}
+
+html body.role-instructor .hero-action-primary:hover {
+  background: #fff7d6 !important;
+  border-color: #fff7d6 !important;
+}
 html body.role-student .student-hero-actions,
 html body.role-instructor .hero-actions {
   gap: 8px !important;

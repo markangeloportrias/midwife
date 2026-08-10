@@ -1,0 +1,7 @@
+/* Use .c-modal for new modal surfaces. */
+.c-modal {
+  border: 0;
+  border-radius: var(--app-radius);
+  background: var(--app-color-surface);
+  box-shadow: 0 20px 55px rgba(15, 23, 42, 0.2);
+}

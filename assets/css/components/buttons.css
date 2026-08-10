@@ -1,0 +1,20 @@
+/* Use .c-button for new reusable buttons. Existing role controls retain their page styles. */
+.c-button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Existing portal action controls. */
+/* Controls follow one height, radius, and primary-action treatment. */
+.app-shell .btn,
+.dashboard :is(.btn, .mini-btn, .clinical-roster-action) {
+  min-height: 40px !important;
+  padding: 0 14px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}

@@ -2399,7 +2399,7 @@
   }
 
   async function syncLegacyCasesToApi(studentId) {
-    // Legacy data is migrated explicitly through migrate-local-to-mysql.php.
+    // Legacy data is migrated explicitly through tools/migrate-local-to-mysql.php.
     // Never import browser records silently during normal application use.
     return;
     /* istanbul ignore next */
@@ -2493,7 +2493,7 @@
     var result;
     try { result = await mysqlRequest('school-years'); }
     catch (error) { result = await mysqlRequest('school-year-directory'); }
-    return { ok: true, school_years: result.years || [] };
+    return { ok: true, school_years: result.school_years || result.years || [] };
   };
   ApiClient.createSchoolYear = async function (value) {
     try { return await mysqlRequest('school-years', { method: 'POST', body: JSON.stringify({ label: normalize(value) }) }); }
@@ -2702,7 +2702,7 @@
     catch(error){return {ok:false,message:error.message};}
   };
   ApiClient.getNotificationHistory = async function (filters) {
-    var result=await mysqlRequest('notifications');var list=result.notifications||[];var f=filters||{};
+    var f=filters||{};var result=await mysqlRequest('notifications' + (f.archived ? '?archived=1' : ''));var list=result.notifications||[];
     return list.filter(function(n){
       if ((f.student_id||f.studentId) && String(n.student_id)!==String(f.student_id||f.studentId)) return false;
       if ((f.event_type||f.eventType) && String(n.event_type)!==String(f.event_type||f.eventType)) return false;
@@ -2711,6 +2711,9 @@
   };
   ApiClient.archiveNotification = async function (notificationId) {
     try { return await mysqlRequest('notifications/' + encodeURIComponent(notificationId) + '/archive', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };  ApiClient.restoreNotification = async function (notificationId) {
+    try { return await mysqlRequest('notifications/' + encodeURIComponent(notificationId) + '/restore', { method: 'PATCH', body: '{}' }); }
     catch (error) { return { ok: false, message: error.message }; }
   };
   ApiClient.sendChatMessage = async function (payload) {
@@ -2722,6 +2725,18 @@
     if (f.student_id||f.studentId) query.push('student_id='+encodeURIComponent(f.student_id||f.studentId));
     if (f.instructor_id||f.instructorId) query.push('instructor_id='+encodeURIComponent(f.instructor_id||f.instructorId));
     var result=await mysqlRequest('chat'+(query.length?'?'+query.join('&'):''));return result.messages||[];
+  };
+  ApiClient.editChatMessage = async function (messageId, message) {
+    try { return await mysqlRequest('chat/'+encodeURIComponent(messageId)+'/edit',{method:'PATCH',body:JSON.stringify({message:message||''})}); }
+    catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.unsendChatMessage = async function (messageId) {
+    try { return await mysqlRequest('chat/'+encodeURIComponent(messageId)+'/unsend',{method:'PATCH',body:'{}'}); }
+    catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.deleteChatMessage = async function (messageId) {
+    try { return await mysqlRequest('chat/'+encodeURIComponent(messageId)+'/delete',{method:'PATCH',body:'{}'}); }
+    catch(error){return {ok:false,message:error.message};}
   };
   ApiClient.getChatThreads = async function (filters) {
     var messages=await ApiClient.getChatMessages(filters||{});var threads={};
@@ -2753,6 +2768,9 @@
   };
   ApiClient.getRecordHistory = async function (caseId) {
     try {var result=await mysqlRequest('audit?record_id='+encodeURIComponent(caseId));return {ok:true,history:result.entries||[]};}catch(error){return {ok:false,history:[],message:error.message};}
+  };
+  ApiClient.getActivityLog = async function () {
+    try {var result=await mysqlRequest('audit');return {ok:true,entries:result.entries||[]};}catch(error){return {ok:false,entries:[],message:error.message};}
   };
   ApiClient.addNotificationHistory = async function (payload) {
     try {var result=await mysqlRequest('notifications',{method:'POST',body:JSON.stringify(payload||{})});return {ok:!!result.ok,notification_id:result.id};}catch(error){return {ok:false,message:error.message};}

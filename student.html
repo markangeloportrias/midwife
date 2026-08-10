@@ -13,3008 +13,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="modern-shell.css?v=20260726-11" />
-    <style>
-      :root {
-        /* Canvas & surfaces */
-        --canvas: #f4f6fb;
-        --canvas-muted: #e8edf6;
-        --surface: #ffffff;
-        --border: rgba(26, 30, 111, 0.12);
-        --border-strong: rgba(26, 30, 111, 0.25);
-
-        /* Text hierarchy */
-        --text-primary: #0f1140;
-        --text-secondary: #5c677d;
-        --text-light: #94a3b8;
-
-        /* Domain accents */
-        --primary: #1a1e6f;
-        --primary-deep: #0f1140;
-        --primary-soft: rgba(26, 30, 111, 0.08);
-        --success: #10b981;
-        --success-deep: #065f46;
-        --success-soft: rgba(16, 185, 129, 0.1);
-        --warning: #ffc300;
-        --warning-deep: #e6b000;
-        --warning-soft: rgba(255, 195, 0, 0.1);
-        --accent-purple: #2a309f;
-        --accent-purple-deep: #1a1e6f;
-        --accent-purple-soft: rgba(42, 48, 159, 0.1);
-        --accent-rose: #ec4899;
-        --accent-rose-deep: #9d174d;
-        --accent-rose-soft: rgba(236, 72, 153, 0.1);
-        --danger: #ef4444;
-        --danger-soft: rgba(239, 68, 68, 0.08);
-
-        /* 8px spacing grid */
-        --space-1: 4px;
-        --space-2: 8px;
-        --space-3: 12px;
-        --space-4: 16px;
-        --space-5: 20px;
-        --space-6: 24px;
-        --space-8: 32px;
-
-        /* Elevation */
-        --shadow-elevation-1:
-          0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
-        --shadow-elevation-2:
-          0 10px 15px -3px rgba(15, 23, 42, 0.08),
-          0 4px 6px -4px rgba(15, 23, 42, 0.08);
-        --shadow-elevation-3: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-
-        /* Motion */
-        --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-        --transition-fast: 150ms var(--ease-spring);
-        --transition-base: 280ms var(--ease-spring);
-
-        /* Layout */
-        --sidebar-width: 224px;
-        --header-height: 72px;
-        --radius-sm: 8px;
-        --radius-md: 12px;
-        --radius-lg: 16px;
-
-        --space-sm: var(--space-2);
-        --space-md: var(--space-4);
-        --space-lg: var(--space-5);
-      }
-
-      *,
-      *::before,
-      *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        height: 100%;
-      }
-
-      body {
-        min-height: 100vh;
-        overflow: hidden;
-        font-family:
-          "Inter",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          sans-serif;
-        line-height: 1.5;
-        color: var(--ink);
-        background: var(--canvas);
-        background-image:
-          radial-gradient(
-            at 0% 0%,
-            rgba(79, 70, 229, 0.03) 0px,
-            transparent 50%
-          ),
-          radial-gradient(
-            at 100% 100%,
-            rgba(139, 92, 246, 0.03) 0px,
-            transparent 50%
-          );
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-      }
-
-      /* Theme token fallbacks to avoid missing-variable rendering */
-      :root {
-        --ink: var(--text-primary);
-        --ink-subtle: var(--text-light);
-        --canvas-2: var(--canvas-muted);
-        --shadow-tight: var(--shadow-elevation-1);
-        --shadow-md: var(--shadow-elevation-2);
-        --shadow-sm: var(--shadow-elevation-1);
-        --space-xl: var(--space-6);
-      }
-
-      a,
-      button,
-      input,
-      textarea,
-      select {
-        font: inherit;
-      }
-
-      button {
-        color: inherit;
-      }
-
-      :focus-visible {
-        outline: 2px solid rgba(8, 145, 178, 0.62);
-        outline-offset: 2px;
-      }
-
-      @keyframes panelRise {
-        from {
-          opacity: 0;
-          transform: translateY(14px) scale(0.985);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      @keyframes floatSoft {
-        from {
-          transform: translateY(0) scale(1);
-        }
-        to {
-          transform: translateY(-10px) scale(1.02);
-        }
-      }
-
-      @keyframes shimmer {
-        0% {
-          background-position: -200% 0;
-        }
-        100% {
-          background-position: 200% 0;
-        }
-      }
-
-      @keyframes pulseGlow {
-        0%,
-        100% {
-          opacity: 0.6;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1.04);
-        }
-      }
-
-      @keyframes heroOrbFloat {
-        0%,
-        100% {
-          transform: translate(0, 0) scale(1);
-        }
-        33% {
-          transform: translate(15px, -20px) scale(1.05);
-        }
-        66% {
-          transform: translate(-10px, 10px) scale(0.97);
-        }
-      }
-
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* ========================================
-         NEW LAYOUT: Header + Sidebar + Content
-         ======================================== */
-      .dashboard {
-        display: grid;
-        grid-template-rows: var(--header-height) 1fr;
-        grid-template-columns: var(--sidebar-width) 1fr;
-        height: 100vh;
-        overflow: hidden;
-        background: var(--canvas);
-      }
-
-      /* Navigation Badges */
-      .nav-badge {
-        position: absolute;
-        top: 50%;
-        right: 2px;
-        transform: translateY(-50%);
-        font-size: 10px;
-        font-weight: 700;
-        background: var(--canvas-muted);
-        color: var(--text-secondary);
-        display: inline-flex;
-        width: 56px;
-        min-width: 56px;
-        height: 20px;
-        border-radius: 10px;
-        align-items: center;
-        justify-content: center;
-        transition: all var(--transition-fast);
-        flex: none;
-        padding: 0 8px;
-      }
-
-      .sidebar-nav-item.active .nav-badge {
-        background: rgba(255, 255, 255, 0.25);
-        color: #fff;
-      }
-
-      /* Summary Tab Layout */
-      .req-progress-card {
-        background: rgba(255, 255, 255, 0.6);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: var(--space-4);
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.01);
-        transition: all var(--transition-fast);
-        backdrop-filter: blur(8px);
-      }
-
-      .req-progress-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(79, 70, 229, 0.2);
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
-      }
-
-      .req-progress-title {
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: var(--space-2);
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
-
-      .req-progress-bar-bg {
-        height: 6px;
-        background: var(--canvas-muted);
-        border-radius: 99px;
-        overflow: hidden;
-        margin-bottom: var(--space-2);
-      }
-
-      .req-progress-bar-fill {
-        height: 100%;
-        background: var(--primary);
-        border-radius: 99px;
-        transition: width 0.8s var(--ease-spring);
-      }
-
-      .req-progress-text {
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--text-secondary);
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .summary-records-table th,
-      .summary-records-table td {
-        padding: var(--space-3);
-        border-bottom: 1px solid var(--border);
-      }
-
-      .summary-records-table tr:hover {
-        background: rgba(79, 70, 229, 0.02);
-      }
-
-      .badge-approved {
-        background: var(--success-soft);
-        color: var(--success-deep);
-      }
-
-      .badge-pending {
-        background: var(--warning-soft);
-        color: var(--warning-deep);
-      }
-
-      .rc-badge {
-        font-size: 10px;
-        font-weight: 700;
-        padding: 2px 8px;
-        border-radius: 99px;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
-
-      /* ========== NEW SIDEBAR STYLES ========== */
-      .sidebar {
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        overflow-x: hidden;
-        background: var(--surface);
-        border-right: 1px solid var(--border);
-        box-shadow: 2px 0 8px rgba(26, 30, 111, 0.04);
-        grid-row: 2;
-        grid-column: 1;
-        padding: 16px 0 0 0;
-      }
-
-      .sidebar::-webkit-scrollbar {
-        width: 3px;
-      }
-      .sidebar::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .sidebar::-webkit-scrollbar-thumb {
-        background: rgba(203, 213, 225, 0.5);
-        border-radius: 99px;
-      }
-
-      /* Sidebar help footer */
-      .sidebar-help {
-        margin-top: auto;
-        padding: 16px 12px;
-        border-top: 1px solid var(--border);
-      }
-
-      .sidebar-help-card {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        width: 100%;
-        padding: 12px;
-        background: rgba(26, 30, 111, 0.04);
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border);
-        cursor: pointer;
-        text-align: left;
-        transition: all var(--transition-fast);
-      }
-
-      .sidebar-help-card:hover {
-        background: var(--primary-soft);
-        border-color: var(--border-strong);
-        transform: translateY(-1px);
-      }
-
-      .sidebar-help-card:focus-visible {
-        outline: 2px solid rgba(26, 30, 111, 0.45);
-        outline-offset: 2px;
-      }
-
-      .sidebar-help-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: var(--primary-soft);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        color: var(--primary);
-        font-size: 14px;
-      }
-
-      .sidebar-help-text .help-title {
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 2px;
-      }
-
-      .sidebar-help-text .help-desc {
-        font-size: 11px;
-        color: var(--text-secondary);
-        line-height: 1.5;
-      }
-
-      .sidebar-section {
-        min-height: 0;
-      }
-
-      .sidebar-nav {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        padding: 0 10px;
-      }
-      .sidebar-bottom { margin-top: auto; padding: 12px 10px; border-top: 1px solid var(--border); }
-      .sidebar-bottom .sidebar-logout {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: 10px;
-        background: #dc2626 !important;
-        color: #fff !important;
-        text-decoration: none;
-        border: 1px solid transparent !important;
-        transition: background 0.2s ease;
-      }
-      .sidebar-bottom .sidebar-logout:hover {
-        background: #b91c1c !important;
-      }
-      .profile-panel-card { max-width: 620px; padding: 20px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); }
-      .student-details-card { max-width: 760px; box-shadow: 0 10px 24px rgba(15, 17, 64, 0.07); }
-      .student-details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-      .student-details-card .form-group.full-width { grid-column: 1 / -1; }
-      .student-details-card .readonly-value { min-height: 42px; display: flex; align-items: center; padding: 10px 12px; border: 1px solid var(--border); border-radius: 5px; background: var(--canvas-muted); color: var(--text-primary); font-weight: 600; }
-      .student-details-card .readonly-value i { margin-right: 9px; color: var(--primary); }
-      @media (max-width: 640px) { .student-details-grid { grid-template-columns: 1fr; } .student-details-card .form-group.full-width { grid-column: auto; } }
-      .profile-panel-avatar { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); background: var(--canvas-muted); }
-      .profile-panel-top { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
-      .case-actions { display: flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; }
-      .case-action-btn { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 4px; background: #fff; color: var(--primary); cursor: pointer; }
-      .case-action-btn:hover { background: var(--primary-soft); border-color: var(--primary); }
-      .case-action-btn.trash { color: var(--danger); }
-      .case-action-btn.has-remarks { color: #b45309; border-color: #f59e0b; background: #fffbeb; position: relative; }
-      .case-action-btn.has-remarks::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #dc2626; top: 3px; right: 3px; }
-      .case-remarks-row td { background: #f8fafc !important; padding: 10px 14px !important; color: #475569 !important; font-family: inherit !important; }
-      .edit-request-notification { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 14px; align-items: center; width: 100%; padding: 17px; border: 1px solid var(--border); border-left: 4px solid #f59e0b; border-radius: 12px; background: var(--surface); cursor: pointer; color: var(--text-primary); box-shadow: var(--shadow-elevation-1); transition: var(--transition-fast); }
-      .edit-request-notification:hover { border-color: var(--primary); box-shadow: var(--shadow-elevation-2); transform: translateY(-1px); }
-      .edit-request-notification.approved { border-left-color: var(--success); }
-      .edit-request-notification.rejected { border-left-color: var(--danger); }
-      .notification-icon { display: grid; width: 44px; height: 44px; place-items: center; border-radius: 12px; background: var(--warning-soft); color: var(--warning-deep); font-size: 18px; }
-      .approved .notification-icon { background: var(--success-soft); color: var(--success-deep); }
-      .rejected .notification-icon { background: var(--danger-soft); color: var(--danger); }
-      .notification-title { margin: 0 0 4px; font-size: 15px; font-weight: 800; }
-      .notification-meta { color: var(--text-secondary); font-size: 13px; }
-      .notification-time { display: block; margin-top: 4px; color: var(--text-light); font-size: 12px; }
-      .delete-edit-notification { align-self: start; border: 1px solid rgba(239,68,68,.18); border-radius: 7px; padding: 7px 10px; background: var(--danger-soft); color: var(--danger); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
-      .delete-edit-notification:hover { background: var(--danger); color: #fff; }
-      .case-highlight td { background: #fff7d6 !important; }
-      .chat-thread { min-height: 230px; max-height: 360px; overflow-y: auto; padding: 16px; border: 1px solid #e2e8f0; border-radius: 12px; background: linear-gradient(180deg, #f8faff 0%, #f5f7fb 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.8); }
-      .chat-message { max-width: min(78%, 560px); margin: 0 0 14px; padding: 11px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; box-shadow: 0 2px 5px rgba(15, 23, 42, .05); }
-      .chat-message.student { margin-left: auto; border-bottom-right-radius: 4px; background: linear-gradient(135deg, var(--primary), #3546a4); color: #fff; }
-      .chat-message.instructor { border: 1px solid #e2e8f0; border-bottom-left-radius: 4px; background: #fff; color: var(--text-primary); }
-      .chat-message small { display: block; margin-top: 5px; opacity: .72; font-size: 10px; }
-      .chat-compose { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; padding: 8px; border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; box-shadow: 0 6px 16px rgba(15, 23, 42, .05); }
-      .chat-recipient-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-      .chat-recipient-label { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
-      .chat-recipient-select { min-width: 240px; height: 30px; padding: 2px 10px; border: 1px solid var(--border); border-radius: 4px; background: #fff; color: var(--text-primary); font-size: 13px; line-height: 1.1; }
-      .chat-compose-row { display: flex; align-items: flex-end; gap: 10px; }
-      .chat-compose textarea { flex: 1; min-height: 38px; max-height: 96px; padding: 9px 12px; border: 1px solid transparent; border-radius: 9px; background: #f8fafc; color: var(--text-primary); font: inherit; font-size: 12px; line-height: 1.4; resize: vertical; transition: border-color .2s ease, background .2s ease, box-shadow .2s ease; }
-      .chat-compose textarea::placeholder { color: #94a3b8; }
-      .chat-compose textarea:focus { outline: none; border-color: #9ba8e7; background: #fff; box-shadow: 0 0 0 3px rgba(30, 41, 130, .10); }
-      .chat-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
-      .chat-header-actions { display: flex; align-items: flex-start; justify-content: flex-end; margin-left: auto; padding-top: 4px; }
-      .chat-header-actions .chat-recipient-row { justify-content: flex-end; }
-      .chat-header-actions .chat-recipient-select { min-width: 300px; width: 300px; }
-      .chat-header .workspace-header { margin-bottom: 0; }
-      .chat-send-btn {
-        height: 30px;
-        padding: 0 14px;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        background: #fff;
-        color: var(--text-primary);
-        font-size: 13px;
-        line-height: 1;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        white-space: nowrap;
-      }
-      .chat-send-btn i { color: var(--primary); }
-      .chat-send-btn:hover { border-color: var(--primary); background: var(--primary-soft); color: var(--primary-deep); }
-      .chat-send-button { min-width: 92px; height: 38px; padding: 0 14px; border: 0; border-radius: 9px; background: linear-gradient(135deg, var(--primary), #3d50b4); color: #fff; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 7px; box-shadow: 0 4px 10px rgba(30, 41, 130, .22); transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease; }
-      .chat-send-button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(30, 41, 130, .30); }
-      .chat-send-button:active { transform: translateY(0); box-shadow: 0 3px 8px rgba(30, 41, 130, .22); }
-      .chat-send-button:focus-visible { outline: 3px solid rgba(59, 76, 177, .28); outline-offset: 2px; }
-
-      /* Student messaging workspace */
-      #chatTab.student-chat-panel {
-        width: 100%;
-        height: clamp(500px, calc(100vh - 230px), 680px);
-        min-height: 0;
-        padding: 0;
-        overflow: hidden;
-        border: 1px solid #dbe3f1;
-        border-radius: 14px;
-        background: #fff;
-      }
-      .student-chat-layout { display: grid; width: 100%; height: 100%; min-height: 0; grid-template-columns: minmax(280px, 340px) minmax(0, 1fr); }
-      .chat-directory { display: flex; min-width: 0; min-height: 0; flex-direction: column; overflow: hidden; border-right: 1px solid #dbe3f1; background: #f8f9ff; }
-      .chat-directory-header { padding: 24px 20px 16px; }
-      .chat-directory-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
-      .chat-directory-title { margin: 0; color: #101552; font-size: 21px; font-weight: 800; }
-      .chat-directory-subtitle { margin: 4px 0 0; color: #66758d; font-size: 12px; }
-      .chat-directory-icon { display: grid; width: 44px; height: 44px; place-items: center; flex: 0 0 auto; border-radius: 13px; background: #e9edff; color: #3545a5; }
-      .chat-instructor-search { position: relative; margin-top: 18px; }
-      .chat-instructor-search i { position: absolute; top: 50%; left: 14px; color: #8fa0bc; transform: translateY(-50%); }
-      .chat-instructor-search input { width: 100%; height: 44px; padding: 0 14px 0 40px; border: 1px solid #d8e1ef; border-radius: 10px; background: #fff; color: #263550; font: inherit; font-size: 13px; outline: none; }
-      .chat-instructor-search input:focus { border-color: #7887d4; box-shadow: 0 0 0 3px rgba(53, 69, 165, .10); }
-      .chat-directory-label { padding: 0 20px 8px; color: #8a99b5; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-      .chat-instructor-list { display: grid; gap: 5px; padding: 0 10px 18px; overflow-y: auto; }
-      .chat-instructor-item { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; gap: 11px; align-items: center; width: 100%; padding: 11px 12px; border: 1px solid transparent; border-radius: 11px; background: transparent; color: #25324a; font: inherit; text-align: left; cursor: pointer; transition: .18s ease; }
-      .chat-instructor-item > span:nth-child(2) { display: block; min-width: 0; }
-      .chat-instructor-item:hover { border-color: #dce3f7; background: #fff; }
-      .chat-instructor-item.active { border-color: #cfd7ff; background: #fff; box-shadow: 0 5px 14px rgba(30, 41, 111, .08); }
-      .chat-instructor-avatar { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 12px; background: #e9edff; color: #20267c; font-size: 13px; font-weight: 800; text-transform: uppercase; }
-      .chat-instructor-name { display: block; overflow: hidden; color: #171b4b; font-size: 13px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
-      .chat-instructor-role { display: block; overflow: hidden; margin-top: 3px; color: #7a8aa5; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
-      .chat-instructor-chevron { color: #a3afc3; font-size: 11px; }
-      .chat-directory-empty { padding: 34px 18px; color: #8a99b5; font-size: 12px; text-align: center; }
-      .chat-conversation { display: grid; min-width: 0; min-height: 0; overflow: hidden; grid-template-rows: auto minmax(0, 1fr) auto; background: #f7f8fd; }
-      .chat-conversation-header { display: flex; align-items: center; gap: 13px; min-height: 86px; padding: 16px 24px; border-bottom: 1px solid #dbe3f1; background: #fff; }
-      .chat-conversation-avatar { display: grid; width: 46px; height: 46px; place-items: center; border-radius: 13px; background: #e9edff; color: #20267c; font-size: 18px; }
-      .chat-conversation-title { color: #101552; font-size: 16px; font-weight: 800; }
-      .chat-conversation-subtitle { margin-top: 4px; color: #7b89a3; font-size: 12px; }
-      #chatTab .chat-thread { display: flex; min-height: 0; max-height: none; overflow-y: auto; flex-direction: column; padding: 24px; border: 0; border-radius: 0; background: #f7f8fd; box-shadow: none; }
-      .chat-thread-empty { display: grid; width: min(390px, calc(100% - 32px)); min-height: 190px; place-items: center; align-content: center; margin: auto; padding: 26px; border: 1px dashed #ccd7ef; border-radius: 16px; background: rgba(255,255,255,.72); color: #7f8faa; text-align: center; }
-      .chat-thread-empty i { display: grid; width: 54px; height: 54px; place-items: center; margin-bottom: 14px; border-radius: 15px; background: #e9edff; color: #6d7ed1; font-size: 22px; }
-      .chat-thread-empty strong { display: block; margin-bottom: 6px; color: #596b87; font-size: 14px; }
-      .chat-thread-empty span { font-size: 12px; line-height: 1.45; }
-      #chatTab .chat-compose { margin: 0; padding: 16px 20px; border: 0; border-top: 1px solid #dbe3f1; border-radius: 0; box-shadow: none; }
-      #chatTab .chat-compose textarea { min-height: 54px; max-height: 120px; padding: 15px 16px; border: 1px solid transparent; background: #f1f3f9; }
-      #chatTab .chat-send-button { height: 54px; min-width: 110px; }
-      #chatInstructorSelect { display: none; }
-      @media (max-width: 820px) {
-        #chatTab.student-chat-panel { height: clamp(500px, calc(100vh - 210px), 640px); }
-        .student-chat-layout { grid-template-columns: 270px minmax(0, 1fr); }
-      }
-      @media (max-width: 640px) {
-        #chatTab.student-chat-panel { height: auto; min-height: 720px; }
-        .student-chat-layout { height: auto; min-height: 720px; grid-template-columns: 1fr; }
-        .chat-directory { max-height: 280px; border-right: 0; border-bottom: 1px solid #dbe3f1; }
-        .chat-conversation { min-height: 500px; }
-      }
-      .chat-send-button:disabled { cursor: not-allowed; opacity: .52; transform: none; box-shadow: none; }
-      .chat-send-button i { font-size: 14px; }
-      @media (max-width: 640px) { .chat-thread { min-height: 260px; padding: 14px; } .chat-message { max-width: 88%; } .chat-compose-row { flex-direction: column; align-items: stretch; } .chat-send-button { width: 100%; } .chat-recipient-select { width: 100%; min-width: 0; } .chat-header { flex-direction: column; } .chat-header-actions { align-items: flex-start; width: 100%; margin-left: 0; padding-top: 0; } .chat-header-actions .chat-recipient-select { width: 100%; } }
-
-      .sidebar-nav-item {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        padding: 9px 12px;
-        color: var(--text-secondary);
-        text-decoration: none;
-        border: none;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        background: transparent;
-        transition: all 0.25s ease;
-        font-size: 12.5px;
-        font-weight: 500;
-        text-align: left;
-      }
-
-      .sidebar-nav-item i {
-        width: 18px;
-        text-align: center;
-        font-size: 14px;
-        color: var(--text-light);
-        flex-shrink: 0;
-      }
-
-      .sidebar-nav-item > span:not(.nav-badge) {
-        flex: 1;
-        text-align: left;
-      }
-
-      .sidebar-nav-item:has(.nav-badge) {
-        padding-right: 70px;
-      }
-
-      .sidebar-nav-item:hover {
-        background: var(--canvas-muted);
-        color: var(--text-primary);
-      }
-
-      .sidebar-nav-item:hover i {
-        color: var(--primary);
-      }
-
-      .sidebar-nav-item.active {
-        color: #fff;
-        background: var(--primary);
-        font-weight: 600;
-        border-left: 3px solid #f5a623;
-      }
-
-      .sidebar-nav-item.active i {
-        color: #fff;
-      }
-
-      /* ========== NEW HEADER STYLES ========== */
-      .header {
-        grid-column: 1 / -1;
-        grid-row: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 24px;
-        background: #0c1461;
-        border-bottom: none;
-        position: relative;
-        z-index: 100;
-        box-shadow: 0 2px 12px rgba(12, 20, 97, 0.25);
-        height: var(--header-height);
-      }
-
-      .header-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .header-left .title {
-        font-size: 13px;
-        font-weight: 700;
-        color: #fff;
-        line-height: 1.2;
-      }
-
-      .header-left .sub {
-        font-size: 10px;
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: 500;
-        margin-top: 1px;
-      }
-
-      .header-right {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      /* Top Right Profile Section & Dropdown Trigger */
-      .header-profile-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: var(--space-3);
-        cursor: pointer;
-        padding: var(--space-1) var(--space-2);
-        border-radius: var(--radius-md);
-        transition: all var(--transition-fast);
-      }
-
-      .header-profile-container:hover {
-        background: var(--canvas-muted);
-      }
-
-      .header-profile-info {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        text-align: right;
-      }
-
-      .header-profile-info .profile-name {
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--text-primary);
-      }
-
-      .header-profile-info .profile-id {
-        font-size: 11px;
-        color: var(--text-secondary);
-        font-weight: 500;
-      }
-
-      .header-photo-btn {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 1px solid var(--border);
-        background: var(--surface);
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all var(--transition-fast);
-        padding: 0;
-        flex-shrink: 0;
-      }
-
-      .header-photo-btn img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .header-photo-btn i.default-icon {
-        font-size: 14px;
-        color: var(--text-light);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      /* Premium Profile Dropdown Menu */
-      .profile-dropdown-menu {
-        position: absolute;
-        top: calc(100% + 8px);
-        right: 0;
-        width: 260px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(16px) saturate(180%);
-        -webkit-backdrop-filter: blur(16px) saturate(180%);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-md);
-        display: none;
-        flex-direction: column;
-        padding: var(--space-4);
-        z-index: 1000;
-        cursor: default;
-        animation: panelRise 0.25s var(--ease-spring);
-      }
-
-      .profile-dropdown-menu.open {
-        display: flex;
-      }
-
-      .dropdown-header {
-        display: flex;
-        align-items: center;
-        gap: var(--space-3);
-        padding-bottom: var(--space-2);
-      }
-
-      .dropdown-avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 1px solid var(--border);
-        background: var(--canvas-muted);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-
-      .dropdown-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .dropdown-avatar i.default-icon {
-        font-size: 16px;
-        color: var(--text-light);
-      }
-
-      .dropdown-meta {
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-      }
-
-      .dropdown-name {
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--text-primary);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .dropdown-id {
-        font-size: 11px;
-        color: var(--text-secondary);
-        margin-top: 1px;
-      }
-
-      .dropdown-divider {
-        height: 1px;
-        background: var(--border);
-        margin: var(--space-2) 0;
-      }
-
-      .dropdown-content {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-3);
-        margin: var(--space-2) 0;
-      }
-
-      .profile-edit-section {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .profile-name-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-      }
-
-      .profile-name-row span {
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text-primary);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .btn-edit-profile {
-        background: none;
-        border: none;
-        color: var(--text-light);
-        cursor: pointer;
-        font-size: 12px;
-        padding: 4px;
-        transition: color var(--transition-fast);
-      }
-
-      .btn-edit-profile:hover {
-        color: var(--primary);
-      }
-
-      .profile-edit-section input {
-        width: 100%;
-        padding: 8px 10px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        font-size: 12px;
-        background: var(--canvas);
-        color: var(--text-primary);
-        transition: all var(--transition-fast);
-      }
-
-      .profile-edit-section input:focus {
-        outline: none;
-        border-color: var(--primary);
-        background: var(--surface);
-      }
-
-      .btn-save-inline,
-      .btn-cancel-inline {
-        padding: 6px 12px;
-        border-radius: var(--radius-sm);
-        font-size: 11px;
-        font-weight: 700;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        transition: all var(--transition-fast);
-      }
-
-      .btn-save-inline {
-        background: var(--primary);
-        color: #fff;
-        border: none;
-      }
-
-      .btn-save-inline:hover {
-        background: var(--primary-deep);
-      }
-
-      .btn-cancel-inline {
-        background: var(--canvas-muted);
-        color: var(--text-secondary);
-        border: 1px solid var(--border);
-      }
-
-      .btn-cancel-inline:hover {
-        background: rgba(239, 68, 68, 0.08);
-        color: var(--danger);
-        border-color: rgba(239, 68, 68, 0.15);
-      }
-
-      .dropdown-action-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        padding: 9px 12px;
-        background: var(--canvas-muted);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        color: var(--text-secondary);
-        font-size: 12px;
-        font-weight: 700;
-        text-align: left;
-        cursor: pointer;
-        transition: all var(--transition-fast);
-      }
-
-      .dropdown-action-btn:hover {
-        background: var(--primary-soft);
-        color: var(--primary);
-        border-color: rgba(79, 70, 229, 0.2);
-      }
-
-      .dropdown-action-btn.logout-btn {
-        color: var(--danger);
-        background: rgba(239, 68, 68, 0.05);
-        border-color: rgba(239, 68, 68, 0.1);
-        justify-content: center;
-      }
-
-      .dropdown-action-btn.logout-btn:hover {
-        background: var(--danger);
-        color: #fff;
-        border-color: transparent;
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
-      }
-
-      /* Clean Sidebar Footer styles */
-      .sidebar-footer {
-        margin-top: auto;
-        padding: var(--space-4) var(--space-3);
-        border-top: 1px solid var(--border);
-      }
-
-      .logout-btn-full {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 10px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all var(--transition-fast);
-        background: rgba(239, 68, 68, 0.05);
-        color: var(--danger);
-        border: 1px solid rgba(239, 68, 68, 0.1);
-      }
-
-      .logout-btn-full:hover {
-        background: var(--danger);
-        color: #fff;
-        border-color: transparent;
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
-      }
-
-      .logout-btn-full:hover i {
-        transform: translateX(2px);
-      }
-
-      /* Main Content */
-      .main-content {
-        overflow-y: auto;
-        grid-row: 2;
-        grid-column: 2;
-        padding: 24px 28px;
-        scrollbar-width: thin;
-        scroll-behavior: smooth;
-        background: var(--canvas);
-      }
-
-      .main-content::-webkit-scrollbar {
-        width: 5px;
-      }
-      .main-content::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .main-content::-webkit-scrollbar-thumb {
-        background: rgba(203, 213, 225, 0.5);
-        border-radius: 99px;
-      }
-      .main-content::-webkit-scrollbar-thumb:hover {
-        background: rgba(148, 163, 184, 0.7);
-      }
-
-      /* Page Hero */
-      .page-hero {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        padding: 28px 32px;
-        margin-bottom: 20px;
-        border-radius: var(--radius-lg);
-        background: var(--surface);
-        border: 1px solid var(--border);
-        box-shadow: 0 2px 8px rgba(26, 30, 111, 0.04);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .page-hero .hero-eyebrow {
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--text-secondary);
-        margin-bottom: 6px;
-      }
-
-      .hero-content {
-        flex: 1;
-        z-index: 1;
-      }
-
-      .hero-title {
-        font-size: 26px;
-        font-weight: 800;
-        letter-spacing: -0.04em;
-        margin-bottom: 6px;
-        color: var(--text-primary);
-      }
-
-      .hero-subtitle {
-        font-size: 13px;
-        font-weight: 400;
-        max-width: 420px;
-        line-height: 1.6;
-        color: var(--text-secondary);
-      }
-
-      .hero-illustration {
-        width: 160px;
-        flex-shrink: 0;
-        opacity: 0.9;
-        animation: floatSoft 3s ease-in-out infinite alternate;
-      }
-
-      /* Horizontal stat cards row (replacing old 2x2 grid) */
-      .stats-row {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-
-      .stat-card-h {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: 14px 12px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: all 0.2s ease;
-        cursor: pointer;
-      }
-
-      .stat-card-h:hover {
-        border-color: rgba(26, 30, 111, 0.2);
-        box-shadow: 0 4px 12px rgba(26, 30, 111, 0.06);
-        transform: translateY(-1px);
-      }
-
-      .stat-card-h .stat-icon-wrap {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        background: var(--primary-soft);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        color: var(--primary);
-        font-size: 15px;
-      }
-
-      .stat-card-h .stat-info .stat-name {
-        font-size: 10px;
-        font-weight: 600;
-        color: var(--text-secondary);
-        margin-bottom: 2px;
-        white-space: nowrap;
-      }
-
-      .stat-card-h .stat-info .stat-num {
-        font-size: 22px;
-        font-weight: 800;
-        color: var(--text-primary);
-        letter-spacing: -0.03em;
-      }
-
-      .stat-card-h .stat-info .stat-sub {
-        font-size: 9px;
-        color: var(--text-light);
-        font-weight: 500;
-      }
-
-      /* Dashboard recent activity */
-      .recent-records-panel {
-        overflow: hidden;
-        background: linear-gradient(135deg, #ffffff 0%, #fbfcff 100%);
-        border: 1px solid #dbe3f3;
-        border-radius: 18px;
-        padding: 0;
-        box-shadow: 0 10px 28px rgba(30, 41, 59, 0.06);
-      }
-
-      .recent-records-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 18px 20px 16px;
-        border-bottom: 1px solid #e9eef7;
-      }
-
-      .recent-records-title {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--text-primary);
-        font-size: 16px;
-        font-weight: 800;
-      }
-
-      .recent-records-title i {
-        display: grid;
-        width: 32px;
-        height: 32px;
-        place-items: center;
-        border-radius: 10px;
-        background: #eef2ff;
-        color: var(--primary);
-        font-size: 14px;
-      }
-
-      .recent-view-all {
-        border: 0;
-        background: transparent;
-        color: var(--primary);
-        font-size: 12px;
-        font-weight: 700;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 7px 10px;
-        border-radius: 8px;
-      }
-
-      .recent-view-all:hover { color: var(--primary-deep); background: var(--primary-soft); }
-
-      .recent-records-list { display: grid; gap: 8px; padding: 10px 12px 12px; }
-
-      .recent-record {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        gap: 12px;
-        padding: 11px 12px;
-        border-radius: 10px;
-        background: #fff;
-        border: 1px solid #e1e7f2;
-        cursor: pointer;
-        box-shadow: 0 2px 7px rgba(24, 39, 125, .035);
-        transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
-      }
-
-      .recent-record:hover {
-        background: #f8f9ff;
-        border-color: #aeb9df;
-        box-shadow: 0 5px 14px rgba(24, 39, 125, .08);
-        transform: none;
-      }
-
-      .recent-record-icon {
-        width: 38px;
-        height: 38px;
-        border-radius: 9px;
-        background: var(--primary-soft);
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex: 0 0 auto;
-      }
-
-      .recent-record-info { display: grid; min-width: 0; flex: 1; gap: 5px; text-align: left; }
-      .recent-record-heading { display: flex; min-width: 0; align-items: center; gap: 8px; }
-      .recent-record-name { overflow: hidden; color: var(--text-primary); font-size: 12px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
-      .recent-record-status { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 4px; padding: 3px 7px; border-radius: 999px; background: #fff4d8; color: #996b00; font-size: 8px; font-weight: 800; text-transform: uppercase; }
-      .recent-record-status.verified { background: #e7f8f0; color: #087451; }
-      .recent-record-meta { overflow: hidden; color: #53627a; font-size: 10px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
-      .recent-record-details { display: flex; min-width: 0; align-items: center; gap: 12px; color: #8491a8; font-size: 9px; }
-      .recent-record-details span { display: inline-flex; min-width: 0; align-items: center; gap: 4px; }
-      .recent-record-details .recent-record-facility { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .recent-record-date { display: grid; flex: 0 0 104px; gap: 2px; color: #4b5a75; font-size: 9px; font-weight: 750; text-align: right; white-space: nowrap; }
-      .recent-record-date small { color: #8c98ac; font-size: 8px; font-weight: 650; }
-      .recent-record-arrow { color: #94a3b8; font-size: 12px; transition: transform var(--transition-fast), color var(--transition-fast); }
-      .recent-record:hover .recent-record-arrow { color: var(--primary); transform: translateX(3px); }
-
-      @media (max-width: 700px) {
-        .recent-record { align-items: flex-start; }
-        .recent-record-date { display: none; }
-        .recent-record-details { flex-wrap: wrap; gap: 5px 10px; }
-      }
-
-      .recent-records-empty {
-        margin: 8px;
-        padding: 28px 16px;
-        text-align: center;
-        color: var(--text-secondary);
-        font-size: 13px;
-        background: var(--canvas-muted);
-        border-radius: var(--radius-md);
-      }
-
-      /* Legacy stats grid (for progress banner) */
-      .stats-grid {
-        display: none;
-      }
-
-      .progress-banner {
-        margin-top: 0;
-        background: var(--canvas-muted);
-        padding: 10px 14px;
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border);
-      }
-
-      .progress-header {
-        display: flex;
-        justify-content: space-between;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 8px;
-        color: var(--text-secondary);
-      }
-
-      .progress-bar-bg {
-        height: 8px;
-        background: var(--canvas);
-        border-radius: 10px;
-        overflow: hidden;
-        border: 1px solid var(--border);
-      }
-
-      .progress-bar-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--primary), var(--primary-deep));
-        width: 45%;
-        border-radius: 10px;
-        transition: width 1.2s var(--ease-spring);
-        position: relative;
-      }
-
-      .progress-bar-fill::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.3),
-          transparent
-        );
-        background-size: 200% 100%;
-        animation: shimmer 2s linear infinite;
-      }
-
-      .stat-card {
-        background: var(--canvas-muted);
-        padding: var(--space-3) var(--space-4);
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border);
-        min-width: 0;
-        transition: all var(--transition-fast);
-      }
-
-      .stat-card:hover {
-        border-color: rgba(79, 70, 229, 0.25);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.05);
-      }
-
-      .stat-label {
-        font-size: 10px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-bottom: 4px;
-        color: var(--text-secondary);
-      }
-
-      .stat-value {
-        font-size: 22px;
-        font-weight: 800;
-        font-variant-numeric: tabular-nums;
-        letter-spacing: -0.02em;
-        color: var(--text-primary);
-      }
-
-      /* Record Workspace */
-      .record-workspace {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-lg);
-        padding: 24px;
-        box-shadow: 0 1px 4px rgba(26, 30, 111, 0.04);
-        margin-bottom: 20px;
-      }
-
-      /* Search Filter Bar */
-      .search-filter-bar {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 16px;
-        align-items: center;
-      }
-
-      .search-input-wrap {
-        flex: 1;
-        position: relative;
-        display: flex;
-        align-items: center;
-      }
-
-      .search-input-wrap i {
-        position: absolute;
-        left: 12px;
-        color: var(--text-light);
-        font-size: 13px;
-        pointer-events: none;
-      }
-
-      .search-input-wrap input {
-        width: 100%;
-        padding: 9px 12px 9px 34px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        background: var(--canvas);
-        color: var(--text-primary);
-        transition: all 0.2s ease;
-      }
-
-      .search-input-wrap input:focus {
-        outline: none;
-        border-color: rgba(26, 30, 111, 0.3);
-        background: var(--surface);
-        box-shadow: 0 0 0 3px var(--primary-soft);
-      }
-
-      .filter-input {
-        padding: 9px 14px;
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--border);
-        font-size: 12px;
-        background: var(--canvas);
-        color: var(--text-secondary);
-        transition: all var(--transition-fast);
-        cursor: pointer;
-      }
-
-      .filter-input:focus {
-        outline: none;
-        border-color: var(--primary);
-      }
-
-      .btn-filter {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 9px 14px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        background: var(--surface);
-        color: var(--text-secondary);
-        font-size: 12px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-      }
-
-      .btn-filter:hover {
-        background: var(--canvas-muted);
-        border-color: rgba(26, 30, 111, 0.2);
-      }
-
-      .analytics-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: var(--space-5);
-        margin-bottom: var(--space-6);
-      }
-
-      .chart-placeholder {
-        height: 200px;
-        background: linear-gradient(
-          135deg,
-          var(--canvas-muted) 0%,
-          var(--canvas) 100%
-        );
-        border-radius: var(--radius-md);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        color: var(--text-light);
-        font-size: 12px;
-        font-weight: 500;
-        border: 2px dashed rgba(203, 213, 225, 0.5);
-        transition: all var(--transition-fast);
-      }
-
-      .chart-placeholder i {
-        font-size: 28px;
-        opacity: 0.4;
-      }
-
-      .chart-placeholder:hover {
-        border-color: rgba(79, 70, 229, 0.3);
-        background: rgba(79, 70, 229, 0.03);
-        color: var(--primary);
-      }
-
-      .workspace-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: var(--space-6);
-        padding-bottom: var(--space-4);
-        border-bottom: 1px solid var(--border);
-      }
-
-      .workspace-title {
-        font-size: 20px;
-        font-weight: 800;
-        color: var(--text-primary);
-        letter-spacing: -0.03em;
-      }
-
-      .workspace-subtitle {
-        font-size: 13px;
-        color: var(--text-secondary);
-        margin-top: 4px;
-      }
-
-      /* Modern Empty State */
-      .modern-empty-state {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 48px var(--space-6);
-        background: linear-gradient(
-          135deg,
-          rgba(79, 70, 229, 0.03) 0%,
-          rgba(139, 92, 246, 0.05) 100%
-        );
-        border-radius: var(--radius-lg);
-        border: 2px dashed rgba(79, 70, 229, 0.15);
-        transition: all var(--transition-base);
-      }
-
-      .modern-empty-state:hover {
-        border-color: rgba(79, 70, 229, 0.3);
-        background: linear-gradient(
-          135deg,
-          rgba(79, 70, 229, 0.05) 0%,
-          rgba(139, 92, 246, 0.08) 100%
-        );
-      }
-
-      .empty-icon {
-        font-size: 52px;
-        color: var(--primary);
-        opacity: 0.3;
-        margin-bottom: var(--space-4);
-        animation: pulseGlow 3s ease-in-out infinite;
-      }
-
-      .modern-empty-state h3 {
-        font-size: 18px;
-        font-weight: 800;
-        color: var(--primary-deep);
-        margin-bottom: 8px;
-        letter-spacing: -0.02em;
-      }
-
-      .modern-empty-state p {
-        font-size: 14px;
-        color: var(--text-secondary);
-        max-width: 400px;
-        margin-bottom: var(--space-5);
-        line-height: 1.6;
-      }
-
-      /* Action Buttons */
-      .btn-primary {
-        background: linear-gradient(135deg, var(--primary), #6366f1);
-        color: #fff;
-        border: none;
-        padding: 11px 24px;
-        font-weight: 700;
-        border-radius: var(--radius-md);
-        cursor: pointer;
-        transition: all var(--transition-fast);
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 13px;
-        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .btn-primary::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          135deg,
-          transparent 40%,
-          rgba(255, 255, 255, 0.15) 50%,
-          transparent 60%
-        );
-        background-size: 200% 200%;
-        transition: background-position 0.4s;
-      }
-
-      .btn-primary:hover::after {
-        background-position: -100% -100%;
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
-      }
-
-      .btn-primary:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 6px rgba(79, 70, 229, 0.15);
-      }
-
-      /* Record Cards (Dynamic Grid) */
-      .records-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: var(--space-4);
-        margin-top: var(--space-5);
-      }
-
-      .record-card-modern {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: var(--space-4);
-        transition: all var(--transition-fast);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .record-card-modern::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        background: linear-gradient(
-          180deg,
-          var(--primary),
-          var(--accent-purple)
-        );
-        border-radius: 0 4px 4px 0;
-        opacity: 0;
-        transform: scaleY(0);
-        transition: all var(--transition-fast);
-      }
-
-      .record-card-modern:hover {
-        border-color: rgba(79, 70, 229, 0.3);
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-        transform: translateY(-2px);
-      }
-
-      .record-card-modern:hover::before {
-        opacity: 1;
-        transform: scaleY(1);
-      }
-
-      /* Responsive Hamburger Menu */
-      .mobile-header {
-        display: none;
-        align-items: center;
-        gap: var(--space-3);
-        padding: var(--space-3) var(--space-4);
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-      }
-
-      .menu-toggle {
-        background: none;
-        border: none;
-        font-size: 20px;
-        color: var(--primary);
-        cursor: pointer;
-        transition: transform var(--transition-fast);
-      }
-
-      .menu-toggle:hover {
-        transform: scale(1.1);
-      }
-
-      @media (max-width: 1024px) {
-        .dashboard {
-          grid-template-columns: 1fr;
-        }
-        .dashboard.sidebar-open .sidebar {
-          left: 0;
-        }
-        .sidebar {
-          position: fixed;
-          left: -100%;
-          top: 0;
-          bottom: 0;
-          width: var(--sidebar-width);
-          z-index: 1000;
-          box-shadow: 20px 0 60px rgba(15, 23, 42, 0.12);
-        }
-        .mobile-header {
-          display: flex;
-        }
-        .page-hero {
-          flex-direction: column;
-          text-align: center;
-        }
-        .analytics-grid {
-          grid-template-columns: 1fr;
-        }
-        .hero-title {
-          font-size: 22px;
-        }
-      }
-
-      /* --- Missing component styles used by markup/JS --- */
-      .record-workspace {
-        overflow: hidden;
-      }
-
-      /* PRC-style records table and procedure navigation */
-      .procedure-tabs {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin: 0 0 16px;
-        padding: 10px;
-        background: var(--canvas-muted);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-      }
-      .procedure-tab {
-        border: 1px solid var(--border);
-        background: var(--surface);
-        color: var(--text-secondary);
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      .procedure-tab:hover,
-      .procedure-tab.active {
-        background: var(--primary);
-        border-color: var(--primary);
-        color: #fff;
-      }
-      .prc-records-table th { white-space: normal; min-width: 125px; }
-
-      .card-panel {
-        background: var(--surface);
-      }
-
-      /* Record modal */
-      .record-modal-overlay {
-        position: fixed;
-        inset: 0;
-        display: none;
-        background: rgba(15, 23, 42, 0.5);
-        backdrop-filter: blur(16px) saturate(180%);
-        -webkit-backdrop-filter: blur(16px) saturate(180%);
-        z-index: 2000;
-        padding: var(--space-6);
-        align-items: center;
-        justify-content: center;
-      }
-
-      .record-modal-overlay.active {
-        display: flex;
-        animation: panelRise 0.35s var(--ease-spring) backwards;
-      }
-
-      .record-modal {
-        width: 100%;
-        max-width: 1180px;
-        max-height: calc(100vh - 48px);
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        border-radius: 20px;
-        background: var(--surface);
-        border: 1px solid rgba(226, 232, 240, 0.5);
-        box-shadow:
-          0 25px 60px -12px rgba(15, 23, 42, 0.2),
-          0 12px 24px -8px rgba(15, 23, 42, 0.08);
-        scrollbar-width: thin;
-      }
-
-      .record-modal::-webkit-scrollbar {
-        width: 5px;
-      }
-      .record-modal::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .record-modal::-webkit-scrollbar-thumb {
-        background: rgba(203, 213, 225, 0.5);
-        border-radius: 99px;
-      }
-
-      .record-modal-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--space-4);
-        padding: 14px 28px;
-        border-bottom: 1px solid var(--border);
-        position: sticky;
-        top: 0;
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        z-index: 10;
-      }
-
-      .record-modal-title {
-        font-size: 17px;
-        font-weight: 800;
-        color: var(--text-primary);
-        letter-spacing: -0.03em;
-      }
-      .record-modal-heading { display: flex; align-items: center; gap: 12px; min-width: 0; }
-      .record-modal-type {
-        display: inline-flex;
-        align-items: center;
-        min-height: 26px;
-        padding: 4px 10px;
-        border: 1px solid #d9def7;
-        border-radius: 999px;
-        background: #eef0ff;
-        color: #252b84;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: .04em;
-        white-space: nowrap;
-      }
-
-      .record-modal-close {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        border: 1px solid var(--border);
-        background: var(--canvas);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-secondary);
-        transition: all var(--transition-fast);
-      }
-
-      .record-modal-close:hover {
-        background: var(--danger-soft);
-        border-color: rgba(239, 68, 68, 0.2);
-        color: var(--danger);
-        transform: rotate(90deg);
-      }
-      #badge-requests.nav-badge { background: #ef4444; color: #fff; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.14); }
-
-      /* Case-details modal */
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 2100;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-6);
-        background: rgba(15, 23, 42, 0.5);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-      }
-
-      .modal-overlay.active {
-        display: flex;
-      }
-
-      .modal-overlay .modal {
-        width: min(760px, 100%);
-        max-height: calc(100vh - 48px);
-        overflow: auto;
-        border: 1px solid var(--border);
-        border-radius: 18px;
-        background: var(--surface);
-        box-shadow: var(--shadow-elevation-3);
-      }
-
-      .modal-overlay .modal-header {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 18px 22px;
-        border-bottom: 1px solid var(--border);
-        background: var(--surface);
-      }
-
-      .modal-overlay .modal-title {
-        color: var(--text-primary);
-        font-size: 19px;
-        font-weight: 800;
-      }
-
-      .modal-overlay .modal-close {
-        width: 36px;
-        height: 36px;
-        border: 0;
-        border-radius: 50%;
-        background: var(--canvas-muted);
-        color: var(--text-secondary);
-        cursor: pointer;
-      }
-
-      .modal-overlay #detailContent {
-        padding: 20px 22px 24px;
-      }
-
-      .detail-row {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-bottom: 14px;
-      }
-
-      .detail-row.full { grid-template-columns: 1fr; }
-
-      .detail-field {
-        padding: 14px;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        background: var(--canvas);
-      }
-
-      .detail-label {
-        margin-bottom: 5px;
-        color: var(--text-secondary);
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-      }
-
-      .detail-value { color: var(--text-primary); line-height: 1.5; }
-
-      @media (max-width: 640px) {
-        .detail-row { grid-template-columns: 1fr; }
-      }
-
-      .input-pane {
-        padding: 16px 28px 18px;
-      }
-
-      #deliveryInputPane {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 9px 16px;
-      }
-
-      .form-row {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: var(--space-4);
-        margin-bottom: var(--space-4);
-      }
-
-      #deliveryInputPane .form-row {
-        display: contents;
-      }
-      .form-row.full {
-        grid-template-columns: 1fr;
-      }
-      #deliveryInputPane .form-row.full .form-group {
-        grid-column: 1 / -1;
-      }
-      #deliveryInputPane .form-group {
-        min-width: 0;
-      }
-
-      .record-workspace .btn-primary,
-      .pane-actions .primary,
-      .pane-actions .secondary {
-        border-radius: 4px;
-      }
-
-      /* Clear action hierarchy for the manual-record entry form. */
-      .pane-actions .primary {
-        min-width: 140px;
-        padding: 11px 18px;
-        border: 1px solid #0c1461;
-        background: linear-gradient(135deg, #0c1461, #273994);
-        color: #fff;
-        font-weight: 800;
-        box-shadow: 0 3px 8px rgba(12, 20, 97, 0.24);
-      }
-      .pane-actions .primary:hover {
-        background: linear-gradient(135deg, #17237c, #3448ae);
-        transform: translateY(-1px);
-      }
-      .pane-actions .secondary {
-        min-width: 96px;
-        padding: 11px 18px;
-        border-color: #cbd5e1;
-        background: #fff;
-        color: #475569;
-        font-weight: 700;
-      }
-
-      @media (max-width: 820px) {
-        .form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        #deliveryInputPane { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      }
-      @media (max-width: 560px) {
-        .form-row { grid-template-columns: 1fr; }
-        #deliveryInputPane { grid-template-columns: 1fr; }
-      }
-
-      .form-group {
-        position: relative;
-      }
-
-      .form-group label {
-        display: block;
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--text-secondary);
-        margin-bottom: 4px;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-
-      .form-group input,
-      .form-group select {
-        width: 100%;
-        box-sizing: border-box;
-        min-height: 38px;
-        padding: 7px 11px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        background: var(--canvas);
-        color: var(--text-primary);
-        font-size: 13px;
-        transition: all var(--transition-fast);
-      }
-
-      .form-group textarea {
-        width: 100%;
-        min-height: 58px;
-        box-sizing: border-box;
-        padding: 8px 11px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        background: var(--canvas);
-        color: var(--text-primary);
-        font-size: 13px;
-        resize: vertical;
-        transition: all var(--transition-fast);
-      }
-
-      .form-group input:focus,
-      .form-group select:focus,
-      .form-group textarea:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px var(--primary-soft);
-        background: var(--surface);
-      }
-
-      .form-group input::placeholder,
-      .form-group textarea::placeholder {
-        color: var(--text-light);
-      }
-
-      /* Clinical-entry form: grouped fields with a clearer visual hierarchy. */
-      #deliveryInputPane {
-        display: block;
-        max-height: calc(96vh - 138px);
-        overflow-y: auto;
-        padding: 22px 28px 20px;
-        background: linear-gradient(180deg, #fbfcff 0%, #ffffff 100%);
-      }
-      #deliveryInputPane .form-row {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px 18px;
-        margin: 0 0 14px;
-        padding: 15px 16px 16px;
-        border: 1px solid #e3e9f4;
-        border-radius: 12px;
-        background: #fff;
-      }
-      #deliveryInputPane .form-row.full { grid-template-columns: 1fr; }
-      #deliveryInputPane .form-row::before {
-        grid-column: 1 / -1;
-        margin-bottom: -2px;
-        color: var(--primary);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-      }
-      #deliveryInputPane .form-row:nth-of-type(1)::before { content: "Patient information"; }
-      #deliveryInputPane .form-row:nth-of-type(2)::before { content: "Case details"; }
-      #deliveryInputPane .form-row:nth-of-type(3)::before { content: "Clinical assessment"; }
-      #deliveryInputPane .form-row:nth-of-type(4)::before { content: "Diagnosis"; }
-      #deliveryInputPane .form-row:nth-of-type(5)::before { content: "Procedure schedule"; }
-      #deliveryInputPane .form-row:nth-of-type(6)::before { content: "Facility information"; }
-      #deliveryInputPane .form-row:nth-of-type(7)::before { content: "Facility & supervisor"; }
-      #deliveryInputPane .form-row:nth-of-type(8)::before { content: "Supervisor details"; }
-      #deliveryInputPane .form-row:nth-of-type(9)::before { content: "Professional license"; }
-      #deliveryInputPane .form-group label { margin-bottom: 7px; color: #52617a; font-size: 10px; }
-      #deliveryInputPane .form-group input,
-      #deliveryInputPane .form-group textarea {
-        min-height: 43px;
-        padding: 10px 12px;
-        border-color: #d9e2f0;
-        border-radius: 9px;
-        background: #f7f9fd;
-        font-size: 14px;
-      }
-      #deliveryInputPane .form-group textarea { min-height: 88px; }
-      #deliveryInputPane .form-group input:hover,
-      #deliveryInputPane .form-group textarea:hover { border-color: #b7c5df; background: #fff; }
-      #deliveryInputPane .form-group input:focus,
-      #deliveryInputPane .form-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26, 30, 111, .1); }
-      #deliveryInputPane .form-group:has(#inputPatientName) label::after,
-      #deliveryInputPane .form-group:has(#inputCaseNo) label::after,
-      #deliveryInputPane .form-group:has(#inputDateTime) label::after,
-      #deliveryInputPane .form-group:has(#inputDiagnosis) label::after { content: " *"; color: var(--danger); }
-      @media (max-width: 560px) {
-        #deliveryInputPane { padding: 16px; }
-        #deliveryInputPane .form-row { grid-template-columns: 1fr; padding: 14px; }
-      }
-
-      /* Compact desktop layout: all case fields and actions remain visible together. */
-      @media (min-width: 761px) {
-        .record-modal {
-          width: calc(100% - 48px);
-          max-width: 1320px;
-          height: min(560px, calc(100vh - 48px));
-        }
-        #deliveryInputPane {
-          display: grid;
-          flex: 1 1 auto;
-          min-height: 0;
-          grid-template-columns: repeat(6, minmax(0, 1fr));
-          gap: 9px 18px;
-          max-height: calc(100vh - 154px);
-          overflow-y: auto;
-          padding: 16px 28px 12px;
-          background: #fff;
-          align-content: space-between;
-        }
-        #deliveryInputPane .form-row {
-          display: contents;
-          margin: 0;
-          padding: 0;
-          border: 0;
-          border-radius: 0;
-          background: transparent;
-        }
-        #deliveryInputPane .form-row::before { display: none; }
-        #deliveryInputPane .form-group { grid-column: span 2; }
-        #deliveryInputPane .form-group:has(#inputDiagnosis) { grid-column: 1 / -1; }
-        #deliveryInputPane .form-group:has(#inputDilation),
-        #deliveryInputPane .form-group:has(#inputStation) { grid-column: span 3; }
-        #deliveryInputPane #internalExamFields {
-          grid-column: 1 / -1;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 16px;
-        }
-        #deliveryInputPane #internalExamFields .form-group { grid-column: auto; }
-        #deliveryInputPane .form-group label { margin-bottom: 5px; font-size: 10px; }
-        #deliveryInputPane .form-group input,
-        #deliveryInputPane .form-group textarea {
-          width: 100%;
-          height: 42px;
-          min-height: 42px;
-          padding: 9px 12px;
-          font-size: 13px;
-        }
-        #deliveryInputPane .form-group textarea {
-          height: 66px;
-          min-height: 66px;
-          resize: vertical;
-        }
-        #deliveryInputPane .pane-actions {
-          grid-column: 1 / -1;
-          margin-top: 4px;
-          padding-top: 12px;
-          border-top: 1px solid #dbe3f0;
-        }
-      }
-
-      #deliveryModalBackBtn, #clearFormBtn, #addRecordBtn { min-height: 36px; padding: 8px 14px; font-size: 13px; }
-      #deliveryModalBackBtn { min-width: 82px; border-color: #cbd5e1; color: #475569; background: #fff; }
-      #clearFormBtn { min-width: 82px; border-color: #f4c45b; color: #8a5a00; background: #fff7df; }
-      #clearFormBtn:hover { border-color: #e5a918; color: #714700; background: #ffedba; }
-      #addRecordBtn { min-width: 116px; border-color: #17237c; background: linear-gradient(135deg, #1a1e6f, #3448ae); box-shadow: 0 4px 10px rgba(26, 30, 111, .25); }
-      #addRecordBtn:hover { background: linear-gradient(135deg, #0f1460, #273994); }
-
-      .pane-actions {
-        display: flex;
-        gap: var(--space-3);
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        padding-top: var(--space-5);
-        border-top: 1px solid var(--border);
-      }
-      #deliveryInputPane .pane-actions {
-        grid-column: 1 / -1;
-        margin-top: 2px;
-        padding-top: 10px;
-      }
-
-      .btn.primary {
-        background: linear-gradient(135deg, var(--primary), #6366f1);
-        color: #fff;
-        border: none;
-        padding: 11px 22px;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        font-weight: 800;
-        font-size: 13px;
-        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
-        transition: all var(--transition-fast);
-      }
-
-      .btn.primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
-      }
-
-      .btn.secondary,
-      .secondary {
-        background: var(--surface);
-        color: var(--text-secondary);
-        border: 1px solid var(--border);
-        padding: 11px 22px;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        font-weight: 700;
-        font-size: 13px;
-        transition: all var(--transition-fast);
-      }
-
-      .btn.secondary:hover,
-      .secondary:hover {
-        background: var(--primary-soft);
-        border-color: rgba(79, 70, 229, 0.3);
-        color: var(--primary);
-        transform: translateY(-1px);
-      }
-
-      /* Empty state title/text hooks (JS toggles these) */
-      .record-empty-state-title {
-        font-weight: 900;
-        font-size: 16px;
-        margin-bottom: 8px;
-      }
-
-      .record-empty-state-text {
-        font-size: 13px;
-        color: var(--text-secondary);
-        line-height: 1.6;
-      }
-
-      /* Option Pane / Dialog */
-      .option-pane-overlay {
-        position: fixed;
-        inset: 0;
-        display: none;
-        background: rgba(15, 23, 42, 0.5);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        z-index: 3000;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .option-pane-overlay.open {
-        display: flex;
-      }
-
-      .option-pane {
-        position: relative;
-        background: var(--surface);
-        border-radius: 20px;
-        padding: var(--space-8);
-        max-width: 420px;
-        width: 90%;
-        box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.2);
-        text-align: center;
-        animation: panelRise 0.3s var(--ease-spring) backwards;
-      }
-
-      .option-pane-close {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        display: grid;
-        width: 32px;
-        height: 32px;
-        place-items: center;
-        border: 0;
-        border-radius: 50%;
-        background: transparent;
-        color: var(--text-secondary);
-        font-size: 24px;
-        line-height: 1;
-        cursor: pointer;
-      }
-
-      .option-pane-close:hover { background: var(--primary-soft); color: var(--primary); }
-
-      .option-pane-icon { display: none; }
-      .option-pane.remarks-dialog {
-        max-width: 470px;
-        padding: 36px 38px 34px;
-        overflow: hidden;
-        border: 1px solid #dfe3ff;
-        background: linear-gradient(145deg, #ffffff 0%, #fafaff 58%, #f1f3ff 100%);
-        box-shadow: 0 28px 75px rgba(20, 27, 108, .28);
-      }
-      .option-pane.remarks-dialog::before {
-        content: "";
-        position: absolute;
-        top: -80px;
-        right: -62px;
-        width: 190px;
-        height: 190px;
-        border-radius: 50%;
-        background: rgba(99, 102, 241, .10);
-      }
-      .remarks-dialog .option-pane-icon {
-        position: relative;
-        display: grid;
-        width: 52px;
-        height: 52px;
-        place-items: center;
-        margin: 0 auto 15px;
-        border-radius: 16px;
-        background: linear-gradient(135deg, #e7e9ff, #d8dcff);
-        color: #3d43bf;
-        font-size: 21px;
-        box-shadow: 0 8px 18px rgba(65, 73, 196, .16);
-      }
-      .remarks-dialog .option-pane-title { position: relative; margin-bottom: 10px; font-size: 20px; }
-      .remarks-dialog .option-pane-message {
-        position: relative;
-        min-height: 48px;
-        margin: 0 0 22px;
-        padding: 13px 16px;
-        border: 1px solid #e2e6f7;
-        border-radius: 12px;
-        background: rgba(255,255,255,.72);
-        color: #556581;
-        line-height: 1.5;
-      }
-      .remarks-dialog .option-pane-btn.primary { min-width: 152px; padding: 12px 24px; border-radius: 10px; }
-      .remarks-dialog .option-pane-close { z-index: 1; top: 12px; right: 12px; }
-
-      .option-pane-title {
-        font-size: 18px;
-        font-weight: 800;
-        color: var(--text-primary);
-        margin-bottom: 8px;
-      }
-
-      .option-pane-message {
-        font-size: 14px;
-        color: var(--text-secondary);
-        margin-bottom: var(--space-6);
-        line-height: 1.6;
-      }
-
-      .option-pane-actions {
-        display: flex;
-        gap: var(--space-3);
-        justify-content: center;
-      }
-
-      .option-pane-btn {
-        padding: 10px 24px;
-        border-radius: var(--radius-sm);
-        font-weight: 700;
-        font-size: 13px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        transition: all var(--transition-fast);
-      }
-
-      .option-pane-btn.primary {
-        background: linear-gradient(135deg, var(--primary), #6366f1);
-        color: #fff;
-        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
-      }
-
-      .option-pane-btn.primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
-      }
-
-      .option-pane-btn.secondary {
-        background: var(--surface);
-        color: var(--text-secondary);
-        border-color: var(--border);
-      }
-
-      .option-pane-btn.secondary:hover {
-        background: var(--primary-soft);
-        color: var(--primary);
-      }
-
-      /* Photo modal */
-      .photo-modal {
-        position: fixed;
-        inset: 0;
-        display: none;
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(20px);
-        z-index: 3000;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .photo-modal.open {
-        display: flex;
-      }
-
-      .photo-modal img {
-        max-width: 80%;
-        max-height: 80vh;
-        border-radius: 20px;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-      }
-
-      .photo-modal-close {
-        position: absolute;
-        top: 24px;
-        right: 24px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #fff;
-        font-size: 20px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all var(--transition-fast);
-      }
-
-      .photo-modal-close:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: rotate(90deg);
-      }
-
-      /* Profile detail section in dropdown */
-      .profile-details-section {
-        margin-top: 12px;
-        background: rgba(15, 17, 64, 0.03);
-        border-radius: 8px;
-        padding: 12px;
-      }
-      .profile-detail-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 8px;
-      }
-      .profile-detail-row:last-child {
-        margin-bottom: 0;
-      }
-      .profile-detail-row i {
-        color: var(--primary);
-        font-size: 14px;
-        width: 16px;
-        text-align: center;
-      }
-      .profile-detail-row .detail-label {
-        display: block;
-        font-size: 10px;
-        color: var(--text-light);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-weight: 700;
-        line-height: 1;
-        margin-bottom: 4px;
-      }
-      .profile-detail-row .detail-value {
-        display: block;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text-primary);
-        line-height: 1;
-      }
-
-      /* Header profile colors (on dark background) */
-      .header-profile-info .profile-name {
-        color: #fff;
-      }
-      .header-profile-info .profile-id {
-        color: rgba(255, 255, 255, 0.6);
-      }
-      .header-photo-btn {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.2);
-        color: #fff;
-      }
-      .header-profile-container i.fa-chevron-down {
-        color: rgba(255, 255, 255, 0.6);
-      }
-      .header-profile-container:hover {
-        background: rgba(255, 255, 255, 0.08);
-      }
-
-      /* Updated btn-primary */
-      .btn-primary {
-        background: linear-gradient(135deg, #0c1461, #1a237e);
-        color: #fff;
-        border: none;
-        padding: 9px 18px;
-        font-weight: 700;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 13px;
-        box-shadow: 0 2px 8px rgba(12, 20, 97, 0.22);
-        transition: all 0.2s ease;
-      }
-      .btn-primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 18px rgba(12, 20, 97, 0.35);
-      }
-
-      /* Footer */
-      .page-footer {
-        text-align: center;
-        padding: 20px;
-        font-size: 11px;
-        color: var(--text-light);
-        border-top: 1px solid var(--border);
-        margin-top: 8px;
-      }
-
-      /* Navigation transitions */
-      @keyframes navTransitionSlide {
-        from {
-          opacity: 0;
-          transform: translateX(14px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-      .nav-slide-transition {
-        animation: navTransitionSlide 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)
-          forwards;
-      }
-
-      /* Workspace header */
-      .workspace-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-      }
-      .workspace-title {
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--text-primary);
-        letter-spacing: -0.02em;
-      }
-      .workspace-subtitle {
-        font-size: 12px;
-        color: var(--text-secondary);
-        margin-top: 3px;
-      }
-      .frontend-panel { display: none; }
-      .frontend-panel .frontend-panel-body { padding: 8px 0; }
-      .frontend-panel-empty { padding: 34px; text-align: center; color: var(--text-secondary); border: 1px dashed var(--border); border-radius: 6px; }
-      .archive-record-list { display: grid; overflow: hidden; border: 1px solid #dbe3ef; border-radius: 12px; background: #fff; }
-      .archive-record-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; min-height: 76px; padding: 14px 16px; }
-      .archive-record-row + .archive-record-row { border-top: 1px solid #e8edf5; }
-      .archive-record-row:hover { background: #f8faff; }
-      .archive-record-main { display: grid; min-width: 0; grid-template-columns: minmax(120px, .7fr) minmax(160px, 1fr) minmax(150px, .8fr); gap: 18px; align-items: center; }
-      .archive-record-case { color: #171b4b; font-size: 14px; font-weight: 800; }
-      .archive-record-label { display: block; margin-bottom: 4px; color: #8a99b2; font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
-      .archive-record-value { overflow: hidden; color: #4c5d78; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
-      .archive-record-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
-      .archive-action-btn { display: inline-flex; min-height: 34px; align-items: center; justify-content: center; gap: 7px; padding: 7px 11px; border: 1px solid #d6deeb; border-radius: 8px; background: #fff; color: #3345a0; font: inherit; font-size: 11px; font-weight: 800; cursor: pointer; }
-      .archive-action-btn:hover { border-color: #aeb9d2; background: #eef0ff; }
-      .archive-action-btn.delete { border-color: #f2c8cd; color: #dc3545; }
-      .archive-action-btn.delete:hover { border-color: #dc3545; background: #fff0f2; }
-      @media (max-width: 760px) {
-        .archive-record-row { align-items: start; }
-        .archive-record-main { grid-template-columns: 1fr; gap: 9px; }
-      }
-      @media (max-width: 520px) {
-        .archive-record-row { grid-template-columns: 1fr; }
-        .archive-record-actions { justify-content: flex-start; }
-      }
-      .settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-      .settings-option { display: flex; align-items: center; gap: 10px; padding: 13px; border: 1px solid var(--border); border-radius: 5px; color: var(--text-primary); font-size: 13px; }
-      .settings-option input { accent-color: var(--primary); }
-      .summary-student-info { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 14px; margin-bottom: 18px; border: 1px solid var(--border); border-radius: 6px; background: #f8fafc; }
-      .summary-student-info div { font-size: 13px; color: var(--text-secondary); }
-      .summary-student-info strong { display: block; color: var(--text-primary); margin-top: 3px; }
-      .summary-procedure-section { margin-top: 22px; }
-      .summary-procedure-section h3 { margin: 0 0 8px; color: var(--primary-deep); font-size: 15px; }
-      #summaryAllRecordsHeading, #summaryLegacyTable { display: none !important; }
-      /* Standard clinical-record table layout */
-      table {
-        border-collapse: collapse !important;
-        border-spacing: 0 !important;
-        border: 1px solid #000 !important;
-        background: #fff !important;
-        color: #000 !important;
-        font-family: "Times New Roman", Times, serif !important;
-      }
-
-      th,
-      td {
-        border: 1px solid #000 !important;
-        padding: 5px 8px !important;
-        color: #000 !important;
-        vertical-align: middle !important;
-      }
-
-      th {
-        background: #fff !important;
-        text-align: center !important;
-        font-family: "Times New Roman", Times, serif !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        line-height: 1.05 !important;
-        letter-spacing: 0 !important;
-        text-transform: none !important;
-        white-space: normal !important;
-      }
-
-      td {
-        text-align: left;
-        font-size: 14px;
-      }
-      /* Unified portal tables */
-      .table-wrapper, .clinical-form-table-container { overflow: auto; padding: 12px; border: 1px solid #dbe3f1 !important; border-radius: 14px !important; background: #fff !important; box-shadow: 0 4px 16px rgba(30, 41, 59, .04); }
-      table, .clinical-form-table { border: 1px solid #dbe3f1 !important; border-collapse: separate !important; border-spacing: 0 !important; border-radius: 10px; background: #fff !important; color: #25324a !important; font-family: "Inter", "Poppins", sans-serif !important; overflow: hidden; }
-      th, td, .clinical-form-table th, .clinical-form-table td { border: 0 !important; border-right: 1px solid #e5eaf3 !important; border-bottom: 1px solid #e5eaf3 !important; padding: 12px 14px !important; color: #36445e !important; font-family: inherit !important; font-size: 12px !important; line-height: 1.4 !important; vertical-align: middle !important; }
-      th, .clinical-form-table th { background: #f4f6fb !important; color: #52627c !important; text-align: left !important; font-size: 10px !important; font-weight: 800 !important; letter-spacing: .06em !important; line-height: 1.25 !important; text-transform: uppercase !important; }
-      thead tr:first-child th, .clinical-form-table thead tr:first-child th { background: #20267c !important; color: #fff !important; }
-      thead tr:first-child th:first-child { border-top-left-radius: 9px; }
-      thead tr:first-child th:last-child { border-top-right-radius: 9px; }
-      td:last-child, th:last-child { border-right: 0 !important; }
-      tbody tr:last-child td { border-bottom: 0 !important; }
-      tbody tr:nth-child(even) td { background: #fafbfe !important; }
-      tbody tr:hover td { background: #f0f3ff !important; }
-      .clinical-form-table .logbook-input { color: #25324a !important; }
-      .case-action-btn { border-color: #dbe3f1 !important; border-radius: 8px !important; background: #fff !important; box-shadow: 0 2px 5px rgba(30,41,59,.04); }
-
-      /* Clinical record form table */
-      .clinical-form-table-container { padding: 10px; border: 1px solid #d7deed; border-radius: 12px; background: #fff; }
-      .clinical-form-table { border: 1px solid #dbe3f1 !important; border-collapse: separate !important; border-spacing: 0 !important; background: #fff !important; color: #25324a !important; font-family: "Inter", "Poppins", sans-serif !important; }
-      .clinical-form-table th, .clinical-form-table td { border: 0 !important; border-right: 1px solid #e5eaf3 !important; border-bottom: 1px solid #e5eaf3 !important; color: #36445e !important; font-family: inherit !important; vertical-align: middle !important; }
-      .clinical-form-table th { padding: 12px 14px !important; background: #f4f6fb !important; color: #52627c !important; text-align: left !important; font-size: 10px !important; font-weight: 800 !important; letter-spacing: .06em !important; line-height: 1.25 !important; text-transform: uppercase !important; }
-      .clinical-form-table thead tr:first-child th { background: #20267c !important; color: #fff !important; }
-      .clinical-form-table td { padding: 12px 14px !important; font-size: 12px !important; line-height: 1.4 !important; }
-      /* Clinical logbook table — aligned with the instructor data-table design. */
-      .clinical-form-table-container {
-        padding: 7px !important;
-        overflow: auto;
-        border: 1px solid #dce3ef !important;
-        border-radius: 12px !important;
-        background: #ffffff !important;
-        box-shadow: none !important;
-      }
-      .clinical-form-table {
-        width: 100%;
-        margin: 0;
-        table-layout: fixed;
-        border: 0 !important;
-        border-collapse: separate !important;
-        border-spacing: 0 !important;
-        border-radius: 11px 11px 0 0 !important;
-        background: #ffffff !important;
-        font-family: "Inter", "Poppins", sans-serif !important;
-      }
-      .clinical-form-table thead,
-      .clinical-form-table thead tr,
-      .clinical-form-table thead th,
-      .clinical-form-table thead tr:first-child th,
-      .clinical-form-table thead tr:nth-child(2) th {
-        background: #151b6c !important;
-        color: #ffffff !important;
-      }
-      .clinical-form-table th {
-        padding: 13px 16px !important;
-        border: 0 !important;
-        color: #ffffff !important;
-        font-family: inherit !important;
-        text-align: center !important;
-        font-size: 10px !important;
-        font-weight: 750 !important;
-        letter-spacing: 0 !important;
-        line-height: 1.35 !important;
-        text-transform: none !important;
-      }
-      .clinical-form-table td {
-        padding: 13px 16px !important;
-        border: 0 !important;
-        border-bottom: 1px solid #edf1f7 !important;
-        background: #ffffff !important;
-        color: #33415c !important;
-        font-family: inherit !important;
-        font-size: 12px !important;
-        line-height: 1.4 !important;
-        vertical-align: middle !important;
-      }
-      .clinical-form-table tbody tr:nth-child(even) td { background: #ffffff !important; }
-      .clinical-form-table tbody tr:last-child td { border-bottom: 0 !important; }
-      .clinical-form-table tbody tr:hover td { background: #f6f8ff !important; }
-      .clinical-form-table tbody td:nth-child(2),
-      .clinical-form-table tbody td:nth-child(4),
-      .clinical-form-table tbody td:nth-child(8),
-      .clinical-form-table tbody td:nth-child(9) {
-        text-align: center !important;
-        font-variant-numeric: tabular-nums;
-      }
-      .clinical-form-table tbody td:nth-child(4),
-      .clinical-form-table tbody td:nth-child(8) {
-        white-space: pre !important;
-        word-break: normal;
-        overflow-wrap: normal;
-      }
-      .clinical-form-table tbody tr + .frontend-logbook-row { display: none; }
-      .clinical-form-table thead tr:nth-child(2) th {
-        border-top: 1px solid rgba(255, 255, 255, 0.32) !important;
-      }
-      .clinical-form-table th[rowspan] { vertical-align: middle !important; }
-      .clinical-form-table thead tr:first-child th:first-child { border-top-left-radius: 9px !important; }
-      .clinical-form-table thead tr:first-child th:last-child { border-top-right-radius: 9px !important; }
-      .clinical-form-table .case-actions { gap: 6px; }
-      .clinical-form-table .case-action-btn {
-        width: 30px;
-        height: 30px;
-        display: inline-grid;
-        place-items: center;
-        padding: 0;
-        border-radius: 8px !important;
-        transition: border-color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease;
-      }
-      .clinical-form-table .case-action-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 10px rgba(30, 41, 59, .10);
-      }
-      @media (max-width: 768px) {
-        .clinical-form-table-container { overflow-x: auto !important; border-radius: 10px !important; }
-        .clinical-form-table th, .clinical-form-table td { padding: 11px 12px !important; }
-      }
-      .clinical-form-table .logbook-input { width: 100%; min-width: 110px; box-sizing: border-box; border: 0; outline: none; background: transparent; color: #000; font: inherit; }
-      .clinical-form-table .logbook-input:focus { box-shadow: inset 0 -2px 0 #1a1e6f; }
-
-      /* Shared three-role shell — Instructor dashboard is the visual baseline. */
-      :root {
-        --canvas: #f5f7fc;
-        --canvas-muted: #eef2f9;
-        --surface: #fff;
-        --border: #dce3ef;
-        --primary: #151b6c;
-        --primary-deep: #101552;
-        --primary-soft: #eef0ff;
-        --text-primary: #171b4b;
-        --text-secondary: #64718b;
-      }
-      body { background: var(--canvas); background-image: none; }
-      .header {
-        background: #111867;
-        box-shadow: 0 3px 12px rgba(15, 17, 64, .18);
-      }
-      .header-left { gap: 16px; }
-      .header-left > img { width: 40px !important; height: 40px !important; }
-      .header-left .title { font-size: 13px; line-height: 1.15; font-weight: 750; }
-      .header-left .sub { color: #aeb8e8; font-size: 10px; margin-top: 2px; }
-      .header-profile-container { gap: 10px; padding: 4px 8px; color: #fff; }
-      .header-profile-container:hover { background: rgba(255,255,255,.08); }
-      .header-profile-info .profile-name { color: #fff; font-size: 13px; font-weight: 700; }
-      .header-photo-btn {
-        width: 38px;
-        height: 38px;
-        border: 2px solid rgba(255,255,255,.55);
-        background: #fff;
-        color: var(--primary);
-        box-shadow: none;
-      }
-      .sidebar {
-        padding: 16px 10px 0;
-        border-right: 1px solid var(--border);
-        box-shadow: none;
-      }
-      .sidebar-nav { gap: 4px; padding: 0; }
-      .sidebar-nav-item {
-        min-height: 40px;
-        gap: 9px;
-        padding: 9px 12px;
-        border-radius: 8px;
-        color: #52637c;
-        font-size: 13px;
-        font-weight: 550;
-        overflow: hidden;
-      }
-      .sidebar-nav-item::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 19%;
-        width: 4px;
-        height: 62%;
-        border-radius: 0 4px 4px 0;
-        background: #f6bb16;
-        opacity: 0;
-      }
-      .sidebar-nav-item i { color: #8da1bd; }
-      .sidebar-nav-item:hover { transform: none; background: #f3f5fb; color: var(--primary); }
-      .sidebar-nav-item.active {
-        padding-left: 12px;
-        border-left: 0;
-        background: #252b84;
-        color: #fff;
-        box-shadow: none;
-      }
-      .sidebar-nav-item.active::before { opacity: 1; }
-      .nav-badge {
-        right: 8px;
-        width: auto;
-        min-width: 30px;
-        height: 22px;
-        padding: 0 7px;
-        background: #e8edf7;
-        color: #506481;
-      }
-      .sidebar-nav-item:has(.nav-badge) { padding-right: 48px; }
-      .sidebar-bottom { margin-top: auto; padding: 12px 6px; border-top: 1px solid var(--border); }
-      .sidebar-bottom .sidebar-logout {
-        min-height: 40px;
-        padding: 9px 12px;
-        border-radius: 8px;
-        font-size: 12px;
-        font-weight: 700;
-        box-shadow: 0 8px 16px rgba(220,38,38,.25);
-      }
-      .main-content { padding: 24px 28px; background: var(--canvas); }
-      .page-hero {
-        min-height: 0;
-        padding: 14px 20px;
-        margin-bottom: 12px;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        background: linear-gradient(115deg, #fff 0%, #fff 62%, #eef0ff 100%);
-        box-shadow: 0 2px 7px rgba(30,41,59,.05);
-      }
-      .page-hero .hero-eyebrow {
-        margin-bottom: 0;
-        color: #4757bf;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-      }
-      .hero-title { margin: 5px 0; color: var(--primary); font-size: clamp(18px,2vw,22px); letter-spacing: -.02em; }
-      .hero-subtitle { max-width: 590px; color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
-      .hero-illustration { width: 105px; opacity: .84; animation: none; }
-      .stats-row { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px 12px; margin-bottom: 12px; }
-      .stat-card-h {
-        min-height: 78px;
-        padding: 10px 13px;
-        border: 1px solid var(--border);
-        border-radius: 9px;
-        box-shadow: 0 2px 8px rgba(30,41,59,.04);
-      }
-      .stat-card-h:hover { transform: translateY(-2px); border-color: #bbc5df; box-shadow: 0 8px 18px rgba(30,41,59,.08); }
-      .stat-card-h .stat-icon-wrap { width: 36px; height: 36px; border-radius: 8px; font-size: 14px; }
-      .stat-card-h .stat-info .stat-name { color: var(--text-secondary); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-      .stat-card-h .stat-info .stat-num { color: var(--primary); font-size: 20px; line-height: 1; }
-      .stat-card-h .stat-info .stat-sub { color: #98a4b8; font-size: 10px; }
-      .recent-records-panel { border-radius: 18px; }
-      @media (max-width: 900px) { .stats-row { grid-template-columns: repeat(2,minmax(0,1fr)); } }
-      @media (max-width: 640px) { .header-left > img:last-child { display: none; } .stats-row { grid-template-columns: 1fr; } }
-      .student-nav-group {
-        margin: 16px 10px 7px;
-        color: #94a3b8;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: .09em;
-        line-height: 1.2;
-        text-transform: uppercase;
-      }
-      .student-nav-group:first-child { margin-top: 4px; }
-      .sidebar-nav-item > span:not(.nav-badge) {
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .sidebar-nav-item:hover { padding-left: 14px; }
-      .sidebar-nav-item.active { padding-left: 14px; }
-      .dashboard.sidebar-collapsed .student-nav-group { display: none; }
-      @media (max-width: 800px) {
-        .student-nav-group { display: none; }
-      }
-
-
-      /* Three-role clinical records table — shared visual standard. */
-      .clinical-form-table-container {
-        overflow-x: auto !important;
-        padding: 9px !important;
-        border: 1px solid #d8e1f0 !important;
-        border-radius: 15px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-      }
-      .clinical-form-table {
-        width: 100% !important;
-        border: 0 !important;
-        border-collapse: separate !important;
-        border-spacing: 0 !important;
-        border-radius: 11px !important;
-        overflow: hidden !important;
-        background: #fff !important;
-        color: #384966 !important;
-        font-family: "Inter", "Poppins", sans-serif !important;
-      }
-      .clinical-form-table thead,
-      .clinical-form-table thead tr,
-      .clinical-form-table thead th,
-      .clinical-form-table thead tr:first-child th,
-      .clinical-form-table thead tr:nth-child(2) th {
-        background: #1b2174 !important;
-        color: #fff !important;
-      }
-      .clinical-form-table th {
-        padding: 14px 16px !important;
-        border: 0 !important;
-        color: #fff !important;
-        text-align: center !important;
-        font-family: inherit !important;
-        font-size: 11px !important;
-        font-weight: 800 !important;
-        letter-spacing: 0 !important;
-        line-height: 1.25 !important;
-        text-transform: none !important;
-        vertical-align: middle !important;
-      }
-      .clinical-form-table thead tr:nth-child(2) th {
-        border-top: 1px solid rgba(255,255,255,.28) !important;
-      }
-      .clinical-form-table td {
-        padding: 17px 19px !important;
-        border: 0 !important;
-        border-bottom: 1px solid #e8edf5 !important;
-        background: #fff !important;
-        color: #172033 !important;
-        font-family: inherit !important;
-        font-size: 13px !important;
-        font-weight: 700 !important;
-        line-height: 1.45 !important;
-        vertical-align: middle !important;
-      }
-      .clinical-form-table tbody tr:nth-child(even) td { background: #fff !important; }
-      .clinical-form-table tbody tr:hover td { background: #f8f9ff !important; }
-      .clinical-form-table tbody tr:last-child td { border-bottom: 0 !important; }
-      .clinical-form-table .case-actions { gap: 6px !important; flex-wrap: nowrap; }
-      .clinical-form-table .case-action-btn {
-        width: 29px !important;
-        height: 29px !important;
-        border: 1px solid #d9e3f2 !important;
-        border-radius: 50% !important;
-        background: #fff !important;
-        color: #1b2174 !important;
-        box-shadow: 0 2px 7px rgba(24,33,90,.06) !important;
-      }
-      .clinical-form-table .case-action-btn.trash { color: #ef4444 !important; }
-      .clinical-form-table .case-action-btn:hover {
-        border-color: #b7c5e0 !important;
-        background: #f4f6ff !important;
-        transform: translateY(-1px);
-      }
-
-      /* Uniform procedure-table values across every clinical record type. */
-      .clinical-form-table tbody td,
-      .clinical-form-table tbody td :where(span, small, div, input, textarea) {
-        color: #4f607d !important;
-        font-family: "Inter", "Poppins", sans-serif !important;
-        font-size: 10px !important;
-        font-style: normal !important;
-        font-weight: 400 !important;
-        line-height: 1.2 !important;
-      }
-      .clinical-form-table tbody td {
-        vertical-align: middle !important;
-      }
-
-      /* Hierarchical clinical-record form. Groups remain intact at every width. */
-      #deliveryInputPane .clinical-form-section {
-        grid-column: 1 / -1;
-        min-width: 0;
-        padding: 15px 16px 16px;
-        border: 1px solid #e3e9f4;
-        border-radius: 12px;
-        background: #fff;
-      }
-      #deliveryInputPane .clinical-form-section-title {
-        margin: 0 0 12px;
-        color: var(--primary);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-      }
-      #deliveryInputPane .clinical-form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px 18px;
-      }
-      #deliveryInputPane .clinical-form-grid .form-group { min-width: 0; grid-column: auto !important; }
-      #deliveryInputPane .clinical-form-grid .form-group.full-span { grid-column: 1 / -1 !important; }
-      #deliveryInputPane .clinical-form-grid .form-group input,
-      #deliveryInputPane .clinical-form-grid .form-group textarea { width: 100%; }
-      .record-detail-cell .record-detail-primary,
-      .record-detail-cell .record-detail-secondary { display: block; }
-      .record-detail-cell .record-detail-secondary { margin-top: 3px; }
-      #deliveryAssistedWorkspace .clinical-form-table tbody td:nth-child(4),
-      #deliveryAssistedWorkspace .clinical-form-table tbody td:nth-child(8) {
-        white-space: normal !important;
-        overflow-wrap: anywhere;
-      }
-      @media (max-width: 560px) {
-        #deliveryInputPane .clinical-form-grid { grid-template-columns: 1fr; }
-        #deliveryInputPane .clinical-form-section { padding: 14px; }
-        #deliveryInputPane .clinical-form-grid .form-group.full-span { grid-column: auto; }
-      }
-    </style>
-    <link rel="stylesheet" href="student-ux.css?v=20260728-admin-4" />
-    <link rel="stylesheet" href="portal-heroes.css?v=20260728-12" />
+    <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260729-12" />
+    <link rel="stylesheet" href="assets/css/pages/student.css" />
+    <link rel="stylesheet" href="assets/css/components/hero.css?v=20260728-12" />
+    <link rel="stylesheet" href="assets/css/base/theme.css" />
   </head>
   <body>
     <div class="dashboard">
@@ -3022,7 +24,7 @@
       <header class="header">
         <div class="header-left">
           <img
-            src="logo2.png"
+            src="assets/images/logo2.png"
             alt="BISU Logo"
             style="width: 36px; height: 36px; object-fit: contain"
           />
@@ -3031,7 +33,7 @@
             <div class="sub">Clinical Portal</div>
           </div>
           <img
-            src="logo1.png"
+            src="assets/images/logo1.png"
             alt="College Logo"
             style="width: 36px; height: 36px; object-fit: contain"
           />
@@ -3165,7 +167,7 @@
       <!-- Left Sidebar -->
       <nav class="sidebar" aria-label="Main Navigation">
         <div class="sidebar-brand">
-          <div class="sidebar-brand-logos"><img src="logo2.png" alt="BISU" /><img src="logo1.png" alt="Midwifery" /></div>
+          <div class="sidebar-brand-logos portal-mark-wrap"><img src="assets/images/portal-mark-cropped.png" alt="MIDWIFE Clinical Portal" class="portal-mark" /></div>
           <div class="sidebar-brand-copy"><strong>Clinical Portal</strong><span>Student workspace</span></div>
         </div>
         <div class="sidebar-nav">
@@ -3208,8 +210,8 @@
             <i class="fas fa-comment-dots"></i><span>Messages</span>
           </a>
           <div class="student-nav-group">Administration</div>
-          <a class="sidebar-nav-item sidebar-nav-jump" href="#trash" data-nav-key="trash">
-            <i class="fas fa-trash-restore"></i><span>Record Archive</span>
+          <a class="sidebar-nav-item sidebar-nav-jump" href="#activity-log" data-nav-key="activity-log">
+            <i class="fas fa-clock-rotate-left"></i><span>Activity Log</span>
           </a>
           <a class="sidebar-nav-item sidebar-nav-jump" href="#settings" data-nav-key="settings">
             <i class="fas fa-user-cog"></i><span>Account Settings</span>
@@ -3239,8 +241,8 @@
       <!-- Main Content -->
       <main class="main-content" id="dashboard">
         <!-- Hero Section -->
-        <header class="page-hero" aria-label="Student dashboard hero">
-          <div class="hero-content">
+        <header class="page-hero student-dashboard-hero" aria-label="Student dashboard hero">
+          <div class="hero-content student-dashboard-hero-content">
             <div class="hero-eyebrow"><i class="fas fa-circle-check"></i> Student workspace</div>
             <h1 class="hero-title">Keep your clinical logbook up to date</h1>
             <div class="hero-subtitle">
@@ -3259,6 +261,18 @@
               </button>
             </div>
           </div>
+
+          <aside class="student-hero-brief" aria-label="Clinical logbook overview">
+            <div class="student-hero-brief-label"><span aria-hidden="true"></span> Clinical logbook</div>
+            <div class="student-hero-brief-main">
+              <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+              <div>
+                <strong>Ready for your next case</strong>
+                <span>Capture each supervised procedure in one trusted record.</span>
+              </div>
+            </div>
+            <div class="student-hero-brief-footer"><i class="fas fa-lock" aria-hidden="true"></i> Private clinical workspace</div>
+          </aside>
 
           <div class="shared-paper-illustration" aria-hidden="true">
             <span class="paper-clip"></span>
@@ -3383,8 +397,16 @@
           </div>
         </header>
 
-        <!-- Horizontal Stat Cards -->
-        <div class="stats-row" aria-label="Procedure statistics">
+        <section class="student-dashboard-progress" id="dashboardProgressSection" aria-labelledby="dashboardProgressHeading">
+          <div class="student-dashboard-section-heading">
+            <div>
+              <span class="student-dashboard-kicker">Clinical progress</span>
+              <h2 id="dashboardProgressHeading">Your procedure tracker</h2>
+            </div>
+            <p>Open a procedure to add a record or review your progress.</p>
+          </div>
+
+          <div class="stats-row" aria-label="Procedure statistics">
           <div
             class="stat-card-h"
             onclick="switchTab('procedure', 'delivery-handled')"
@@ -3475,14 +497,18 @@
               <div class="stat-sub">Total Cases</div>
             </div>
           </div>
-        </div>
+          </div>
+        </section>
 
         <!-- Recent dashboard activity -->
         <section class="recent-records-panel" id="recentRecordsPanel" aria-label="Recent records">
           <div class="recent-records-header">
             <div class="recent-records-title">
               <i class="fas fa-clock-rotate-left" aria-hidden="true"></i>
-              <span>Recent Records</span>
+              <div class="recent-records-title-copy">
+                <span class="recent-records-eyebrow">Clinical activity</span>
+                <strong>Recent records</strong>
+              </div>
             </div>
             <button class="recent-view-all" type="button" onclick="switchTab('summary')">
               View all <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -3503,8 +529,9 @@
           id="deliveryAssistedWorkspace"
         >
           <div class="procedure-tabs" id="recordProcedureTabs" aria-label="My Records procedures">
+            <button type="button" class="procedure-tab active" data-record-procedure="all-records"><i class="fas fa-table-list" aria-hidden="true"></i> All Records</button>
             <button type="button" class="procedure-tab" data-record-procedure="delivery-handled">Delivery Handled</button>
-            <button type="button" class="procedure-tab active" data-record-procedure="delivery-assisted">Delivery Assisted</button>
+            <button type="button" class="procedure-tab" data-record-procedure="delivery-assisted">Delivery Assisted</button>
             <button type="button" class="procedure-tab" data-record-procedure="suturing">Perineal Suturing</button>
             <button type="button" class="procedure-tab" data-record-procedure="iv-insertion">IV Insertion</button>
             <button type="button" class="procedure-tab" data-record-procedure="internal-exam">Internal Examination</button>
@@ -3536,6 +563,9 @@
               </div>
             </div>
             <div class="workspace-actions">
+              <button class="record-archive-button" id="openRecordArchiveBtn" type="button">
+                <i class="fas fa-box-archive" aria-hidden="true"></i> Archive
+              </button>
               <button class="btn-primary" id="fabAddDeliveryBtn">
                 <i class="fas fa-plus"></i> New Record
               </button>
@@ -3569,7 +599,6 @@
             </table>
           </div>
 
-          <div class="modern-empty-state" id="deliveryEmptyState" style="display: none"></div>
         </section>
 
         <section class="record-workspace card-panel frontend-panel" id="editRequestsTab">
@@ -3610,14 +639,22 @@
           <div class="frontend-panel-body" id="trashContent"><div class="frontend-panel-empty"><i class="fas fa-trash-can"></i><p>Your trash is empty.</p></div></div>
         </section>
 
+        <section class="record-workspace card-panel frontend-panel" id="activityLogTab">
+          <div class="workspace-header"><div><div class="workspace-title">Activity Log</div><div class="workspace-subtitle">A timestamped history of changes to your clinical records.</div></div></div>
+          <div class="activity-log-list" id="activityLogContent"><div class="frontend-panel-empty"><i class="fas fa-clock-rotate-left"></i><p>Loading activity…</p></div></div>
+        </section>
+
         <section class="record-workspace card-panel frontend-panel" id="settingsTab">
           <div class="workspace-header"><div><div class="workspace-title">Profile &amp; Settings</div><div class="workspace-subtitle">Manage your profile and portal preferences on this device.</div></div></div>
           <div class="frontend-panel-body">
-            <div class="profile-panel-card" style="max-width: none; margin-bottom: 16px">
+            <div class="profile-panel-card settings-section settings-profile-card">
               <div class="profile-panel-top">
-                <img class="profile-panel-avatar" id="settingsProfileImg" src="" alt="Profile photo" />
-                <div><strong>Profile Photo</strong><div class="workspace-subtitle">Use a clear photo for your student profile.</div></div>
-                <button class="secondary" id="settingsPhotoBtn" type="button" style="margin-left:auto">Change Photo</button>
+                <div class="settings-avatar-shell" id="settingsAvatarShell">
+                  <i class="fas fa-user settings-avatar-placeholder" aria-hidden="true"></i>
+                  <img class="profile-panel-avatar" id="settingsProfileImg" src="" alt="" />
+                </div>
+                <div class="settings-section-heading"><span class="settings-kicker">Personal profile</span><strong>Profile details</strong><div class="workspace-subtitle">Keep your contact information current.</div></div>
+                <button class="secondary settings-photo-button" id="settingsPhotoBtn" type="button"><i class="fas fa-camera" aria-hidden="true"></i>Change photo</button>
               </div>
               <div class="settings-grid">
                 <div class="form-group"><label>Student Name</label><div id="settingsDisplayName" class="readonly-value"><i class="fas fa-user"></i>Student</div></div>
@@ -3626,17 +663,19 @@
                 <div class="form-group"><label>Parent / Guardian Contact</label><input id="settingsParentContact" type="tel" placeholder="Parent contact number" autocomplete="tel" /></div>
               </div>
             </div>
-            <div class="profile-panel-card" style="max-width: none; margin-bottom: 16px">
-              <strong>Change Password</strong><div class="workspace-subtitle" style="margin-bottom: 14px">This updates the password interface only; it does not change a server account.</div>
+            <div class="profile-panel-card settings-section settings-password-card">
+              <div class="settings-section-heading"><span class="settings-kicker">Security</span><strong>Change password</strong><div class="workspace-subtitle">Use a unique password to protect your account.</div></div>
               <div class="settings-grid">
                 <div class="form-group"><label>Current Password</label><input id="settingsCurrentPassword" type="password" autocomplete="current-password" /></div>
                 <div class="form-group"><label>New Password</label><input id="settingsNewPassword" type="password" autocomplete="new-password" /></div>
                 <div class="form-group" style="grid-column: 1 / -1"><label>Confirm New Password</label><input id="settingsConfirmPassword" type="password" autocomplete="new-password" /></div>
               </div>
             </div>
-            <div class="settings-grid">
-              <label class="settings-option"><input id="settingRecordReminders" type="checkbox" checked /> Record reminders</label>
-              <label class="settings-option"><input id="settingCompactMode" type="checkbox" /> Compact table view</label>
+            <div class="profile-panel-card settings-section settings-appearance-card">
+              <div class="settings-appearance-copy"><span class="settings-kicker">Appearance</span><strong>Portal theme</strong><div class="workspace-subtitle">Choose the workspace contrast that feels best for you.</div></div>
+              <button class="appearance-toggle" id="settingsAppearanceToggle" type="button" aria-pressed="false">
+                <i class="fas fa-moon" aria-hidden="true"></i><span>Use dark mode</span>
+              </button>
             </div>
             <div class="pane-actions"><span id="settingsFeedback" style="margin-right:auto; color:var(--success); font-size:13px"></span><button class="primary" id="saveSettingsBtn" type="button">Save Settings</button></div>
           </div>
@@ -3661,6 +700,17 @@
           </div>
 
           <div class="summary-student-info" id="summaryStudentInfo"></div>
+          <div style="display:flex; align-items:center; gap:10px; margin:0 0 12px">
+            <div class="procedure-tabs" id="studentProgressProcedureTabs" aria-label="My Progress procedures" style="flex:1; margin:0 !important">
+            <button type="button" class="procedure-tab active" data-progress-procedure="all">All Procedures</button>
+            <button type="button" class="procedure-tab" data-progress-procedure="delivery-handled">Delivery Handled</button>
+            <button type="button" class="procedure-tab" data-progress-procedure="delivery-assisted">Delivery Assisted</button>
+            <button type="button" class="procedure-tab" data-progress-procedure="suturing">Perineal Suturing</button>
+            <button type="button" class="procedure-tab" data-progress-procedure="iv-insertion">IV Insertion</button>
+            <button type="button" class="procedure-tab" data-progress-procedure="internal-exam">Internal Examination</button>
+            </div>
+            <button class="btn-primary" id="studentProgressExportBtn" type="button" style="min-height:32px; padding:0 10px; font-size:11px; box-shadow:none; flex:0 0 auto"><i class="fas fa-file-export"></i> Export</button>
+          </div>
           <div id="summaryProcedureTables"></div>
 
           <!-- Consolidated Records Title & Search Filter Bar -->
@@ -3852,7 +902,7 @@
       </div>
     </div>
 
-    <script src="api-client.js?v=20260722-4"></script>
+    <script src="assets/js/api-client.js?v=20260805-chat-actions-1"></script>
     <script>
       let currentStudent = null;
       const STANDALONE_STUDENT_KEY = "thesis_standalone_student_v1";
@@ -3871,6 +921,35 @@
       const CHAT_SELECTED_INSTRUCTOR_PREFIX = "student_selected_instructor_v1";
       const LEGACY_CHAT_MESSAGES_KEY = "student_instructor_chat";
       let chatInstructorOptions = [];
+
+      function getStudentAppearancePreference() {
+        try {
+          return JSON.parse(localStorage.getItem("student_frontend_settings") || "{}").appearance === "dark" ? "dark" : "light";
+        } catch (_) {
+          return "light";
+        }
+      }
+
+      function applyStudentAppearance(appearance) {
+        const isDark = appearance === "dark";
+        document.body.classList.toggle("student-dark", isDark);
+        document.body.classList.remove("compact-logbook");
+        const toggle = document.getElementById("settingsAppearanceToggle");
+        if (toggle) {
+          toggle.setAttribute("aria-pressed", String(isDark));
+          toggle.innerHTML = isDark
+            ? '<i class="fas fa-sun" aria-hidden="true"></i><span>Use light mode</span>'
+            : '<i class="fas fa-moon" aria-hidden="true"></i><span>Use dark mode</span>';
+        }
+      }
+
+      function saveStudentAppearancePreference(appearance) {
+        let settings = {};
+        try { settings = JSON.parse(localStorage.getItem("student_frontend_settings") || "{}"); } catch (_) { settings = {}; }
+        localStorage.setItem("student_frontend_settings", JSON.stringify({ ...settings, appearance }));
+      }
+
+      applyStudentAppearance(getStudentAppearancePreference());
 
       function getCurrentStudentId() {
         return currentStudent?.student_id || localStorage.getItem("currentStudentId") || "STANDALONE";
@@ -4289,7 +1368,10 @@
         const settingsContact = document.getElementById("settingsContactNumber");
         const settingsParent = document.getElementById("settingsParentName");
         const settingsParentContact = document.getElementById("settingsParentContact");
-        if (settingsImage) settingsImage.src = photo;
+        if (settingsImage) {
+          settingsImage.src = photo;
+          settingsImage.hidden = !photo;
+        }
         if (settingsName) settingsName.textContent = name;
         if (settingsContact) settingsContact.value = currentStudent?.contact_number || "";
         if (settingsParent) settingsParent.value = currentStudent?.parent_name || "";
@@ -4570,9 +1652,7 @@
       const deliveryRecordsBody = document.getElementById(
         "deliveryRecordsBody",
       );
-      const deliveryEmptyState = document.getElementById("deliveryEmptyState");
       const fabAddDeliveryBtn = document.getElementById("fabAddDeliveryBtn");
-      const emptyStateAddBtn = document.getElementById("emptyStateAddBtn");
       const deliveryModalOverlay = document.getElementById(
         "deliveryModalOverlay",
       );
@@ -4589,6 +1669,11 @@
         "recordWorkspaceSubtitle",
       );
       const PROCEDURE_CONFIGS = {
+        "all-records": {
+          title: "All Clinical Records",
+          subtitle: "Review every clinical record across all procedures.",
+          procedureName: "Clinical Record",
+        },
         "delivery-assisted": {
           title: "Record of Delivery Assisted",
           subtitle:
@@ -4620,8 +1705,9 @@
           procedureName: "Internal Exam",
         },
       };
-      let activeProcedureKey = "delivery-assisted";
+      let activeProcedureKey = "all-records";
       let activeProcedureConfig = PROCEDURE_CONFIGS[activeProcedureKey];
+      let activeProgressProcedureKey = "all";
 
       function setSidebarActive(key) {
         document.querySelectorAll(".sidebar-nav-item").forEach((el) => {
@@ -4647,7 +1733,7 @@
       let liveEditRequestsLoaded = false;
 
       function getCaseKey(rec) {
-        return String(rec.id || `${activeProcedureKey}-${rec.caseNo || rec.patientName || "case"}`);
+        return String(rec.id || `${rec.procedureKey || activeProcedureKey}-${rec.caseNo || rec.patientName || "case"}`);
       }
       function getEditRequestStatus(rec) {
         const states = JSON.parse(localStorage.getItem("student_frontend_edit_states") || "{}");
@@ -4661,7 +1747,7 @@
             !request.archived &&
             !request.archived_at &&
             String(request.studentId || "") === studentId &&
-            normalizeProcedureKey(request.type || request.procedure_name) === activeProcedureKey &&
+            normalizeProcedureKey(request.type || request.procedure_name) === (rec.procedureKey || activeProcedureKey) &&
             (request.caseNumbers || []).map(String).includes(caseNo),
           )
           .sort((a, b) => new Date(b.requestedAt || 0) - new Date(a.requestedAt || 0))[0];
@@ -4701,7 +1787,7 @@
 
         deliveryRecords.forEach((record) => {
           if (
-            normalizeProcedureKey(activeProcedureKey) === procedureKey &&
+            normalizeProcedureKey(record.procedureKey || activeProcedureKey) === procedureKey &&
             String(record.caseNo || "") === caseNo
           ) {
             delete states[getCaseKey(record)];
@@ -4750,7 +1836,7 @@
           const states = JSON.parse(localStorage.getItem("student_frontend_edit_states") || "{}");
           deliveryRecords.forEach((record) => {
             const stateKey = getCaseKey(record);
-            const requestKey = `${normalizeProcedureKey(activeProcedureKey)}::${String(record.caseNo || "")}`;
+            const requestKey = `${normalizeProcedureKey(record.procedureKey || activeProcedureKey)}::${String(record.caseNo || "")}`;
             if (states[stateKey] === "requested" && !pendingCases.has(requestKey)) {
               delete states[stateKey];
               record.editRequestStatus = "";
@@ -4775,7 +1861,7 @@
         const request = requestSource
           .filter((item) =>
             String(item.studentId || item.student_id || "") === studentId &&
-            normalizeProcedureKey(item.type || item.procedureKey || item.procedure_key || item.procedure_name) === activeProcedureKey &&
+            normalizeProcedureKey(item.type || item.procedureKey || item.procedure_key || item.procedure_name) === (rec.procedureKey || activeProcedureKey) &&
             (item.caseNumbers || []).map(String).includes(caseNo),
           )
           .sort((a, b) => new Date(b.requestedAt || b.requested_at || 0) - new Date(a.requestedAt || a.requested_at || 0))[0];
@@ -4963,7 +2049,10 @@
         buttons.forEach((btn) => {
           const button = document.createElement("button");
           button.type = "button";
-          button.className = `option-pane-btn ${btn.variant === "secondary" ? "secondary" : "primary"}`;
+          const variant = ["secondary", "danger"].includes(btn.variant)
+            ? btn.variant
+            : "primary";
+          button.className = `option-pane-btn ${variant}`;
           button.textContent = btn.label || "OK";
           button?.addEventListener("click", async () => {
             closeOptionPane();
@@ -5122,6 +2211,13 @@
           : "delivery-assisted";
         activeProcedureKey = nextKey;
         activeProcedureConfig = PROCEDURE_CONFIGS[nextKey];
+        const isAllRecords = nextKey === "all-records";
+        if (fabAddDeliveryBtn) {
+          fabAddDeliveryBtn.style.display = "";
+          fabAddDeliveryBtn.innerHTML = isAllRecords
+            ? '<i class="fas fa-plus" aria-hidden="true"></i> Add Record'
+            : '<i class="fas fa-plus" aria-hidden="true"></i> New Record';
+        }
         document.querySelectorAll("[data-record-procedure]").forEach((tab) => {
           tab.classList.toggle(
             "active",
@@ -5145,18 +2241,6 @@
           field.style.display = procedureKey === "internal-exam" ? "block" : "none";
         });
 
-        const emptyTitle = deliveryEmptyState?.querySelector(
-          ".record-empty-state-title",
-        );
-        const emptyText = deliveryEmptyState?.querySelector(
-          ".record-empty-state-text",
-        );
-        if (emptyTitle) {
-          emptyTitle.textContent = `No ${activeProcedureConfig.procedureName} Records Yet`;
-        }
-        if (emptyText) {
-          emptyText.textContent = `You haven't added any ${activeProcedureConfig.procedureName.toLowerCase()} case records. Click the button below to get started.`;
-        }
       }
 
       function clearDeliveryFormInputs() {
@@ -5293,7 +2377,7 @@
       }
 
       function renderDeliveryRecordsTable() {
-        if (!deliveryRecordsBody || !deliveryEmptyState) return;
+        if (!deliveryRecordsBody) return;
 
         deliveryRecordsBody.innerHTML = "";
 
@@ -5329,8 +2413,23 @@
             return true;
           });
 
-        // The logbook always shows one browser-only row, even before records exist.
-        deliveryEmptyState.style.display = "none";
+        const deliveryTableContainer = deliveryRecordsBody.closest(
+          ".clinical-form-table-container",
+        );
+        if (deliveryTableContainer) deliveryTableContainer.style.display = "";
+
+        if (!visibleRecords.length) {
+          const row = document.createElement("tr");
+          row.className = "procedure-empty-row";
+          const cell = document.createElement("td");
+          cell.colSpan = 9;
+          cell.textContent = deliveryRecords.length
+            ? "No records match the current search or date filter."
+            : "No records for this procedure.";
+          row.appendChild(cell);
+          deliveryRecordsBody.appendChild(row);
+          return;
+        }
 
         const formatTableDateTime = (value) => {
           if (!value) return "-";
@@ -5413,6 +2512,7 @@
           });          buttons[1]?.addEventListener("click", () => {
             if (requestStatus === "requested" || requestStatus === "edited") return;
             if (requestStatus === "accepted") {
+              if (rec.procedureKey && rec.procedureKey !== "all-records") setActiveProcedure(rec.procedureKey);
               editingRequestKey = getCaseKey(rec);
               deliveryEditingIndex = index;
               deliveryEditingRecord = JSON.parse(JSON.stringify(rec));
@@ -5435,7 +2535,9 @@
               return;
             }
             const requests = JSON.parse(localStorage.getItem("student_frontend_edit_requests") || "[]");
-            const frontendRequest = { caseKey: getCaseKey(rec), procedureKey: activeProcedureKey, caseNo: rec.caseNo || "Unnumbered case", procedure: activeProcedureConfig?.procedureName || "Case", status: "requested", requestedAt: new Date().toLocaleString() };
+            const recordProcedureKey = rec.procedureKey || activeProcedureKey;
+            const recordProcedureConfig = PROCEDURE_CONFIGS[recordProcedureKey] || activeProcedureConfig;
+            const frontendRequest = { caseKey: getCaseKey(rec), procedureKey: recordProcedureKey, caseNo: rec.caseNo || "Unnumbered case", procedure: recordProcedureConfig?.procedureName || rec.procedureName || "Case", status: "requested", requestedAt: new Date().toLocaleString() };
             requests.unshift(frontendRequest);
             localStorage.setItem("student_frontend_edit_requests", JSON.stringify(requests));
             setEditRequestStatus(rec, "requested");
@@ -5448,7 +2550,7 @@
                 const studentId = getCurrentStudentId();
                 console.log('[EDIT_REQUEST_DEBUG] Creating shared edit request for student:', studentId);
                 if (typeof ApiClient !== 'undefined' && ApiClient.requestEditApproval) {
-                  const procName = activeProcedureConfig?.procedureName || frontendRequest.procedure || "Case";
+                  const procName = recordProcedureConfig?.procedureName || frontendRequest.procedure || "Case";
                   const caseNums = frontendRequest.caseNo ? [frontendRequest.caseNo] : [];
                   console.log('[EDIT_REQUEST_DEBUG] Calling ApiClient.requestEditApproval with:', {studentId, procName, caseNums});
                   const res = await ApiClient.requestEditApproval(studentId, procName, caseNums);
@@ -5494,7 +2596,6 @@
           });
         });
 
-        appendStudentLogbookRow(deliveryRecordsBody, 9);
       }
 
       async function loadActiveWorkspaceRecords() {
@@ -5507,11 +2608,13 @@
         try {
           const list = await ApiClient.getJoinedCases(
             currentStudent.student_id,
-            activeProcedureConfig?.procedureName || "Delivery Assisted",
+            activeProcedureKey === "all-records" ? "" : (activeProcedureConfig?.procedureName || "Delivery Assisted"),
           );
 
           deliveryRecords = list.map((rec) => ({
             id: rec.id,
+            procedureKey: normalizeProcedureKey(rec.procedure_name),
+            procedureName: rec.procedure_name || "Clinical Record",
             patientName: rec.patient_name || "",
             patientAddress: rec.patient_address || "",
             caseNo: rec.case_no || "",
@@ -5878,6 +2981,54 @@
         container.appendChild(list);
       }
 
+      function formatActivityTimestamp(value) {
+        if (!value) return "Timestamp unavailable";
+        const timestamp = new Date(value);
+        if (Number.isNaN(timestamp.getTime())) return String(value);
+        return timestamp.toLocaleString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        });
+      }
+
+      async function renderActivityLog() {
+        const container = document.getElementById("activityLogContent");
+        if (!container) return;
+        container.innerHTML = '<div class="frontend-panel-empty"><i class="fas fa-spinner fa-spin"></i><p>Loading activity…</p></div>';
+        const result = await ApiClient.getActivityLog();
+        if (!result?.ok) {
+          container.innerHTML = `<div class="frontend-panel-empty"><i class="fas fa-triangle-exclamation"></i><p>${escapeHtml(result?.message || "Unable to load activity.")}</p></div>`;
+          return;
+        }
+        const entries = result.entries || [];
+        if (!entries.length) {
+          container.innerHTML = '<div class="frontend-panel-empty"><i class="fas fa-clock-rotate-left"></i><p>No record activity yet.</p></div>';
+          return;
+        }
+        const actionMap = {
+          archive: ["fa-box-archive", "Record archived"],
+          restore: ["fa-rotate-left", "Record restored"],
+          create: ["fa-circle-plus", "Record created"],
+          update: ["fa-pen-to-square", "Record updated"],
+          review: ["fa-clipboard-check", "Record reviewed"],
+          comment: ["fa-comment-dots", "Instructor feedback added"],
+        };
+        container.innerHTML = "";
+        entries.forEach((entry) => {
+          const [icon, label] = actionMap[entry.action_name] || ["fa-clock-rotate-left", "Record activity"];
+          const item = document.createElement("article");
+          item.className = `activity-log-item ${entry.action_name || "activity"}`;
+          const recordLabel = [entry.procedure_name, entry.case_no ? `Case ${entry.case_no}` : ""]
+            .filter(Boolean)
+            .join(" · ") || "Clinical record";
+          item.innerHTML = `<div class="activity-log-icon"><i class="fas ${icon}" aria-hidden="true"></i></div><div class="activity-log-copy"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(recordLabel)}</span></div><time datetime="${escapeHtml(entry.created_at || "")}">${escapeHtml(formatActivityTimestamp(entry.created_at))}</time>`;
+          container.appendChild(item);
+        });
+      }
+
       async function renderEditRequests() {
         const container = document.getElementById("editRequestsContent");
         if (!container) return;
@@ -5958,6 +3109,55 @@
         });
       }
 
+      function closeStudentChatMenus(exceptMenu) {
+        document.querySelectorAll(".student-chat-message-menu.open").forEach((menu) => {
+          if (menu !== exceptMenu) menu.classList.remove("open");
+        });
+      }
+
+      function confirmStudentChatAction(action) {
+        const label = action === "unsend" ? "Unsend" : "Delete";
+        return new Promise((resolve) => {
+          showOptionPane({
+            title: `${label} message?`,
+            message: `Are you sure you want to ${action} this message?`,
+            buttons: [
+              { label: "Cancel", variant: "secondary", onClick: () => resolve(false) },
+              { label, variant: "danger", onClick: () => resolve(true) },
+            ],
+          });
+        });
+      }
+
+      async function runStudentChatAction(action, message) {
+        if (!message || message.sender !== "student") return;
+        if (!message.id) {
+          showOptionPane({ title: "Message Unavailable", message: "This message cannot be identified. Refresh the conversation and try again." });
+          return;
+        }
+        let result;
+        if (action === "edit") {
+          const updatedText = prompt("Edit message:", message.text || "");
+          if (updatedText === null) return;
+          if (!updatedText.trim()) {
+            showOptionPane({ title: "Message Required", message: "A message cannot be empty." });
+            return;
+          }
+          result = await ApiClient.editChatMessage(message.id, updatedText.trim());
+        } else {
+          if (!(await confirmStudentChatAction(action))) return;
+          result = action === "unsend"
+            ? await ApiClient.unsendChatMessage(message.id)
+            : await ApiClient.deleteChatMessage(message.id);
+        }
+        if (!result || !result.ok) {
+          showOptionPane({ title: "Message Not Updated", message: (result && result.message) || "Unable to update this message." });
+          return;
+        }
+        await renderChatThread();
+      }
+      document.addEventListener("click", () => closeStudentChatMenus());
+
       async function renderChatThread() {
         const thread = document.getElementById("chatThread");
         if (!thread) return;
@@ -5980,7 +3180,7 @@
         const messages = [
           ...legacyMessages,
           ...(Array.isArray(sharedMessages) ? sharedMessages.map((message) => ({
-            id: `shared_${message.id}`,
+            id: message.id || "",
             sender: message.sender_role,
             text: message.message,
             instructorName: message.instructor_name || message.sender_name,
@@ -6003,6 +3203,30 @@
             : "You";
           time.textContent = `${senderLabel} · ${message.time}`;
           item.appendChild(time);
+          if (message.sender === "student") {
+            const toggle = document.createElement("button");
+            toggle.type = "button";
+            toggle.className = "student-chat-message-menu-toggle";
+            toggle.setAttribute("aria-label", "Message options");
+            toggle.innerHTML = '<i class="fas fa-ellipsis-vertical"></i>';
+            const menu = document.createElement("div");
+            menu.className = "student-chat-message-menu";
+            menu.innerHTML = '<button type="button" data-student-chat-action="edit"><i class="fas fa-pen"></i>Edit</button><button type="button" data-student-chat-action="unsend"><i class="fas fa-reply"></i>Unsend</button><button type="button" class="danger" data-student-chat-action="delete"><i class="fas fa-trash"></i>Delete</button>';
+            toggle.addEventListener("click", (event) => {
+              event.stopPropagation();
+              const isOpen = menu.classList.contains("open");
+              closeStudentChatMenus(menu);
+              menu.classList.toggle("open", !isOpen);
+            });
+            menu.addEventListener("click", async (event) => {
+              const button = event.target.closest("button[data-student-chat-action]");
+              if (!button) return;
+              event.stopPropagation();
+              menu.classList.remove("open");
+              await runStudentChatAction(button.getAttribute("data-student-chat-action"), message);
+            });
+            item.append(toggle, menu);
+          }
           thread.appendChild(item);
         });
         thread.scrollTop = thread.scrollHeight;
@@ -6015,29 +3239,32 @@
         const pageHero = document.querySelector(".page-hero");
         const analyticsGrid = document.querySelector(".analytics-grid");
         const statsRow = document.querySelector(".stats-row");
+        const dashboardProgressSection = document.getElementById("dashboardProgressSection") || statsRow;
         const recentRecordsPanel = document.getElementById("recentRecordsPanel");
         const workspace = document.getElementById("deliveryAssistedWorkspace");
         const summaryTab = document.getElementById("summaryTabSection");
         const editRequestsTab = document.getElementById("editRequestsTab");
         const chatTab = document.getElementById("chatTab");
         const trashTab = document.getElementById("trashTab");
+        const activityLogTab = document.getElementById("activityLogTab");
         const settingsTab = document.getElementById("settingsTab");
 
         // Remove any previous transition class so re-showing triggers animation
-        [pageHero, analyticsGrid, statsRow, recentRecordsPanel, workspace, summaryTab, editRequestsTab, chatTab, trashTab, settingsTab].forEach((el) => {
+        [pageHero, analyticsGrid, dashboardProgressSection, recentRecordsPanel, workspace, summaryTab, editRequestsTab, chatTab, trashTab, activityLogTab, settingsTab].forEach((el) => {
           if (el) el.classList.remove("nav-slide-transition");
         });
 
         // Hide all first
         if (pageHero) pageHero.style.display = "none";
         if (analyticsGrid) analyticsGrid.style.display = "none";
-        if (statsRow) statsRow.style.display = "none";
+        if (dashboardProgressSection) dashboardProgressSection.style.display = "none";
         if (recentRecordsPanel) recentRecordsPanel.style.display = "none";
         if (workspace) workspace.style.display = "none";
         if (summaryTab) summaryTab.style.display = "none";
         if (editRequestsTab) editRequestsTab.style.display = "none";
         if (chatTab) chatTab.style.display = "none";
         if (trashTab) trashTab.style.display = "none";
+        if (activityLogTab) activityLogTab.style.display = "none";
         if (settingsTab) settingsTab.style.display = "none";
 
         if (tabName === "dashboard") {
@@ -6049,9 +3276,9 @@
             analyticsGrid.style.display = "grid";
             analyticsGrid.classList.add("nav-slide-transition");
           }
-          if (statsRow) {
-            statsRow.style.display = "grid";
-            statsRow.classList.add("nav-slide-transition");
+          if (dashboardProgressSection) {
+            dashboardProgressSection.style.display = dashboardProgressSection === statsRow ? "grid" : "block";
+            dashboardProgressSection.classList.add("nav-slide-transition");
           }
           if (recentRecordsPanel) {
             recentRecordsPanel.style.display = "block";
@@ -6075,7 +3302,7 @@
           setSidebarActive("summary");
           renderSummaryProcedureTables([]);
           renderSummaryTab();
-        } else if (tabName === "edit-requests") {
+} else if (tabName === "edit-requests") {
           if (editRequestsTab) { editRequestsTab.style.display = "block"; editRequestsTab.classList.add("nav-slide-transition"); }
           renderEditRequests();
           setSidebarActive("edit-requests");
@@ -6088,6 +3315,10 @@
           if (trashTab) { trashTab.style.display = "block"; trashTab.classList.add("nav-slide-transition"); }
           renderArchivedRecords();
           setSidebarActive("trash");
+        } else if (tabName === "activity-log") {
+          if (activityLogTab) { activityLogTab.style.display = "block"; activityLogTab.classList.add("nav-slide-transition"); }
+          renderActivityLog();
+          setSidebarActive("activity-log");
         } else if (tabName === "settings") {
           if (settingsTab) { settingsTab.style.display = "block"; settingsTab.classList.add("nav-slide-transition"); }
           updateProfileNavPanel();
@@ -6095,12 +3326,34 @@
         }
       }
 
+      function applyStudentProgressProcedureFilter(procedureKey) {
+        const selectedKey = procedureKey === "all" || PROCEDURE_TARGETS[procedureKey]
+          ? procedureKey
+          : "all";
+        activeProgressProcedureKey = selectedKey;
+        document.querySelectorAll("[data-progress-procedure]").forEach((tab) => {
+          tab.classList.toggle("active", tab.getAttribute("data-progress-procedure") === selectedKey);
+        });
+        document.querySelectorAll(".summary-procedure-section").forEach((section) => {
+          section.style.display = selectedKey === "all" || section.id === `summaryProcedure-${selectedKey}`
+            ? "block"
+            : "none";
+        });
+        const navigationInfo = document.getElementById("studentProgressNavigationInfo");
+        if (navigationInfo) {
+          navigationInfo.textContent = selectedKey === "all"
+            ? "Viewing all procedure records. Select a procedure to filter the table."
+            : `Viewing ${procedureNames[selectedKey] || "selected"} records only. Select All Procedures to show every procedure.`;
+        }
+      }
       function renderSummaryProcedureTables(cases) {
         const info = document.getElementById("summaryStudentInfo");
         const container = document.getElementById("summaryProcedureTables");
         const legacyHeading = document.getElementById("summaryAllRecordsHeading");
         const legacyTable = document.getElementById("summaryTableBody")?.closest(".clinical-form-table-container");
         if (!info || !container) return;
+        const navigationInfo = document.getElementById("studentProgressNavigationInfo");
+        if (navigationInfo) navigationInfo.textContent = "Viewing all procedure records. Scroll to review each procedure separately.";
         if (legacyHeading) legacyHeading.style.display = "none";
         if (legacyTable) legacyTable.style.display = "none";
 
@@ -6139,6 +3392,7 @@
         Object.keys(PROCEDURE_TARGETS).forEach((key) => {
           const section = document.createElement("section");
           section.className = "summary-procedure-section";
+          section.id = `summaryProcedure-${key}`;
           const records = cases.filter((record) => normalizeProcedureKey(record.procedure_name) === key);
           const title = document.createElement("h3");
           title.textContent = `${procedureNames[key]} (${records.length})`;
@@ -6180,6 +3434,7 @@
           section.appendChild(wrap);
           container.appendChild(section);
         });
+        applyStudentProgressProcedureFilter(activeProgressProcedureKey);
       }
 
       async function renderSummaryTab() {
@@ -6345,14 +3600,12 @@
             }
 
             if (key === "records") {
-              // My Records always opens at the first logbook procedure.
-              switchTab("procedure", "delivery-handled");
+              switchTab("procedure", "all-records");
             }
-
             if (key === "summary") {
               switchTab("summary");
             }
-            if (["edit-requests", "chat", "trash", "settings", "profile"].includes(key)) {
+            if (["edit-requests", "chat", "trash", "activity-log", "settings", "profile"].includes(key)) {
               switchTab(key);
             }
             if (key === "logout") {
@@ -6364,7 +3617,7 @@
       document.querySelectorAll("[data-student-quick-action]").forEach((button) => {
         button.addEventListener("click", () => {
           const action = button.getAttribute("data-student-quick-action");
-          if (action === "records") switchTab("procedure", "delivery-handled");
+          if (action === "records") switchTab("procedure", "all-records");
           if (action === "summary") switchTab("summary");
           if (action === "new-record") {
             switchTab("procedure", "delivery-handled");
@@ -6382,8 +3635,7 @@
       });
 
       document.getElementById("saveSettingsBtn")?.addEventListener("click", () => {
-        const reminders = Boolean(document.getElementById("settingRecordReminders")?.checked);
-        const compact = Boolean(document.getElementById("settingCompactMode")?.checked);
+        const appearance = getStudentAppearancePreference();
         const contactNumber = document.getElementById("settingsContactNumber")?.value.trim() || "";
         const parentName = document.getElementById("settingsParentName")?.value.trim() || "";
         const parentContact = document.getElementById("settingsParentContact")?.value.trim() || "";
@@ -6393,7 +3645,7 @@
           showOptionPane({ title: "Password Mismatch", message: "The new password and confirmation must match." });
           return;
         }
-        localStorage.setItem("student_frontend_settings", JSON.stringify({ reminders, compact }));
+        saveStudentAppearancePreference(appearance);
         if (currentStudent) {
           currentStudent.contact_number = contactNumber;
           currentStudent.parent_name = parentName;
@@ -6405,9 +3657,14 @@
           const field = document.getElementById(id);
           if (field) field.value = "";
         });
-        document.body.classList.toggle("compact-logbook", compact);
         const feedback = document.getElementById("settingsFeedback");
         if (feedback) feedback.textContent = newPassword ? "Profile settings saved. Password updated for this frontend preview." : "Profile settings saved on this device.";
+      });
+
+      document.getElementById("settingsAppearanceToggle")?.addEventListener("click", () => {
+        const nextAppearance = document.body.classList.contains("student-dark") ? "light" : "dark";
+        applyStudentAppearance(nextAppearance);
+        saveStudentAppearancePreference(nextAppearance);
       });
 
       document.getElementById("emptyTrashBtn")?.addEventListener("click", () => {
@@ -6619,17 +3876,39 @@
         ?.addEventListener("change", renderDeliveryRecordsTable);
 
       fabAddDeliveryBtn?.addEventListener("click", () => {
+        if (activeProcedureKey === "all-records") {
+          const addRecordProcedures = [
+            ["delivery-handled", "Delivery Handled"],
+            ["delivery-assisted", "Delivery Assisted"],
+            ["suturing", "Perineal Suturing"],
+            ["iv-insertion", "IV Insertion"],
+            ["internal-exam", "Internal Examination"],
+          ];
+          showOptionPane({
+            title: "Add Clinical Record",
+            message: "Choose the procedure for the record you want to add.",
+            buttons: addRecordProcedures.map(([key, label]) => ({
+              label,
+              variant: "primary",
+              onClick: () => {
+                setActiveProcedure(key);
+                deliveryEditingIndex = -1;
+                deliveryEditingRecord = null;
+                clearDeliveryFormInputs();
+                openDeliveryModal();
+              },
+            })),
+          });
+          return;
+        }
         deliveryEditingIndex = -1;
         deliveryEditingRecord = null;
         clearDeliveryFormInputs();
         openDeliveryModal();
       });
 
-      emptyStateAddBtn?.addEventListener("click", () => {
-        deliveryEditingIndex = -1;
-        deliveryEditingRecord = null;
-        clearDeliveryFormInputs();
-        openDeliveryModal();
+      document.getElementById("openRecordArchiveBtn")?.addEventListener("click", () => {
+        switchTab("trash");
       });
 
       deliveryModalCloseBtn?.addEventListener("click", () => {
@@ -6752,6 +4031,26 @@
         });
       });
 
+      document.getElementById("studentProgressExportBtn")?.addEventListener("click", async () => {
+        if (!currentStudent?.student_id) return;
+        const records = await ApiClient.getJoinedCases(currentStudent.student_id, "", "");
+        const headers = ["Procedure", "Patient", "Case No.", "Diagnosis", "Date & Time", "Facility", "Supervisor"];
+        const csvCell = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+        const rows = records.map((record) => [record.procedure_name, record.patient_name, record.case_no, record.complete_diagnosis, record.date_time_performed, record.facility_name, record.supervisor_printed_name].map(csvCell).join(","));
+        const blob = new Blob(["\ufeff" + [headers.map(csvCell).join(","), ...rows].join("\n")], { type: "text/csv;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `my-clinical-progress-${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(link); link.click(); link.remove();
+        setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+      });
+      document.querySelectorAll("[data-progress-procedure]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const procedureKey = button.getAttribute("data-progress-procedure") || "all";
+          applyStudentProgressProcedureFilter(procedureKey);
+          document.getElementById("summaryProcedureTables")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
       document?.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
           updateDashboardStats();
@@ -6846,6 +4145,6 @@
         if (!document.hidden) refreshStudentLiveData();
       });
     </script>
-    <script src="modern-shell.js?v=20260722-2"></script>
+    <script src="assets/js/modern-shell.js?v=20260722-2"></script>
   </body>
 </html>

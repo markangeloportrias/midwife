@@ -1,0 +1,4 @@
+/* Inherited controls keep form text consistent with their containing page. */
+:where(button, input, select, textarea) {
+  font: inherit;
+}

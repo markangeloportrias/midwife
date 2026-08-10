@@ -1,0 +1,181 @@
+/* Extracted from instructor.html id="annual-records-uniform-style" */
+/* Loaded after portal styles so the detailed Annual Records table stays uniform. */
+      html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table {
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+      }
+      html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table thead th {
+        font-size: 8px !important;
+        line-height: 1.15 !important;
+        border-right: 2px solid rgba(255, 255, 255, .55) !important;
+        border-bottom: 2px solid rgba(255, 255, 255, .55) !important;
+      }
+      html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table tbody td {
+        border-right: 1px solid #cbd5e1 !important;
+        border-bottom: 1px solid #cbd5e1 !important;
+      }
+      html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table tbody td:last-child {
+        border-right: 0 !important;
+      }
+
+/* Extracted from instructor.html id="annual-records-table-design" */
+/* Shared, action-free Annual Records table design. */
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 6px !important;
+        overflow-x: auto !important;
+        border: 1px solid #d7e1f0 !important;
+        border-radius: 12px !important;
+        background: #fff !important;
+      }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap > table {
+        width: 100% !important;
+        min-width: 640px !important;
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+        table-layout: auto !important;
+      }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap > table {
+        min-width: 1040px !important;
+        table-layout: fixed !important;
+      }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap thead th {
+        padding: 11px 10px !important;
+        border-right: 1px solid rgba(255,255,255,.25) !important;
+        border-bottom: 1px solid rgba(255,255,255,.25) !important;
+        background: #202f86 !important;
+        color: #fff !important;
+        font-size: 9px !important;
+        font-weight: 800 !important;
+        line-height: 1.15 !important;
+        letter-spacing: .01em !important;
+        text-align: center !important;
+        text-transform: uppercase !important;
+        vertical-align: middle !important;
+        white-space: normal !important;
+      }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap thead tr:first-child th:first-child { border-radius: 9px 0 0 0 !important; }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap thead tr:first-child th:last-child { border-radius: 0 9px 0 0 !important; }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap tbody td {
+        padding: 12px 10px !important;
+        border-right: 1px solid #cbd5e1 !important;
+        border-bottom: 1px solid #cbd5e1 !important;
+        background: #f6f8fc !important;
+        color: #334155 !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        line-height: 1.25 !important;
+        vertical-align: middle !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+      }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap tbody tr:nth-child(even) td { background: #eef3f9 !important; }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap tbody tr:hover td { background: #e5eefb !important; }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap :is(th, td):last-child { border-right: 0 !important; }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap tbody tr:last-child td:first-child { border-radius: 0 0 0 9px !important; }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap tbody tr:last-child td:last-child { border-radius: 0 0 9px 0 !important; }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap tbody tr[tabindex="0"]:focus-visible { outline: 3px solid rgba(32,47,134,.28); outline-offset: -2px; }
+      @media (max-width: 760px) {
+        html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap { padding: 4px !important; }
+        html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap thead th { padding: 9px 8px !important; font-size: 8px !important; }
+        html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap tbody td { padding: 10px 8px !important; font-size: 9px !important; }
+      }
+
+/* Extracted from instructor.html id="yearly-procedure-navigation-style" */
+html body.role-instructor #yearlyStudentRecordsPanel .yearly-procedure-nav { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 12px; padding:8px; border:1px solid #d7e1f0; border-radius:10px; background:#f6f8fc; }
+      html body.role-instructor #yearlyStudentRecordsPanel .yearly-procedure-nav button { min-height:32px; padding:0 12px; border:1px solid #ccd8ed; border-radius:7px; background:#fff; color:#52647e; font:700 10px/1 "Inter",sans-serif; cursor:pointer; }
+      html body.role-instructor #yearlyStudentRecordsPanel .yearly-procedure-nav button.active { border-color:#202f86; background:#202f86; color:#fff; box-shadow:0 2px 6px rgba(32,47,134,.18); }
+      html body.role-instructor #yearlyStudentRecordsPanel .yearly-procedure-nav button:focus-visible { outline:3px solid rgba(32,47,134,.25); outline-offset:2px; }
+
+/* Extracted from instructor.html id="instructor-annual-records-compact-table" */
+html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table thead th {
+        min-height:0 !important;
+        height:auto !important;
+        padding:6px 8px !important;
+        font-size:9px !important;
+        line-height:1.1 !important;
+        text-transform:none !important;
+      }
+      html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table tbody tr,
+      html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table tbody td {
+        min-height:0 !important;
+        height:auto !important;
+      }
+      html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table tbody td {
+        padding:6px 9px !important;
+        font-size:10px !important;
+        line-height:1.18 !important;
+      }
+
+/* Extracted from instructor.html id="instructor-annual-records-final-compact" */
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap .clinical-form-table thead th {
+        min-height:0 !important;
+        height:auto !important;
+        padding:6px 8px !important;
+        font-size:9px !important;
+        line-height:1.1 !important;
+        text-transform:none !important;
+      }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap .clinical-form-table tbody tr,
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap .clinical-form-table tbody td {
+        min-height:0 !important;
+        height:auto !important;
+      }
+      html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel > .table-wrap .clinical-form-table tbody td {
+        padding:6px 9px !important;
+        font-size:10px !important;
+        line-height:1.18 !important;
+      }
+
+/* Extracted from instructor.html id="instructor-annual-records-nav-flat" */
+html body.role-instructor #yearlyStudentRecordsPanel .yearly-procedure-nav {
+        margin:0 0 8px !important;
+        padding:0 !important;
+        border:0 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+      }
+
+/* Extracted from instructor.html id="instructor-annual-records-panel-flat" */
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel {
+        margin:0 !important;
+        padding:0 !important;
+        border:0 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+      }
+
+/* Extracted from instructor.html id="instructor-annual-back-visibility" */
+html body.role-instructor #yearly-report-view #yearlyInstructorBackBtn.yearly-back-hidden { display:none !important; }
+
+/* Admin annual-record and workspace report styles. */
+/* Extracted from admin-dashboard.html  */
+/* Students uses a single workspace surface: retain the table frame, not nested cards. */
+      #studentsCard .students-breadcrumb {
+        display: none !important;
+      }
+      #studentsCard .students-panel {
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+      #studentsCard .students-panel > .row:first-child {
+        margin: 0 0 8px !important;
+      }
+      #studentsCard .students-panel .table-wrap {
+        margin-top: 0 !important;
+      }
+
+/* Extracted from admin-dashboard.html id="admin-annual-procedure-navigation" */
+#yearlyReportPanel .admin-yearly-procedure-nav { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 4px; padding:8px; border:1px solid #d7e1f0; border-radius:10px; background:#f6f8fc; }
+      #yearlyReportPanel .admin-yearly-procedure-nav button { min-height:32px; padding:0 12px; border:1px solid #ccd8ed; border-radius:7px; background:#fff; color:#52647e; font:700 10px/1 "Inter",sans-serif; cursor:pointer; }
+      #yearlyReportPanel .admin-yearly-procedure-nav button.active { border-color:#202f86; background:#202f86; color:#fff; box-shadow:0 2px 6px rgba(32,47,134,.18); }
+      #yearlyReportPanel .admin-yearly-procedure-nav button:focus-visible { outline:3px solid rgba(32,47,134,.25); outline-offset:2px; }
+
+/* Extracted from admin-dashboard.html id="admin-annual-back-visibility" */
+#yearlyReportsCard #yearlyBackBtn.yearly-back-hidden { display:none !important; }

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $instructors = is_array($payload['instructors'] ?? null) ? $payload['instructors'] : [];
 
     try {
-        $config = require __DIR__ . '/api/config.php';
+        $config = require __DIR__ . '/../api/config.php';
         $db = $config['database'];
         $pdo = new PDO(
             "mysql:host={$db['host']};port={$db['port']};dbname={$db['name']};charset=utf8mb4",

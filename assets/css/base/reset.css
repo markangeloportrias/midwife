@@ -1,0 +1,11 @@
+/* Safe global defaults; page styles may intentionally override them. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}

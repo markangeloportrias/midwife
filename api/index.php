@@ -35,6 +35,7 @@ try {
     }
 
     if ($resource === 'dashboard-stats' && $method === 'GET') {
+        currentUser($pdo, ['admin', 'instructor']);
         $counts = [];
         $queries = [
             'students' => 'SELECT COUNT(*) FROM students WHERE archived_at IS NULL',
@@ -48,16 +49,19 @@ try {
     }
 
     if ($resource === 'instructor-directory' && $method === 'GET') {
+        currentUser($pdo, ['admin', 'instructor', 'student']);
         $rows=$pdo->query("SELECT account_uid AS id,username,display_name,role_title,status FROM instructor_accounts WHERE archived_at IS NULL AND status='active' ORDER BY display_name")->fetchAll();
         respond(['ok'=>true,'accounts'=>$rows]);
     }
 
     if ($resource === 'school-year-directory' && $method === 'GET') {
+        currentUser($pdo, ['admin', 'instructor']);
         $rows=$pdo->query("SELECT y.id,y.label,y.status,y.created_at,COUNT(DISTINCT b.id) AS block_count,COUNT(DISTINCT s.student_id) AS student_count FROM school_years y LEFT JOIN student_blocks b ON b.school_year_id=y.id AND b.archived_at IS NULL LEFT JOIN student_block_assignments a ON a.block_id=b.id AND a.archived_at IS NULL LEFT JOIN students s ON s.student_id=a.student_id AND s.archived_at IS NULL WHERE y.archived_at IS NULL GROUP BY y.id,y.label,y.status,y.created_at,y.start_year ORDER BY y.start_year DESC")->fetchAll();
         respond(['ok'=>true,'years'=>$rows]);
     }
 
     if ($resource === 'block-directory' && $method === 'GET') {
+        currentUser($pdo, ['admin', 'instructor']);
         $year=trim((string)($_GET['school_year']??''));
         $stmt=$pdo->prepare("SELECT b.id,b.label,y.label AS school_year,b.status,b.created_at,COUNT(DISTINCT s.student_id) AS student_count FROM student_blocks b JOIN school_years y ON y.id=b.school_year_id LEFT JOIN student_block_assignments a ON a.block_id=b.id AND a.archived_at IS NULL LEFT JOIN students s ON s.student_id=a.student_id AND s.archived_at IS NULL WHERE b.archived_at IS NULL AND (?='' OR y.label=?) GROUP BY b.id,b.label,y.label,b.status,b.created_at,y.start_year ORDER BY y.start_year DESC,b.label");
         $stmt->execute([$year,$year]);
@@ -65,6 +69,7 @@ try {
     }
 
     if ($resource === 'assignment-directory' && $method === 'GET') {
+        currentUser($pdo, ['admin', 'instructor']);
         $year=trim((string)($_GET['school_year']??''));
         $blockId=trim((string)($_GET['block_id']??''));
         $stmt=$pdo->prepare("SELECT s.student_id,s.student_name,s.parent_name,s.contact_number,y.label AS registered_school_year,b.id AS block_id,b.label AS block_label FROM student_block_assignments a JOIN students s ON s.student_id=a.student_id JOIN student_blocks b ON b.id=a.block_id JOIN school_years y ON y.id=b.school_year_id WHERE a.archived_at IS NULL AND s.archived_at IS NULL AND (?='' OR b.id=?) AND (?='' OR y.label=?) ORDER BY s.student_name");
@@ -109,16 +114,25 @@ try {
         if ($method === 'GET') {
             if ($id !== '') {
                 if ($user['role']==='student' && $user['user_uid']!==$id) respond(['ok'=>false,'message'=>'Access denied.'],403);
-                $stmt=$pdo->prepare('SELECT student_id,student_name,parent_name,contact_number,profile_photo,status,archived_at,created_at FROM students WHERE student_id=?');$stmt->execute([$id]);
+                // Include the current assignment so profile screens can render the
+                // academic year and block even when opened outside the roster flow.
+                $stmt=$pdo->prepare("SELECT s.student_id,s.student_name,s.parent_name,s.contact_number,s.profile_photo,s.status,s.archived_at,s.created_at,
+                    (SELECT y.label FROM student_block_assignments a JOIN student_blocks b ON b.id=a.block_id AND b.archived_at IS NULL JOIN school_years y ON y.id=b.school_year_id AND y.archived_at IS NULL WHERE a.student_id=s.student_id AND a.archived_at IS NULL ORDER BY (y.status='active') DESC,y.start_year DESC LIMIT 1) AS registered_school_year,
+                    (SELECT b.label FROM student_block_assignments a JOIN student_blocks b ON b.id=a.block_id AND b.archived_at IS NULL JOIN school_years y ON y.id=b.school_year_id AND y.archived_at IS NULL WHERE a.student_id=s.student_id AND a.archived_at IS NULL ORDER BY (y.status='active') DESC,y.start_year DESC LIMIT 1) AS block_label
+                    FROM students s WHERE s.student_id=?");$stmt->execute([$id]);
                 respond(['ok'=>true,'student'=>$stmt->fetch()?:null]);
             }
             if ($user['role']==='student') respond(['ok'=>false,'message'=>'Access denied.'],403);
             $archived = ($_GET['archived'] ?? '0') === '1';
-            $stmt = $pdo->prepare('SELECT student_id, student_name, parent_name, contact_number, profile_photo, status, archived_at, created_at FROM students WHERE ' . ($archived ? 'archived_at IS NOT NULL' : 'archived_at IS NULL') . ' ORDER BY student_name');
+            $stmt = $pdo->prepare("SELECT s.student_id,s.student_name,s.parent_name,s.contact_number,s.profile_photo,s.status,s.archived_at,s.created_at,
+                (SELECT y.label FROM student_block_assignments a JOIN student_blocks b ON b.id=a.block_id AND b.archived_at IS NULL JOIN school_years y ON y.id=b.school_year_id AND y.archived_at IS NULL WHERE a.student_id=s.student_id AND a.archived_at IS NULL ORDER BY (y.status='active') DESC,y.start_year DESC LIMIT 1) AS registered_school_year,
+                (SELECT b.label FROM student_block_assignments a JOIN student_blocks b ON b.id=a.block_id AND b.archived_at IS NULL JOIN school_years y ON y.id=b.school_year_id AND y.archived_at IS NULL WHERE a.student_id=s.student_id AND a.archived_at IS NULL ORDER BY (y.status='active') DESC,y.start_year DESC LIMIT 1) AS block_label
+                FROM students s WHERE ".($archived ? 's.archived_at IS NOT NULL' : 's.archived_at IS NULL')." ORDER BY s.student_name");
             $stmt->execute();
             respond(['ok' => true, 'students' => $stmt->fetchAll()]);
         }
         if ($method === 'POST' && $id === '') {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['student_id', 'student_name', 'password', 'parent_name', 'contact_number']); // Password is the student's initial login credential.
             $stmt = $pdo->prepare('INSERT INTO students (student_id, student_name, password, parent_name, contact_number) VALUES (?, ?, ?, ?, ?)');
             $stmt->execute([$data['student_id'], $data['student_name'], password_hash((string)$data['password'], PASSWORD_DEFAULT), $data['parent_name'] ?? null, $data['contact_number'] ?? null]);
@@ -126,6 +140,7 @@ try {
             respond(['ok' => true, 'student_id' => $data['student_id']], 201);
         }
         if ($method === 'PATCH' && $id !== '' && in_array($action, ['archive', 'restore'], true)) {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             $pdo->beginTransaction();
             try {
                 $sql = $action === 'archive'
@@ -172,7 +187,7 @@ try {
             }
         }
         if ($method === 'PATCH' && $id !== '' && $action === '') {
-            if ($user['role']==='student' && $user['user_uid']!==$id) respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if ($user['role'] !== 'admin' && !($user['role'] === 'student' && $user['user_uid'] === $id)) respond(['ok'=>false,'message'=>'Access denied.'],403);
             $fields=[];$params=[];foreach(['student_name','parent_name','contact_number','profile_photo'] as $field){if(array_key_exists($field,$data)){$fields[]="$field=?";$params[]=$data[$field];}}
             if(!empty($data['password'])){$fields[]='password=?';$params[]=password_hash((string)$data['password'],PASSWORD_DEFAULT);}
             if(!$fields)respond(['ok'=>false,'message'=>'No student changes supplied.'],422);$params[]=$id;$stmt=$pdo->prepare('UPDATE students SET '.implode(',',$fields).' WHERE student_id=? AND archived_at IS NULL');$stmt->execute($params);audit($pdo,$user,'update','student',$id);respond(['ok'=>true]);
@@ -180,12 +195,13 @@ try {
     }
 
     if ($resource === 'instructors') {
-        $user = currentUser($pdo, $method === 'GET' ? ['admin', 'student', 'instructor'] : ['admin']);
+        $user = currentUser($pdo, ['admin', 'student', 'instructor']);
         if ($method === 'GET') {
             $rows = $pdo->query('SELECT account_uid AS id, username, display_name, contact_number, profile_photo, role_title AS role, status, archived_at, created_at FROM instructor_accounts WHERE archived_at IS NULL ORDER BY display_name')->fetchAll();
             respond(['ok' => true, 'accounts' => $rows]);
         }
         if ($method === 'POST' && $id === '') {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['username', 'password', 'display_name']);
             $uid = 'ins_' . bin2hex(random_bytes(8));
             $stmt = $pdo->prepare('INSERT INTO instructor_accounts (account_uid, username, password, display_name, contact_number, role_title) VALUES (?, ?, ?, ?, ?, ?)');
@@ -203,10 +219,15 @@ try {
         }
         if ($method === 'PATCH' && $id !== '' && $action === '') {
             $fields=[];$params=[];
-            foreach (['username'=>'username','display_name'=>'display_name','contact_number'=>'contact_number','profile_photo'=>'profile_photo','role'=>'role_title','status'=>'status'] as $inputKey=>$column) {
+            if ($user['role'] === 'instructor' && $user['user_uid'] !== $id) respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if ($user['role'] === 'student') respond(['ok'=>false,'message'=>'Access denied.'],403);
+            $allowedFields = $user['role'] === 'admin'
+                ? ['username'=>'username','display_name'=>'display_name','contact_number'=>'contact_number','profile_photo'=>'profile_photo','role'=>'role_title','status'=>'status']
+                : ['contact_number'=>'contact_number','profile_photo'=>'profile_photo'];
+            foreach ($allowedFields as $inputKey=>$column) {
                 if (array_key_exists($inputKey,$data)) {$fields[]="$column=?";$params[]=$data[$inputKey];}
             }
-            if (!empty($data['password'])) {$fields[]='password=?';$params[]=password_hash((string)$data['password'],PASSWORD_DEFAULT);}
+            if ($user['role'] === 'admin' && !empty($data['password'])) {$fields[]='password=?';$params[]=password_hash((string)$data['password'],PASSWORD_DEFAULT);}
             if (!$fields) respond(['ok'=>false,'message'=>'No instructor changes supplied.'],422);
             $params[]=$id;$stmt=$pdo->prepare('UPDATE instructor_accounts SET '.implode(',',$fields).' WHERE account_uid=? AND archived_at IS NULL');$stmt->execute($params);
             audit($pdo,$user,'update','instructor',$id);respond(['ok'=>$stmt->rowCount()>=0]);
@@ -220,6 +241,7 @@ try {
             respond(['ok' => true, 'years' => $rows]);
         }
         if ($method === 'POST') {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['label']);
             if (!preg_match('/^(\d{4})-(\d{4})$/', (string)$data['label'], $m) || (int)$m[2] !== (int)$m[1] + 1) respond(['ok' => false, 'message' => 'Use a consecutive YYYY-YYYY school year.'], 422);
             $pdo->beginTransaction();
@@ -230,6 +252,7 @@ try {
             respond(['ok' => true, 'id' => $pdo->lastInsertId()], 201);
         }
         if ($method === 'PATCH' && $id !== '') {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             $nextStatus = strtolower(trim((string)($data['status'] ?? '')));
             if (!in_array($nextStatus, ['active', 'inactive'], true)) respond(['ok' => false, 'message' => 'Invalid academic year status.'], 422);
             if ($nextStatus === 'inactive') {
@@ -259,12 +282,14 @@ try {
             respond(['ok' => true, 'blocks' => $stmt->fetchAll()]);
         }
         if ($method === 'POST') {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['label', 'school_year']);
             $stmt = $pdo->prepare('INSERT INTO student_blocks (school_year_id, label, created_by) SELECT id, ?, ? FROM school_years WHERE label=? AND archived_at IS NULL');
             $stmt->execute([$data['label'], $user['user_uid'], $data['school_year']]);
             respond(['ok' => $stmt->rowCount() > 0, 'id' => $pdo->lastInsertId()], 201);
         }
         if ($method === 'PATCH' && $id !== '') {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['label']);
             $stmt = $pdo->prepare('UPDATE student_blocks SET label=? WHERE id=? AND archived_at IS NULL');
             $stmt->execute([$data['label'], $id]);
@@ -287,6 +312,7 @@ try {
             respond(['ok' => true, 'students' => $stmt->fetchAll()]);
         }
         if ($method === 'POST') {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['student_id', 'block_id']);
             $stmt = $pdo->prepare('INSERT INTO student_block_assignments (student_id, block_id, assigned_by) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE block_id=VALUES(block_id), assigned_by=VALUES(assigned_by), archived_at=NULL, updated_at=NOW()');
             $stmt->execute([$data['student_id'], $data['block_id'], $user['user_uid']]);
@@ -294,6 +320,7 @@ try {
             respond(['ok' => true]);
         }
         if ($method === 'PATCH' && $id !== '' && $action === 'archive') {
+            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
             $stmt = $pdo->prepare('UPDATE student_block_assignments SET archived_at=NOW() WHERE student_id=? AND archived_at IS NULL');
             $stmt->execute([$id]); respond(['ok' => true]);
         }
@@ -439,12 +466,38 @@ try {
             $stmt->execute([$data['instructor_id']??null,$data['instructor_name']??null,$senderRole,$data['sender_name']??($senderRole==='student'?'Student':'Instructor'),trim((string)$data['message']),$senderRole==='instructor'?1:0,$senderRole==='student'?1:0,$data['student_id']]);
             respond(['ok'=>$stmt->rowCount()>0,'id'=>$pdo->lastInsertId()],201);
         }
+        if ($method === 'PATCH' && $id !== '' && $action === 'edit') {
+            requireFields($data, ['message']);
+            $message = trim((string)$data['message']);
+            if ($message === '') respond(['ok'=>false,'message'=>'A message is required.'],422);
+            $ownerWhere = $user['role'] === 'student'
+                ? "sender_role='student' AND student_id=?"
+                : ($user['role'] === 'instructor' ? "sender_role='instructor' AND instructor_id=?" : '1=1');
+            $params = [$message, $id];
+            if ($ownerWhere !== '1=1') $params[] = $user['user_uid'];
+            $stmt = $pdo->prepare("UPDATE chat_messages SET message=? WHERE id=? AND archived_at IS NULL AND $ownerWhere");
+            $stmt->execute($params);
+            respond(['ok'=>$stmt->rowCount()>0]);
+        }
+        if ($method === 'PATCH' && $id !== '' && in_array($action, ['unsend', 'delete'], true)) {
+            $ownerWhere = $user['role'] === 'student'
+                ? "sender_role='student' AND student_id=?"
+                : ($user['role'] === 'instructor' ? "sender_role='instructor' AND instructor_id=?" : '1=1');
+            $params = [$id];
+            if ($ownerWhere !== '1=1') $params[] = $user['user_uid'];
+            $stmt = $pdo->prepare("UPDATE chat_messages SET archived_at=NOW() WHERE id=? AND archived_at IS NULL AND $ownerWhere");
+            $stmt->execute($params);
+            respond(['ok'=>$stmt->rowCount()>0]);
+        }
     }
 
     if ($resource === 'notifications') {
         $user = currentUser($pdo, ['admin','instructor','student']);
         if ($method === 'GET') {
-            $where = $user['role']==='student' ? ' AND (student_id=? OR student_id IS NULL)' : ''; $stmt=$pdo->prepare('SELECT * FROM notification_history WHERE archived_at IS NULL'.$where.' ORDER BY created_at DESC');$stmt->execute($where?[$user['user_uid']]:[]);respond(['ok'=>true,'notifications'=>$stmt->fetchAll()]);
+            $archived = ($_GET['archived'] ?? '0') === '1';
+            $where = $user['role']==='student' ? ' AND (student_id=? OR student_id IS NULL)' : '';
+            $stmt=$pdo->prepare('SELECT * FROM notification_history WHERE '.($archived ? 'archived_at IS NOT NULL' : 'archived_at IS NULL').$where.' ORDER BY created_at DESC');
+            $stmt->execute($where?[$user['user_uid']]:[]);respond(['ok'=>true,'notifications'=>$stmt->fetchAll()]);
         }
         if ($method === 'POST') {
             requireFields($data,['event_type']);$stmt=$pdo->prepare('INSERT INTO notification_history (event_type,student_id,procedure_key,procedure_type,case_no,request_id,message,remarks,meta) VALUES (?,?,?,?,?,?,?,?,?)');$stmt->execute([$data['event_type'],$data['student_id']??null,$data['procedure_key']??null,$data['procedure_type']??null,$data['case_no']??null,$data['request_id']??null,$data['message']??null,$data['remarks']??null,json_encode($data['meta']??null)]);respond(['ok'=>true,'id'=>$pdo->lastInsertId()],201);
@@ -457,13 +510,36 @@ try {
             $stmt->execute([$remarks, $id]);
             audit($pdo, $user, 'comment', 'case', $id, ['remarks' => $remarks]);
             respond(['ok' => $stmt->rowCount() >= 0]);
-        }        if ($method === 'PATCH' && $id !== '' && $action === 'archive') {$stmt=$pdo->prepare('UPDATE notification_history SET archived_at=NOW() WHERE id=? AND archived_at IS NULL');$stmt->execute([$id]);respond(['ok'=>$stmt->rowCount()>0]);}
+        }
+        if ($method === 'PATCH' && $id !== '' && in_array($action, ['archive', 'restore'], true)) {
+            if ($user['role'] !== 'admin') respond(['ok' => false, 'message' => 'Access denied.'], 403);
+            $stmt=$pdo->prepare('UPDATE notification_history SET archived_at='.($action === 'archive' ? 'NOW()' : 'NULL').' WHERE id=? AND archived_at IS '.($action === 'archive' ? 'NULL' : 'NOT NULL'));
+            $stmt->execute([$id]);respond(['ok'=>$stmt->rowCount()>0]);
+        }
     }
 
     if ($resource === 'audit') {
-        currentUser($pdo, ['admin','instructor']);
-        if(!empty($_GET['record_id'])){$stmt=$pdo->prepare("SELECT * FROM audit_trail WHERE entity_type='case' AND entity_id=? ORDER BY created_at DESC");$stmt->execute([$_GET['record_id']]);$rows=$stmt->fetchAll();}
-        else $rows=$pdo->query('SELECT * FROM audit_trail ORDER BY created_at DESC LIMIT 500')->fetchAll();respond(['ok'=>true,'entries'=>$rows]);
+        $user = currentUser($pdo, ['admin', 'instructor', 'student']);
+        $recordId = (string)($_GET['record_id'] ?? '');
+        if ($user['role'] === 'student') {
+            $sql = 'SELECT a.*, c.case_no, c.procedure_name FROM audit_trail a INNER JOIN case_records c ON a.entity_type = \'case\' AND a.entity_uid = CAST(c.id AS CHAR) WHERE c.student_id = ?';
+            $params = [$user['user_uid']];
+            if ($recordId !== '') {
+                $sql .= ' AND c.id = ?';
+                $params[] = $recordId;
+            }
+            $sql .= ' ORDER BY a.created_at DESC LIMIT 200';
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            $rows = $stmt->fetchAll();
+        } elseif ($recordId !== '') {
+            $stmt = $pdo->prepare("SELECT * FROM audit_trail WHERE entity_type = 'case' AND entity_uid = ? ORDER BY created_at DESC");
+            $stmt->execute([$recordId]);
+            $rows = $stmt->fetchAll();
+        } else {
+            $rows = $pdo->query('SELECT * FROM audit_trail ORDER BY created_at DESC LIMIT 500')->fetchAll();
+        }
+        respond(['ok' => true, 'entries' => $rows]);
     }
 
     respond(['ok' => false, 'message' => 'Endpoint not found.'], 404);

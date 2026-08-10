@@ -103,6 +103,8 @@ CREATE TABLE IF NOT EXISTS api_sessions (
   INDEX idx_session_user (role, user_uid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Activity Log storage. Every clinical-record lifecycle action is written here
+-- with its actor, record reference, details, and immutable timestamp.
 CREATE TABLE IF NOT EXISTS audit_trail (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   actor_role ENUM('admin', 'instructor', 'student', 'system') NOT NULL,
@@ -114,6 +116,7 @@ CREATE TABLE IF NOT EXISTS audit_trail (
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_audit_created (created_at),
   INDEX idx_audit_entity (entity_type, entity_uid),
+  INDEX idx_audit_activity_timeline (entity_type, entity_uid, created_at),
   INDEX idx_audit_actor (actor_role, actor_uid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
