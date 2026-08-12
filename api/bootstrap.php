@@ -58,6 +58,25 @@ function ensureCaseCommentsTable(PDO $pdo): void
 }
 
 ensureCaseCommentsTable($pdo);
+
+function ensureAuditTrailTable(PDO $pdo): void
+{
+    $pdo->exec("CREATE TABLE IF NOT EXISTS audit_trail (
+        id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        actor_role ENUM('admin', 'instructor', 'student', 'system') NOT NULL,
+        actor_uid VARCHAR(80) NULL,
+        action_name VARCHAR(80) NOT NULL,
+        entity_type VARCHAR(80) NOT NULL,
+        entity_uid VARCHAR(120) NULL,
+        details JSON NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_audit_created (created_at),
+        INDEX idx_audit_entity (entity_type, entity_uid),
+        INDEX idx_audit_actor (actor_role, actor_uid)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+}
+
+ensureAuditTrailTable($pdo);
 function input(): array
 {
     $raw = file_get_contents('php://input') ?: '';
@@ -127,4 +146,3 @@ function pathParts(): array
     $path = $position === false ? trim($path, '/') : substr($path, $position + strlen($marker));
     return array_values(array_filter(explode('/', trim($path, '/')), 'strlen'));
 }
-

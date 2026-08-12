@@ -1,0 +1,1024 @@
+/* Admin portal palette: #00296b, #003f88, #00509d, #fdc500, #ffd500. */
+html body.role-admin {
+  --admin-primary: #00509d;
+  --admin-text: #00296b;
+  --admin-muted: #54719a;
+  --admin-border: #c8d9ec;
+  background: #f4f8fc !important;
+  color: #00296b !important;
+}
+
+html body.role-admin :is(.app-shell, .main-content) {
+  background: #f4f8fc !important;
+}
+
+html body.role-admin :is(.header, .institution-header) {
+  background: linear-gradient(100deg, #00296b 0%, #003f88 56%, #00509d 100%) !important;
+  border-color: rgba(255, 213, 0, 0.28) !important;
+  box-shadow: 0 5px 18px rgba(0, 41, 107, 0.18) !important;
+}
+
+html body.role-admin .app-shell > .sidebar {
+  background: linear-gradient(180deg, #00296b 0%, #003f88 56%, #00509d 100%) !important;
+  border-right-color: rgba(255, 213, 0, 0.25) !important;
+}
+
+html body.role-admin .sidebar-brand { border-bottom-color: rgba(255, 213, 0, 0.27) !important; }
+html body.role-admin .sidebar :is(.sidebar-header, .sidebar-group-label) { color: rgba(255, 255, 255, 0.66) !important; }
+html body.role-admin .sidebar .sidebar-item { color: rgba(255, 255, 255, 0.92) !important; }
+html body.role-admin .sidebar .sidebar-icon { color: #dcecff !important; }
+html body.role-admin .sidebar .sidebar-item:hover { background: rgba(0, 41, 107, 0.34) !important; color: #ffffff !important; }
+html body.role-admin .sidebar .sidebar-item.active {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+  box-shadow: 0 8px 18px rgba(0, 41, 107, 0.22) !important;
+}
+html body.role-admin .sidebar .sidebar-item.active .sidebar-icon { color: #00296b !important; }
+html body.role-admin .sidebar .sidebar-count { background: #fdc500 !important; color: #00296b !important; }
+html body.role-admin .sidebar .sidebar-item.active .sidebar-count { background: #00296b !important; color: #ffd500 !important; }
+html body.role-admin .sidebar-user-card { border-color: rgba(255, 213, 0, 0.28) !important; background: rgba(0, 41, 107, 0.3) !important; }
+html body.role-admin .sidebar-user-avatar { background: #fdc500 !important; color: #00296b !important; }
+
+html body.role-admin .card {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  box-shadow: 0 12px 28px rgba(0, 41, 107, 0.08) !important;
+}
+
+html body.role-admin .admin-dashboard-hero {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 213, 0, 0.34) !important;
+  border-left: 5px solid #ffd500 !important;
+  background: linear-gradient(115deg, #00296b 0%, #003f88 58%, #00509d 100%) !important;
+  box-shadow: 0 12px 26px rgba(0, 41, 107, 0.18) !important;
+}
+
+html body.role-admin .admin-dashboard-hero :is(h1, h2, p) { color: #ffffff !important; }
+html body.role-admin .dashboard-system-status {
+  border-color: rgba(255, 213, 0, 0.48) !important;
+  background: rgba(0, 41, 107, 0.26) !important;
+  color: #ffffff !important;
+}
+html body.role-admin .dashboard-system-status span { background: #ffd500 !important; box-shadow: 0 0 0 3px rgba(255, 213, 0, 0.18) !important; }
+html body.role-admin .shared-paper-illustration { border-color: #ffd500 !important; background: #ffffff !important; }
+html body.role-admin .shared-paper-illustration .paper-status { background: #ffd500 !important; color: #00296b !important; }
+
+html body.role-admin #dashboardSummary .summary-box {
+  border-color: #c8d9ec !important;
+  border-top: 3px solid #00509d !important;
+  background: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(0, 41, 107, 0.06) !important;
+}
+html body.role-admin #dashboardSummary .summary-box:nth-child(2) { border-top-color: #003f88 !important; }
+html body.role-admin #dashboardSummary .summary-box:nth-child(3) { border-top-color: #fdc500 !important; }
+html body.role-admin #dashboardSummary .summary-box:nth-child(4) { border-top-color: #00296b !important; }
+html body.role-admin #dashboardSummary .summary-box:hover { border-color: #00509d !important; background: #f7fbff !important; }
+html body.role-admin .summary-box :is(.label, .value) { color: #00296b !important; }
+html body.role-admin .summary-box > div[style] { color: #54719a !important; }
+html body.role-admin .summary-box .icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(0, 80, 157, 0.1) !important;
+  color: #00509d !important;
+}
+html body.role-admin #dashboardSummary .summary-box:nth-child(1) .icon { background: rgba(0, 80, 157, 0.1) !important; color: #00509d !important; }
+html body.role-admin #dashboardSummary .summary-box:nth-child(2) .icon { background: rgba(0, 63, 136, 0.1) !important; color: #003f88 !important; }
+html body.role-admin #dashboardSummary .summary-box:nth-child(3) .icon { background: rgba(253, 197, 0, 0.18) !important; color: #00296b !important; }
+html body.role-admin #dashboardSummary .summary-box:nth-child(4) .icon { background: #00296b !important; color: #ffd500 !important; }
+
+html body.role-admin .dashboard-action-card {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: 0 5px 14px rgba(0, 41, 107, 0.06) !important;
+}
+html body.role-admin .dashboard-action-card:hover { border-color: #00509d !important; background: #f7fbff !important; }
+html body.role-admin .action-icon { background: rgba(0, 80, 157, 0.1) !important; color: #00509d !important; }
+html body.role-admin .dashboard-action-card:hover .action-icon { background: #00509d !important; color: #ffffff !important; }
+html body.role-admin .action-copy strong { color: #00296b !important; }
+html body.role-admin .action-copy small,
+html body.role-admin .action-arrow { color: #54719a !important; }
+html body.role-admin .dashboard-action-card:nth-child(1) { border-left: 3px solid #003f88 !important; }
+html body.role-admin .dashboard-action-card:nth-child(1) .action-icon { background: rgba(0, 63, 136, 0.1) !important; color: #003f88 !important; }
+html body.role-admin .dashboard-action-card:nth-child(2) { border-left: 3px solid #00509d !important; }
+html body.role-admin .dashboard-action-card:nth-child(2) .action-icon { background: rgba(0, 80, 157, 0.1) !important; color: #00509d !important; }
+html body.role-admin .dashboard-action-card:nth-child(3) { border-left: 3px solid #fdc500 !important; }
+html body.role-admin .dashboard-action-card:nth-child(3) .action-icon { background: rgba(253, 197, 0, 0.18) !important; color: #00296b !important; }
+html body.role-admin .dashboard-action-card:nth-child(4) { border-left: 3px solid #00296b !important; }
+html body.role-admin .dashboard-action-card:nth-child(4) .action-icon { background: #00296b !important; color: #ffd500 !important; }
+
+html body.role-admin .dashboard-activity-card {
+  border-color: #c8d9ec !important;
+  border-top: 3px solid #00296b !important;
+  background: #ffffff !important;
+}
+html body.role-admin .dashboard-activity-header :is(h3, p) { color: #00296b !important; }
+html body.role-admin .dashboard-activity-header p,
+html body.role-admin .dashboard-activity-item :is(small, time) { color: #54719a !important; }
+html body.role-admin .dashboard-activity-item {
+  border-left: 3px solid #00509d;
+  background: #f7fbff !important;
+}
+html body.role-admin .dashboard-activity-item > i { background: #00509d !important; color: #ffffff !important; }
+html body.role-admin .dashboard-activity-item:nth-child(2) { border-left-color: #003f88; }
+html body.role-admin .dashboard-activity-item:nth-child(2) > i { background: #003f88 !important; }
+html body.role-admin .dashboard-activity-item:nth-child(3) { border-left-color: #fdc500; }
+html body.role-admin .dashboard-activity-item:nth-child(3) > i { background: #fdc500 !important; color: #00296b !important; }
+html body.role-admin .dashboard-activity-item strong { color: #00296b !important; }
+html body.role-admin .dashboard-activity-header .btn-secondary {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+  box-shadow: 0 6px 14px rgba(253, 197, 0, 0.2) !important;
+}
+
+html body.role-admin :is(.workspace-title, .card h3, .admin-procedure-section h4) { color: #00296b !important; }
+html body.role-admin :is(.workspace-subtitle, .card p, .empty, .admin-procedure-empty) { color: #54719a !important; }
+html body.role-admin :is(.workspace-header, .admin-student-heading) { border-color: #c8d9ec !important; }
+
+html body.role-admin :is(.btn-primary, .btn-primary:visited) {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.24) !important;
+}
+html body.role-admin .btn-primary:hover { background: #ffd500 !important; }
+html body.role-admin :is(.btn-secondary, .record-archive-button, .link-btn) {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-admin :is(.btn-secondary, .record-archive-button, .link-btn):hover { background: #eef5fb !important; color: #00296b !important; }
+
+html body.role-admin :is(input, select, textarea) {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin :is(input, select, textarea):focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.15) !important;
+}
+
+html body.role-admin :is(.table-wrapper, .table-wrap, .clinical-form-table-container) {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-admin table { border-color: #c8d9ec !important; background: #ffffff !important; }
+html body.role-admin :is(table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.26) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin table :is(td, tbody tr, tbody tr:nth-child(even) td) {
+  border-color: #d8e4f1 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin table tbody tr:hover td { background: #f2f7fc !important; }
+
+html body.role-admin :is(.procedure-tabs, .summary-table-filters, .students-breadcrumb, .cases-breadcrumb, .admin-student-summary) {
+  border-color: #c8d9ec !important;
+  background: #eef5fb !important;
+}
+html body.role-admin :is(.procedure-tab, .students-breadcrumb button, .cases-breadcrumb button) {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-admin :is(.procedure-tab:hover, .procedure-tab.active, .students-breadcrumb button:hover, .cases-breadcrumb button:hover) {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body.role-admin .admin-student-photo { border-color: #ffd500 !important; background: #00509d !important; color: #ffffff !important; }
+html body.role-admin :is(.admin-student-heading h3, .admin-student-detail strong, .students-breadcrumb .current, .cases-breadcrumb .current) { color: #00296b !important; }
+html body.role-admin .admin-student-detail span { color: #54719a !important; }
+
+html body.role-admin .mini-btn:not(.danger) {
+  border-color: #00509d !important;
+  background: #eef5fb !important;
+  color: #003f88 !important;
+}
+html body.role-admin .mini-btn:not(.danger):hover { background: #00509d !important; color: #ffffff !important; }
+html body.role-admin :is(.badge-approved, .badge-pending, .rc-badge) { border-color: rgba(0, 80, 157, 0.22) !important; color: #003f88 !important; }
+html body.role-admin .badge-pending { background: rgba(253, 197, 0, 0.2) !important; color: #00296b !important; }
+html body.role-admin .badge-approved { background: rgba(0, 80, 157, 0.12) !important; color: #003f88 !important; }
+html body.role-admin .system-tool-panel { border-color: #c8d9ec !important; background: #ffffff !important; }
+html body.role-admin .system-tool-panel h3 { color: #00296b !important; }
+
+/* Instructor Management keeps the palette even against its legacy high-specificity table rules. */
+html body.role-admin:has(#instructorsCard) #instructorsCard {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#instructorsCard) #instructorsCard :is(.workspace-title, .workspace-subtitle) { color: #00296b !important; }
+html body.role-admin:has(#instructorsCard) #instructorsCard .workspace-subtitle { color: #54719a !important; }
+html body.role-admin:has(#instructorsCard) #instructorsCard .btn-primary {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#instructorsCard) #instructorsCard :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#instructorsCard) #instructorsCard table :is(tbody tr, tbody td) {
+  border-color: #d8e4f1 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#instructorsCard) #instructorsCard table tbody tr:hover td { background: #f2f7fc !important; }
+html body.role-admin:has(#instructorsCard) #instructorsCard .mini-btn:not(.danger):not(.success) {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#instructorsCard) #instructorsCard .mini-btn:not(.danger):not(.success):hover { background: #003f88 !important; }
+html body.role-admin:has(#instructorsCard) #instructorsCard .mini-btn.success {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#instructorsCard) #instructorsCard .account-status-badge.active {
+  border-color: rgba(0, 80, 157, 0.25) !important;
+  background: rgba(0, 80, 157, 0.1) !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#instructorsCard) #instructorsCard .account-status-badge.inactive {
+  border-color: rgba(253, 197, 0, 0.48) !important;
+  background: rgba(253, 197, 0, 0.16) !important;
+  color: #00296b !important;
+}
+
+/* Student Management uses the same action and status hierarchy as Instructor Management. */
+html body.role-admin:has(#studentsCard) #studentsCard {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#studentsCard) #studentsCard :is(h3, p) { color: #00296b !important; }
+html body.role-admin:has(#studentsCard) #studentsCard > p { color: #54719a !important; }
+html body.role-admin:has(#studentsCard) #studentsCard .btn-primary {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#studentsCard) #studentsCard :is(.table-wrap, table) { border-color: #c8d9ec !important; background: #ffffff !important; }
+html body.role-admin:has(#studentsCard) #studentsCard :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#studentsCard) #studentsCard table :is(tbody tr, tbody td) {
+  border-color: #d8e4f1 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#studentsCard) #studentsCard table tbody tr:hover td { background: #f2f7fc !important; }
+html body.role-admin:has(#studentsCard) #studentsCard .mini-btn:not(.danger):not(.success) {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#studentsCard) #studentsCard .mini-btn.success {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#studentsCard) #studentsCard .account-status-badge.active {
+  border-color: rgba(0, 80, 157, 0.25) !important;
+  background: rgba(0, 80, 157, 0.1) !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#studentsCard) #studentsCard .account-status-badge.inactive {
+  border-color: rgba(253, 197, 0, 0.48) !important;
+  background: rgba(253, 197, 0, 0.16) !important;
+  color: #00296b !important;
+}
+
+/* Academic-year block drill-down: navigation is neutral, creation is gold, and row actions are distinct. */
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel {
+  padding: 10px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 14px !important;
+  background: #f5f9fd !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel > .row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin-bottom: 10px !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel #openAddBlockBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.24) !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel .btn-back {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel .btn-back:hover {
+  border-color: #003f88 !important;
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel :is(.table-wrap, table) {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel .mini-btn {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel .mini-btn:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel .mini-btn[data-block-action="edit"] {
+  border: 1px solid #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  padding: 8px 12px !important;
+  border-radius: 7px !important;
+  font-weight: 700 !important;
+}
+html body.role-admin:has(#studentsBlockPanel.active) #studentsBlockPanel .mini-btn[data-block-action="edit"]:hover {
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+
+/* Student roster drill-down follows the same workspace treatment as the block list. */
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel {
+  padding: 10px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 14px !important;
+  background: #f5f9fd !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel > .row:first-child {
+  align-items: center !important;
+  gap: 10px !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #openAddStudentBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.24) !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListBackBtn {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListBackBtn:hover {
+  border-color: #003f88 !important;
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #toggleArchivedStudentsBtn {
+  border-color: #bfd4e8 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #archivedStudentsCount {
+  display: inline-grid !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  place-items: center !important;
+  border-radius: 999px !important;
+  background: #e8f1fb !important;
+  color: #003f88 !important;
+  font-weight: 800 !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentSearchInput {
+  height: 42px !important;
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentSearchInput:focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel :is(.table-wrap, table) {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel .mini-btn:not(.danger) {
+  border: 1px solid #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  padding: 8px 12px !important;
+  border-radius: 7px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel .mini-btn:not(.danger):hover {
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel .mini-btn.danger {
+  border: 1px solid #fdc500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+  box-shadow: 0 5px 12px rgba(253, 197, 0, 0.2) !important;
+}
+html body.role-admin:has(#studentsListPanel.active) #studentsListPanel .mini-btn.danger:hover {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+
+/* Annual Records: retain the same palette through year, block, student, and report drill-downs. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  border-top: 4px solid #fdc500 !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard :is(.workspace-title, .workspace-subtitle) { color: #00296b !important; }
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .workspace-subtitle { color: #54719a !important; }
+html body.role-admin:has(#yearlyReportsCard) #yearlyBackBtn {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyBackBtn:hover { background: #eaf3fb !important; color: #00296b !important; }
+html body.role-admin:has(#yearlyReportsCard) #yearlyBreadcrumb {
+  border-color: #c5d9ec !important;
+  background: #eef5fb !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyBreadcrumb button {
+  border: 1px solid #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyBreadcrumb button:first-child {
+  border-color: #00296b !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyBreadcrumb .current {
+  background: #003f88 !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#yearlyReportsCard) :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentListPanel, #yearlyReportPanel).active {
+  padding: 10px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 14px !important;
+  background: #f5f9fd !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard :is(.table-wrap, table) {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .mini-btn {
+  border: 1px solid #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .mini-btn:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .admin-yearly-procedure-nav {
+  border-color: #c5d9ec !important;
+  background: #eef5fb !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .admin-yearly-procedure-nav button {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .admin-yearly-procedure-nav button.active {
+  border-color: #ffd500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .empty {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+
+/* Progress Overview uses the same calm, clinical blue-and-gold data workspace. */
+html body.role-admin:has(#casesCard) #casesCard {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#casesCard) #casesCard :is(h3, p, strong) { color: #00296b !important; }
+html body.role-admin:has(#casesCard) #casesNavigationInfo { color: #54719a !important; }
+html body.role-admin:has(#casesCard) #adminProgressExportBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.24) !important;
+}
+html body.role-admin:has(#casesCard) #refreshCasesBtn,
+html body.role-admin:has(#casesCard) #casesCard .btn-back {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#casesCard) #refreshCasesBtn:hover,
+html body.role-admin:has(#casesCard) #casesCard .btn-back:hover {
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#casesCard) #casesCard :is(#casesSearchInput, #casesYearSelect, #casesProcedureFilter) {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#casesCard) #casesCard :is(#casesSearchInput, #casesYearSelect, #casesProcedureFilter):focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-admin:has(#casesCard) #casesBreadcrumb {
+  border-color: #c5d9ec !important;
+  background: #eef5fb !important;
+}
+html body.role-admin:has(#casesCard) #casesBreadcrumb button {
+  border: 1px solid #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#casesCard) #casesCard .cases-panel {
+  padding: 10px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 14px !important;
+  background: #f5f9fd !important;
+}
+html body.role-admin:has(#casesCard) #casesCard :is(.table-wrap, table) {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#casesCard) #casesCard :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#casesCard) #casesCard table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#casesCard) #casesCard table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-admin:has(#casesCard) #casesCard .mini-btn:not(.danger) {
+  border: 1px solid #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#casesCard) #casesCard .mini-btn:not(.danger):hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-admin:has(#casesCard) #casesCard .empty {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+
+/* Edit Requests keeps decisions distinct without introducing colors outside the portal palette. */
+html body.role-admin:has(#editRequestsCard) #editRequestsCard {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard :is(h3, p) { color: #00296b !important; }
+html body.role-admin:has(#editRequestsCard) #editRequestsCard > p { color: #54719a !important; }
+html body.role-admin:has(#editRequestsCard) #editRequestsCard :is(#editRequestsSearchInput, #editRequestsStatusFilter) {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard :is(#editRequestsSearchInput, #editRequestsStatusFilter):focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-admin:has(#editRequestsCard) #refreshEditRequestsBtn {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#editRequestsCard) #refreshEditRequestsBtn:hover { background: #eaf3fb !important; color: #00296b !important; }
+html body.role-admin:has(#editRequestsCard) #editRequestsCard :is(.table-wrap, table) {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .mini-btn {
+  border: 1px solid #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .mini-btn[data-action="approve-request"] {
+  border-color: #ffd500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .mini-btn[data-action="reject-request"] {
+  border-color: #003f88 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .mini-btn[data-action="delete-request"] {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .edit-request-status {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 26px !important;
+  padding: 0 9px !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  font-size: 10px !important;
+  text-transform: uppercase !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .edit-request-status.pending {
+  border-color: #ffd500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .edit-request-status.approved {
+  border-color: #00509d !important;
+  background: #eaf3fb !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .edit-request-status.rejected {
+  border-color: #003f88 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .empty {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+
+/* Activity Log follows the palette in both the active and archived history views. */
+html body.role-admin:has(#notificationsCard) #notificationsCard {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#notificationsCard) #notificationsCard :is(h3, p) { color: #00296b !important; }
+html body.role-admin:has(#notificationsCard) #notificationsCard > p { color: #54719a !important; }
+html body.role-admin:has(#notificationsCard) #notificationsSearchInput {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#notificationsCard) #notificationsSearchInput:focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-admin:has(#notificationsCard) :is(#refreshNotificationsBtn, #viewArchivedNotificationsBtn) {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#notificationsCard) :is(#refreshNotificationsBtn, #viewArchivedNotificationsBtn):hover {
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#notificationsCard) #deleteAllNotificationsBtn {
+  border-color: #ffd500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+  box-shadow: 0 6px 14px rgba(253, 197, 0, 0.2) !important;
+}
+html body.role-admin:has(#notificationsCard) #notificationsCard :is(.table-wrap, table) {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#notificationsCard) #notificationsCard :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#notificationsCard) #notificationsCard table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#notificationsCard) #notificationsCard table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-admin:has(#notificationsCard) #notificationsCard .mini-btn {
+  border: 1px solid #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#notificationsCard) #notificationsCard .mini-btn[data-action="delete-notification"] {
+  border-color: #ffd500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#notificationsCard) #notificationsCard .empty {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+
+/* System Tools applies the palette to security, backups, and the audit trail. */
+html body.role-admin:has(#systemToolsCard) #systemToolsCard {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#systemToolsCard) #systemToolsCard :is(.workspace-title, .workspace-subtitle) { color: #00296b !important; }
+html body.role-admin:has(#systemToolsCard) #systemToolsCard .workspace-subtitle { color: #54719a !important; }
+html body.role-admin:has(#systemToolsCard) #systemToolsCard .system-tool-panel {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#systemToolsCard) #systemToolsCard .system-tool-panel :is(h3, p, small, label) { color: #00296b !important; }
+html body.role-admin:has(#systemToolsCard) #systemToolsCard .system-tool-panel h3 i { color: #fdc500 !important; }
+html body.role-admin:has(#systemToolsCard) #systemToolsCard .system-tool-panel p,
+html body.role-admin:has(#systemToolsCard) #systemToolsCard .system-tool-panel small { color: #54719a !important; }
+html body.role-admin:has(#systemToolsCard) #systemToolsCard :is(#currentAdminPin, #newAdminPin, #confirmAdminPin) {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#systemToolsCard) #systemToolsCard :is(#currentAdminPin, #newAdminPin, #confirmAdminPin):focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-admin:has(#systemToolsCard) #saveAdminPinBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.24) !important;
+}
+html body.role-admin:has(#systemToolsCard) #downloadBackupBtn {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#systemToolsCard) :is(#chooseRestoreBtn, #clearAuditLogBtn) {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#systemToolsCard) :is(#chooseRestoreBtn, #clearAuditLogBtn):hover {
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#systemToolsCard) #systemToolsCard :is(.table-wrap, table) {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-admin:has(#systemToolsCard) #systemToolsCard :is(table thead, table thead tr, table thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-admin:has(#systemToolsCard) #systemToolsCard table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-admin:has(#systemToolsCard) #systemToolsCard table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-admin:has(#systemToolsCard) #systemToolsCard .empty {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+
+html body.role-admin :is(.modal, .modal-content, .option-pane, .c-modal) {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  box-shadow: 0 22px 52px rgba(0, 41, 107, 0.22) !important;
+}
+html body.role-admin :focus-visible { outline: 3px solid #ffd500 !important; outline-offset: 2px; }
+/* Student-progress replica navigation for administrator review. */
+html body.role-admin #adminProcedureSummary .replica-admin-progress-nav {
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  margin:14px 0 12px;
+  padding:6px;
+  border:1px solid #9fc4e3;
+  border-radius:10px;
+  background:#edf5fb;
+}
+html body.role-admin #adminProcedureSummary .replica-admin-progress-nav button {
+  flex:0 0 auto;
+  min-height:32px;
+  padding:0 12px;
+  border:1px solid #aac9e5;
+  border-radius:9px;
+  color:#00458c;
+  background:#fff;
+  font:750 12px/1 Inter,sans-serif;
+  cursor:pointer;
+}
+html body.role-admin #adminProcedureSummary .replica-admin-progress-nav button.active { border-color:#00509d; color:#fff; background:#00509d; }
+html body.role-admin #adminProcedureSummary .admin-procedure-section { margin:12px 0; padding:12px; border:1px solid #9fc4e3; border-radius:10px; background:#fff; }
+html body.role-admin #adminProcedureSummary .replica-admin-progress-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 8px; }
+html body.role-admin #adminProcedureSummary .replica-admin-progress-heading h4 { margin:0; color:#003f88; font-size:15px; }
+html body.role-admin #adminProcedureSummary .replica-admin-progress-bar { display:inline-flex; align-items:center; gap:8px; min-width:178px; color:#365978; font:800 10px/1 Arial,Helvetica,sans-serif; }
+html body.role-admin #adminProcedureSummary .replica-admin-progress-bar > span { min-width:34px; text-align:right; white-space:nowrap; }
+html body.role-admin #adminProcedureSummary .replica-admin-progress-bar > i { display:block; width:120px; height:7px; overflow:hidden; border-radius:99px; background:#d9e7f2; }
+html body.role-admin #adminProcedureSummary .replica-admin-progress-bar b { display:block; height:100%; border-radius:inherit; background:#00509d; transition:width .35s ease; }
+html body.role-admin #adminProcedureSummary .replica-admin-progress-bar.is-complete b { background:#07845a; }
+
+/* PRC-form replica used by the administrator's procedure summaries. */
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table thead,
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table thead tr,
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table thead th {
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table thead th {
+  padding: 5px 4px !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table tbody td {
+  padding: 5px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table tbody tr { height: 50px !important; }
+html body.role-admin #adminProcedureSummary .clinical-form-table.prc-replica-table tbody small { font: inherit !important; color: inherit !important; }
+
+/* Administrative review table mirrors the PRC procedure grid and keeps its Comment action. */
+html body.role-admin .clinical-form-table.admin-review-table.prc-replica-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+html body.role-admin .clinical-form-table.admin-review-table.prc-replica-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+html body.role-admin .clinical-form-table.admin-review-table.prc-replica-table :is(thead, thead tr, thead th) {
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+html body.role-admin .clinical-form-table.admin-review-table.prc-replica-table thead th {
+  padding: 5px 4px !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+html body.role-admin .clinical-form-table.admin-review-table.prc-replica-table tbody td {
+  padding: 5px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+html body.role-admin .clinical-form-table.admin-review-table.prc-replica-table tbody tr { height: 50px !important; }
+html body.role-admin .clinical-form-table.admin-review-table.prc-replica-table tbody tr:hover td { background: #fff !important; }
+
+/* Overrides the Cases workspace's legacy navy table theme. */
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table :is(thead, thead tr, thead th) {
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table thead th {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 5px 4px !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table tbody td {
+  height: 50px !important;
+  min-height: 50px !important;
+  padding: 5px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table tbody tr:hover td { background: #fff !important; }
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table tbody td {
+  border-color: #000 !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table-container {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table { max-width: none !important; }

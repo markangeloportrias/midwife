@@ -3876,3 +3876,61 @@ html body.role-student .student-chat-message-menu button:hover { background: var
 html body.role-student .student-chat-message-menu button.danger:hover { background: #fff1f2; color: #c81e3a; }
 html body.role-student .option-pane-btn.danger { background: #c81e3a; color: #fff; }
 html body.role-student .option-pane-btn.danger:hover { background: #a9162f; transform: translateY(-1px); }
+
+/* PRC clinical form: mirrors the supplied paper form, with the Signature column omitted. */
+html body.role-student .prc-procedure-table-container {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+html body.role-student table.prc-procedure-table {
+  table-layout: fixed !important;
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  color: #000 !important;
+  font-family: Cambria, "Times New Roman", serif !important;
+}
+html body.role-student table.prc-procedure-table :is(thead, thead tr, thead th, thead tr:first-child th, thead tr:nth-child(2) th) {
+  background: #fff !important;
+  color: #000 !important;
+}
+html body.role-student table.prc-procedure-table th {
+  height: auto !important;
+  padding: 5px 4px !important;
+  border: 1px solid #000 !important;
+  background: #fff !important;
+  color: #000 !important;
+  font: 700 11px/1.15 Cambria, "Times New Roman", serif !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+html body.role-student table.prc-procedure-table td {
+  height: 54px !important;
+  padding: 5px 4px !important;
+  border: 1px solid #000 !important;
+  background: #fff !important;
+  color: #000 !important;
+  font: 400 11px/1.2 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+html body.role-student table.prc-procedure-table tbody td :where(span, small, div) {
+  color: #000 !important;
+  font-family: Cambria, "Times New Roman", serif !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+}
+html body.role-student table.prc-procedure-table tbody tr:hover td { background: #fff !important; }
+html body.role-student table.prc-procedure-table .case-action-btn {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  color: #000 !important;
+}

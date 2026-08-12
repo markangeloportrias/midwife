@@ -1,0 +1,3089 @@
+/* Instructor workspace palette: #00296b, #003f88, #00509d, #fdc500, #ffd500. */
+html body.role-instructor {
+  background: #f4f8fc !important;
+  color: #00296b !important;
+}
+
+html body.role-instructor .sidebar {
+  background: linear-gradient(180deg, #00296b 0%, #003f88 100%) !important;
+}
+html body.role-instructor .sidebar-nav-item.active {
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+}
+html body.role-instructor .sidebar-nav-item.active :is(i, .sidebar-icon, .sidebar-label) { color: #00296b !important; }
+html body.role-instructor .sidebar-user-card {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(0, 80, 157, 0.54) !important;
+}
+html body.role-instructor .sidebar-user-avatar {
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+
+html body.role-instructor .main-content { background: #f4f8fc !important; }
+html body.role-instructor .dashboard-hero {
+  border-color: #00509d !important;
+  background: linear-gradient(115deg, #00296b 0%, #003f88 55%, #00509d 100%) !important;
+  box-shadow: 0 14px 30px rgba(0, 41, 107, 0.2) !important;
+}
+html body.role-instructor .dashboard-hero :is(h1, p, .hero-kicker) { color: #ffffff !important; }
+html body.role-instructor .hero-kicker i,
+html body.role-instructor .shared-paper-illustration .paper-status { color: #ffd500 !important; }
+html body.role-instructor .hero-action {
+  border-color: rgba(255, 255, 255, 0.36) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+html body.role-instructor .hero-action:hover { background: rgba(255, 255, 255, 0.18) !important; }
+html body.role-instructor .hero-action-primary {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+}
+
+html body.role-instructor .stat-card {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  box-shadow: 0 8px 20px rgba(0, 41, 107, 0.06) !important;
+}
+html body.role-instructor .stat-card:first-child { border-top: 3px solid #00509d !important; }
+html body.role-instructor .stat-card.warning { border-top: 3px solid #fdc500 !important; }
+html body.role-instructor .stat-card.success { border-top: 3px solid #003f88 !important; }
+html body.role-instructor .stat-card.accent { border-top: 3px solid #00296b !important; }
+html body.role-instructor .stat-card .stat-icon {
+  background: #eaf3fb !important;
+  color: #00509d !important;
+}
+html body.role-instructor .stat-card.warning .stat-icon { background: #fff3c9 !important; color: #00296b !important; }
+html body.role-instructor .stat-card.success .stat-icon { background: #e1edf8 !important; color: #003f88 !important; }
+html body.role-instructor .stat-card.accent .stat-icon { background: #00296b !important; color: #ffd500 !important; }
+html body.role-instructor .stat-card :is(.stat-label, .stat-value, .stat-desc) { color: #00296b !important; }
+html body.role-instructor .stat-card .stat-desc { color: #54719a !important; }
+
+html body.role-instructor :is(.content-section, .content-section > .section, .settings-card, .table-wrapper, .messages-card) {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-instructor :is(.section-header-row h2, .section-header-row p, #active-subtitle) { color: #00296b !important; }
+html body.role-instructor #active-subtitle { color: #54719a !important; }
+html body.role-instructor .badge { background: #fdc500 !important; color: #00296b !important; }
+html body.role-instructor .btn-primary,
+html body.role-instructor .view-records-btn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.22) !important;
+}
+html body.role-instructor .btn-secondary {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-instructor .btn-secondary:hover { background: #eaf3fb !important; color: #00296b !important; }
+
+html body.role-instructor .procedure-tabs {
+  border-color: #c5d9ec !important;
+  background: #eef5fb !important;
+}
+html body.role-instructor .procedure-tab {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-instructor .procedure-tab.active,
+html body.role-instructor .procedure-tab.active:hover {
+  border-color: #ffd500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}
+
+html body.role-instructor :is(.dashboard-data-table, .procedure-records-table) {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-instructor :is(.dashboard-data-table, .procedure-records-table) :is(thead, thead tr, thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-instructor :is(.dashboard-data-table, .procedure-records-table) :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-instructor :is(.dashboard-data-table, .procedure-records-table) tbody tr:hover td { background: #edf6ff !important; }
+html body.role-instructor :is(.table-comment-btn, .comment-btn, .mini-btn, .current-records-back) {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body.role-instructor :is(.table-comment-btn, .comment-btn, .mini-btn, .current-records-back):hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-instructor .empty {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+
+/* Direct fallback for the records overview before the shell script assigns the role class. */
+html body .content-section > .section {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body #refreshRecordsBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+}
+html body #instructorProcedureTabs {
+  border-color: #c5d9ec !important;
+  background: #eef5fb !important;
+}
+html body #instructorProcedureTabs .procedure-tab {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body #instructorProcedureTabs .procedure-tab.active {
+  border-color: #ffd500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}
+html body #mainRecordsWrapper {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body #active-table :is(thead, thead tr, thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body #active-table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body #active-table tbody tr:hover td { background: #edf6ff !important; }
+html body #active-table .table-comment-btn {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body #active-table .table-comment-btn:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+
+/* Match the most specific legacy controls so every visible icon and action follows the palette. */
+html body.role-instructor:has(.dashboard) .main-content .dashboard-hero {
+  border-color: #00509d !important;
+  background: linear-gradient(115deg, #00296b 0%, #003f88 55%, #00509d 100%) !important;
+}
+html body.role-instructor:has(.dashboard) .main-content .dashboard-hero .hero-action-primary {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+}
+html body.role-instructor:has(.dashboard) .main-content .dashboard-hero .hero-action-primary i { color: #00296b !important; }
+html body.role-instructor #refreshRecordsBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+}
+html body.role-instructor #refreshRecordsBtn i { color: #00296b !important; }
+html body.role-instructor #instructorProcedureTabs .procedure-tab.active,
+html body.role-instructor #instructorProcedureTabs .procedure-tab.active:hover {
+  border-color: #ffd500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}
+html body.role-instructor #mainRecordsWrapper table.procedure-records-table .table-comment-btn {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body.role-instructor #mainRecordsWrapper table.procedure-records-table .table-comment-btn:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+  color: #ffffff !important;
+}
+html body.role-instructor #mainRecordsWrapper table.procedure-records-table .table-comment-btn i { color: #ffd500 !important; }
+
+/* Registered Blocks and its student drill-down use the same table/action hierarchy. */
+html body.role-instructor #currentRecordsStudentRoster {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table :is(thead, thead tr, thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-instructor #currentRecordsStudentRoster .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster .current-records-back {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .clinical-roster-action:hover,
+html body.role-instructor #currentRecordsStudentRoster .current-records-back:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-record-count {
+  color: #003f88 !important;
+  font-weight: 800 !important;
+}
+
+/* Annual Records matches the same navy, blue, and gold language at every navigation level. */
+html body.role-instructor #yearly-report-view {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #yearly-report-view :is(.workspace-title, .workspace-subtitle) { color: #00296b !important; }
+html body.role-instructor #yearly-report-view .workspace-subtitle { color: #54719a !important; }
+html body.role-instructor #yearlyRecordsBreadcrumb {
+  border-color: #c5d9ec !important;
+  background: #eef5fb !important;
+  color: #003f88 !important;
+}
+html body.role-instructor #yearly-report-view .students-panel {
+  border-color: #c8d9ec !important;
+  background: #f5f9fd !important;
+}
+/* Annual Records already sits inside the workspace card; remove the redundant panel behind its table. */
+html body.role-instructor #yearly-report-view .students-panel {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table thead th {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-instructor #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table tbody td {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-instructor #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-instructor #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) .admin-directory-action {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) .admin-directory-action:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-instructor #yearly-report-view .empty {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+
+/* Shared instructor content controls: covers Progress Overview, summaries, and remaining workflows. */
+html body.role-instructor .content-section :is(input, select, textarea) {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .content-section :is(input, select, textarea):focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-instructor .content-section .btn.btn-primary {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.22) !important;
+}
+html body.role-instructor .content-section .btn.btn-primary i { color: #00296b !important; }
+html body.role-instructor .content-section .btn.btn-secondary {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .content-section .btn.btn-secondary i { color: #003f88 !important; }
+html body.role-instructor .content-section :is(.dashboard-data-table, .admin-premium-table, .clinical-form-table) :is(thead, thead tr, thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-instructor .content-section :is(.dashboard-data-table, .admin-premium-table, .clinical-form-table) :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-instructor .content-section :is(.dashboard-data-table, .admin-premium-table, .clinical-form-table) tbody tr:hover td { background: #edf6ff !important; }
+html body.role-instructor .content-section :is(.admin-directory-action, .clinical-roster-action, .mini-btn) {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body.role-instructor .content-section :is(.admin-directory-action, .clinical-roster-action, .mini-btn):hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-instructor .content-section :is(.empty, .messages-empty, .summary-select-empty) {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+
+/* Dedicated Instructor Progress Overview component. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy {
+  color: #00296b !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-overview {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy :is(h2, h3) { color: #00296b !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-subtitle { color: #54719a !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-toolbar input {
+  border-color: #c5d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-toolbar input:focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-btn {
+  border: 1px solid #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.2) !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-btn i { color: #00296b !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-btn.back {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-table-wrap,
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-panel {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy table :is(thead, thead tr, thead th) {
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy table tbody tr:hover td { background: #edf6ff !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-empty {
+  border-color: #bdd4ea !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student {
+  border-color: #c8d9ec !important;
+  background: #eef5fb !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-avatar {
+  background: #00296b !important;
+  color: #ffd500 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-label { color: #54719a !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-value { color: #00296b !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-procedure {
+  border-left: 4px solid #fdc500 !important;
+  padding-left: 10px !important;
+}
+
+/* Correction-request center: a focused, right-aligned review workflow. */
+html body.role-instructor .section:has(#mainRecordsWrapper.edit-requests-mode) {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 26px rgba(0, 41, 107, 0.08) !important;
+}
+html body.role-instructor #edit-requests-view.edit-requests-panel {
+  padding: 8px 0 2px !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-panel-header {
+  gap: 14px !important;
+  margin: 0 0 16px !important;
+  padding: 2px 0 14px !important;
+  border-bottom: 1px solid #d9e6f2 !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-panel-icon {
+  width: 48px !important;
+  height: 48px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 14px !important;
+  background: #e8f1fb !important;
+  color: #00509d !important;
+  font-size: 18px !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-panel-header h3 {
+  color: #00296b !important;
+  font-size: 18px !important;
+  letter-spacing: -0.02em !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-panel-header h3 span {
+  min-width: 24px !important;
+  height: 24px !important;
+  margin-left: 7px !important;
+  border: 1px solid #fdc500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+  font-weight: 800 !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-panel-header p { color: #54719a !important; }
+html body.role-instructor #edit-requests-view .edit-requests-list { gap: 12px !important; }
+html body.role-instructor #edit-requests-view .edit-requests-list .request-item {
+  border: 1px solid #c8d9ec !important;
+  border-left: 4px solid #00509d !important;
+  border-radius: 14px !important;
+  background: linear-gradient(90deg, #f5f9fd 0%, #ffffff 32%) !important;
+  box-shadow: 0 8px 18px rgba(0, 41, 107, 0.06) !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-list .request-item-content {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  column-gap: 24px !important;
+  align-items: center !important;
+  position: relative !important;
+  padding: 18px 20px !important;
+}
+html body.role-instructor #edit-requests-view .request-item-header,
+html body.role-instructor #edit-requests-view .request-item-meta { grid-column: 1 !important; }
+html body.role-instructor #edit-requests-view .request-item-header {
+  margin-bottom: 8px !important;
+  align-items: center !important;
+}
+html body.role-instructor #edit-requests-view .request-item-title {
+  color: #00296b !important;
+  font-size: 14px !important;
+}
+html body.role-instructor #edit-requests-view .request-item-meta {
+  color: #54719a !important;
+  line-height: 1.5 !important;
+}
+html body.role-instructor #edit-requests-view .request-item-meta strong { color: #003f88 !important; }
+html body.role-instructor #edit-requests-view .request-status {
+  position: absolute !important;
+  top: 16px !important;
+  right: 20px !important;
+  border-radius: 999px !important;
+  padding: 3px 8px !important;
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.03em !important;
+}
+html body.role-instructor #edit-requests-view .request-status-pending {
+  border: 1px solid #fdc500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+html body.role-instructor #edit-requests-view .request-status-approved {
+  border: 1px solid #00509d !important;
+  background: #e8f1fb !important;
+  color: #003f88 !important;
+}
+html body.role-instructor #edit-requests-view .request-status-rejected {
+  border: 1px solid #003f88 !important;
+  background: #eef5fb !important;
+  color: #00296b !important;
+}
+html body.role-instructor #edit-requests-view .request-item-actions {
+  grid-column: 2 !important;
+  grid-row: 1 / span 2 !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  align-self: center !important;
+}
+html body.role-instructor #edit-requests-view .request-item-actions button {
+  min-height: 36px !important;
+  padding: 8px 13px !important;
+  border: 1px solid transparent !important;
+  border-radius: 9px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #edit-requests-view .request-approve-btn {
+  border-color: #fdc500 !important;
+  background: linear-gradient(135deg, #ffd500, #fdc500) !important;
+  color: #00296b !important;
+}
+html body.role-instructor #edit-requests-view .request-reject-btn {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-instructor #edit-requests-view .request-view-btn {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+}
+html body.role-instructor #edit-requests-view .request-delete-btn {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+  color: #ffffff !important;
+}
+html body.role-instructor #edit-requests-view .request-item-actions button:hover {
+  transform: translateY(-1px) !important;
+  filter: brightness(0.96) !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-list > .empty {
+  border-color: #bdd4ea !important;
+  border-radius: 14px !important;
+  background: #f5f9fd !important;
+  color: #54719a !important;
+}
+@media (max-width: 720px) {
+  html body.role-instructor #edit-requests-view .edit-requests-list .request-item-content { grid-template-columns: 1fr !important; }
+  html body.role-instructor #edit-requests-view .request-status { position: static !important; align-self: flex-start !important; }
+  html body.role-instructor #edit-requests-view .request-item-actions { grid-column: 1 !important; grid-row: auto !important; justify-content: flex-start !important; margin-top: 14px !important; }
+}
+
+/* Table treatment for the correction request queue. */
+html body.role-instructor #edit-requests-view .edit-requests-list {
+  gap: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-table-header,
+html body.role-instructor #edit-requests-view .edit-requests-list .request-item-content {
+  display: grid !important;
+  grid-template-columns: minmax(190px, 1.35fr) minmax(150px, 1fr) minmax(90px, 0.65fr) minmax(105px, 0.75fr) minmax(94px, 0.65fr) minmax(270px, auto) !important;
+  column-gap: 16px !important;
+  align-items: center !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-table-header {
+  height: 32px !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  padding: 0 14px !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-table-header span:last-child { text-align: right !important; }
+html body.role-instructor #edit-requests-view .edit-requests-list .request-item {
+  border: 0 !important;
+  border-left: 0 !important;
+  border-bottom: 1px solid #d9e6f2 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-list .request-item:last-child { border-bottom: 0 !important; }
+html body.role-instructor #edit-requests-view .edit-requests-list .request-item-content {
+  height: 46px !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  padding: 5px 14px !important;
+  position: static !important;
+}
+html body.role-instructor #edit-requests-view .request-item-header,
+html body.role-instructor #edit-requests-view .request-item-meta { display: contents !important; }
+html body.role-instructor #edit-requests-view .request-item-title {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  color: #00296b !important;
+  font-size: 10px !important;
+  line-height: 1.15 !important;
+}
+html body.role-instructor #edit-requests-view .request-item-title strong { display: inline !important; }
+html body.role-instructor #edit-requests-view .request-item-meta > div {
+  color: #54719a !important;
+  font-size: 9px !important;
+  line-height: 1.35 !important;
+}
+html body.role-instructor #edit-requests-view .request-item-meta > div:nth-child(1) { grid-column: 2 !important; grid-row: 1 !important; }
+html body.role-instructor #edit-requests-view .request-item-meta > div:nth-child(2) { grid-column: 3 !important; grid-row: 1 !important; }
+html body.role-instructor #edit-requests-view .request-item-meta > div:nth-child(3) { grid-column: 4 !important; grid-row: 1 !important; }
+html body.role-instructor #edit-requests-view .request-status {
+  position: static !important;
+  grid-column: 5 !important;
+  grid-row: 1 !important;
+  justify-self: start !important;
+  top: auto !important;
+  right: auto !important;
+}
+html body.role-instructor #edit-requests-view .request-item-actions {
+  grid-column: 6 !important;
+  grid-row: 1 !important;
+  justify-content: flex-end !important;
+  margin: 0 !important;
+}
+html body.role-instructor #edit-requests-view .request-item-actions button {
+  min-height: 26px !important;
+  padding: 5px 9px !important;
+  border-radius: 7px !important;
+  font-size: 9px !important;
+}
+html body.role-instructor #edit-requests-view .edit-requests-list .request-item:hover { background: #f5f9fd !important; }
+html body.role-instructor #edit-requests-view .edit-requests-list .request-item:hover .request-item-content { background: #f5f9fd !important; }
+@media (max-width: 980px) {
+  html body.role-instructor #edit-requests-view .edit-requests-list { overflow-x: auto !important; }
+  html body.role-instructor #edit-requests-view .edit-requests-table-header,
+  html body.role-instructor #edit-requests-view .edit-requests-list .request-item-content { min-width: 940px !important; }
+}
+
+/* Instructor Messages: eliminate legacy lavender tones in favor of the portal palette. */
+html body.role-instructor #messages-view .messages-card {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  box-shadow: 0 12px 26px rgba(0, 41, 107, 0.08) !important;
+}
+html body.role-instructor #messages-view .messages-conversations {
+  border-color: #d9e6f2 !important;
+  background: linear-gradient(180deg, #f5f9fd 0%, #eef5fb 100%) !important;
+}
+html body.role-instructor #messages-view :is(.messages-pane-heading h2, .messages-chat-header h3) { color: #00296b !important; }
+html body.role-instructor #messages-view .messages-pane-heading p { color: #54719a !important; }
+html body.role-instructor #messages-view .messages-pane-heading > i {
+  border: 1px solid #c8d9ec !important;
+  border-radius: 12px !important;
+  background: #00296b !important;
+  color: #ffd500 !important;
+}
+html body.role-instructor #messages-view .messages-search {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  color: #00509d !important;
+}
+html body.role-instructor #messages-view .messages-search:focus-within {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-instructor #messages-view .messages-search input { color: #00296b !important; }
+html body.role-instructor #messages-view .messages-search-hint { color: #54719a !important; }
+html body.role-instructor #messages-view .chat-student-suggestions {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  box-shadow: 0 12px 24px rgba(0, 41, 107, 0.14) !important;
+}
+html body.role-instructor #messages-view .chat-student-suggestion {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-instructor #messages-view .chat-student-suggestion:hover { background: #eef5fb !important; }
+html body.role-instructor #messages-view :is(.chat-student-suggestion-avatar, .conversation-avatar) {
+  background: #e8f1fb !important;
+  color: #00509d !important;
+}
+html body.role-instructor #messages-view .messages-conversation-list .conv { color: #54719a !important; }
+html body.role-instructor #messages-view .messages-conversation-list .conv:not(.active) {
+  background: #e8f1fb !important;
+  border-left: 3px solid transparent !important;
+}
+html body.role-instructor #messages-view .messages-conversation-list .conv:hover {
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: 0 4px 12px rgba(0, 41, 107, 0.06) !important;
+}
+html body.role-instructor #messages-view .messages-conversation-list .conv.active {
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: inset 3px 0 0 #fdc500, 0 5px 14px rgba(0, 41, 107, 0.08) !important;
+}
+html body.role-instructor #messages-view .messages-conversation-list :is(.conversation-meta small, .conversation-id, .messages-empty-list) { color: #7890af !important; }
+html body.role-instructor #messages-view .messages-chat-header {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #messages-view .messages-avatar {
+  border: 1px solid #c8d9ec !important;
+  background: #00296b !important;
+  color: #ffd500 !important;
+}
+html body.role-instructor #messages-view .messages-chat-header span { color: #54719a !important; }
+html body.role-instructor #messages-view .messages-list {
+  background: radial-gradient(circle at top right, rgba(253, 197, 0, 0.12), transparent 30%), #f5f9fd !important;
+}
+html body.role-instructor #messages-view .messages-empty {
+  border-color: #bdd4ea !important;
+  background: #ffffff !important;
+  color: #7890af !important;
+}
+html body.role-instructor #messages-view .messages-empty i {
+  background: #00296b !important;
+  color: #ffd500 !important;
+}
+html body.role-instructor #messages-view .messages-empty strong { color: #00296b !important; }
+html body.role-instructor #messages-view .chat-msg.instructor { background: #00509d !important; color: #ffffff !important; }
+html body.role-instructor #messages-view .chat-msg.student { background: #e8f1fb !important; color: #00296b !important; }
+html body.role-instructor #messages-view .messages-composer {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #messages-view .messages-composer textarea {
+  border-color: #c8d9ec !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+}
+html body.role-instructor #messages-view .messages-composer textarea:focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-instructor #messages-view .messages-composer .btn {
+  border-color: #fdc500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.2) !important;
+}
+html body.role-instructor #messages-view .messages-composer .btn:disabled {
+  border-color: #c8d9ec !important;
+  background: #e8f1fb !important;
+  color: #7890af !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* Instructor Account Settings: premium identity and editable-profile surface. */
+html body.role-instructor #settingsView .settings-card {
+  border: 1px solid #c8d9ec !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+  box-shadow: 0 14px 30px rgba(0, 41, 107, 0.08) !important;
+  padding: 24px !important;
+}
+html body.role-instructor #settingsView .section-header-row {
+  margin-bottom: 20px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid #d9e6f2 !important;
+}
+html body.role-instructor #settingsView .section-header-row h2 {
+  color: #00296b !important;
+  font-size: 21px !important;
+  letter-spacing: -0.025em !important;
+}
+html body.role-instructor #settingsView .section-header-row p { color: #54719a !important; }
+html body.role-instructor #settingsView .settings-photo-row {
+  border: 1px solid #00509d !important;
+  border-radius: 16px !important;
+  background: linear-gradient(118deg, #00296b 0%, #003f88 58%, #00509d 100%) !important;
+  box-shadow: 0 10px 22px rgba(0, 41, 107, 0.16) !important;
+}
+html body.role-instructor #settingsView .settings-avatar-wrap {
+  border-color: rgba(255, 255, 255, 0.82) !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  box-shadow: 0 0 0 3px rgba(253, 197, 0, 0.95), 0 8px 18px rgba(0, 41, 107, 0.22) !important;
+}
+html body.role-instructor #settingsView .settings-photo-meta strong { color: #ffffff !important; font-size: 15px !important; }
+html body.role-instructor #settingsView .settings-photo-meta span { color: rgba(255, 255, 255, 0.82) !important; }
+html body.role-instructor #settingsView #settingsPhotoBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  font-weight: 800 !important;
+}
+html body.role-instructor #settingsView .settings-section-label {
+  grid-template-columns: 38px 1fr !important;
+  column-gap: 11px !important;
+  margin: 22px 0 13px !important;
+}
+html body.role-instructor #settingsView .settings-section-label > i {
+  width: 38px !important;
+  height: 38px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 11px !important;
+  background: #e8f1fb !important;
+  color: #00509d !important;
+}
+html body.role-instructor #settingsView .settings-section-label span { color: #00296b !important; font-size: 14px !important; }
+html body.role-instructor #settingsView .settings-section-label small { color: #54719a !important; }
+html body.role-instructor #settingsView .settings-grid {
+  gap: 16px !important;
+  border-color: #c8d9ec !important;
+  border-radius: 14px !important;
+  background: #f5f9fd !important;
+}
+html body.role-instructor #settingsView .form-group label { color: #003f88 !important; font-size: 10px !important; font-weight: 800 !important; letter-spacing: 0.035em !important; text-transform: uppercase !important; }
+html body.role-instructor #settingsView :is(.locked-input, .editable-input) {
+  border-color: #c8d9ec !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #54719a !important;
+}
+html body.role-instructor #settingsView .locked-input { background: #e8f1fb !important; }
+html body.role-instructor #settingsView :is(.locked-input, .editable-input) > i { color: #00509d !important; }
+html body.role-instructor #settingsView :is(.locked-input, .editable-input) input {
+  border-left-color: #c8d9ec !important;
+  color: #00296b !important;
+}
+html body.role-instructor #settingsView .locked-input input[disabled] { background: transparent !important; color: #003f88 !important; }
+html body.role-instructor #settingsView .editable-input:focus-within {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+html body.role-instructor #settingsView .settings-actions {
+  margin-top: 14px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid #d9e6f2 !important;
+}
+html body.role-instructor #settingsView #saveInstructorSettingsBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  font-weight: 800 !important;
+  box-shadow: 0 8px 18px rgba(253, 197, 0, 0.22) !important;
+}
+
+/* Student Progress detail: polished report hierarchy. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading {
+  margin: 2px 0 12px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid #d9e6f2 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading h2 {
+  color: #00296b !important;
+  font-size: 21px !important;
+  letter-spacing: -0.025em !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-actions .ip-btn.back {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-export {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 7px 16px rgba(253, 197, 0, 0.2) !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student {
+  position: relative !important;
+  overflow: hidden !important;
+  border-color: #c8d9ec !important;
+  border-radius: 15px !important;
+  background: linear-gradient(105deg, #eef5fb 0%, #ffffff 72%) !important;
+  box-shadow: 0 8px 18px rgba(0, 41, 107, 0.05) !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 5px !important;
+  height: 100% !important;
+  background: linear-gradient(180deg, #ffd500 0%, #fdc500 100%) !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-avatar {
+  border: 2px solid #ffd500 !important;
+  border-radius: 15px !important;
+  background: #00296b !important;
+  color: #ffd500 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student > div:first-of-type strong {
+  color: #00296b !important;
+  font-size: 16px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-label {
+  color: #54719a !important;
+  letter-spacing: 0.035em !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-value { color: #003f88 !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-procedure {
+  margin-top: 20px !important;
+  padding: 0 0 0 12px !important;
+  border-left: 4px solid #fdc500 !important;
+  color: #00296b !important;
+  font-size: 18px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table-wrap {
+  border-color: #c8d9ec !important;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 14px rgba(0, 41, 107, 0.05) !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table :is(thead, thead tr, thead th) {
+  background: #00296b !important;
+  color: #ffffff !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table :is(tbody tr, tbody td) {
+  border-color: #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody tr:hover td { background: #eef5fb !important; }
+
+/* Mirror the student Clinical Progress & Case Summary layout in instructor detail view. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail {
+  position: relative !important;
+  padding-top: 2px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-actions {
+  position: absolute !important;
+  top: 2px !important;
+  right: 0 !important;
+  z-index: 1 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading {
+  min-height: 42px !important;
+  margin: 0 0 14px !important;
+  padding: 0 104px 12px 0 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading .ip-subtitle {
+  margin: 4px 0 0 !important;
+  color: #54719a !important;
+  font-size: 12px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student {
+  grid-template-columns: 68px minmax(190px, 1.35fr) repeat(4, minmax(120px, 1fr)) !important;
+  gap: 18px !important;
+  margin: 0 0 12px !important;
+  padding: 18px 20px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-record-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin: 0 0 14px !important;
+  padding: 6px !important;
+  border: 1px solid #bdd4ea !important;
+  border-radius: 12px !important;
+  background: #eef5fb !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-tabs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-tab {
+  min-height: 32px !important;
+  padding: 0 12px !important;
+  border: 1px solid #bdd4ea !important;
+  border-radius: 9px !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+  cursor: pointer !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-tab.active {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: 0 5px 11px rgba(0, 80, 157, 0.16) !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-record-toolbar .ip-export {
+  flex: 0 0 auto !important;
+  min-height: 34px !important;
+  padding: 0 14px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords > section {
+  margin: 10px 0 0 !important;
+  padding: 12px !important;
+  border: 1px solid #bdd4ea !important;
+  border-radius: 13px !important;
+  background: #ffffff !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords > section[hidden] { display: none !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords .ip-procedure {
+  position: relative !important;
+  margin: 0 0 10px !important;
+  padding: 0 0 0 15px !important;
+  border-left: 0 !important;
+  font-size: 15px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords .ip-procedure::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0.42em !important;
+  left: 0 !important;
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 999px !important;
+  background: #fdc500 !important;
+}
+@media (max-width: 1050px) {
+  html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student { grid-template-columns: 58px minmax(170px, 1fr) repeat(2, minmax(110px, 1fr)) !important; }
+  html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-record-toolbar { align-items: flex-start !important; flex-direction: column !important; }
+}
+
+/* Exact student Progress layout contract, reused by the instructor detail report. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-actions { display: none !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading {
+  min-height: 0 !important;
+  margin: 0 0 14px !important;
+  padding: 0 0 14px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading h2 { font-size: 21px !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student.summary-student-info {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 18px 28px !important;
+  margin: 0 0 12px !important;
+  padding: 18px 22px !important;
+  border: 1px solid #8fb8d8 !important;
+  border-radius: 7px !important;
+  background: #eef5fb !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student.summary-student-info::before { display: none !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student.summary-student-info > div {
+  color: #00296b !important;
+  font-size: 11px !important;
+  font-weight: 650 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student.summary-student-info > div strong {
+  display: block !important;
+  margin-top: 5px !important;
+  color: #00296b !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-record-toolbar.student-progress-toolbar {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .student-progress-toolbar .procedure-tabs {
+  flex: 1 !important;
+  margin: 0 !important;
+  padding: 6px !important;
+  border: 1px solid #8fb8d8 !important;
+  border-radius: 12px !important;
+  background: #eef5fb !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .student-progress-toolbar .procedure-tab {
+  min-height: 32px !important;
+  padding: 0 12px !important;
+  border-color: #93b9d7 !important;
+  border-radius: 9px !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .student-progress-toolbar .procedure-tab.active {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: 0 5px 11px rgba(0, 80, 157, 0.16) !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .student-progress-toolbar .ip-export {
+  min-height: 32px !important;
+  padding: 0 11px !important;
+  border-color: #fdc500 !important;
+  border-radius: 8px !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords > .summary-procedure-section {
+  margin: 10px 0 0 !important;
+  padding: 12px !important;
+  border: 1px solid #8fb8d8 !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords > .summary-procedure-section:nth-child(even) { background: #ffffff !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords .summary-procedure-section .ip-procedure {
+  margin: 0 0 10px !important;
+  font-size: 15px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords .summary-procedure-section .ip-no-records {
+  min-height: 58px !important;
+  text-align: left !important;
+  color: #54719a !important;
+}
+/* Match the Student Progress table grid: one clean frame with shared cell borders. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table-wrap {
+  padding: 7px !important;
+  border-color: #8fb8d8 !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table {
+  border: 1px solid #a4c3dc !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table th,
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table td {
+  border: 0 !important;
+  border-right: 1px solid #a4c3dc !important;
+  border-bottom: 1px solid #a4c3dc !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table thead th {
+  border-color: #3e6b9d !important;
+  background: #00296b !important;
+  min-height: 39px !important;
+  padding: 7px 9px !important;
+  font: 750 9px/1.25 "Inter", sans-serif !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table thead tr:nth-child(2) th {
+  border-top: 1px solid #3e6b9d !important;
+  background: #00296b !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody td {
+  min-height: 54px !important;
+  padding: 8px 10px !important;
+  background: #ffffff !important;
+  font: 500 11px/1.35 "Inter", sans-serif !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table th:last-child,
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table td:last-child {
+  border-right: 0 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table thead tr:first-child th:first-child {
+  border-top-left-radius: 9px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table thead tr:first-child th:last-child {
+  border-top-right-radius: 9px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 9px !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 9px !important;
+}
+
+/* Shared Instructor data-table contract. Clinical procedure tables deliberately keep their own detailed layout. */
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) {
+  width: 100% !important;
+  border: 1px solid #c8d9ec !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  overflow: hidden !important;
+}
+html body.role-instructor :is(
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap,
+  #instructorProgressCopy .ip-overview .ip-table-wrap
+) {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) thead th {
+  box-sizing: border-box !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 7px 16px !important;
+  border: 0 !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+  font: 800 9px/1.15 "Inter", sans-serif !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) thead th:first-child { border-radius: 13px 0 0 0 !important; }
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) thead th:last-child { border-radius: 0 13px 0 0 !important; }
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) tbody td {
+  box-sizing: border-box !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  padding: 9px 16px !important;
+  border: 0 !important;
+  border-top: 1px solid #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  font: 600 11px/1.3 "Inter", sans-serif !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) tbody tr:first-child td { border-top: 0 !important; }
+
+/* Compact Annual Records block rows. */
+html body.role-instructor #yearly-report-view #yearlyBlockPanel > .table-wrap > table > tbody > tr > td {
+  height: 45px !important;
+  min-height: 45px !important;
+}
+
+/* Annual navigation panels are functional wrappers only, not extra card containers. */
+html body.role-instructor #yearly-report-view .yearly-navigation-panel {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #yearly-report-view .yearly-navigation-panel.active {
+  display: block !important;
+}
+
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) tbody tr:last-child td:first-child { border-radius: 0 0 0 13px !important; }
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) tbody tr:last-child td:last-child { border-radius: 0 0 13px 0 !important; }
+html body.role-instructor :is(
+  table.dashboard-data-table,
+  #yearly-report-view :is(#yearlyYearPanel, #yearlyBlockPanel, #yearlyStudentSummaryPanel) > .table-wrap > table,
+  #instructorProgressCopy .ip-overview .ip-table-wrap > table
+) tbody tr:hover td { background: #eef5fb !important; }
+
+/* Registered Blocks uses the same single-table frame, without an extra outer card. */
+html body.role-instructor #currentRecordsStudentRoster {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table {
+  border: 1px solid #c8d9ec !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  overflow: hidden !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table thead th {
+  box-sizing: border-box !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 7px 16px !important;
+  border: 0 !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+  font: 800 9px/1.15 "Inter", sans-serif !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr {
+  background: #ffffff !important;
+  filter: none !important;
+  transform: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td {
+  box-sizing: border-box !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  padding: 9px 16px !important;
+  border: 0 !important;
+  border-top: 1px solid #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  font: 600 11px/1.3 "Inter", sans-serif !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr:first-child td { border-top: 0 !important; }
+
+/* Registered Blocks: responsive five-column layout with one consistent hover surface. */
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table {
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  font-size: 11px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(th, td) {
+  vertical-align: middle !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(th, td):nth-child(1) { width: 6% !important; }
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(th, td):nth-child(2) { width: 29% !important; }
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(th, td):nth-child(3) { width: 29% !important; }
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(th, td):nth-child(4) { width: 15% !important; }
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(th, td):nth-child(5) { width: 21% !important; }
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table thead th {
+  font-size: 9px !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td,
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td :is(strong, span) {
+  font-size: 9px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td {
+  height: 44px !important;
+  min-height: 44px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr {
+  height: 44px !important;
+  min-height: 44px !important;
+  cursor: default !important;
+  transition: background-color .16s ease !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr:hover td,
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr:focus-within td {
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:last-child .clinical-roster-action {
+  height: 22px !important;
+  min-height: 22px !important;
+  margin: 0 !important;
+  padding: 0 7px !important;
+  font: 700 7px/1 "Inter", sans-serif !important;
+  cursor: pointer !important;
+  transition: background-color .16s ease, transform .16s ease, box-shadow .16s ease !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:last-child .clinical-roster-action:hover {
+  background: #003f88 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 5px 12px rgba(0, 63, 136, .22) !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(th, td):last-child {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: left !important;
+  text-indent: 0 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td.action-cell {
+  padding-right: 0 !important;
+  text-align: left !important;
+  text-indent: 0 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td.action-cell .clinical-roster-action {
+  float: none !important;
+  transform: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(thead th, tbody td):nth-child(5) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: left !important;
+  text-indent: 0 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:nth-child(5) .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:nth-child(5) .clinical-roster-action:hover {
+  margin-left: 0 !important;
+  transform: none !important;
+}
+
+/* Registered Blocks page hierarchy and right-side metrics/actions. */
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) .section-header-row,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) .section-header-row {
+  margin: 0 !important;
+  padding: 24px 28px 18px !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) #active-title,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) #active-title {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) #active-subtitle,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) #active-subtitle {
+  display: block !important;
+  margin-top: 5px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+html body.role-instructor .section-header-row .section-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  margin-left: auto !important;
+}
+html body.role-instructor #currentRecordsBackToStudents {
+  min-height: 32px !important;
+  padding: 0 12px !important;
+  border: 1px solid #00509d !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  font: 700 11px/1 "Inter", sans-serif !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #currentRecordsBackToStudents:hover {
+  background: #eaf3ff !important;
+  border-color: #003f88 !important;
+  color: #00296b !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(thead th, tbody td):nth-child(4),
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(thead th, tbody td):nth-child(5) {
+  padding-right: 22px !important;
+  text-align: right !important;
+  text-indent: 0 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:nth-child(5) .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:nth-child(5) .clinical-roster-action:hover {
+  margin-left: auto !important;
+  transform: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(thead th, tbody td):nth-child(-n + 3) {
+  padding-left: 18px !important;
+  text-align: left !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr,
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr:nth-child(odd),
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr:nth-child(even),
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td {
+  height: 34px !important;
+  min-height: 34px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 1 !important;
+}
+
+/* When the registered-block roster is open, the table is the surface—not an inner card inside another card. */
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) > .section,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) > .section {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) #currentRecordsStudentRoster,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) #currentRecordsStudentRoster {
+  margin-top: 0 !important;
+}
+@media (max-width: 900px) {
+  html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student.summary-student-info { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+/* Student-progress replica navigation for instructor review. */
+html body.role-instructor #summaryProcedures .replica-progress-nav {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  margin: 0 0 12px;
+  padding: 6px;
+  border: 1px solid #9fc4e3;
+  border-radius: 10px;
+  background: #edf5fb;
+}
+html body.role-instructor #summaryProcedures .replica-progress-nav button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid #aac9e5;
+  border-radius: 9px;
+  color: #00458c;
+  background: #fff;
+  font: 750 12px/1 Inter, sans-serif;
+  cursor: pointer;
+}
+html body.role-instructor #summaryProcedures .replica-progress-nav button.active { border-color: #00509d; color: #fff; background: #00509d; }
+html body.role-instructor #summaryProcedures .replica-progress-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:8px; }
+html body.role-instructor #summaryProcedures .replica-progress-heading h3 { margin:0 !important; }
+html body.role-instructor #summaryProcedures .replica-progress-bar { display:inline-flex; align-items:center; gap:8px; min-width:178px; color:#365978; font:800 10px/1 Arial,Helvetica,sans-serif; }
+html body.role-instructor #summaryProcedures .replica-progress-bar > span { min-width:34px; text-align:right; white-space:nowrap; }
+html body.role-instructor #summaryProcedures .replica-progress-bar > i { display:block; width:120px; height:7px; overflow:hidden; border-radius:99px; background:#d9e7f2; }
+html body.role-instructor #summaryProcedures .replica-progress-bar b { display:block; height:100%; border-radius:inherit; background:#00509d; transition:width .35s ease; }
+html body.role-instructor #summaryProcedures .replica-progress-bar.is-complete b { background:#07845a; }
+
+/* PRC-form replica used by the instructor's procedure summaries. */
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table thead,
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table thead tr,
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table thead th {
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table thead th {
+  padding: 5px 4px !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table tbody td {
+  padding: 5px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table tbody tr { height: 50px !important; }
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table tbody small { font: inherit !important; color: inherit !important; }
+
+/* Main instructor review table: same PRC grid, while retaining its Comment control. */
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table :is(thead, thead tr, thead th) {
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table thead th {
+  padding: 5px 4px !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table tbody td {
+  padding: 5px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table tbody tr { height: 50px !important; }
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table tbody tr:hover td { background: #fff !important; }
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table .table-comment-btn { white-space: nowrap !important; }
+
+/* Force the instructor progress and Annual Records tables to use the same PRC surface. */
+html body #summaryProcedures .clinical-form-table.prc-replica-table,
+html body #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+html body #summaryProcedures .clinical-form-table.prc-replica-table :is(th, td),
+html body #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+html body #summaryProcedures .clinical-form-table.prc-replica-table :is(thead, thead tr, thead th),
+html body #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table :is(thead, thead tr, thead th) {
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+html body #summaryProcedures .clinical-form-table.prc-replica-table thead th,
+html body #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table thead th {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 5px 4px !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+html body #summaryProcedures .clinical-form-table.prc-replica-table tbody td,
+html body #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table tbody td {
+  height: 50px !important;
+  min-height: 50px !important;
+  padding: 5px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+html body #summaryProcedures .clinical-form-table.prc-replica-table tbody tr:hover td,
+html body #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table tbody tr:hover td { background: #fff !important; }
+
+/* The Instructor Progress view is rendered by modern-shell.js; match it to the PRC record table. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table :is(thead, thead tr, thead th) {
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table thead th {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 5px 4px !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table thead tr:nth-child(2) th {
+  border-top: 1px solid #000 !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table tbody td {
+  height: 50px !important;
+  min-height: 50px !important;
+  padding: 5px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table tbody tr:hover td { background: #fff !important; }
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table tbody td {
+  border-color: #000 !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table-wrap {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table { max-width: none !important; }
+
+/* Registered-block student list: keep the page header, block context, and table
+   in one ordered workspace instead of letting the nested roster compete with it. */
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]),
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) {
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 16px !important;
+  background: #ffffff !important;
+  box-shadow: 0 8px 22px rgba(0, 41, 107, .06) !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) > .section,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) > .section {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) .section-header-row,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) .section-header-row {
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 24px 34px 20px !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) #currentRecordsStudentRoster,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) #currentRecordsStudentRoster {
+  margin: 0 !important;
+  padding: 18px 16px 16px !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-top: 1px solid #d9e6f2 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students .current-records-navigator {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-navigator > div {
+  min-width: 0 !important;
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-navigator h3 {
+  color: #00296b !important;
+  font-size: 21px !important;
+  line-height: 1.2 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-navigator p {
+  color: #54719a !important;
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-navigator .current-records-back {
+  order: 0 !important;
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  min-height: 34px !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  border: 1px solid #00509d !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #00509d !important;
+  font: 700 11px/1 "Inter", sans-serif !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-navigator .current-records-back:hover {
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-navigator .current-records-back i {
+  margin-right: 6px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table {
+  width: 100% !important;
+  margin: 0 !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table thead th {
+  height: 48px !important;
+  padding: 10px 18px !important;
+  font: 800 10px/1.2 "Inter", sans-serif !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td {
+  height: 56px !important;
+  min-height: 56px !important;
+  padding: 10px 18px !important;
+  font: 600 12px/1.3 "Inter", sans-serif !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:last-child .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:last-child .clinical-roster-action:hover {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 0 11px !important;
+  font: 700 11px/1 "Inter", sans-serif !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(thead th, tbody td):nth-child(4),
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(thead th, tbody td):nth-child(5) {
+  padding-right: 18px !important;
+}
+
+/* The selected block is context, not a second page header. */
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students .current-records-navigator {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  min-height: 28px !important;
+  margin: 0 0 12px !important;
+  padding: 0 2px !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-crumb-root,
+html body.role-instructor #currentRecordsStudentRoster .current-records-back {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #54719a !important;
+  font: 600 12px/1.3 "Inter", sans-serif !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-back {
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-back:hover {
+  background: transparent !important;
+  color: #00509d !important;
+  text-decoration: underline !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-crumb-separator {
+  color: #9ab1ca !important;
+  font: 500 12px/1 "Inter", sans-serif !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .current-records-crumb-current {
+  color: #00296b !important;
+  font: 750 12px/1.3 "Inter", sans-serif !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor #currentRecordsStudentRoster #currentRecordsLevelSubtitle {
+  display: none !important;
+}
+
+/* Fallback without the runtime role class: breadcrumbs must never inherit button chrome. */
+html body #currentRecordsStudentRoster.showing-block-students .current-records-navigator {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  min-height: 28px !important;
+  margin: 0 0 12px !important;
+  padding: 0 2px !important;
+}
+html body #currentRecordsStudentRoster .current-records-crumb-root,
+html body #currentRecordsStudentRoster .current-records-back {
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #54719a !important;
+  font: 600 12px/1.3 "Inter", sans-serif !important;
+  white-space: nowrap !important;
+}
+html body #currentRecordsStudentRoster .current-records-back:hover {
+  background: transparent !important;
+  color: #00509d !important;
+  text-decoration: underline !important;
+}
+html body #currentRecordsStudentRoster .current-records-crumb-separator {
+  color: #9ab1ca !important;
+  font: 500 12px/1 "Inter", sans-serif !important;
+}
+html body #currentRecordsStudentRoster .current-records-crumb-current {
+  color: #00296b !important;
+  font: 750 12px/1.3 "Inter", sans-serif !important;
+  white-space: nowrap !important;
+}
+html body #currentRecordsStudentRoster #currentRecordsLevelSubtitle {
+  display: none !important;
+}
+
+/* The middle breadcrumb is an inline navigation link, never a button. */
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students .current-records-navigator #currentRecordsBackToBlocks,
+html body #currentRecordsStudentRoster.showing-block-students .current-records-navigator #currentRecordsBackToBlocks {
+  display: inline !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #00509d !important;
+  font: 600 12px/1.3 "Inter", sans-serif !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students .current-records-navigator #currentRecordsBackToBlocks:hover,
+html body #currentRecordsStudentRoster.showing-block-students .current-records-navigator #currentRecordsBackToBlocks:hover {
+  background: transparent !important;
+  color: #003f88 !important;
+  text-decoration: underline !important;
+}
+
+/* Keep the navigation path visible after a student record is opened. */
+html body.role-instructor .current-records-detail-breadcrumb,
+html body .current-records-detail-breadcrumb {
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  margin-top: 9px !important;
+  color: #9ab1ca !important;
+  font: 500 12px/1.3 "Inter", sans-serif !important;
+}
+html body.role-instructor .current-records-detail-breadcrumb button,
+html body .current-records-detail-breadcrumb button {
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #00509d !important;
+  font: 600 12px/1.3 "Inter", sans-serif !important;
+  text-decoration: none !important;
+}
+html body.role-instructor .current-records-detail-breadcrumb button:hover,
+html body .current-records-detail-breadcrumb button:hover {
+  background: transparent !important;
+  color: #003f88 !important;
+  text-decoration: underline !important;
+}
+html body.role-instructor .current-records-detail-breadcrumb strong,
+html body .current-records-detail-breadcrumb strong {
+  color: #00296b !important;
+  font: 750 12px/1.3 "Inter", sans-serif !important;
+}
+
+/* Student-record detail: restore a clear heading and a conventional return action. */
+html body.role-instructor .content-section:has(#currentRecordsDetailBreadcrumb[style*="display: flex"]) #active-title,
+html body.role-instructor .content-section:has(#currentRecordsDetailBreadcrumb[style*="display:flex"]) #active-title {
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsDetailBreadcrumb[style*="display: flex"]) #active-subtitle,
+html body.role-instructor .content-section:has(#currentRecordsDetailBreadcrumb[style*="display:flex"]) #active-subtitle {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+html body.role-instructor #currentRecordsBackToStudents {
+  min-height: 36px !important;
+  padding: 0 13px !important;
+  border: 1px solid #00509d !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #00509d !important;
+  font: 700 11px/1 "Inter", sans-serif !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #currentRecordsBackToStudents i {
+  margin-right: 7px !important;
+}
+html body.role-instructor #currentRecordsBackToStudents:hover {
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+
+/* Keep the selected-block list compact: no empty band between context and data. */
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) .section-header-row,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) .section-header-row {
+  box-sizing: border-box !important;
+  height: 100px !important;
+  min-height: 0 !important;
+  padding: 22px 34px 12px !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) #currentRecordsStudentRoster,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) #currentRecordsStudentRoster {
+  padding: 10px 20px 14px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students .current-records-navigator {
+  margin-bottom: 8px !important;
+}
+
+/* The clinical form grid owns the whole table surface—no inset white gutter. */
+html body.role-instructor #mainRecordsWrapper:has(#active-table.prc-replica-table) {
+  padding: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  border: 1px solid #9fbad1 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #mainRecordsWrapper #active-table.prc-replica-table {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+html body #mainRecordsWrapper:has(#active-table.prc-replica-table) {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  border: 1px solid #9fbad1 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+}
+/* Same continuous PRC grid used on the Student Dashboard. */
+html body.role-instructor #mainRecordsWrapper:has(#active-table.prc-replica-table) {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table {
+  width: 100% !important;
+  margin: 0 !important;
+  table-layout: fixed !important;
+  border: 1px solid #9fbad1 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+}
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table :is(thead, thead tr, thead th, thead tr:first-child th, thead tr:nth-child(2) th) {
+  background: #e3f1fa !important;
+  color: #17324d !important;
+}
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table th,
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table td,
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table tbody tr:nth-child(odd) td,
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table tbody tr:nth-child(even) td {
+  border: 1px solid #c6d9e8 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* The role class is attached after the shell initializes; retain the same grid before then. */
+html body #mainRecordsWrapper:has(#active-table.prc-replica-table) {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+}
+html body #mainRecordsWrapper table#active-table.prc-replica-table {
+  width: 100% !important;
+  margin: 0 !important;
+  table-layout: fixed !important;
+  border: 1px solid #9fbad1 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+}
+html body #mainRecordsWrapper table#active-table.prc-replica-table :is(thead, thead tr, thead th, thead tr:first-child th, thead tr:nth-child(2) th) {
+  background: #e3f1fa !important;
+  color: #17324d !important;
+}
+html body #mainRecordsWrapper table#active-table.prc-replica-table th,
+html body #mainRecordsWrapper table#active-table.prc-replica-table td,
+html body #mainRecordsWrapper table#active-table.prc-replica-table tbody tr:nth-child(odd) td,
+html body #mainRecordsWrapper table#active-table.prc-replica-table tbody tr:nth-child(even) td {
+  border: 1px solid #c6d9e8 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+html body #mainRecordsWrapper table#active-table.prc-replica-table thead th {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #9fbad1 !important;
+}
+
+/* One native grid for the whole PRC table; grouped header cells use colspan/rowspan
+   but must not receive a second, separate divider layer. */
+html body #mainRecordsWrapper table#active-table.prc-replica-table thead th::after {
+  content: none !important;
+}
+
+@media (max-width: 700px) {
+  html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) .section-header-row,
+  html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) .section-header-row {
+    height: auto !important;
+    padding: 18px 18px 12px !important;
+  }
+  html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) #currentRecordsStudentRoster,
+  html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) #currentRecordsStudentRoster {
+    padding: 14px 12px 12px !important;
+  }
+  html body.role-instructor #currentRecordsStudentRoster .current-records-navigator .current-records-back {
+    justify-self: start !important;
+  }
+}
+
+/* Clinical record tables: a consistent, low-contrast grid with a clear header fill. */
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table,
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table,
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table,
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table {
+  border: 1px solid #b8c7d6 !important;
+  background: #ffffff !important;
+}
+
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table :is(th, td),
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table :is(th, td),
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table :is(th, td),
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table :is(th, td) {
+  border-color: #b8c7d6 !important;
+}
+
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table :is(thead, thead tr, thead th),
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table :is(thead, thead tr, thead th),
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table :is(thead, thead tr, thead th),
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table :is(thead, thead tr, thead th) {
+  background: #e7f2f9 !important;
+  color: #18324b !important;
+}
+
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table tbody td,
+html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table tbody td,
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel .clinical-form-table.prc-replica-table tbody td,
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table tbody td {
+  background: #ffffff !important;
+}
+
+/* Keep the outline correct while the dashboard is initializing, before its role class is applied. */
+html body #mainRecordsWrapper table#active-table.prc-replica-table {
+  border: 1px solid #9db5ca !important;
+  outline: 1px solid #9db5ca !important;
+  outline-offset: -1px !important;
+  box-shadow: none !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table :is(th, td) {
+  border-color: #b8c7d6 !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table :is(thead, thead tr, thead th) {
+  background: #e7f2f9 !important;
+  color: #18324b !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table thead th {
+  border: 1px solid #9db5ca !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table thead tr:nth-child(2) th {
+  border-top-color: #9db5ca !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table tbody td {
+  background: #ffffff !important;
+}
+
+/* Match the established clinical-form grid used by the student record table. */
+html body #mainRecordsWrapper table#active-table.prc-replica-table {
+  border: 1px solid #9fbad1 !important;
+  border-collapse: collapse !important;
+  outline: 0 !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table :is(th, td) {
+  border: 1px solid #c6d9e8 !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table :is(thead, thead tr, thead th) {
+  background: #e3f1fa !important;
+  color: #17324d !important;
+}
+
+/* Header cells need their own border rule because the grouped header is more specific. */
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table thead th,
+html body #mainRecordsWrapper table#active-table.prc-replica-table thead th {
+  border: 0 !important;
+  position: relative !important;
+}
+
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table thead th::after,
+html body #mainRecordsWrapper table#active-table.prc-replica-table thead th::after {
+  content: none !important;
+  display: none !important;
+  border: 0 !important;
+}
+
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table thead tr:first-child th::after,
+html body #mainRecordsWrapper table#active-table.prc-replica-table thead tr:first-child th::after {
+  border-top: 0 !important;
+}
+
+/* Keep the table action usable at every available column width. */
+html body.role-instructor #mainRecordsWrapper table#active-table .case-comment-cell,
+html body #mainRecordsWrapper table#active-table .case-comment-cell {
+  padding: 5px !important;
+  text-align: center !important;
+}
+
+html body.role-instructor #mainRecordsWrapper table#active-table .table-comment-btn,
+html body #mainRecordsWrapper table#active-table .table-comment-btn {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  width: 100% !important;
+  max-width: 128px !important;
+  min-width: 0 !important;
+  min-height: 34px !important;
+  padding: 0 clamp(7px, 0.9vw, 12px) !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 700px) {
+  html body #mainRecordsWrapper table#active-table .table-comment-btn {
+    width: 34px !important;
+    padding: 0 !important;
+  }
+
+  html body #mainRecordsWrapper table#active-table .table-comment-label {
+    display: none !important;
+  }
+}
+
+/* The PRC export is a peer of the record navigation, never a child of it. */
+html body.role-instructor #instructorRecordNavigation {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+
+html body.role-instructor #instructorRecordNavigation #instructorProcedureTabs {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0 !important;
+}
+
+html body.role-instructor #instructorRecordNavigation #currentRecordsExportBtn {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 13px;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  html body.role-instructor #instructorRecordNavigation {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  html body.role-instructor #instructorRecordNavigation #currentRecordsExportBtn {
+    align-self: flex-end;
+  }
+}
+
+/* All Records preserves each clinical procedure as its own complete table. */
+html body.role-instructor #allRecordsProcedureTables {
+  display: grid;
+  gap: 18px;
+  padding: 0;
+}
+
+html body.role-instructor #allRecordsProcedureTables .all-records-procedure-section {
+  min-width: 0;
+}
+
+html body.role-instructor #allRecordsProcedureTables .all-records-procedure-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 7px;
+}
+
+html body.role-instructor #allRecordsProcedureTables .all-records-procedure-heading h3 {
+  margin: 0;
+  color: #00296b;
+  font-size: 14px;
+}
+
+html body.role-instructor #allRecordsProcedureTables .all-records-procedure-heading span {
+  color: #54719a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+html body.role-instructor #allRecordsProcedureTables .all-records-procedure-table-wrap {
+  overflow-x: auto;
+}
+
+html body.role-instructor #allRecordsProcedureTables table.all-records-procedure-table {
+  width: 100%;
+  min-width: 1180px;
+  table-layout: fixed;
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  background: #fff !important;
+}
+
+html body.role-instructor #allRecordsProcedureTables table.all-records-procedure-table th {
+  padding: 5px 4px !important;
+  border: 1px solid #000 !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #allRecordsProcedureTables table.all-records-procedure-table td {
+  padding: 5px 6px !important;
+  border: 1px solid #000 !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #allRecordsProcedureTables .all-records-empty-row td {
+  height: 48px;
+  color: #54719a !important;
+  font-style: italic !important;
+  text-align: center !important;
+}
+
+/* The All Records category tables use the exact PRC grid, even before role setup completes. */
+html body #allRecordsProcedureTables table.all-records-procedure-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  background: #fff !important;
+}
+
+html body #allRecordsProcedureTables table.all-records-procedure-table :is(thead, thead tr, thead th) {
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+
+html body #allRecordsProcedureTables table.all-records-procedure-table th {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 5px 4px !important;
+  border: 1px solid #000 !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+
+html body #allRecordsProcedureTables table.all-records-procedure-table td {
+  height: 50px !important;
+  min-height: 50px !important;
+  padding: 5px 6px !important;
+  border: 1px solid #000 !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+
+html body #allRecordsProcedureTables table.all-records-procedure-table tbody tr:hover td {
+  background: #fff !important;
+}
+
+/* All Records uses the same category-card presentation as Student Dashboard > My Progress. */
+html body #allRecordsProcedureTables {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 10px !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-section {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  border: 1px solid #8fb8d8 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-heading {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin: 0 0 10px !important;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-heading h3 {
+  margin: 0 !important;
+  color: #00296b !important;
+  font: 800 16px/1.2 Inter, Arial, sans-serif !important;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-heading h3::before {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #fdc500;
+  content: "";
+  vertical-align: 1px;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-progress {
+  display: inline-flex !important;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 178px;
+  color: #365978;
+  font: 800 11px/1 Arial, Helvetica, sans-serif;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-progress-label {
+  min-width: 34px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-progress-track {
+  display: block;
+  width: 150px;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #d9e7f2;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-progress-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #00509d;
+  transition: width .35s ease;
+}
+
+html body #allRecordsProcedureTables .all-records-procedure-table-wrap {
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+html body #allRecordsProcedureTables .all-records-empty-row td {
+  height: 70px !important;
+  min-height: 70px !important;
+  color: #003f88 !important;
+  font-style: normal !important;
+  text-align: left !important;
+}
+
+/* All five cards belong to the page flow, not the old fixed-height table scroller. */
+html body.role-instructor #mainRecordsWrapper.all-records-mode {
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Shared Instructor Records table system — Current, All Records, and Annual use one surface. */
+html body :is(#mainRecordsWrapper #active-table.prc-replica-table, #allRecordsProcedureTables .all-records-procedure-table, #yearlyStudentRecordsPanel #yearly-student-records-table.prc-replica-table) {
+  border: 1px solid #aec4d8 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: #17324d !important;
+  font-family: Inter, Arial, sans-serif !important;
+}
+
+html body :is(#mainRecordsWrapper #active-table.prc-replica-table, #allRecordsProcedureTables .all-records-procedure-table, #yearlyStudentRecordsPanel #yearly-student-records-table.prc-replica-table) :is(thead, thead tr, thead th) {
+  background: #e3f1fa !important;
+  color: #17324d !important;
+}
+
+html body :is(#mainRecordsWrapper #active-table.prc-replica-table, #allRecordsProcedureTables .all-records-procedure-table, #yearlyStudentRecordsPanel #yearly-student-records-table.prc-replica-table) thead th {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 8px 9px !important;
+  border: 1px solid #aec4d8 !important;
+  box-shadow: none !important;
+  color: #17324d !important;
+  font: 700 10px/1.2 Cambria, "Times New Roman", serif !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+
+html body :is(#mainRecordsWrapper #active-table.prc-replica-table, #allRecordsProcedureTables .all-records-procedure-table, #yearlyStudentRecordsPanel #yearly-student-records-table.prc-replica-table) tbody td {
+  height: 52px !important;
+  min-height: 52px !important;
+  padding: 8px 9px !important;
+  border: 1px solid #d7e4ef !important;
+  background: #fff !important;
+  color: #004994 !important;
+  font: 500 11px/1.28 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+
+html body :is(#mainRecordsWrapper #active-table.prc-replica-table, #allRecordsProcedureTables .all-records-procedure-table, #yearlyStudentRecordsPanel #yearly-student-records-table.prc-replica-table) tbody tr:hover td {
+  background: #fff !important;
+}
+
+html body #mainRecordsWrapper #active-table.prc-replica-table thead th::after {
+  content: none !important;
+  border: 0 !important;
+}
+
+/* Keep the shared light-blue outline visible on both rows of grouped headers. */
+html body :is(#mainRecordsWrapper #active-table.prc-replica-table, #allRecordsProcedureTables .all-records-procedure-table, #yearlyStudentRecordsPanel #yearly-student-records-table.prc-replica-table) thead th {
+  border-color: #9fbad1 !important;
+  box-shadow: inset -1px 0 0 #9fbad1, inset 0 -1px 0 #9fbad1 !important;
+}
+
+html body :is(#mainRecordsWrapper #active-table.prc-replica-table, #allRecordsProcedureTables .all-records-procedure-table, #yearlyStudentRecordsPanel #yearly-student-records-table.prc-replica-table) thead tr:first-child th {
+  box-shadow: inset -1px 0 0 #9fbad1, inset 0 1px 0 #9fbad1, inset 0 -1px 0 #9fbad1 !important;
+}
+
+html body :is(#mainRecordsWrapper #active-table.prc-replica-table, #allRecordsProcedureTables .all-records-procedure-table, #yearlyStudentRecordsPanel #yearly-student-records-table.prc-replica-table) tbody td {
+  border-color: #c6d9e8 !important;
+}
+
+@media (max-width: 700px) {
+  html body #allRecordsProcedureTables .all-records-procedure-heading {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+}
+
+/* Premium student identity panel for Instructor Student Progress. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student.ip-student-profile {
+  display: grid !important;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 2.1fr) !important;
+  gap: 28px !important;
+  align-items: stretch !important;
+  margin: 0 0 16px !important;
+  padding: 22px 24px !important;
+  border: 1px solid #9fc4e3 !important;
+  border-radius: 14px !important;
+  background: linear-gradient(115deg, #edf6fc 0%, #ffffff 62%) !important;
+  box-shadow: 0 10px 24px rgba(0, 41, 107, 0.07) !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student-profile::before {
+  display: block !important;
+  width: 6px !important;
+  background: linear-gradient(180deg, #ffd500 0%, #00509d 100%) !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-identity {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+  min-width: 0 !important;
+  padding-right: 24px !important;
+  border-right: 1px solid #c8d9ec !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-photo {
+  display: grid !important;
+  width: 76px !important;
+  height: 76px !important;
+  flex: 0 0 76px !important;
+  overflow: hidden !important;
+  place-items: center !important;
+  border: 3px solid #ffd500 !important;
+  border-radius: 50% !important;
+  background: #003f88 !important;
+  color: #fff !important;
+  box-shadow: 0 6px 16px rgba(0, 63, 136, 0.18) !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-photo span {
+  color: #fff !important;
+  font: 800 26px/1 Inter, Arial, sans-serif !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-name {
+  min-width: 0 !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-eyebrow,
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-details span {
+  display: block !important;
+  color: #54719a !important;
+  font: 700 10px/1.25 Inter, Arial, sans-serif !important;
+  letter-spacing: 0.055em !important;
+  text-transform: uppercase !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-name strong {
+  display: block !important;
+  overflow: hidden !important;
+  margin: 5px 0 4px !important;
+  color: #00296b !important;
+  font: 800 20px/1.15 Inter, Arial, sans-serif !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-name small {
+  display: block !important;
+  color: #365978 !important;
+  font: 600 12px/1.3 Inter, Arial, sans-serif !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-details {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 17px 24px !important;
+  align-content: center !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-details > div {
+  min-width: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-details strong {
+  display: block !important;
+  overflow: hidden !important;
+  margin-top: 5px !important;
+  color: #003f88 !important;
+  font: 750 13px/1.25 Inter, Arial, sans-serif !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 950px) {
+  html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-student.ip-student-profile {
+    grid-template-columns: 1fr !important;
+  }
+
+  html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-identity {
+    padding: 0 0 18px !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid #c8d9ec !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-profile-details {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-actions .ip-btn.back {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  min-height: 36px !important;
+  padding: 0 13px !important;
+  border: 1px solid #00509d !important;
+  border-radius: 7px !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  font-weight: 750 !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading {
+  padding-right: 156px !important;
+}
+
+/* Compact the student-search result rows without changing the shared table design. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-overview .ip-table-wrap > table > tbody > tr > td {
+  height: 36px !important;
+  min-height: 36px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-empty {
+  min-height: 44px !important;
+  margin-top: 8px !important;
+  padding: 12px 18px !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table td.ip-no-records {
+  height: 44px !important;
+  min-height: 44px !important;
+  padding: 10px !important;
+  color: #003f88 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 400 !important;
+  text-align: left !important;
+}
+
+@media (max-width: 620px) {
+  html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-actions {
+    position: static !important;
+    justify-content: flex-start !important;
+    margin: 0 0 10px !important;
+  }
+
+  html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading {
+    padding-right: 0 !important;
+  }
+}
+
+/* Dashboard review queue: a concise activity list, not a PRC form table. */
+html body.role-instructor .dashboard-records-section > .section-header-row {
+  position: relative !important;
+  align-items: center !important;
+  min-height: 52px !important;
+  margin: 0 0 12px !important;
+  padding: 7px 14px 7px 60px !important;
+  border: 1px solid #d6e0ee !important;
+  border-radius: 0 !important;
+  background: linear-gradient(105deg, #e7edf7 0%, #f8fbff 68%, #fff8d9 100%) !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor .dashboard-records-section > .section-header-row::before {
+  content: "\f2f1" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 14px !important;
+  display: grid !important;
+  width: 32px !important;
+  height: 32px !important;
+  place-items: center !important;
+  transform: translateY(-50%) !important;
+  border-radius: 9px !important;
+  background: #003f88 !important;
+  box-shadow: 0 7px 14px rgba(0, 63, 136, 0.18) !important;
+  color: #ffd500 !important;
+  font: 800 13px/1 "Font Awesome 6 Free" !important;
+}
+
+html body.role-instructor .dashboard-records-section > .section-header-row .section-header-copy h2 {
+  margin: 0 !important;
+  color: #00296b !important;
+  font-size: 15px !important;
+}
+
+html body.role-instructor .dashboard-records-section > .section-header-row .section-header-copy h2::before {
+  content: "CLINICAL ACTIVITY" !important;
+  display: block !important;
+  margin-bottom: 2px !important;
+  color: #00509d !important;
+  font: 800 10px/1.2 Inter, Arial, sans-serif !important;
+  letter-spacing: 0.09em !important;
+}
+
+html body.role-instructor .dashboard-records-section > .section-header-row #count-active {
+  display: none !important;
+}
+
+html body.role-instructor .dashboard-records-section > .section-header-row #active-subtitle {
+  display: none !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table-wrap {
+  padding: 0 !important;
+  overflow-x: auto !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table {
+  width: 100% !important;
+  min-width: 860px !important;
+  table-layout: fixed !important;
+  border: 1px solid #d6e0ee !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 13px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  color: #003f88 !important;
+  font-family: Inter, Arial, sans-serif !important;
+  overflow: hidden !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table thead th {
+  height: 30px !important;
+  padding: 4px 9px !important;
+  border: 0 !important;
+  background: #003f88 !important;
+  color: #ffffff !important;
+  font: 800 9px/1.15 Inter, Arial, sans-serif !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table thead th:first-child { border-radius: 12px 0 0 0 !important; }
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table thead th:last-child { border-radius: 0 12px 0 0 !important; }
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table tbody td {
+  height: 36px !important;
+  padding: 3px 9px !important;
+  border: 0 !important;
+  border-top: 1px solid #eef2f7 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  font: 650 10px/1.15 Inter, Arial, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table tbody tr:nth-child(even) td,
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table tbody tr:hover td {
+  background: #f5f7fa !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table .dashboard-new-record-status {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 3px 7px !important;
+  border: 1px solid #ffe0a3 !important;
+  border-radius: 999px !important;
+  background: #fff5dc !important;
+  color: #9a6500 !important;
+  font: 800 9px/1 Inter, Arial, sans-serif !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table .dashboard-new-record-status.resubmitted {
+  border-color: #bdd4ea !important;
+  background: #eaf3ff !important;
+  color: #00509d !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table .dashboard-new-record-date {
+  color: #365978 !important;
+  font-weight: 600 !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table .dashboard-new-record-date span {
+  color: #71819d !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-action-cell {
+  width: 84px !important;
+  padding: 3px !important;
+  text-align: center !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table .dashboard-new-record-review {
+  display: inline-grid !important;
+  width: auto !important;
+  min-width: 52px !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  place-items: center !important;
+  padding: 0 8px !important;
+  border: 1px solid #9dc2e7 !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  color: #00509d !important;
+  font: 800 9px/1 Inter, Arial, sans-serif !important;
+}
+
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table .dashboard-new-record-review:hover,
+html body.role-instructor .dashboard-records-section .dashboard-new-records-table .dashboard-new-record-review:focus-visible {
+  background: #eef6ff !important;
+}
+
+/* Messages student search: one unified field, not an input nested in another box. */
+html body.role-instructor #messages-view .messages-search {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  min-height: 46px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+}
+
+html body.role-instructor #messages-view .messages-search > i {
+  display: grid !important;
+  width: 44px !important;
+  height: 44px !important;
+  flex: 0 0 44px !important;
+  place-items: center !important;
+  color: #00509d !important;
+}
+
+html body.role-instructor #messages-view .messages-search input,
+html body.role-instructor #messages-view .messages-search input:focus {
+  width: 100% !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 12px 0 0 !important;
+  border: 0 !important;
+  border-left: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Quick student lookup remains available throughout Annual Records navigation. */
+html body.role-instructor #yearly-report-view .yearly-student-search-wrap {
+  position: relative !important;
+  width: min(100%, 460px) !important;
+  margin: 0 0 0 auto !important;
+}
+
+html body.role-instructor #yearly-report-view .workspace-header {
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+html body.role-instructor #yearly-report-view .yearly-student-search {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 38px !important;
+  overflow: hidden !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+}
+
+html body.role-instructor #yearly-report-view .yearly-student-search:focus-within {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.1) !important;
+}
+
+html body.role-instructor #yearly-report-view .yearly-student-search > i {
+  display: grid !important;
+  width: 38px !important;
+  height: 38px !important;
+  flex: 0 0 38px !important;
+  place-items: center !important;
+  color: #00509d !important;
+  font-size: 12px !important;
+}
+
+html body.role-instructor #yearly-report-view .yearly-student-search input,
+html body.role-instructor #yearly-report-view .yearly-student-search input:focus {
+  width: 100% !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  padding: 0 12px 0 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #00296b !important;
+  font: 600 11px/1 Inter, Arial, sans-serif !important;
+}
+
+html body.role-instructor #yearly-report-view .yearly-student-search-suggestions {
+  position: absolute !important;
+  z-index: 20 !important;
+  top: calc(100% + 5px) !important;
+  right: 0 !important;
+  left: 0 !important;
+  display: none !important;
+  overflow: hidden !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 22px rgba(0, 41, 107, 0.12) !important;
+}
+
+html body.role-instructor #yearly-report-view .yearly-student-search-suggestions.is-open { display: block !important; }
+
+html body.role-instructor #yearly-report-view .yearly-student-search-result {
+  display: block !important;
+  width: 100% !important;
+  padding: 9px 12px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #edf2f7 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+html body.role-instructor #yearly-report-view .yearly-student-search-result:hover { background: #eef6ff !important; }
+html body.role-instructor #yearly-report-view .yearly-student-search-result strong,
+html body.role-instructor #yearly-report-view .yearly-student-search-result span { display: block !important; }
+html body.role-instructor #yearly-report-view .yearly-student-search-result strong { font: 750 11px/1.2 Inter, Arial, sans-serif !important; }
+html body.role-instructor #yearly-report-view .yearly-student-search-result span { margin-top: 3px !important; color: #54719a !important; font: 500 10px/1.2 Inter, Arial, sans-serif !important; }
+html body.role-instructor #yearly-report-view .yearly-student-search-empty { padding: 10px 12px !important; color: #54719a !important; font-size: 11px !important; }
+
+@media (max-width: 760px) {
+  html body.role-instructor #yearly-report-view .workspace-header { align-items: stretch !important; flex-wrap: wrap !important; }
+  html body.role-instructor #yearly-report-view .yearly-student-search-wrap { width: 100% !important; margin: 0 !important; order: 3 !important; }
+}

@@ -1538,6 +1538,16 @@ body.role-instructor .review-modal-card {
   border-color: #c91d23 !important;
 }
 
+/* Rounded destructive action across the expanded and compact sidebars. */
+.sidebar .sidebar-logout,
+.sidebar .sidebar-logout-btn,
+.sidebar #adminLogoutBtn,
+.sidebar-collapsed .sidebar-logout,
+.sidebar-collapsed .sidebar-logout-btn,
+.sidebar-collapsed #adminLogoutBtn {
+  border-radius: 14px !important;
+}
+
 /* Refined sidebar identity block. */
 .sidebar-brand,
 .sidebar-collapsed .sidebar-brand {

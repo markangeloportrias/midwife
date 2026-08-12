@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260726-11" />
+    <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260726-12" />
     <link rel="stylesheet" href="assets/css/pages/admin.css" />
     <link rel="stylesheet" href="assets/css/components/hero.css?v=20260728-12" />
     <link rel="stylesheet" href="assets/css/components/buttons.css" />
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="assets/css/components/modals.css" />
     <link rel="stylesheet" href="assets/css/pages/reports.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-20" />
+    <link rel="stylesheet" href="assets/css/pages/admin-palette.css?v=20260811-23" />
   </head>
   <body>
     <div class="wrap">
@@ -650,11 +651,11 @@
                 </div>
                 <div id="adminCasesStudentSummary"></div>
                 <div class="table-wrap clinical-form-table-container" style="display:none">
-                  <table class="clinical-form-table procedure-records-table">
+                  <table class="clinical-form-table procedure-records-table prc-replica-table admin-review-table">
                     <colgroup>
-                      <col style="width: 16%"><col style="width: 6%"><col style="width: 20%">
-                      <col style="width: 8%"><col style="width: 17%"><col style="width: 14%">
-                      <col style="width: 10%"><col style="width: 9%"><col style="width: 10%">
+                      <col style="width:19.16%"><col style="width:5.04%"><col style="width:12.89%">
+                      <col style="width:7.29%"><col style="width:16.81%"><col style="width:12.89%">
+                      <col style="width:8.96%"><col style="width:8.96%"><col style="width:8%">
                     </colgroup>
                     <thead>
                       <tr>
@@ -757,15 +758,7 @@
                   Refresh
                 </button>
                 <button class="btn btn-secondary" id="viewArchivedNotificationsBtn">View Archive</button>
-                <button
-                  class="btn btn-secondary"
-                  id="deleteAllNotificationsBtn"
-                  style="
-                    background: rgba(255, 94, 94, 0.12);
-                    border-color: rgba(255, 94, 94, 0.3);
-                    color: #b53737;
-                  "
-                >
+                <button class="btn btn-secondary" id="deleteAllNotificationsBtn">
                   Archive All
                 </button>
               </div>
@@ -2679,29 +2672,29 @@
           suturing: { label: "Perineal Suturing", icon: "fa-syringe", tone: "#f7ecff", color: "#a23ee7" },
           "iv insertion": { label: "IV Insertion", icon: "fa-droplet", tone: "#e2f8fc", color: "#009bbb" }
         };
-        const cards = CASE_PROCEDURES.map((procedure) => {
-          const count = cases.filter((record) => procedureLabel(record.procedure_name) === procedure).length;
-          const target = targets[procedure] || 1, percent = Math.min(100, Math.round((count / target) * 100)), ui = procedureUi[procedure];
-          return `<button type="button" class="admin-procedure-card" data-admin-procedure="${escapeHtml(procedure)}" style="display:grid;grid-template-columns:46px minmax(0,1fr);column-gap:11px;align-items:center;min-height:82px;padding:12px 15px;text-align:left;border:1px solid #dce4f4;border-radius:13px;background:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(25,43,115,.05)"><span style="grid-row:span 2;width:42px;height:42px;display:grid;place-items:center;border-radius:11px;background:${ui.tone};color:${ui.color}"><i class="fas ${ui.icon}"></i></span><strong style="overflow:hidden;color:#64738e;font-size:12px;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap;text-overflow:ellipsis">${ui.label}</strong><span style="color:#202d85;font-size:28px;font-weight:800;line-height:1">${count}</span><span style="grid-column:2;display:block;margin-top:2px;color:#8a98ae;font-size:10px;font-weight:700">${count} of ${target} total cases</span><span style="grid-column:1 / -1;display:block;height:5px;margin-top:5px;border-radius:999px;background:#edf0f7;overflow:hidden"><span style="display:block;width:${percent}%;height:100%;background:${ui.color}"></span></span></button>`;
-        }).join("");
         const navigation = CASE_PROCEDURES.map((procedure) => {
           const ui = procedureUi[procedure], active = activeCasesProcedureDetail === procedure;
-          return `<button type="button" data-admin-procedure="${escapeHtml(procedure)}" style="flex:0 0 auto;padding:10px 15px;border:1px solid ${active ? "#242f8a" : "#dbe2f1"};border-radius:9px;background:${active ? "#242f8a" : "#fff"};color:${active ? "#fff" : "#62728d"};font-size:12px;font-weight:750;cursor:pointer">${ui.label}</button>`;
+          return `<button type="button" class="${active ? "active" : ""}" data-admin-procedure="${escapeHtml(procedure)}">${ui.label}</button>`;
         }).join("");
         const allProceduresActive = activeCasesProcedureDetail === "all";
-        const navigationWithAll = `<button type="button" data-admin-procedure="all" style="flex:0 0 auto;padding:10px 15px;border:1px solid ${allProceduresActive ? "#242f8a" : "#dbe2f1"};border-radius:9px;background:${allProceduresActive ? "#242f8a" : "#fff"};color:${allProceduresActive ? "#fff" : "#62728d"};font-size:12px;font-weight:750;cursor:pointer">All Procedures</button>` + navigation;
+        const navigationWithAll = `<button type="button" class="${allProceduresActive ? "active" : ""}" data-admin-procedure="all">All Procedures</button>` + navigation;
         const selected = activeCasesProcedureDetail === "all"
           ? "all"
           : (CASE_PROCEDURES.includes(activeCasesProcedureDetail) ? activeCasesProcedureDetail : "");
         const procedureTable = (procedure) => {
           const records = cases.filter((record) => procedureLabel(record.procedure_name) === procedure);
+          const diagnosisHeader = ["delivery handled", "delivery assisted"].includes(procedure)
+            ? "Complete Diagnosis (Gravida, Para)"
+            : "Complete Diagnosis";
           const rows = records.length ? records.map((record) => `<tr><td>${escapeHtml(record.patient_name || "")}${record.patient_address ? `<br><small>${escapeHtml(record.patient_address)}</small>` : ""}</td><td>${escapeHtml(record.case_no || "")}</td><td>${escapeHtml(record.complete_diagnosis || "")}</td><td>${escapeHtml(record.date_time_performed || "")}</td><td>${escapeHtml(record.facility_name || "")}${record.facility_address ? `<br><small>${escapeHtml(record.facility_address)}</small>` : ""}${record.facility_contact_number ? `<br><small>${escapeHtml(record.facility_contact_number)}</small>` : ""}</td><td>${escapeHtml(record.supervisor_printed_name || "-")}${record.supervisor_contact_number ? `<br><small>${escapeHtml(record.supervisor_contact_number)}</small>` : ""}</td><td>${escapeHtml(record.supervisor_position_designation || "-")}</td><td>${escapeHtml(record.supervisor_license_no || "-")}${record.supervisor_license_expiry_date ? `<br><small>${escapeHtml(record.supervisor_license_expiry_date)}</small>` : ""}</td></tr>`).join("") : `<tr><td colspan="8" class="admin-procedure-empty">No records for this procedure.</td></tr>`;
-          return `<section class="admin-procedure-section"><h4 style="margin:0 0 8px">${escapeHtml(CASE_PROCEDURE_LABELS[procedure])} Records (${records.length})</h4><div class="table-wrap clinical-form-table-container"><table class="clinical-form-table procedure-records-table"><colgroup><col style="width:16%"><col style="width:6%"><col style="width:20%"><col style="width:8%"><col style="width:17%"><col style="width:14%"><col style="width:10%"><col style="width:9%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+          const target = targets[procedure] || 1;
+          const percent = Math.min(100, Math.round((records.length / target) * 100));
+          return `<section class="admin-procedure-section"><div class="replica-admin-progress-heading"><h4>${escapeHtml(CASE_PROCEDURE_LABELS[procedure])} (${records.length})</h4><div class="replica-admin-progress-bar${records.length >= target ? " is-complete" : ""}"><span>${records.length} / ${target}</span><i><b style="width:${percent}%"></b></i></div></div><div class="table-wrap clinical-form-table-container"><table class="clinical-form-table procedure-records-table prc-replica-table"><colgroup><col style="width:20.83%"><col style="width:5.48%"><col style="width:14.01%"><col style="width:7.92%"><col style="width:18.27%"><col style="width:14.01%"><col style="width:9.74%"><col style="width:9.74%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${diagnosisHeader}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
         };
         const details = selected === "all"
           ? CASE_PROCEDURES.map(procedureTable).join("")
           : (selected ? procedureTable(selected) : `<div class="empty" style="display:block">Choose a procedure card to view its separate clinical records.</div>`);
-        container.innerHTML = `<div class="admin-procedure-navigation" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:14px 0 12px">${cards}</div><nav aria-label="Procedure record navigation" style="display:flex;gap:9px;overflow-x:auto;padding:8px;border:1px solid #dbe2f1;border-radius:11px;background:#f7f9fd;margin-bottom:14px">${navigationWithAll}</nav>${details}`;
+        container.innerHTML = `<nav class="replica-admin-progress-nav" aria-label="Procedure record navigation">${navigationWithAll}</nav>${details}`;
       }
       function renderAdminStudentSummary(student, totalCases) {
         const container = document.getElementById("adminCasesStudentSummary");
@@ -4149,10 +4142,10 @@
           const created = createdTs ? new Date(createdTs).toLocaleString() : "-";
           const statusBadge =
             req.status === "approved"
-              ? '<span style="color: #148b54; font-weight: 600;">Approved</span>'
+              ? '<span class="edit-request-status approved">Approved</span>'
               : req.status === "rejected"
-                ? '<span style="color: #c0392b; font-weight: 600;">Rejected</span>'
-                : '<span style="color: #1565C0; font-weight: 600;">Pending</span>';
+                ? '<span class="edit-request-status rejected">Rejected</span>'
+                : '<span class="edit-request-status pending">Pending</span>';
 
           tr.innerHTML = `
           <td>${index + 1}</td>
