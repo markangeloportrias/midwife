@@ -14,7 +14,12 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260726-12" />
-    <link rel="stylesheet" href="assets/css/pages/instructor.css?v=20260812-8" />
+    <link rel="stylesheet" href="assets/css/pages/instructor.css" />00296b
+003f88
+00509d
+fdc500
+ffd500
+apply these colors
     <link rel="stylesheet" href="assets/css/components/hero.css?v=20260728-12" />
     <link rel="stylesheet" href="assets/css/components/buttons.css" />
     <link rel="stylesheet" href="assets/css/components/forms.css" />
@@ -22,9 +27,7 @@
     <link rel="stylesheet" href="assets/css/components/modals.css" />
     <link rel="stylesheet" href="assets/css/pages/reports.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-20" />
-    <link rel="stylesheet" href="assets/css/pages/instructor-palette.css?v=20260812-118" />
-    <link rel="stylesheet" href="assets/css/pages/student-prc.css?v=20260812-1" />
-    <link rel="stylesheet" href="assets/css/pages/instructor-records-table.css?v=20260812-39" />
+<link rel="stylesheet" href="assets/css/pages/instructor-palette.css?v=20260810-18" />
   </head>
   <body>
     <div class="dashboard">
@@ -346,7 +349,7 @@
         <section class="settings-view" id="settingsView">
           <div class="settings-card">
             <div class="section-header-row">
-              <div class="section-header-copy">
+              <div>
                 <h2>Account Settings</h2>
                 <p>Update your profile photo and instructor details.</p>
               </div>
@@ -394,86 +397,37 @@
         <div class="content-section">
           <div class="section">
             <div class="section-header-row">
-              <div class="section-header-copy">
+              <div>
                 <h2 id="active-title">
-                  <span id="active-title-text">New Records</span>
+                  <span id="active-title-text">Recent Records Overview</span>
                   <span class="badge" id="count-active">0</span>
                 </h2>
                 <small id="active-subtitle"
-                  >Recently submitted clinical records waiting for your review.</small
+                  >Latest clinical activities recorded by students.</small
                 >
-                <nav id="currentRecordsDetailBreadcrumb" class="current-records-detail-breadcrumb" aria-label="Clinical records navigation" style="display:none">
-                  <button type="button" id="currentRecordsDetailBackToBlocks">Registered Blocks</button>
-                  <span aria-hidden="true">/</span>
-                  <button type="button" id="currentRecordsDetailBackToBlock">Block</button>
-                  <span aria-hidden="true">/</span>
-                  <strong id="currentRecordsDetailStudent" aria-current="page">Student</strong>
-                </nav>
               </div>
-              <div class="section-header-actions">
-                <button class="btn btn-outline" id="currentRecordsBackToStudents" type="button" style="display:none">
-                  <i class="fas fa-arrow-left"></i> Back to Name List
-                </button>
-                <button class="btn btn-outline" id="dashboardNewRecordsAll" type="button">
-                  View all records <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-primary view-records-btn" id="refreshRecordsBtn" type="button">
-                  <i class="fas fa-sync-alt"></i> Refresh Records
-                </button>
-              </div>
-            </div>
-            <div class="record-procedure-toolbar" id="instructorRecordNavigation" style="display:none">
-              <nav class="procedure-tabs" id="instructorProcedureTabs" aria-label="Student record procedures">
-                <button type="button" class="procedure-tab active" data-instructor-procedure="all-records">All Records</button>
-                <button type="button" class="procedure-tab" data-instructor-procedure="delivery-handled">Delivery Handled</button>
-                <button type="button" class="procedure-tab" data-instructor-procedure="delivery-assisted">Delivery Assisted</button>
-                <button type="button" class="procedure-tab" data-instructor-procedure="suturing">Perineal Suturing</button>
-                <button type="button" class="procedure-tab" data-instructor-procedure="iv-insertion">IV Insertion</button>
-                <button type="button" class="procedure-tab" data-instructor-procedure="internal-exam">Internal Examination</button>
-              </nav>
-              <button class="btn btn-primary" id="currentRecordsExportBtn" type="button" style="display:none">
-                <i class="fas fa-file-word" aria-hidden="true"></i> Export PRC Form
+              <button class="btn btn-primary view-records-btn" id="refreshRecordsBtn" type="button">
+                <i class="fas fa-sync-alt"></i> Refresh Records
               </button>
             </div>
-            <section id="dashboardNewRecords" class="dashboard-new-records" aria-label="New records awaiting review" style="display:none">
-              <div class="dashboard-new-records-table-wrap">
-                <table class="dashboard-new-records-table">
-                  <colgroup>
-                    <col style="width:15%" />
-                    <col style="width:15%" />
-                    <col style="width:8%" />
-                    <col style="width:17%" />
-                    <col style="width:13%" />
-                    <col style="width:15%" />
-                    <col style="width:10%" />
-                    <col style="width:7%" />
-                  </colgroup>
-                  <thead>
-                    <tr>
-                      <th>Procedure</th>
-                      <th>Patient</th>
-                      <th>Case No.</th>
-                      <th>Diagnosis</th>
-                      <th>Facility</th>
-                      <th>Status</th>
-                      <th>Date &amp; Time</th>
-                      <th class="dashboard-new-records-action-cell">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody id="dashboardNewRecordsList" aria-live="polite"></tbody>
-                </table>
-              </div>
-              <div class="empty" id="dashboardNewRecordsEmpty" style="display:none">No new clinical records need review right now.</div>
-            </section>
+            <div class="procedure-tabs" id="instructorProcedureTabs" aria-label="My Records procedures">
+              <button type="button" class="procedure-tab active" data-instructor-procedure="my-records">All Records</button>
+              <button type="button" class="procedure-tab" data-instructor-procedure="delivery-handled">Delivery Handled</button>
+              <button type="button" class="procedure-tab" data-instructor-procedure="delivery-assisted">Delivery Assisted</button>
+              <button type="button" class="procedure-tab" data-instructor-procedure="suturing">Perineal Suturing</button>
+              <button type="button" class="procedure-tab" data-instructor-procedure="iv-insertion">IV Insertion</button>
+              <button type="button" class="procedure-tab" data-instructor-procedure="internal-exam">Internal Examination</button>
+            </div>
             <div id="currentRecordsStudentRoster" class="table-wrapper" style="display:none">
-              <nav class="current-records-navigator" aria-label="Clinical records navigation">
+              <div class="current-records-navigator">
                 <button type="button" id="currentRecordsBackToBlocks" class="current-records-back" style="display:none">
-                  Registered Blocks
+                  <i class="fas fa-arrow-left" aria-hidden="true"></i> Registered blocks
                 </button>
-                <span class="current-records-crumb-separator" aria-hidden="true">/</span>
-                <strong id="currentRecordsLevelTitle" class="current-records-crumb-current" aria-current="page">Registered Blocks</strong>
-                <p id="currentRecordsLevelSubtitle">Choose a block to view its students and clinical records.</p>
-              </nav>
+                <div>
+                  <h3 id="currentRecordsLevelTitle">Registered Blocks</h3>
+                  <p id="currentRecordsLevelSubtitle">Choose a block to view its students and clinical records.</p>
+                </div>
+              </div>
               <table class="dashboard-data-table admin-premium-table">
                 <thead><tr><th>No.</th><th id="currentRecordsColumnTwo">Registered Block</th><th id="currentRecordsColumnThree">Academic Year</th><th id="currentRecordsColumnFour">Students</th><th>Actions</th></tr></thead>
                 <tbody id="currentRecordsStudentRosterBody"></tbody>
@@ -481,23 +435,23 @@
               <div class="empty" id="currentRecordsStudentRosterEmpty" style="display:none">No registered blocks found.</div>
             </div>
             <div id="mainRecordsWrapper" class="table-wrapper">
-              <table id="active-table" class="procedure-records-table prc-replica-table instructor-review-table instructor-records-table" style="display: table">
+              <table id="active-table" class="procedure-records-table" style="display: table">
                 <colgroup>
-                  <col style="width: 19.16%" />
-                  <col style="width: 5.04%" />
-                  <col style="width: 12.89%" />
-                  <col style="width: 7.29%" />
-                  <col style="width: 16.81%" />
-                  <col style="width: 12.89%" />
-                  <col style="width: 8.96%" />
-                  <col style="width: 8.96%" />
-                  <col style="width: 8%" />
+                  <col style="width: 210px" />
+                  <col style="width: 78px" />
+                  <col style="width: 225px" />
+                  <col style="width: 125px" />
+                  <col style="width: 255px" />
+                  <col style="width: 175px" />
+                  <col style="width: 145px" />
+                  <col style="width: 135px" />
+                  <col style="width: 96px" />
                 </colgroup>
                 <thead>
                   <tr>
                     <th rowspan="2">Name and Address of Patient</th>
                     <th rowspan="2">Case No.</th>
-                    <th id="activeDiagnosisHeader" rowspan="2">Complete Diagnosis</th>
+                    <th rowspan="2">Complete Diagnosis</th>
                     <th rowspan="2">Date &amp; Time Performed</th>
                     <th rowspan="2">Full Name, Address of Facility &amp; Contact Number</th>
                     <th colspan="2">Supervised by</th>
@@ -511,7 +465,6 @@
                 </thead>
                 <tbody></tbody>
               </table>
-              <div id="allRecordsProcedureTables" class="all-records-procedure-tables" style="display:none"></div>
               <!-- New table for yearly reports -->
               <div id="yearly-report-view" style="display: none; padding: 10px">
               <div class="workspace-header">
@@ -521,18 +474,11 @@
                     Review student records organized by school year, block, and student.
                   </div>
                 </div>
-                <div class="yearly-student-search-wrap">
-                  <label class="yearly-student-search" for="yearlyStudentSearchInput">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <input id="yearlyStudentSearchInput" type="search" placeholder="Search student by name or ID..." autocomplete="off" aria-autocomplete="list" aria-controls="yearlyStudentSearchSuggestions" />
-                  </label>
-                  <div id="yearlyStudentSearchSuggestions" class="yearly-student-search-suggestions" role="listbox"></div>
-                </div>
                 <button class="btn btn-secondary btn-back yearly-back-hidden" id="yearlyInstructorBackBtn" type="button" style="display: none"><i class="fas fa-arrow-left"></i> Back</button>
               </div>
               <div class="students-breadcrumb" id="yearlyRecordsBreadcrumb"></div>
 
-              <div class="yearly-navigation-panel active" id="yearlyYearPanel">
+              <div class="students-panel active" id="yearlyYearPanel">
                 <div class="table-wrap">
                   <table style="min-width: 560px">
                     <thead>
@@ -553,7 +499,7 @@
                 </div>
               </div>
 
-              <div class="yearly-navigation-panel" id="yearlyBlockPanel">
+              <div class="students-panel" id="yearlyBlockPanel">
                 <div class="table-wrap">
                   <table style="min-width: 720px">
                     <thead>
@@ -573,7 +519,7 @@
                 </div>
               </div>
 
-              <div class="yearly-navigation-panel" id="yearlyStudentSummaryPanel">
+              <div class="students-panel" id="yearlyStudentSummaryPanel">
                 <div class="table-wrap">
                   <table style="min-width: 720px">
                     <thead>
@@ -592,24 +538,18 @@
                   No students found in this block.
                 </div>
               </div>
-              <div class="yearly-navigation-panel" id="yearlyStudentRecordsPanel">
-                <div class="yearly-records-toolbar">
-                  <nav class="yearly-procedure-nav" aria-label="Filter annual clinical records by procedure">
-                    <button type="button" class="active" data-yearly-procedure="">All Records</button>
-                    <button type="button" data-yearly-procedure="delivery-handled">Delivery Handled</button>
-                    <button type="button" data-yearly-procedure="delivery-assisted">Delivery Assisted</button>
-                    <button type="button" data-yearly-procedure="suturing">Perineal Suturing</button>
-                    <button type="button" data-yearly-procedure="iv-insertion">IV Insertion</button>
-                    <button type="button" data-yearly-procedure="internal-exam">Internal Examination</button>
-                  </nav>
-                  <button class="btn btn-primary" id="yearlyRecordsExportBtn" type="button">
-                    <i class="fas fa-file-word" aria-hidden="true"></i> Export PRC Form
-                  </button>
-                </div>
-                <div class="table-wrap clinical-form-table-container">
-                  <table id="yearly-student-records-table" class="procedure-records-table prc-replica-table instructor-review-table instructor-records-table" style="display:table">
-                    <colgroup><col style="width:19.16%"><col style="width:5.04%"><col style="width:12.89%"><col style="width:7.29%"><col style="width:16.81%"><col style="width:12.89%"><col style="width:8.96%"><col style="width:8.96%"><col style="width:8%"></colgroup>
-                    <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th id="yearlyDiagnosisHeader" rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time Performed</th><th rowspan="2">Full Name, Address of Facility &amp; Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th><th rowspan="2">Action</th></tr><tr><th>Printed Name and Contact No.</th><th>Position/<br>Designation</th></tr></thead>
+              <div class="students-panel" id="yearlyStudentRecordsPanel">
+                <nav class="yearly-procedure-nav" aria-label="Filter annual clinical records by procedure">
+                  <button type="button" class="active" data-yearly-procedure="">All Records</button>
+                  <button type="button" data-yearly-procedure="delivery-handled">Delivery Handled</button>
+                  <button type="button" data-yearly-procedure="delivery-assisted">Delivery Assisted</button>
+                  <button type="button" data-yearly-procedure="suturing">Perineal Suturing</button>
+                  <button type="button" data-yearly-procedure="iv-insertion">IV Insertion</button>
+                  <button type="button" data-yearly-procedure="internal-exam">Internal Examination</button>
+                </nav><div class="table-wrap clinical-form-table-container">
+                  <table id="yearly-student-records-table" class="clinical-form-table procedure-records-table" style="width:100%">
+                    <colgroup><col style="width:16%"><col style="width:7%"><col style="width:18%"><col style="width:10%"><col style="width:18%"><col style="width:14%"><col style="width:9%"><col style="width:8%"></colgroup>
+                    <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised By</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead>
                     <tbody id="yearlyStudentRecordsTbody"></tbody>
                   </table>
                 </div>
@@ -889,20 +829,6 @@
             </div>
             <div class="empty" id="empty-active">No records saved yet.</div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="prc-preview-overlay" id="prcPreviewOverlay" aria-hidden="true">
-      <div class="prc-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="prcPreviewTitle">
-        <div class="prc-preview-toolbar">
-          <div><strong id="prcPreviewTitle">PRC Form Preview</strong><span>Review the landscape form before downloading.</span></div>
-          <button type="button" class="prc-preview-close" id="prcPreviewCloseBtn" aria-label="Close preview"><i class="fas fa-times" aria-hidden="true"></i></button>
-        </div>
-        <div class="prc-preview-pages" id="prcPreviewPages"></div>
-        <div class="prc-preview-actions">
-          <button type="button" class="btn-secondary" id="prcPreviewCancelBtn">Back</button>
-          <button type="button" class="btn-primary" id="prcPreviewDownloadBtn"><i class="fas fa-download" aria-hidden="true"></i> Download DOCX Form</button>
         </div>
       </div>
     </div>
@@ -1423,8 +1349,6 @@
 
       // Yearly Records Navigation Elements
       const yearlyRecordsBreadcrumb = document.getElementById("yearlyRecordsBreadcrumb");
-      const yearlyStudentSearchInput = document.getElementById("yearlyStudentSearchInput");
-      const yearlyStudentSearchSuggestions = document.getElementById("yearlyStudentSearchSuggestions");
       const yearlyRecordsNavMessage = document.getElementById("yearlyRecordsNavMessage");
       const yearlyYearPanel = document.getElementById("yearlyYearPanel");
       const yearlyBlockPanel = document.getElementById("yearlyBlockPanel");
@@ -1450,7 +1374,6 @@
       };
       let yearlyVisibleStudentRecords = [];
       let yearlyProcedureFilterValue = "";
-      let yearlyStudentSearchData = [];
       const notificationsView = document.getElementById("notifications-view");
       const mainRecordsWrapper = document.getElementById("mainRecordsWrapper");
       const yearlySummaryTbody = null; // deprecated - use yearlyStudentSummaryTbody instead
@@ -1566,76 +1489,6 @@
         setTextById("overallTeachingProgress", `${percent}%`);
         const fill = document.getElementById("overallTeachingFill");
         if (fill) fill.style.width = `${percent}%`;
-      }
-
-      function renderDashboardNewRecords(records) {
-        const list = document.getElementById("dashboardNewRecordsList");
-        const empty = document.getElementById("dashboardNewRecordsEmpty");
-        const tableWrap = list?.closest(".dashboard-new-records-table-wrap");
-        if (!list) return;
-
-        const newRecords = (records || [])
-          .filter((record) => {
-            const status = record.status || (record.checked_by ? "Verified" : "Submitted");
-            return status === "Submitted" || status === "Resubmitted";
-          })
-          .slice(0, 4);
-
-        if (!newRecords.length) {
-          list.innerHTML = "";
-          if (tableWrap) tableWrap.style.display = "none";
-          if (empty) empty.style.display = "block";
-          return;
-        }
-
-        if (tableWrap) tableWrap.style.display = "block";
-        if (empty) empty.style.display = "none";
-        list.innerHTML = "";
-        const formatDashboardDateTime = (value) => {
-          const parsed = new Date(String(value || "").replace(" ", "T"));
-          if (Number.isNaN(parsed.getTime())) return escapeHtml(value || "-");
-          const date = parsed.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-          const time = parsed.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
-          return `${escapeHtml(date)}<br><span>${escapeHtml(time)}</span>`;
-        };
-        newRecords.forEach((record) => {
-          const status = record.status || (record.checked_by ? "Verified" : "Submitted");
-          const statusLabel = status === "Resubmitted" ? "Resubmitted" : "Awaiting review";
-          const row = document.createElement("tr");
-          row.tabIndex = 0;
-          row.setAttribute("role", "button");
-          row.setAttribute("aria-label", `Review record ${record.case_no || ""}`.trim());
-          row.innerHTML = `
-            <td>${formatCombined(record.patient_name, record.patient_address, "", "<br>") || "—"}</td>
-            <td>${escapeHtml(record.case_no || "—")}</td>
-            <td>${escapeHtml(record.complete_diagnosis || "—")}</td>
-            <td>${escapeHtml(record.date_time_performed || "—")}</td>
-            <td>${formatCombined(record.facility_name, record.facility_address, record.facility_contact_number, "<br>") || "—"}</td>
-            <td>${formatCombined(record.supervisor_printed_name, record.supervisor_contact_number, "", "<br>") || "—"}</td>
-            <td>${escapeHtml(record.supervisor_position_designation || "—")}</td>
-            <td>${formatCombined(record.supervisor_license_no, record.supervisor_license_expiry_date, "", "<br>") || "—"}</td>
-            <td class="dashboard-new-records-action-cell"><button type="button" class="dashboard-new-record-review">Review <i class="fas fa-arrow-right" aria-hidden="true"></i></button></td>`;
-          row.innerHTML = `
-            <td>${escapeHtml(record.procedure_name || "Clinical procedure")}</td>
-            <td>${escapeHtml(record.patient_name || "-")}</td>
-            <td>${escapeHtml(record.case_no || "-")}</td>
-            <td>${escapeHtml(record.complete_diagnosis || "-")}</td>
-            <td>${escapeHtml(record.facility_name || "-")}</td>
-            <td><span class="dashboard-new-record-status${status === "Resubmitted" ? " resubmitted" : ""}"><i class="fas fa-clock" aria-hidden="true"></i> ${statusLabel}</span></td>
-            <td class="dashboard-new-record-date">${formatDashboardDateTime(record.date_time_performed)}</td>
-            <td class="dashboard-new-records-action-cell"><button type="button" class="dashboard-new-record-review" aria-label="Review record details">Review</button></td>`;
-          row.querySelector(".dashboard-new-record-review")?.addEventListener("click", (event) => {
-            event.stopPropagation();
-            showRecordDetail(record);
-          });
-          row.addEventListener("click", () => showRecordDetail(record));
-          row.addEventListener("keydown", (event) => {
-            if (event.key !== "Enter" && event.key !== " ") return;
-            event.preventDefault();
-            showRecordDetail(record);
-          });
-          list.appendChild(row);
-        });
       }
 
       async function getPendingEditRequests() {
@@ -2046,16 +1899,17 @@
                   <div>${when}</div>
                 </div>
                 ${isPending ? `<div class="request-item-actions">
-                  <button class="request-view-btn" data-view-edit-request data-student-id="${studentId}" data-procedure="${req.type || ""}" data-case-no="${caseNum}">
-                    <i class="fas fa-eye"></i> View Details
-                  </button>
                   <button class="request-approve-btn" data-approve-edit-request="${req.id}" data-case-no="${caseNum}">
                     <i class="fas fa-check"></i> Approve
                   </button>
                   <button class="request-reject-btn" data-reject-edit-request="${req.id}" data-case-no="${caseNum}">
                     <i class="fas fa-times"></i> Reject
                   </button>
+                  <button class="request-delete-btn" data-delete-edit-request="${req.id}" data-case-no="${caseNum}">
+                    <i class="fas fa-trash"></i> Delete
+                  </button>
                 </div>` : `<div class="request-item-meta"><div>Decision: ${statusLabel}${req.rejectionRemarks ? ` — ${escapeHtml(req.rejectionRemarks)}` : ""}</div></div>`}
+                ${!isPending ? `<div class="request-item-actions"><button class="request-delete-btn" data-delete-edit-request="${req.id}" data-case-no="${caseNum}"><i class="fas fa-trash"></i> Delete</button></div>` : ""}
               </div>
             `;
             editRequestsList.appendChild(item);
@@ -2458,17 +2312,6 @@
       // Event delegation for edit-requests-list
       const editRequestsListDelegation = document.getElementById("edit-requests-list");
       editRequestsListDelegation?.addEventListener("click", async (e) => {
-        const viewBtn = e.target.closest("button[data-view-edit-request]");
-        if (viewBtn) {
-          const studentId = viewBtn.getAttribute("data-student-id") || "";
-          const procedure = viewBtn.getAttribute("data-procedure") || "";
-          const caseNo = normalizeCaseNo(viewBtn.getAttribute("data-case-no"));
-          const records = await ApiClient.getAllCasesForInstructor(procedureByType[procedure] || procedure, "");
-          const record = records.find((item) => String(item.student_id) === String(studentId) && normalizeCaseNo(item.case_no) === caseNo);
-          if (record) showRecordDetail(record);
-          else showOptionMessage("Record unavailable", "The related clinical record could not be found.");
-          return;
-        }
         const approveBtn = e.target.closest("button[data-approve-edit-request]");
         if (approveBtn) {
           const id = approveBtn.getAttribute("data-approve-edit-request");
@@ -2817,12 +2660,6 @@
           }
 
           proceduresDiv.innerHTML = "";
-          const progressTargets = { "delivery-handled": 20, "delivery-assisted": 20, "internal-exam": 20, suturing: 5, "iv-insertion": 5 };
-          const progressNav = document.createElement("nav");
-          progressNav.className = "replica-progress-nav";
-          progressNav.setAttribute("aria-label", "Student procedure progress");
-          progressNav.innerHTML = '<button type="button" class="active" data-summary-progress="all">All Procedures</button>' + Object.entries(procedureByType).map(([key, label]) => `<button type="button" data-summary-progress="${key}">${escapeHtml(label === "Suturing" ? "Perineal Suturing" : label === "Internal Exam" ? "Internal Examination" : label)}</button>`).join("");
-          proceduresDiv.appendChild(progressNav);
           const progressActions = document.createElement("div");
           progressActions.style.cssText = "display:flex; justify-content:flex-end; margin:0 0 8px";
           const progressExportButton = document.createElement("button");
@@ -2839,27 +2676,23 @@
             );
             const section = document.createElement("section");
             section.className = "summary-procedure-section";
-            section.dataset.summaryProgress = key;
             const title = document.createElement("h3");
             title.textContent = `${label} (${records.length})`;
-            const target = progressTargets[key] || 0;
-            const percent = target ? Math.min(100, Math.round((records.length / target) * 100)) : 0;
-            const heading = document.createElement("div");
-            heading.className = "replica-progress-heading";
-            const progress = document.createElement("div");
-            progress.className = `replica-progress-bar${records.length >= target ? " is-complete" : ""}`;
-            progress.title = `${records.length} of ${target} required cases (${percent}%)`;
-            progress.innerHTML = `<span>${records.length} / ${target}</span><i><b style="width:${percent}%"></b></i>`;
-            heading.append(title, progress);
-            section.appendChild(heading);
+            section.appendChild(title);
 
             const wrap = document.createElement("div");
             wrap.className = "clinical-form-table-container";
             const table = document.createElement("table");
-            table.className = "clinical-form-table procedure-records-table prc-replica-table instructor-records-table";
-            table.innerHTML = `<colgroup><col style="width:20.83%"><col style="width:5.48%"><col style="width:14.01%"><col style="width:7.92%"><col style="width:18.27%"><col style="width:14.01%"><col style="width:9.74%"><col style="width:9.74%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${instructorPrcDiagnosisHeader(key)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead>`;
+            table.className = "clinical-form-table procedure-records-table";
+            table.innerHTML = `<colgroup><col style="width:15%"><col style="width:6%"><col style="width:18%"><col style="width:8%"><col style="width:16%"><col style="width:13%"><col style="width:9%"><col style="width:8%"><col style="width:7%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th>
+                        <th rowspan="2">Action</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead>`;
             const body = document.createElement("tbody");
-            records.forEach((record) => {
+            if (!records.length) {
+              const row = document.createElement("tr");
+              row.innerHTML = '<td colspan="9" style="text-align:center">No records for this procedure.</td>';
+              body.appendChild(row);
+            } else {
+              records.forEach((record) => {
                 const row = document.createElement("tr");
                 const values = [
                   `${record.patient_name || "-"}${record.patient_address ? `\n${record.patient_address}` : ""}`,
@@ -2877,22 +2710,27 @@
                   cell.style.whiteSpace = "pre-line";
                   row.appendChild(cell);
                 });
+                const actionCell = document.createElement("td");
+                actionCell.className = "case-comment-cell";
+                const commentButton = document.createElement("button");
+                commentButton.type = "button";
+                commentButton.className = "table-comment-btn";
+                commentButton.title = "Add instructor comment";
+                commentButton.innerHTML = '<i class="fas fa-comment-medical" aria-hidden="true"></i><span>Comment</span>';
+                commentButton.addEventListener("click", (event) => {
+                  event.stopPropagation();
+                  handleTableComment(record);
+                });
+                actionCell.appendChild(commentButton);
+                row.appendChild(actionCell);
                 body.appendChild(row);
-            });
+              });
+            }
             table.appendChild(body);
             wrap.appendChild(table);
             section.appendChild(wrap);
             proceduresDiv.appendChild(section);
           }
-          progressNav.addEventListener("click", (event) => {
-            const button = event.target.closest("button[data-summary-progress]");
-            if (!button) return;
-            const selected = button.getAttribute("data-summary-progress") || "all";
-            progressNav.querySelectorAll("button").forEach((item) => item.classList.toggle("active", item === button));
-            proceduresDiv.querySelectorAll(".summary-procedure-section[data-summary-progress]").forEach((section) => {
-              section.style.display = selected === "all" || section.dataset.summaryProgress === selected ? "block" : "none";
-            });
-          });
         } catch (e) {
           proceduresDiv.innerHTML =
             '<div class="empty">Error loading report.</div>';
@@ -3218,44 +3056,6 @@
         renderInstructorStudentBlocks();
       }
 
-      // Annual Records student search
-      async function ensureYearlyStudentSearchData() {
-        if (yearlyStudentSearchData.length) return yearlyStudentSearchData;
-        const result = await ApiClient.getAllStudents().catch(() => ({ ok: false }));
-        yearlyStudentSearchData = result?.ok && Array.isArray(result.students) ? result.students : [];
-        return yearlyStudentSearchData;
-      }
-
-      async function renderYearlyStudentSearch(query) {
-        if (!yearlyStudentSearchSuggestions) return;
-        const term = String(query || "").trim().toLowerCase();
-        if (!term) {
-          yearlyStudentSearchSuggestions.innerHTML = "";
-          yearlyStudentSearchSuggestions.classList.remove("is-open");
-          return;
-        }
-        const students = await ensureYearlyStudentSearchData();
-        const matches = students
-          .filter((student) => String(student.student_name || "").toLowerCase().includes(term) || String(student.student_id || "").toLowerCase().includes(term))
-          .slice(0, 6);
-        yearlyStudentSearchSuggestions.innerHTML = matches.length
-          ? matches.map((student) => `<button type="button" class="yearly-student-search-result" role="option" data-yearly-search-id="${escapeHtml(student.student_id || "")}"><strong>${escapeHtml(student.student_name || "Student")}</strong><span>${escapeHtml(student.student_id || "No ID")} ${student.registered_school_year || student.active_school_year ? `• ${escapeHtml(student.registered_school_year || student.active_school_year)}` : ""}</span></button>`).join("")
-          : '<div class="yearly-student-search-empty">No matching students found.</div>';
-        yearlyStudentSearchSuggestions.classList.add("is-open");
-      }
-
-      function openYearlyStudentSearchResult(studentId) {
-        const student = yearlyStudentSearchData.find((item) => String(item.student_id || "") === String(studentId || ""));
-        if (!student) return;
-        yearlyRecordsNav.year = student.registered_school_year || student.active_school_year || "";
-        yearlyRecordsNav.blockId = "";
-        yearlyRecordsNav.blockLabel = "";
-        yearlyStudentSearchInput.value = "";
-        yearlyStudentSearchSuggestions.innerHTML = "";
-        yearlyStudentSearchSuggestions.classList.remove("is-open");
-        openYearlyStudentRecords(student.student_id, student.student_name || student.student_id);
-      }
-
       // Yearly Records Navigation Functions
       function setYearlyRecordsLevel(level) {
         yearlyRecordsNav.level = level;
@@ -3371,29 +3171,11 @@
             ? result.school_years
             : [];
         const allCases = await ApiClient.getAllCasesForInstructor("", "");
-        const recordsByYear = new Map(
-          await Promise.all(
-            years.map(async (year) => {
-              const yearLabel = String(year.label || "");
-              const blocksResult = await ApiClient.getStudentBlocks(yearLabel);
-              const blocks = blocksResult && blocksResult.ok && Array.isArray(blocksResult.blocks)
-                ? blocksResult.blocks
-                : [];
-              const studentIds = new Set(
-                (await Promise.all(
-                  blocks.map(async (block) => {
-                    const roster = await ApiClient.getBlockStudents(block.id, yearLabel);
-                    return roster && roster.ok && Array.isArray(roster.students) ? roster.students : [];
-                  }),
-                )).flat().map((student) => String(student.student_id || "")).filter(Boolean),
-              );
-              const count = (Array.isArray(allCases) ? allCases : []).filter((record) =>
-                studentIds.has(String(record.student_id || "")),
-              ).length;
-              return [yearLabel, count];
-            }),
-          ),
-        );
+        const recordsByYear = (Array.isArray(allCases) ? allCases : []).reduce((counts, record) => {
+          const key = record.academic_year || record.school_year || "";
+          if (key) counts[key] = (counts[key] || 0) + 1;
+          return counts;
+        }, {});
         yearlyYearsTbody.innerHTML = "";
         if (yearlyYearsEmpty) {
           yearlyYearsEmpty.style.display = years.length ? "none" : "block";
@@ -3411,7 +3193,7 @@
             <td><strong>${escapeHtml(yearLabel)}</strong></td>
             <td>${year.block_count || 0}</td>
             <td>${year.student_count || 0}</td>
-            <td>${recordsByYear.get(yearLabel) || 0}</td>
+            <td>${recordsByYear[yearLabel] || year.record_count || 0}</td>
             <td class="action-cell"><button class="mini-btn admin-directory-action" type="button">Open</button></td>
           `;
           yearlyYearsTbody.appendChild(tr);
@@ -3420,30 +3202,11 @@
 
       async function renderYearlyRecordsBlocks() {
         if (!yearlyRecordsNav.year || !yearlyBlocksTbody) return;
-        const [result, allCases] = await Promise.all([
-          ApiClient.getStudentBlocks(yearlyRecordsNav.year),
-          ApiClient.getAllCasesForInstructor("", ""),
-        ]);
+        const result = await ApiClient.getStudentBlocks(yearlyRecordsNav.year);
         const blocks =
           result && result.ok && Array.isArray(result.blocks)
             ? result.blocks
             : [];
-        const recordsByBlock = new Map(
-          await Promise.all(
-            blocks.map(async (block) => {
-              const roster = await ApiClient.getBlockStudents(block.id, yearlyRecordsNav.year);
-              const studentIds = new Set(
-                (roster && roster.ok && Array.isArray(roster.students) ? roster.students : [])
-                  .map((student) => String(student.student_id || ""))
-                  .filter(Boolean),
-              );
-              const count = (Array.isArray(allCases) ? allCases : []).filter((record) =>
-                studentIds.has(String(record.student_id || "")),
-              ).length;
-              return [String(block.id || ""), count];
-            }),
-          ),
-        );
         yearlyBlocksTbody.innerHTML = "";
         if (yearlyBlocksEmpty) {
           yearlyBlocksEmpty.style.display = blocks.length ? "none" : "block";
@@ -3460,7 +3223,7 @@
             <td>${index + 1}</td>
             <td><strong>${escapeHtml(block.label || block.id || "")}</strong></td>
             <td>${block.student_count || 0}</td>
-            <td>${recordsByBlock.get(String(block.id || "")) || 0}</td>
+            <td>${block.record_count || 0}</td>
             <td class="action-cell"><button class="mini-btn admin-directory-action" type="button">Open</button></td>
           `;
           yearlyBlocksTbody.appendChild(tr);
@@ -3477,7 +3240,8 @@
           ? rosterResult.students
           : [];
         const recordCountByStudent = (Array.isArray(cases) ? cases : []).reduce((counts, record) => {
-          if (record.student_id) {
+          const matchesYear = record.academic_year === yearlyRecordsNav.year || record.school_year === yearlyRecordsNav.year;
+          if (matchesYear && record.student_id) {
             const id = String(record.student_id);
             counts[id] = (counts[id] || 0) + 1;
           }
@@ -3775,56 +3539,6 @@
         renderInstructorBlockStudents();
       }
 
-      function normalizeCurrentRecordsRosterTable(roster) {
-        const table = roster?.querySelector("table.admin-premium-table");
-        if (!table) return;
-        const widths = ["6%", "18%", "46%", "15%", "15%"];
-        const set = (element, property, value) => element?.style.setProperty(property, value, "important");
-
-        set(table, "width", "100%");
-        set(table, "table-layout", "fixed");
-        set(table, "border-spacing", "0");
-        table.querySelectorAll("thead th").forEach((cell, index) => {
-          set(cell, "width", widths[index] || "auto");
-          set(cell, "text-align", "left");
-          set(cell, "text-indent", "0");
-          set(cell, "font-size", "10px");
-          set(cell, "padding-left", index === 4 ? "0" : "18px");
-          set(cell, "padding-right", index === 4 ? "0" : "18px");
-        });
-        table.querySelectorAll("tbody tr").forEach((row) => {
-          set(row, "height", "44px");
-          set(row, "min-height", "44px");
-          set(row, "background", "#ffffff");
-          set(row, "box-shadow", "none");
-          Array.from(row.cells).forEach((cell, index) => {
-            set(cell, "height", "44px");
-            set(cell, "min-height", "44px");
-            set(cell, "padding-top", "0");
-            set(cell, "padding-bottom", "0");
-            set(cell, "padding-left", index === 4 ? "0" : "18px");
-            set(cell, "padding-right", index === 4 ? "0" : "18px");
-            set(cell, "text-align", "left");
-            set(cell, "text-indent", "0");
-            set(cell, "font-size", "11px");
-            set(cell, "line-height", "1");
-            set(cell, "background", "#ffffff");
-            set(cell, "box-shadow", "none");
-            cell.querySelectorAll("strong, span").forEach((text) => set(text, "font-size", "11px"));
-          });
-          const action = row.querySelector("td:nth-child(5) .clinical-roster-action");
-          if (action) {
-            set(action, "height", "23px");
-            set(action, "min-height", "23px");
-            set(action, "margin", "0");
-            set(action, "padding", "0 7px");
-            set(action, "font-size", "9px");
-            set(action, "line-height", "1");
-            set(action, "transform", "none");
-          }
-        });
-      }
-
       async function renderCurrentRecordsStudentRoster() {
         const roster = document.getElementById("currentRecordsStudentRoster");
         const body = document.getElementById("currentRecordsStudentRosterBody");
@@ -3853,30 +3567,22 @@
         roster.classList.toggle("showing-block-students", Boolean(selectedCurrentRecordsBlock));
 
         if (!selectedCurrentRecordsBlock) {
-          const yearLabels = activeYear
-            ? [activeYear]
-            : (allYears && allYears.ok && Array.isArray(allYears.school_years)
-              ? allYears.school_years.map((year) => year.label).filter(Boolean)
-              : []);
-          const registeredBlocks = (await Promise.all(
-            yearLabels.map(async (schoolYear) => {
-              const result = await ApiClient.getStudentBlocks(schoolYear);
-              return result && result.ok && Array.isArray(result.blocks) ? result.blocks : [];
-            }),
-          )).flat();
-          const blocks = registeredBlocks.map((block) => {
-            const id = String(block.id || "");
-            const schoolYear = String(block.school_year || "");
-            return {
-              id,
-              label: block.label || "Unnamed block",
-              schoolYear,
-              students: students.filter((student) =>
-                String(student.block_id || "") === id &&
-                String(student.registered_school_year || "") === schoolYear,
-              ),
-            };
-          }).sort((a, b) =>
+          const blocksByKey = new Map();
+          students.forEach((student) => {
+            const blockId = String(student.block_id || student.block_label || "unassigned");
+            const schoolYear = String(student.registered_school_year || "");
+            const key = `${blockId}::${schoolYear}`;
+            if (!blocksByKey.has(key)) {
+              blocksByKey.set(key, {
+                id: blockId,
+                label: student.block_label || "Unassigned block",
+                schoolYear,
+                students: [],
+              });
+            }
+            blocksByKey.get(key).students.push(student);
+          });
+          const blocks = Array.from(blocksByKey.values()).sort((a, b) =>
             `${a.schoolYear} ${a.label}`.localeCompare(`${b.schoolYear} ${b.label}`),
           );
           if (back) back.style.display = "none";
@@ -3912,7 +3618,6 @@
             });
             body.appendChild(row);
           });
-          normalizeCurrentRecordsRosterTable(roster);
           if (countActive) countActive.textContent = String(blocks.length);
           return;
         }
@@ -3950,14 +3655,11 @@
               student_id: student.student_id,
               student_name: student.student_name,
               block_label: student.block_label,
-              school_name: student.school_name,
-              school: student.school,
             };
-            setActiveSection("all-records");
+            setActiveSection("delivery-handled");
           });
           body.appendChild(row);
         });
-        normalizeCurrentRecordsRosterTable(roster);
         if (countActive) countActive.textContent = String(blockStudents.length);
       }
 
@@ -3966,628 +3668,31 @@
         renderCurrentRecordsStudentRoster();
       });
 
-      document.getElementById("currentRecordsBackToStudents")?.addEventListener("click", () => {
-        selectedCurrentRecordsStudent = null;
-        setActiveSection("my-records", { preserveCurrentRecordsBlock: true });
-      });
-
-      document.getElementById("currentRecordsDetailBackToBlocks")?.addEventListener("click", () => {
-        selectedCurrentRecordsStudent = null;
-        selectedCurrentRecordsBlock = null;
-        setActiveSection("my-records");
-      });
-
-      document.getElementById("currentRecordsDetailBackToBlock")?.addEventListener("click", () => {
-        selectedCurrentRecordsStudent = null;
-        setActiveSection("my-records", { preserveCurrentRecordsBlock: true });
-      });
-
-      // This uses the same PRC preview and Word template workflow as the Student Dashboard.
-      const INSTRUCTOR_PRC_TARGETS = {
-        "delivery-handled": 20,
-        "delivery-assisted": 20,
-        "internal-exam": 20,
-        suturing: 5,
-        "iv-insertion": 5,
-      };
-      const INSTRUCTOR_PRC_TITLES = {
-        "delivery-handled": "Record of Normal Deliveries Handled",
-        "delivery-assisted": "Record of Delivery Assisted",
-        suturing: "Record of Actual Suturing of Perineal Lacerations",
-        "iv-insertion": "Record of Actual Intravenous Fluid Insertions",
-        "internal-exam": "Record of Actual Internal Examination",
-      };
-      const INSTRUCTOR_PRC_TEMPLATE_URL = "assets/templates/prc-forms-template.docx";
-      const INSTRUCTOR_PRC_WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-      const INSTRUCTOR_PRC_XML_NS = "http://www.w3.org/XML/1998/namespace";
-      let instructorPrcPreviewRecords = [];
-      let instructorPrcPreviewStudent = null;
-      let instructorPrcLogoDataUrl = "";
-
-      function instructorPrcDiagnosisHeader(procedureKey) {
-        if (["delivery-handled", "delivery-assisted"].includes(procedureKey))
-          return "Complete Diagnosis (Gravida, Para)";
-        if (procedureKey === "internal-exam")
-          return "Internal Examination (Cervical Dilation, Effacement, BOW, Presentation and Station)";
-        return "Complete Diagnosis";
-      }
-
-      function instructorPrcFormatDateTime(value) {
-        if (!value) return "";
-        const date = new Date(value);
-        if (Number.isNaN(date.getTime())) return escapeHtml(String(value));
-        return `${date.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })}<br>${date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}`;
-      }
-
-      function instructorPrcFormatDate(value) {
-        if (!value || /^0{4}-0{2}-0{2}$/.test(String(value))) return "";
-        const date = new Date(`${String(value).slice(0, 10)}T00:00:00`);
-        return Number.isNaN(date.getTime())
-          ? String(value)
-          : date.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
-      }
-
-      function instructorPrcCell(...values) {
-        const lines = values
-          .filter((value) => value !== undefined && value !== null && String(value).trim() !== "")
-          .map((value) => escapeHtml(value));
-        return lines.length ? lines.join("<br>") : "&nbsp;";
-      }
-
-      function buildInstructorPrcTable(procedureKey, records, startIndex = 0, rowCount = INSTRUCTOR_PRC_TARGETS[procedureKey] || 5) {
-        const pageRecords = records.slice(startIndex, startIndex + rowCount);
-        const rows = pageRecords.map((record) => `<tr>
-          <td>${instructorPrcCell(record.patient_name, record.patient_address)}</td>
-          <td>${instructorPrcCell(record.case_no)}</td>
-          <td>${instructorPrcCell(record.complete_diagnosis)}</td>
-          <td>${instructorPrcFormatDateTime(record.date_time_performed) || "&nbsp;"}</td>
-          <td>${instructorPrcCell(record.facility_name, record.facility_address, record.facility_contact_number)}</td>
-          <td>${instructorPrcCell(record.supervisor_printed_name, record.supervisor_contact_number)}</td>
-          <td>${instructorPrcCell(record.supervisor_position_designation)}</td>
-          <td>&nbsp;</td>
-          <td>${instructorPrcCell(record.supervisor_license_no, instructorPrcFormatDate(record.supervisor_license_expiry_date))}</td>
-        </tr>`).join("");
-        const blankRows = Math.max(0, rowCount - pageRecords.length);
-        const blanks = Array.from({ length: blankRows }, () => "<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>").join("");
-        return `<table class="prc-export-table"><colgroup><col style="width:18.8%"><col style="width:5%"><col style="width:12.6%"><col style="width:7.2%"><col style="width:16.5%"><col style="width:12.8%"><col style="width:8.7%"><col style="width:9%"><col style="width:9.4%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case<br>No.</th><th rowspan="2">${instructorPrcDiagnosisHeader(procedureKey)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of<br>Facility &amp; Contact Number</th><th colspan="3">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position /<br>Designation</th><th>Signature</th></tr></thead><tbody>${rows}${blanks}</tbody></table>`;
-      }
-
-      async function getInstructorPrcLogoDataUrl() {
-        if (instructorPrcLogoDataUrl) return instructorPrcLogoDataUrl;
-        const logoPath = "assets/images/prc-form-image1.jpeg";
-        try {
-          const response = await fetch(logoPath);
-          if (!response.ok) throw new Error("PRC logo could not be loaded.");
-          const logoBlob = await response.blob();
-          instructorPrcLogoDataUrl = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(logoBlob);
-          });
-        } catch (_) {
-          instructorPrcLogoDataUrl = logoPath;
-        }
-        return instructorPrcLogoDataUrl;
-      }
-
-      function buildInstructorPrcForms(student, records, logoSource) {
-        const studentName = student.student_name || student.name || "";
-        const school = student.school_name || student.school || "";
-        return Object.keys(INSTRUCTOR_PRC_TARGETS).flatMap((procedureKey) => {
-          const procedureRecords = records.filter((record) => normalizeProcedureKey(record.procedure_key || record.procedure_name) === procedureKey);
-          const target = INSTRUCTOR_PRC_TARGETS[procedureKey] || 5;
-          const pageSize = target > 10 ? 10 : target;
-          return Array.from({ length: Math.ceil(target / pageSize) }, (_, pageIndex) => {
-            const continuation = pageIndex > 0;
-            return `<section class="prc-export-form${continuation ? " prc-export-continuation" : ""}">${continuation ? "" : `<div class="prc-export-heading"><img class="prc-export-logo" src="${logoSource}" alt="Professional Regulation Commission seal"><div class="prc-export-heading-text"><div class="prc-export-agency">PROFESSIONAL REGULATION COMMISSION</div><div class="prc-export-city">Cebu City</div><div class="prc-export-board">BOARD OF MIDWIFERY</div></div></div><h1>${INSTRUCTOR_PRC_TITLES[procedureKey]}</h1><p class="prc-export-check">Please check if applicant is: <span class="prc-check-box is-checked">✓</span> Graduate Midwife <span class="prc-check-box"></span> Registered Nurse</p><p class="prc-export-applicant"><span>Name of Applicant:</span><span class="prc-export-line">${escapeHtml(studentName)}</span><span class="prc-export-school-label">School:</span><span class="prc-export-line prc-export-school">${escapeHtml(school)}</span></p>`}${buildInstructorPrcTable(procedureKey, procedureRecords, pageIndex * pageSize, pageSize)}</section>`;
-          });
-        }).join("");
-      }
-
-      const INSTRUCTOR_PRC_CRC_TABLE = (() => {
-        const table = new Uint32Array(256);
-        for (let index = 0; index < 256; index += 1) {
-          let value = index;
-          for (let bit = 0; bit < 8; bit += 1) value = (value & 1) ? (0xedb88320 ^ (value >>> 1)) : (value >>> 1);
-          table[index] = value >>> 0;
-        }
-        return table;
-      })();
-
-      function instructorPrcCrc32(bytes) {
-        let crc = 0xffffffff;
-        for (let index = 0; index < bytes.length; index += 1) crc = INSTRUCTOR_PRC_CRC_TABLE[(crc ^ bytes[index]) & 0xff] ^ (crc >>> 8);
-        return (crc ^ 0xffffffff) >>> 0;
-      }
-
-      async function instructorPrcInflate(bytes, compression) {
-        if (compression === 0) return bytes;
-        if (compression !== 8 || typeof DecompressionStream === "undefined") throw new Error("This browser cannot read the PRC document template.");
-        return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer());
-      }
-
-      async function readInstructorPrcTemplateZip(arrayBuffer) {
-        const source = new Uint8Array(arrayBuffer);
-        const view = new DataView(source.buffer, source.byteOffset, source.byteLength);
-        let endOffset = -1;
-        for (let offset = Math.max(0, source.length - 65557); offset <= source.length - 22; offset += 1) {
-          if (view.getUint32(offset, true) === 0x06054b50) endOffset = offset;
-        }
-        if (endOffset < 0) throw new Error("The PRC template is not a valid DOCX file.");
-        const count = view.getUint16(endOffset + 10, true);
-        let offset = view.getUint32(endOffset + 16, true);
-        const decoder = new TextDecoder();
-        const entries = [];
-        for (let index = 0; index < count; index += 1) {
-          if (view.getUint32(offset, true) !== 0x02014b50) throw new Error("The PRC template directory is invalid.");
-          const compression = view.getUint16(offset + 10, true);
-          const compressedSize = view.getUint32(offset + 20, true);
-          const nameLength = view.getUint16(offset + 28, true);
-          const extraLength = view.getUint16(offset + 30, true);
-          const commentLength = view.getUint16(offset + 32, true);
-          const localOffset = view.getUint32(offset + 42, true);
-          const name = decoder.decode(source.slice(offset + 46, offset + 46 + nameLength));
-          const localNameLength = view.getUint16(localOffset + 26, true);
-          const localExtraLength = view.getUint16(localOffset + 28, true);
-          const compressed = source.slice(localOffset + 30 + localNameLength + localExtraLength, localOffset + 30 + localNameLength + localExtraLength + compressedSize);
-          entries.push({ name, data: await instructorPrcInflate(compressed, compression) });
-          offset += 46 + nameLength + extraLength + commentLength;
-        }
-        return entries;
-      }
-
-      function createInstructorPrcDocxZip(entries) {
-        const encoder = new TextEncoder();
-        const chunks = [];
-        const central = [];
-        let offset = 0;
-        entries.forEach((entry) => {
-          const name = encoder.encode(entry.name);
-          const data = entry.data;
-          const crc = instructorPrcCrc32(data);
-          const local = new Uint8Array(30 + name.length);
-          const localView = new DataView(local.buffer);
-          localView.setUint32(0, 0x04034b50, true); localView.setUint16(4, 20, true); localView.setUint16(6, 0x0800, true); localView.setUint16(8, 0, true);
-          localView.setUint32(14, crc, true); localView.setUint32(18, data.length, true); localView.setUint32(22, data.length, true); localView.setUint16(26, name.length, true);
-          local.set(name, 30); chunks.push(local, data);
-          const directory = new Uint8Array(46 + name.length);
-          const directoryView = new DataView(directory.buffer);
-          directoryView.setUint32(0, 0x02014b50, true); directoryView.setUint16(4, 20, true); directoryView.setUint16(6, 20, true); directoryView.setUint16(8, 0x0800, true); directoryView.setUint16(10, 0, true);
-          directoryView.setUint32(16, crc, true); directoryView.setUint32(20, data.length, true); directoryView.setUint32(24, data.length, true); directoryView.setUint16(28, name.length, true); directoryView.setUint32(42, offset, true);
-          directory.set(name, 46); central.push(directory); offset += local.length + data.length;
-        });
-        const centralSize = central.reduce((total, chunk) => total + chunk.length, 0);
-        const end = new Uint8Array(22);
-        const endView = new DataView(end.buffer);
-        endView.setUint32(0, 0x06054b50, true); endView.setUint16(8, entries.length, true); endView.setUint16(10, entries.length, true); endView.setUint32(12, centralSize, true); endView.setUint32(16, offset, true);
-        const result = new Uint8Array(offset + centralSize + end.length);
-        let cursor = 0;
-        [...chunks, ...central, end].forEach((chunk) => { result.set(chunk, cursor); cursor += chunk.length; });
-        return result;
-      }
-
-      function instructorPrcWordText(node) {
-        return Array.from(node.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "t")).map((item) => item.textContent || "").join("");
-      }
-
-      function instructorPrcEnsureWordChild(documentNode, parent, localName) {
-        let child = Array.from(parent.children).find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === localName);
-        if (!child) {
-          child = documentNode.createElementNS(INSTRUCTOR_PRC_WORD_NS, `w:${localName}`);
-          parent.appendChild(child);
-        }
-        return child;
-      }
-
-      function setInstructorPrcTemplateLegalTableMargins(xml) {
-        const section = xml.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "sectPr")[0];
-        if (section) {
-          const pageMargins = instructorPrcEnsureWordChild(xml, section, "pgMar");
-          pageMargins.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:left", "720");
-          pageMargins.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:right", "720");
-        }
-        const tableWidth = 17280;
-        Array.from(xml.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "tbl")).forEach((table) => {
-          const tableProperties = instructorPrcEnsureWordChild(xml, table, "tblPr");
-          const width = instructorPrcEnsureWordChild(xml, tableProperties, "tblW");
-          width.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:w", String(tableWidth));
-          width.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:type", "dxa");
-          const layout = instructorPrcEnsureWordChild(xml, tableProperties, "tblLayout");
-          layout.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:type", "fixed");
-          const gridColumns = Array.from(table.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "gridCol"));
-          const originalWidths = gridColumns.map((column) => Number(column.getAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w")) || 0);
-          const originalTotal = originalWidths.reduce((sum, value) => sum + value, 0);
-          let usedWidth = 0;
-          const scaledWidths = [];
-          gridColumns.forEach((column, index) => {
-            const nextWidth = index === gridColumns.length - 1
-              ? tableWidth - usedWidth
-              : Math.round((originalWidths[index] / originalTotal) * tableWidth);
-            column.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:w", String(nextWidth));
-            usedWidth += nextWidth;
-            scaledWidths.push(nextWidth);
-          });
-          Array.from(table.children)
-            .filter((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "tr")
-            .forEach((row) => {
-              let columnIndex = 0;
-              Array.from(row.children)
-                .filter((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "tc")
-                .forEach((cell) => {
-                  const cellProperties = instructorPrcEnsureWordChild(xml, cell, "tcPr");
-                  const spanNode = Array.from(cellProperties.children).find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "gridSpan");
-                  const span = Math.max(1, Number(spanNode?.getAttributeNS(INSTRUCTOR_PRC_WORD_NS, "val")) || 1);
-                  const cellWidth = instructorPrcEnsureWordChild(xml, cellProperties, "tcW");
-                  cellWidth.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:w", String(scaledWidths.slice(columnIndex, columnIndex + span).reduce((sum, value) => sum + value, 0)));
-                  cellWidth.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:type", "dxa");
-                  columnIndex += span;
-                });
-            });
-        });
-      }
-
-      function instructorPrcSetTemplateCell(cell, value) {
-        const paragraph = cell.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "p")[0];
-        if (!paragraph) return;
-        const cellProperties = instructorPrcEnsureWordChild(paragraph.ownerDocument, cell, "tcPr");
-        instructorPrcEnsureWordChild(paragraph.ownerDocument, cellProperties, "vAlign").setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:val", "center");
-        const paragraphProperties = instructorPrcEnsureWordChild(paragraph.ownerDocument, paragraph, "pPr");
-        Array.from(paragraphProperties.children)
-          .filter((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "numPr")
-          .forEach((node) => node.remove());
-        let alignment = Array.from(paragraphProperties.children).find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "jc");
-        if (!alignment) {
-          alignment = paragraph.ownerDocument.createElementNS(INSTRUCTOR_PRC_WORD_NS, "w:jc");
-          const characterProperties = Array.from(paragraphProperties.children).find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "rPr");
-          paragraphProperties.insertBefore(alignment, characterProperties || null);
-        }
-        alignment.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:val", "left");
-        const firstRun = paragraph.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "r")[0];
-        const runProperties = firstRun?.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "rPr")[0]?.cloneNode(true) || paragraph.ownerDocument.createElementNS(INSTRUCTOR_PRC_WORD_NS, "w:rPr");
-        let fonts = Array.from(runProperties.children).find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "rFonts");
-        if (!fonts) {
-          fonts = paragraph.ownerDocument.createElementNS(INSTRUCTOR_PRC_WORD_NS, "w:rFonts");
-          runProperties.insertBefore(fonts, runProperties.firstChild);
-        }
-        ["ascii", "hAnsi", "cs"].forEach((script) => fonts.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, `w:${script}`, "Arial"));
-        ["sz", "szCs"].forEach((property) => {
-          let size = Array.from(runProperties.children).find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === property);
-          if (!size) {
-            size = paragraph.ownerDocument.createElementNS(INSTRUCTOR_PRC_WORD_NS, `w:${property}`);
-            runProperties.appendChild(size);
-          }
-          size.setAttributeNS(INSTRUCTOR_PRC_WORD_NS, "w:val", "16");
-        });
-        Array.from(paragraph.childNodes).forEach((node) => {
-          if (!(node.nodeType === 1 && node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "pPr")) paragraph.removeChild(node);
-        });
-        String(value || "").split("\n").forEach((line, index, lines) => {
-          const run = paragraph.ownerDocument.createElementNS(INSTRUCTOR_PRC_WORD_NS, "w:r");
-          run.appendChild(runProperties.cloneNode(true));
-          const text = paragraph.ownerDocument.createElementNS(INSTRUCTOR_PRC_WORD_NS, "w:t");
-          text.setAttributeNS(INSTRUCTOR_PRC_XML_NS, "xml:space", "preserve");
-          text.textContent = line;
-          run.appendChild(text); paragraph.appendChild(run);
-          if (index < lines.length - 1) {
-            const breakRun = paragraph.ownerDocument.createElementNS(INSTRUCTOR_PRC_WORD_NS, "w:r");
-            breakRun.appendChild(paragraph.ownerDocument.createElementNS(INSTRUCTOR_PRC_WORD_NS, "w:br"));
-            paragraph.appendChild(breakRun);
-          }
-        });
-      }
-
-      function fillInstructorPrcTemplateTable(table, records) {
-        if (!table) return;
-        const rows = Array.from(table.children).filter((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "tr").slice(2);
-        rows.forEach((row, index) => {
-          const record = records[index] || {};
-          const values = [
-            [record.patient_name, record.patient_address].filter(Boolean).join("\n"), record.case_no, record.complete_diagnosis,
-            instructorPrcDocxDateTime(record.date_time_performed), [record.facility_name, record.facility_address, record.facility_contact_number].filter(Boolean).join("\n"),
-            [record.supervisor_printed_name, record.supervisor_contact_number].filter(Boolean).join("\n"), record.supervisor_position_designation, "",
-            [record.supervisor_license_no, instructorPrcFormatDate(record.supervisor_license_expiry_date)].filter(Boolean).join("\n"),
-          ];
-          Array.from(row.children).filter((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "tc").forEach((cell, cellIndex) => instructorPrcSetTemplateCell(cell, values[cellIndex] || ""));
-        });
-      }
-
-      function instructorPrcDocxDateTime(value) {
-        if (!value) return "";
-        const date = new Date(value);
-        return Number.isNaN(date.getTime()) ? String(value) : `${date.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })}\n${date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}`;
-      }
-
-      function setInstructorPrcInternalDiagnosisHeader(table) {
-        const headerRow = Array.from(table?.children || []).find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "tr");
-        const cell = Array.from(headerRow?.children || []).filter((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "tc")[2];
-        const textNodes = Array.from(cell?.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "t") || []);
-        if (!textNodes.length) return;
-        textNodes[0].textContent = "Complete Diagnosis";
-        textNodes.slice(1).forEach((node) => { node.textContent = ""; });
-      }
-
-      function addInstructorPrcDeliveryAssistedSheet(xml) {
-        const body = xml.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "body")[0];
-        const children = Array.from(body?.children || []);
-        const normalTitle = children.find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "p" && instructorPrcWordText(node).includes("Record of Normal"));
-        const suturingTitle = children.find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "p" && instructorPrcWordText(node).includes("Record of Actual Suturing"));
-        if (!normalTitle || !suturingTitle) return;
-        const findSheetStart = (titleIndex) => {
-          for (let index = titleIndex; index >= 0; index -= 1) {
-            const node = children[index];
-            if (node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "p" && node.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "drawing").length) return index;
-          }
-          return titleIndex;
-        };
-        const start = findSheetStart(children.indexOf(normalTitle));
-        const end = findSheetStart(children.indexOf(suturingTitle));
-        if (end <= start) return;
-        const copied = children.slice(start, end).map((node) => node.cloneNode(true));
-        const copiedTitle = copied.find((node) => node.namespaceURI === INSTRUCTOR_PRC_WORD_NS && node.localName === "p" && instructorPrcWordText(node).includes("Record of Normal"));
-        const titleParts = Array.from(copiedTitle?.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "t") || []);
-        if (titleParts.length) {
-          titleParts[0].textContent = "Record of Delivery Assisted";
-          titleParts.slice(1).forEach((node) => { node.textContent = ""; });
-        }
-        copied.forEach((node) => body.insertBefore(node, children[end]));
-      }
-
-      async function buildInstructorPrcTemplateDocx(student, records) {
-        const response = await fetch(INSTRUCTOR_PRC_TEMPLATE_URL, { cache: "no-store" });
-        if (!response.ok) throw new Error("The PRC Word template could not be loaded.");
-        const entries = await readInstructorPrcTemplateZip(await response.arrayBuffer());
-        const documentEntry = entries.find((entry) => entry.name === "word/document.xml");
-        if (!documentEntry) throw new Error("The PRC Word template is missing its document layout.");
-        const xml = new DOMParser().parseFromString(new TextDecoder().decode(documentEntry.data), "application/xml");
-        if (xml.querySelector("parsererror")) throw new Error("The PRC Word template could not be read.");
-        addInstructorPrcDeliveryAssistedSheet(xml);
-        setInstructorPrcTemplateLegalTableMargins(xml);
-        const studentName = student.student_name || student.name || "";
-        const school = student.school_name || student.school || "";
-        Array.from(xml.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "p")).forEach((paragraph) => {
-          if (!instructorPrcWordText(paragraph).includes("Name of Applicant:")) return;
-          const textNodes = Array.from(paragraph.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "t"));
-          const applicant = textNodes.find((node) => /_{10,}/.test(node.textContent || ""));
-          const schoolNode = textNodes.find((node) => (node.textContent || "").includes("BOHOL ISLAND STATE UNIVERSITY CALAPE"));
-          if (studentName && applicant) applicant.textContent = `${studentName}${"_".repeat(Math.max(3, (applicant.textContent || "").length - studentName.length))}`;
-          if (school && schoolNode) schoolNode.textContent = school;
-        });
-        const grouped = Object.fromEntries(Object.keys(INSTRUCTOR_PRC_TARGETS).map((key) => [key, []]));
-        records.forEach((record) => {
-          const key = normalizeProcedureKey(record.procedure_key || record.procedure_name);
-          if (grouped[key]) grouped[key].push(record);
-        });
-        const tables = Array.from(xml.getElementsByTagNameNS(INSTRUCTOR_PRC_WORD_NS, "tbl"));
-        fillInstructorPrcTemplateTable(tables[0], grouped["delivery-handled"].slice(0, 10));
-        fillInstructorPrcTemplateTable(tables[1], grouped["delivery-handled"].slice(10, 20));
-        fillInstructorPrcTemplateTable(tables[2], grouped["delivery-assisted"].slice(0, 10));
-        fillInstructorPrcTemplateTable(tables[3], grouped["delivery-assisted"].slice(10, 20));
-        fillInstructorPrcTemplateTable(tables[4], grouped.suturing.slice(0, 5));
-        fillInstructorPrcTemplateTable(tables[5], grouped["iv-insertion"].slice(0, 5));
-        setInstructorPrcInternalDiagnosisHeader(tables[6]);
-        setInstructorPrcInternalDiagnosisHeader(tables[7]);
-        fillInstructorPrcTemplateTable(tables[6], grouped["internal-exam"].slice(0, 10));
-        fillInstructorPrcTemplateTable(tables[7], grouped["internal-exam"].slice(10, 20));
-        documentEntry.data = new TextEncoder().encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>${new XMLSerializer().serializeToString(xml.documentElement)}`);
-        return new Blob([createInstructorPrcDocxZip(entries)], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-      }
-
-      function closeInstructorPrcPreview() {
-        const overlay = document.getElementById("prcPreviewOverlay");
-        overlay?.classList.remove("is-open");
-        overlay?.setAttribute("aria-hidden", "true");
-      }
-
-      async function openInstructorPrcExport(student = selectedCurrentRecordsStudent, sourceButton = null) {
-        if (!student?.student_id) {
-          showOptionMessage("Select a Student", "Select a student record before exporting the PRC form.");
-          return;
-        }
-        const button = sourceButton || document.getElementById("currentRecordsExportBtn");
-        button?.setAttribute("disabled", "disabled");
-        try {
-          const [records, logoSource] = await Promise.all([
-            ApiClient.getJoinedCases(student.student_id, "", ""),
-            getInstructorPrcLogoDataUrl(),
-          ]);
-          instructorPrcPreviewRecords = records.filter((record) => String(record.student_id || "") === String(student.student_id));
-          if (!instructorPrcPreviewRecords.length) {
-            showOptionMessage("No Records", "This student has no clinical records to export.");
-            return;
-          }
-          instructorPrcPreviewStudent = student;
-          document.getElementById("prcPreviewPages").innerHTML = buildInstructorPrcForms(instructorPrcPreviewStudent, instructorPrcPreviewRecords, logoSource);
-          const overlay = document.getElementById("prcPreviewOverlay");
-          overlay?.classList.add("is-open");
-          overlay?.setAttribute("aria-hidden", "false");
-        } catch (error) {
-          console.error("Unable to prepare the PRC form preview.", error);
-          showOptionMessage("Export Failed", "Unable to prepare the PRC form preview. Please try again.");
-        } finally {
-          button?.removeAttribute("disabled");
-        }
-      }
-
-      document.getElementById("currentRecordsExportBtn")?.addEventListener("click", (event) => {
-        openInstructorPrcExport(selectedCurrentRecordsStudent, event.currentTarget);
-      });
-      document.getElementById("yearlyRecordsExportBtn")?.addEventListener("click", (event) => {
-        openInstructorPrcExport(
-          {
-            student_id: yearlyRecordsNav.studentId,
-            student_name: yearlyRecordsNav.studentName,
-          },
-          event.currentTarget,
-        );
-      });
-      document.getElementById("prcPreviewCloseBtn")?.addEventListener("click", closeInstructorPrcPreview);
-      document.getElementById("prcPreviewCancelBtn")?.addEventListener("click", closeInstructorPrcPreview);
-      document.getElementById("prcPreviewOverlay")?.addEventListener("click", (event) => {
-        if (event.target === event.currentTarget) closeInstructorPrcPreview();
-      });
-      document.getElementById("prcPreviewDownloadBtn")?.addEventListener("click", async () => {
-        if (!instructorPrcPreviewRecords.length || !instructorPrcPreviewStudent) return;
-        const button = document.getElementById("prcPreviewDownloadBtn");
-        button?.setAttribute("disabled", "disabled");
-        try {
-          const blob = await buildInstructorPrcTemplateDocx(instructorPrcPreviewStudent, instructorPrcPreviewRecords);
-          const link = document.createElement("a");
-          const fileUrl = URL.createObjectURL(blob);
-          link.href = fileUrl;
-          link.download = `PRC-clinical-forms-${new Date().toISOString().slice(0, 10)}.docx`;
-          document.body.appendChild(link); link.click(); link.remove();
-          setTimeout(() => URL.revokeObjectURL(fileUrl), 1000);
-        } catch (error) {
-          console.error("Unable to create the PRC DOCX file.", error);
-          showOptionMessage("Export Failed", "Unable to create the PRC DOCX file. Please try again.");
-        } finally {
-          button?.removeAttribute("disabled");
-        }
-      });
-
-      function applyStudentPrcGridToInstructorTable() {
-        const table = document.getElementById("active-table");
-        table?.classList.add("instructor-records-table");
-        applyInstructorRecordTableOutline(table);
-      }
-
-      function applyInstructorRecordTableOutline(table) {
-        if (!table) return;
-        table.style.setProperty("border", "1px solid #000", "important");
-        table.style.setProperty("border-collapse", "separate", "important");
-        table.style.setProperty("border-spacing", "0", "important");
-        table.style.setProperty("border-radius", "0", "important");
-        table.style.setProperty("outline", "0", "important");
-        table.style.setProperty("outline-offset", "0", "important");
-        table.querySelectorAll("thead th").forEach((cell) => {
-          cell.style.setProperty("border", "1px solid #000", "important");
-          cell.style.setProperty("border-radius", "0", "important");
-          cell.style.setProperty("outline", "0", "important");
-          cell.style.setProperty("box-shadow", "none", "important");
-        });
-      }
-
-      function createInstructorRecordRow(rec) {
-        const tr = document.createElement("tr");
-        tr.style.cursor = "pointer";
-        tr.innerHTML = `
-          <td>${formatCombined(rec.patient_name, rec.patient_address, "", "<br>")}</td>
-          <td>${rec.case_no || ""}</td>
-          <td>${rec.complete_diagnosis || ""}</td>
-          <td>${rec.date_time_performed || ""}</td>
-          <td>${formatCombined(rec.facility_name, rec.facility_address, rec.facility_contact_number, "<br>")}</td>
-          <td>${formatCombined(rec.supervisor_printed_name, rec.supervisor_contact_number, "", "<br>")}</td>
-          <td>${rec.supervisor_position_designation || ""}</td>
-          <td>${formatCombined(rec.supervisor_license_no, rec.supervisor_license_expiry_date, "", "<br>")}</td>
-          <td class="case-comment-cell"><button class="table-comment-btn" type="button" data-table-comment title="Add instructor comment" aria-label="Add instructor comment"><i class="fas fa-comment-medical" aria-hidden="true"></i><span class="table-comment-label">Comment</span></button></td>
-        `;
-        tr.querySelector("[data-table-comment]")?.addEventListener("click", async (event) => {
-          event.stopPropagation();
-          await handleTableComment(rec);
-        });
-        tr.addEventListener("click", () => showRecordDetail(rec));
-        tr.addEventListener("mouseenter", () => (tr.style.background = "rgba(37, 99, 235, 0.05)"));
-        tr.addEventListener("mouseleave", () => (tr.style.background = ""));
-        return tr;
-      }
-
-      function createAllRecordsProcedureTable(procedureKey, records) {
-        const table = document.createElement("table");
-        // Signature is intentionally omitted from the dashboard version.
-        table.className = "procedure-records-table prc-replica-table instructor-review-table instructor-records-table all-records-procedure-table";
-        table.innerHTML = `<colgroup><col style="width:19.16%"><col style="width:5.04%"><col style="width:12.89%"><col style="width:7.29%"><col style="width:16.81%"><col style="width:12.89%"><col style="width:8.96%"><col style="width:8.96%"><col style="width:8%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${instructorPrcDiagnosisHeader(procedureKey)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th><th rowspan="2">Action</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead><tbody></tbody>`;
-        applyInstructorRecordTableOutline(table);
-
-        const body = table.tBodies[0];
-        if (!records.length) {
-          const emptyRow = document.createElement("tr");
-          emptyRow.className = "all-records-empty-row";
-          emptyRow.innerHTML = '<td colspan="9">No records for this procedure.</td>';
-          body.appendChild(emptyRow);
-        } else records.forEach((record) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-              <td>${instructorPrcCell(record.patient_name, record.patient_address)}</td>
-              <td>${instructorPrcCell(record.case_no)}</td>
-              <td>${instructorPrcCell(record.complete_diagnosis)}</td>
-              <td>${instructorPrcFormatDateTime(record.date_time_performed) || "&nbsp;"}</td>
-              <td>${instructorPrcCell(record.facility_name, record.facility_address, record.facility_contact_number)}</td>
-              <td>${instructorPrcCell(record.supervisor_printed_name, record.supervisor_contact_number)}</td>
-              <td>${instructorPrcCell(record.supervisor_position_designation)}</td>
-              <td>${instructorPrcCell(record.supervisor_license_no, instructorPrcFormatDate(record.supervisor_license_expiry_date))}</td>
-              <td class="case-comment-cell"><button class="table-comment-btn" type="button" data-table-comment title="Add instructor comment" aria-label="Add instructor comment"><i class="fas fa-comment-medical" aria-hidden="true"></i><span class="table-comment-label">Comment</span></button></td>`;
-            row.querySelector("[data-table-comment]")?.addEventListener("click", async (event) => {
-              event.stopPropagation();
-              await handleTableComment(record);
-            });
-            row.addEventListener("click", () => showRecordDetail(record));
-            body.appendChild(row);
-        });
-        applyInstructorRecordTableOutline(table);
-        return table;
-      }
-
-      function renderAllRecordsProcedureTables(records) {
-        const container = document.getElementById("allRecordsProcedureTables");
-        if (!container) return;
-        container.innerHTML = "";
-        Object.keys(INSTRUCTOR_PRC_TARGETS).forEach((procedureKey) => {
-          const procedureName = procedureByType[procedureKey] || procedureKey;
-          const procedureRecords = records.filter((record) => normalizeProcedureKey(record.procedure_key || record.procedure_name) === procedureKey);
-          const target = INSTRUCTOR_PRC_TARGETS[procedureKey] || 0;
-          const percentage = target ? Math.min(100, Math.round((procedureRecords.length / target) * 100)) : 0;
-          const section = document.createElement("section");
-          section.className = "all-records-procedure-section";
-          section.innerHTML = `<div class="all-records-procedure-heading"><h3>${escapeHtml(procedureName)} (${procedureRecords.length})</h3><div class="all-records-procedure-progress" role="progressbar" aria-label="${escapeHtml(procedureName)} progress" aria-valuemin="0" aria-valuemax="${target}" aria-valuenow="${Math.min(procedureRecords.length, target)}" title="${procedureRecords.length} of ${target} required cases"><span class="all-records-procedure-progress-label">${procedureRecords.length} / ${target}</span><span class="all-records-procedure-progress-track"><i style="width:${percentage}%"></i></span></div></div>`;
-          const tableWrap = document.createElement("div");
-          tableWrap.className = "all-records-procedure-table-wrap";
-          tableWrap.appendChild(createAllRecordsProcedureTable(procedureKey, procedureRecords));
-          section.appendChild(tableWrap);
-          container.appendChild(section);
-        });
-        container.style.display = "block";
-      }
-
       async function loadRecords() {
         if (activeType === "yearly-reports" || activeType === "yearly-records") {
           const currentRecordsRoster = document.getElementById("currentRecordsStudentRoster");
           if (currentRecordsRoster) currentRecordsRoster.style.display = "none";
           if (mainRecordsWrapper) {
             mainRecordsWrapper.style.display = "block";
-            mainRecordsWrapper.classList.remove("students-mode", "summary-mode", "edit-requests-mode", "all-records-mode");
+            mainRecordsWrapper.classList.remove("students-mode", "summary-mode", "edit-requests-mode");
             mainRecordsWrapper.classList.add("yearly-mode");
             mainRecordsWrapper.closest(".section")?.classList.remove("students-section");
-          }
-          const allRecordsProcedureTables = document.getElementById("allRecordsProcedureTables");
-          if (allRecordsProcedureTables) {
-            allRecordsProcedureTables.style.display = "none";
-            allRecordsProcedureTables.innerHTML = "";
           }
           const contentSection = document.querySelector(".content-section");
           const settingsView = document.getElementById("settingsView");
           const messagesView = document.getElementById("messages-view");
           const refreshRecordsBtn = document.getElementById("refreshRecordsBtn");
-          const currentRecordsBackToStudents = document.getElementById("currentRecordsBackToStudents");
-          const currentRecordsDetailBreadcrumb = document.getElementById("currentRecordsDetailBreadcrumb");
           if (contentSection) contentSection.style.display = "block";
           if (settingsView) settingsView.style.display = "none";
           if (messagesView) messagesView.style.display = "none";
           if (instructorProcedureTabs) instructorProcedureTabs.style.display = "none";
-          document.getElementById("instructorRecordNavigation")?.style.setProperty("display", "none");
           if (refreshRecordsBtn) refreshRecordsBtn.style.display = "none";
-          if (currentRecordsBackToStudents) currentRecordsBackToStudents.style.display = "none";
-          if (currentRecordsDetailBreadcrumb) currentRecordsDetailBreadcrumb.style.display = "none";
           const dashboardHero = document.querySelector(".dashboard-hero");
           const mainStats = document.getElementById("main-stats-grid");
           const mainControls = document.getElementById("main-action-controls");
           if (dashboardHero) dashboardHero.style.display = "none";
           if (mainStats) mainStats.style.display = "none";
           if (mainControls) mainControls.style.display = "none";
-          const dashboardNewRecords = document.getElementById("dashboardNewRecords");
-          const dashboardNewRecordsAll = document.getElementById("dashboardNewRecordsAll");
-          if (dashboardNewRecords) dashboardNewRecords.style.display = "none";
-          if (dashboardNewRecordsAll) dashboardNewRecordsAll.style.display = "none";
           if (studentSummaryView) studentSummaryView.style.display = "none";
           if (studentsView) studentsView.style.display = "none";
           if (notificationsView) notificationsView.style.display = "none";
@@ -4595,18 +3700,16 @@
           if (activeTable) activeTable.style.display = "none";
           if (yearlyReportView) yearlyReportView.style.display = "block";
           setYearlyRecordsLevel(yearlyRecordsNav.level || "years");
-          renderYearlyRecordsBreadcrumb();
           if (yearlyRecordsNav.level === "years") renderYearlyRecordsYears();
           if (yearlyRecordsNav.level === "blocks") renderYearlyRecordsBlocks();
           if (yearlyRecordsNav.level === "students") renderYearlyRecordsStudents();
-          if (yearlyRecordsNav.level === "records") renderYearlyStudentRecords();
           return;
         }
 
         const isNotif = activeType === "notifications";
         const isDashboard = activeType === "dashboard";
         const isMyRecords = activeType === "my-records";
-        const isProcedure = activeType === "all-records" || Object.prototype.hasOwnProperty.call(
+        const isProcedure = Object.prototype.hasOwnProperty.call(
           procedureByType,
           activeType,
         );
@@ -4654,60 +3757,17 @@
         const refreshRecordsBtn = document.getElementById(
           "refreshRecordsBtn",
         );
-        const currentRecordsBackToStudents = document.getElementById(
-          "currentRecordsBackToStudents",
-        );
-        const currentRecordsExportBtn = document.getElementById(
-          "currentRecordsExportBtn",
-        );
-        const instructorRecordNavigation = document.getElementById(
-          "instructorRecordNavigation",
-        );
-        const currentRecordsDetailBreadcrumb = document.getElementById(
-          "currentRecordsDetailBreadcrumb",
-        );
-        const currentRecordsDetailBackToBlock = document.getElementById(
-          "currentRecordsDetailBackToBlock",
-        );
-        const currentRecordsDetailStudent = document.getElementById(
-          "currentRecordsDetailStudent",
-        );
         if (refreshRecordsBtn) {
           refreshRecordsBtn.style.display =
             isDashboard || isMyRecords || isProcedure ? "inline-flex" : "none";
         }
-        if (currentRecordsBackToStudents) {
-          currentRecordsBackToStudents.style.display =
-            isCurrentStudentDetail ? "inline-flex" : "none";
-        }
-        if (currentRecordsExportBtn) {
-          currentRecordsExportBtn.style.display =
-            isCurrentStudentDetail ? "inline-flex" : "none";
-        }
-        if (currentRecordsDetailBreadcrumb) {
-          currentRecordsDetailBreadcrumb.style.display =
-            isCurrentStudentDetail ? "flex" : "none";
-        }
-        if (isCurrentStudentDetail) {
-          if (currentRecordsDetailBackToBlock) {
-            currentRecordsDetailBackToBlock.textContent =
-              selectedCurrentRecordsBlock?.label || "Block";
-          }
-          if (currentRecordsDetailStudent) {
-            currentRecordsDetailStudent.textContent =
-              selectedCurrentRecordsStudent?.student_name || "Student";
-          }
-        }
         if (instructorProcedureTabs) {
-          instructorProcedureTabs.style.display = isProcedure ? "flex" : "none";
+          instructorProcedureTabs.style.display =
+            isDashboard || isMyRecords || isProcedure ? "flex" : "none";
         }
-        if (instructorRecordNavigation) {
-          instructorRecordNavigation.style.display = isProcedure ? "flex" : "none";
-        }
-        const dashboardNewRecords = document.getElementById("dashboardNewRecords");
-        if (dashboardNewRecords) dashboardNewRecords.style.display = isDashboard ? "block" : "none";
-        const dashboardNewRecordsAll = document.getElementById("dashboardNewRecordsAll");
-        if (dashboardNewRecordsAll) dashboardNewRecordsAll.style.display = isDashboard ? "inline-flex" : "none";
+        const allRecordsTab = document.querySelector('[data-instructor-procedure="my-records"]');
+        if (allRecordsTab) allRecordsTab.style.display = isCurrentStudentDetail ? "none" : "";
+
         if (studentsView) {
           studentsView.style.display = isStudents ? "block" : "none";
           if (isStudents) {
@@ -4723,7 +3783,7 @@
         }
 
         if (mainRecordsWrapper) {
-          mainRecordsWrapper.style.display = isDashboard ? "none" : "block";
+          mainRecordsWrapper.style.display = "block";
           mainRecordsWrapper.classList.toggle("students-mode", isStudents);
           mainRecordsWrapper.classList.toggle("summary-mode", isSummary);
           mainRecordsWrapper.classList.toggle("edit-requests-mode", isEditRequests);
@@ -4732,7 +3792,6 @@
             .closest(".section")
             ?.classList.toggle("students-section", isStudents);
         }
-        mainRecordsWrapper?.closest(".section")?.classList.toggle("dashboard-records-section", isDashboard);
         if (emptyActive) emptyActive.style.display = "none";
 
         if (notificationsView) {
@@ -4751,7 +3810,6 @@
           if (currentRecordsRoster) currentRecordsRoster.style.display = "block";
           if (mainRecordsWrapper) mainRecordsWrapper.style.display = "none";
           if (instructorProcedureTabs) instructorProcedureTabs.style.display = "none";
-          if (instructorRecordNavigation) instructorRecordNavigation.style.display = "none";
           if (refreshRecordsBtn) refreshRecordsBtn.style.display = "none";
           if (yearlyReportView) yearlyReportView.style.display = "none";
           await renderCurrentRecordsStudentRoster();
@@ -4761,54 +3819,38 @@
 
         yearlyReportView.style.display = "none";
         activeTable.style.display =
-          isDashboard || isSummary || isStudents || isNotif || isMessages || isSettings || isEditRequests
+          isSummary || isStudents || isNotif || isMessages || isSettings || isEditRequests
             ? "none"
             : "table";
-        if (isProcedure) applyStudentPrcGridToInstructorTable();
 
         if (isSummary || isStudents || isNotif || isMessages || isSettings || isEditRequests)
           return;
 
-        const procedureName = isDashboard || isMyRecords || activeType === "all-records"
-          ? ""
-          : procedureByType[activeType];
-        const activeDiagnosisHeader = document.getElementById("activeDiagnosisHeader");
-        if (activeDiagnosisHeader)
-          activeDiagnosisHeader.textContent = instructorPrcDiagnosisHeader(activeType);
+        const procedureName = isDashboard || isMyRecords ? "" : procedureByType[activeType];
         const list = await ApiClient.getAllCasesForInstructor(
           procedureName,
           "",
         );
-        if (isDashboard) {
-          renderDashboardNewRecords(list);
-          return;
-        }
         const visibleList = selectedCurrentRecordsStudent
           ? list.filter((record) => String(record.student_id || "") === String(selectedCurrentRecordsStudent.student_id || ""))
           : list;
-        const allRecordsProcedureTables = document.getElementById("allRecordsProcedureTables");
 
         if (selectedCurrentRecordsStudent && activeTitleText) {
           activeTitleText.textContent = `${selectedCurrentRecordsStudent.student_name || "Student"} — Records`;
         }
 
         countActive.textContent = visibleList.length;
-        if (activeType === "all-records") {
-          mainRecordsWrapper?.classList.add("all-records-mode");
-          activeTable.style.display = "none";
-          emptyActive.style.display = "none";
-          renderAllRecordsProcedureTables(visibleList);
-          return;
-        }
-        mainRecordsWrapper?.classList.remove("all-records-mode");
-        if (allRecordsProcedureTables) {
-          allRecordsProcedureTables.style.display = "none";
-          allRecordsProcedureTables.innerHTML = "";
-        }
-        activeTable.style.display = "table";
         if (!visibleList.length) {
-          activeTbody.innerHTML = "";
-          emptyActive.style.display = "block";
+          emptyActive.style.display = "none";
+          activeTbody.innerHTML = Array.from(
+            { length: 1 },
+            () => `
+              <tr class="blank-record-row">
+                <td>&nbsp;</td><td></td><td></td><td></td><td></td>
+                <td></td><td></td><td></td><td></td>
+              </tr>
+            `,
+          ).join("");
           return;
         }
 
@@ -4818,20 +3860,23 @@
           const tr = document.createElement("tr");
           tr.style.cursor = "pointer";
           tr.innerHTML = `
-            <td>${formatCombined(rec.patient_name, rec.patient_address, "", "<br>")}</td>
-            <td>${rec.case_no || ""}</td>
-            <td>${rec.complete_diagnosis || ""}</td>
-            <td>${rec.date_time_performed || ""}</td>
-            <td>${formatCombined(rec.facility_name, rec.facility_address, rec.facility_contact_number, "<br>")}</td>
-            <td>${formatCombined(rec.supervisor_printed_name, rec.supervisor_contact_number, "", "<br>")}</td>
-            <td>${rec.supervisor_position_designation || ""}</td>
-            <td>${formatCombined(rec.supervisor_license_no, rec.supervisor_license_expiry_date, "", "<br>")}</td>
-            <td class="case-comment-cell"><button class="table-comment-btn" type="button" data-table-comment title="Add instructor comment" aria-label="Add instructor comment"><i class="fas fa-comment-medical" aria-hidden="true"></i><span class="table-comment-label">Comment</span></button></td>
-          `;
-          tr.querySelector("[data-table-comment]")?.addEventListener("click", async (event) => {
-            event.stopPropagation();
-            await handleTableComment(rec);
-          });
+		<td>${formatCombined(rec.patient_name, rec.patient_address, "", "<br>")}</td>
+      		<td>${rec.case_no || ""}</td>
+      		<td>${rec.complete_diagnosis || ""}</td>
+      		<td>${rec.date_time_performed || ""}</td>
+		<td>${formatCombined(rec.facility_name, rec.facility_address, rec.facility_contact_number, "<br>")}</td>
+		<td>${formatCombined(rec.supervisor_printed_name, rec.supervisor_contact_number, "", "<br>")}</td>
+			<td>${rec.supervisor_position_designation || ""}</td>
+		<td>${formatCombined(rec.supervisor_license_no, rec.supervisor_license_expiry_date, "", "<br>")}</td>
+            <td class="case-comment-cell"><button class="table-comment-btn" type="button" data-table-comment title="Add instructor comment"><i class="fas fa-comment-medical" aria-hidden="true"></i><span>Comment</span></button></td>
+      	`;
+          const tableCommentBtn = tr.querySelector("[data-table-comment]");
+          if (tableCommentBtn) {
+            tableCommentBtn?.addEventListener("click", async (event) => {
+              event.stopPropagation();
+              await handleTableComment(rec);
+            });
+          }
           tr?.addEventListener("click", () => showRecordDetail(rec));
           tr?.addEventListener(
             "mouseenter",
@@ -4848,46 +3893,96 @@
         currentReviewRecord = rec;
         const detailOverlay = document.getElementById("detailModalOverlay");
         const detailContent = document.getElementById("detailContent");
-        const detailValue = (value) => escapeHtml(value || "N/A");
-        const recordStatus = rec.status || (rec.checked_by ? "Verified" : "Submitted");
 
         detailContent.innerHTML = `
-          <section class="detail-group detail-group-blue">
-            <h3>Record and student information</h3>
-            <div class="detail-group-fields">
-              <div class="detail-field"><div class="detail-label">Record status</div><div class="detail-value"><span class="record-status-badge" data-status="${escapeHtml(recordStatus)}">${escapeHtml(recordStatus)}</span></div></div>
-              <div class="detail-field detail-field-span-three"><div class="detail-label">Student information</div><div class="detail-value"><strong>${detailValue(rec.student_name)}</strong>&nbsp; (ID: ${detailValue(rec.student_id)})</div></div>
-              <div class="detail-field"><div class="detail-label">Patient name</div><div class="detail-value">${detailValue(rec.patient_name)}</div></div>
-              <div class="detail-field"><div class="detail-label">Patient address</div><div class="detail-value">${detailValue(rec.patient_address)}</div></div>
-              <div class="detail-field"><div class="detail-label">Case no.</div><div class="detail-value">${detailValue(rec.case_no)}</div></div>
-              <div class="detail-field"><div class="detail-label">Date &amp; time performed</div><div class="detail-value">${detailValue(rec.date_time_performed)}</div></div>
-            </div>
-          </section>
-          <section class="detail-group detail-group-yellow">
-            <h3>Clinical assessment</h3>
-            <div class="detail-group-fields">
-              <div class="detail-field detail-field-diagnosis"><div class="detail-label">Complete diagnosis</div><div class="detail-value">${detailValue(rec.complete_diagnosis)}</div></div>
-              <div class="detail-field"><div class="detail-label">Teacher's remarks</div><div class="detail-value">${detailValue(rec.remarks || rec.teacher_remarks)}</div></div>
-            </div>
-          </section>
-          <section class="detail-group detail-group-blue">
-            <h3>Facility information</h3>
-            <div class="detail-group-fields">
-              <div class="detail-field"><div class="detail-label">Facility name</div><div class="detail-value">${detailValue(rec.facility_name)}</div></div>
-              <div class="detail-field"><div class="detail-label">Facility address</div><div class="detail-value">${detailValue(rec.facility_address)}</div></div>
-              <div class="detail-field"><div class="detail-label">Facility contact</div><div class="detail-value">${detailValue(rec.facility_contact_number)}</div></div>
-            </div>
-          </section>
-          <section class="detail-group detail-group-yellow">
-            <h3>Supervisor and license details</h3>
-            <div class="detail-group-fields">
-              <div class="detail-field"><div class="detail-label">Supervisor name</div><div class="detail-value">${detailValue(rec.supervisor_printed_name)}</div></div>
-              <div class="detail-field"><div class="detail-label">Supervisor contact</div><div class="detail-value">${detailValue(rec.supervisor_contact_number)}</div></div>
-              <div class="detail-field"><div class="detail-label">Position / designation</div><div class="detail-value">${detailValue(rec.supervisor_position_designation)}</div></div>
-              <div class="detail-field"><div class="detail-label">License no.</div><div class="detail-value">${detailValue(rec.supervisor_license_no)}</div></div>
-              <div class="detail-field detail-field-span-two"><div class="detail-label">License expiry date</div><div class="detail-value">${detailValue(rec.supervisor_license_expiry_date)}</div></div>
-            </div>
-          </section>
+		<div class="detail-row full">
+			<div class="detail-field">
+				<div class="detail-label">Record Status</div>
+				<div class="detail-value"><span class="record-status-badge" data-status="${rec.status || (rec.checked_by ? "Verified" : "Submitted")}">${rec.status || (rec.checked_by ? "Verified" : "Submitted")}</span></div>
+			</div>
+		</div>
+      	<div class="detail-row full">
+      		<div class="detail-field">
+      			<div class="detail-label">Student Information</div>
+      			<div class="detail-value">
+      				<strong>${rec.student_name || "N/A"}</strong> (ID: ${rec.student_id || "N/A"})
+      			</div>
+      		</div>
+      	</div>
+      	<div class="detail-row">
+      		<div class="detail-field">
+      			<div class="detail-label">Patient Name</div>
+      			<div class="detail-value">${rec.patient_name || "N/A"}</div>
+      		</div>
+      		<div class="detail-field">
+      			<div class="detail-label">Patient Address</div>
+      			<div class="detail-value">${rec.patient_address || "N/A"}</div>
+      		</div>
+      	</div>
+      	<div class="detail-row">
+      		<div class="detail-field">
+      			<div class="detail-label">Case No.</div>
+      			<div class="detail-value">${rec.case_no || "N/A"}</div>
+      		</div>
+      		<div class="detail-field">
+      			<div class="detail-label">Date &amp; Time Performed</div>
+      			<div class="detail-value">${rec.date_time_performed || "N/A"}</div>
+      		</div>
+      	</div>
+      	<div class="detail-row full">
+      		<div class="detail-field">
+      			<div class="detail-label">Complete Diagnosis</div>
+      			<div class="detail-value">${rec.complete_diagnosis || "N/A"}</div>
+      		</div>
+      	</div>
+      	<div class="detail-row">
+      		<div class="detail-field">
+      			<div class="detail-label">Facility Name</div>
+      			<div class="detail-value">${rec.facility_name || "N/A"}</div>
+      		</div>
+      		<div class="detail-field">
+      			<div class="detail-label">Facility Address</div>
+      			<div class="detail-value">${rec.facility_address || "N/A"}</div>
+      		</div>
+      	</div>
+      	<div class="detail-row full">
+      		<div class="detail-field">
+      			<div class="detail-label">Facility Contact Number</div>
+      			<div class="detail-value">${rec.facility_contact_number || "N/A"}</div>
+      		</div>
+      	</div>
+      	<div class="detail-row">
+      		<div class="detail-field">
+      			<div class="detail-label">Supervisor Name</div>
+      			<div class="detail-value">${rec.supervisor_printed_name || "N/A"}</div>
+      		</div>
+      		<div class="detail-field">
+      			<div class="detail-label">Supervisor Contact</div>
+      			<div class="detail-value">${rec.supervisor_contact_number || "N/A"}</div>
+      		</div>
+      	</div>
+      	<div class="detail-row">
+      		<div class="detail-field">
+      			<div class="detail-label">Position / Designation</div>
+      			<div class="detail-value">${rec.supervisor_position_designation || "N/A"}</div>
+      		</div>
+      		<div class="detail-field">
+      			<div class="detail-label">License No.</div>
+      			<div class="detail-value">${rec.supervisor_license_no || "N/A"}</div>
+      		</div>
+      	</div>
+      	<div class="detail-row full">
+      		<div class="detail-field">
+      			<div class="detail-label">License Expiry Date</div>
+      			<div class="detail-value">${rec.supervisor_license_expiry_date || "N/A"}</div>
+      		</div>
+      	</div>
+      	<div class="detail-row full">
+      		<div class="detail-field">
+      			<div class="detail-label">Teacher's Remarks</div>
+      			<div class="detail-value">${rec.remarks || rec.teacher_remarks || "N/A"}</div>
+      		</div>
+      	</div>
       `;
 
         detailOverlay.classList.add("active");
@@ -4976,15 +4071,11 @@
 
       async function renderYearlyStudentRecords() {
         if (!yearlyStudentRecordsTbody || !yearlyRecordsNav.studentId) return;
-        const yearlyDiagnosisHeader = document.getElementById("yearlyDiagnosisHeader");
-        if (yearlyDiagnosisHeader)
-          yearlyDiagnosisHeader.textContent = instructorPrcDiagnosisHeader(yearlyProcedureFilterValue);
         const cases = await ApiClient.getJoinedCases(yearlyRecordsNav.studentId, "", "");
         const selectedYear = String(yearlyRecordsNav.year || "").trim();
         const normalizedSelectedYear = selectedYear.replace(/\s+/g, "");
         const yearParts = selectedYear.match(/(\d{4})\s*-\s*(\d{4})/);
         yearlyVisibleStudentRecords = cases.filter((rec) => {
-          if (!selectedYear) return true;
           const recordYear = String(rec.academic_year || rec.school_year || "").trim();
           if (recordYear.replace(/\s+/g, "") === normalizedSelectedYear) return true;
           if (!yearParts || !rec.date_time_performed) return false;
@@ -5003,19 +4094,23 @@
         if (yearlyRecordsTableWrap)
           yearlyRecordsTableWrap.style.display = "block";
         if (yearlyStudentRecordsEmpty)
-          yearlyStudentRecordsEmpty.style.display = "none";
+          yearlyStudentRecordsEmpty.style.display = yearlyVisibleStudentRecords.length ? "none" : "block";
         const contextCount = document.getElementById("yearlyContextCount");
         if (contextCount) contextCount.textContent = String(yearlyVisibleStudentRecords.length);
-        if (!yearlyVisibleStudentRecords.length) {
-          yearlyStudentRecordsTbody.innerHTML = "";
-          if (yearlyRecordsTableWrap) yearlyRecordsTableWrap.style.display = "none";
-          if (yearlyStudentRecordsEmpty) yearlyStudentRecordsEmpty.style.display = "block";
-          return;
-        }
-        yearlyVisibleStudentRecords.forEach((record) => {
-          yearlyStudentRecordsTbody.appendChild(createInstructorRecordRow(record));
+        yearlyVisibleStudentRecords.forEach((rec, index) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${formatCombined(rec.patient_name, rec.patient_address, "", "<br>") || "—"}</td>
+            <td>${escapeHtml(rec.case_no || "—")}</td>
+            <td>${escapeHtml(rec.complete_diagnosis || "—")}</td>
+            <td>${escapeHtml(rec.date_time_performed || "—")}</td>
+            <td>${formatCombined(rec.facility_name, rec.facility_address, rec.facility_contact_number, "<br>") || "—"}</td>
+            <td>${formatCombined(rec.supervisor_printed_name, rec.supervisor_contact_number, "", "<br>") || "—"}</td>
+            <td>${escapeHtml(rec.supervisor_position_designation || "—")}</td>
+            <td>${formatCombined(rec.supervisor_license_no, rec.supervisor_license_expiry_date, "", "<br>") || "—"}</td>
+          `;
+          yearlyStudentRecordsTbody.appendChild(tr);
         });
-        applyInstructorRecordTableOutline(document.getElementById("yearly-student-records-table"));
       }
 
       async function archiveInstructorStudent(studentId) {
@@ -5083,9 +4178,8 @@
       });
 
       const sectionTitles = {
-        dashboard: "Recent records",
+        dashboard: "Recent Records Overview",
         "my-records": "Registered Blocks",
-        "all-records": "All Clinical Records",
         settings: "Account Settings",
         "delivery-handled": "Record of Delivery Handled",
         "delivery-assisted": "Record of Delivery Assisted",
@@ -5101,9 +4195,8 @@
         "yearly-records": "Annual Records",
       };
       const sectionSubtitles = {
-        dashboard: "Recently submitted clinical records waiting for your review.",
+        dashboard: "Latest clinical activities recorded by students.",
         "my-records": "Choose a registered block to view its students and clinical records.",
-        "all-records": "All clinical records saved for the selected student.",
         settings: "Manage your profile photo and instructor details.",
         "delivery-handled":
           "Entries saved from the student Delivery Handled form.",
@@ -5122,19 +4215,18 @@
         "yearly-records": "Choose an academic year to view blocks, students, and clinical records.",
       };
 
-      function setActiveSection(type, options = {}) {
+      function setActiveSection(type) {
         // Student account, block, and archive administration belongs to the
         // administrator workspace. Instructors can still review rosters from
         // Current Records, Annual Records, and Student Progress.
         if (type === "students") type = "student-summary";
         if (type === "my-records") {
           selectedCurrentRecordsStudent = null;
-          if (!options.preserveCurrentRecordsBlock) selectedCurrentRecordsBlock = null;
+          selectedCurrentRecordsBlock = null;
         }
         activeType = type;
         const isRecordsRoute =
           type === "my-records" ||
-          type === "all-records" ||
           Object.prototype.hasOwnProperty.call(procedureByType, type);
         document
           .querySelectorAll(".sidebar-nav-item")
@@ -5203,10 +4295,6 @@
           const route = button.getAttribute("data-quick-route");
           if (route) setActiveSection(route);
         });
-      });
-
-      document.getElementById("dashboardNewRecordsAll")?.addEventListener("click", () => {
-        setActiveSection("my-records");
       });
 
       // Section buttons at the top
@@ -5378,21 +4466,6 @@
       });
 
       // Yearly Records Event Listeners
-      yearlyStudentSearchInput?.addEventListener("input", (event) => {
-        renderYearlyStudentSearch(event.target.value);
-      });
-      yearlyStudentSearchInput?.addEventListener("keydown", (event) => {
-        if (event.key !== "Enter") return;
-        const firstMatch = yearlyStudentSearchSuggestions?.querySelector("[data-yearly-search-id]");
-        if (!firstMatch) return;
-        event.preventDefault();
-        openYearlyStudentSearchResult(firstMatch.getAttribute("data-yearly-search-id") || "");
-      });
-      yearlyStudentSearchSuggestions?.addEventListener("click", (event) => {
-        const result = event.target.closest("[data-yearly-search-id]");
-        if (!result) return;
-        openYearlyStudentSearchResult(result.getAttribute("data-yearly-search-id") || "");
-      });
       yearlyRecordsBreadcrumb?.addEventListener("click", (e) => {
         const btn = e.target.closest("button[data-crumb]");
         if (!btn) return;
@@ -5523,12 +4596,8 @@
             if (!table) return;
             var tbody = table.tBodies && table.tBodies[0];
             var hasRows = tbody && tbody.children.length > 0;
-            // Toggle only this wrapper's own empty state. Looking at the
-            // parent section can accidentally select the Registered Blocks
-            // empty state while processing another hidden records table.
-            var emptyEl = Array.prototype.find.call(wrapper.children, function (child) {
-              return child.classList && child.classList.contains('empty');
-            });
+            // Try to find a nearby .empty element (same parent) to toggle
+            var emptyEl = wrapper.parentElement && wrapper.parentElement.querySelector('.empty');
 
             if (!hasRows) {
               if (table.querySelector('thead')) table.querySelector('thead').style.display = 'none';
@@ -5559,7 +4628,7 @@
         window.__updateEmptyTables = updateEmptyTables;
       })();
     </script>
-<script src="assets/js/modern-shell.js?v=20260812-17"></script>
+    <script src="assets/js/modern-shell.js?v=20260807-4"></script>
   </body>
 </html>
 
