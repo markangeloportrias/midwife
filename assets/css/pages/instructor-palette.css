@@ -1,4 +1,16 @@
 /* Instructor workspace palette: #00296b, #003f88, #00509d, #fdc500, #ffd500. */
+html body .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 html body.role-instructor {
   background: #f4f8fc !important;
   color: #00296b !important;
@@ -1131,61 +1143,251 @@ html body.role-instructor .section.instructor-progress-active #instructorProgres
   text-align: left !important;
   color: #54719a !important;
 }
-/* Match the Student Progress table grid: one clean frame with shared cell borders. */
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table-wrap {
-  padding: 7px !important;
-  border-color: #8fb8d8 !important;
-  border-radius: 12px !important;
-  background: #ffffff !important;
-}
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table {
-  border: 1px solid #a4c3dc !important;
-  border-collapse: separate !important;
-  border-spacing: 0 !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
-}
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table th,
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table td {
+/* Student Progress clinical records mirror the original PRC form with a
+   pale-blue header and black ruled grid; Signature is omitted. */
+html body.role-instructor :is(
+  .section.instructor-progress-active #instructorProgressCopy,
+  #yearly-report-view #yearlyStudentRecordsPanel,
+  #mainRecordsWrapper
+) .prc-source-table-wrap {
+  padding: 0 !important;
   border: 0 !important;
-  border-right: 1px solid #a4c3dc !important;
-  border-bottom: 1px solid #a4c3dc !important;
-}
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table thead th {
-  border-color: #3e6b9d !important;
-  background: #00296b !important;
-  min-height: 39px !important;
-  padding: 7px 9px !important;
-  font: 750 9px/1.25 "Inter", sans-serif !important;
-}
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table thead tr:nth-child(2) th {
-  border-top: 1px solid #3e6b9d !important;
-  background: #00296b !important;
-}
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody td {
-  min-height: 54px !important;
-  padding: 8px 10px !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   background: #ffffff !important;
-  font: 500 11px/1.35 "Inter", sans-serif !important;
 }
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table th:last-child,
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table td:last-child {
-  border-right: 0 !important;
+html body.role-instructor #mainRecordsWrapper.prc-source-table-wrap {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #ffffff !important;
 }
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody tr:last-child td {
-  border-bottom: 0 !important;
+html body.role-instructor :is(
+  .section.instructor-progress-active #instructorProgressCopy,
+  #yearly-report-view #yearlyStudentRecordsPanel,
+  #mainRecordsWrapper
+) .prc-source-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
 }
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table thead tr:first-child th:first-child {
-  border-top-left-radius: 9px !important;
+html body.role-instructor :is(
+  .section.instructor-progress-active #instructorProgressCopy,
+  #yearly-report-view #yearlyStudentRecordsPanel,
+  #mainRecordsWrapper
+) .prc-source-table th,
+html body.role-instructor :is(
+  .section.instructor-progress-active #instructorProgressCopy,
+  #yearly-report-view #yearlyStudentRecordsPanel,
+  #mainRecordsWrapper
+) .prc-source-table td {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table thead tr:first-child th:last-child {
-  border-top-right-radius: 9px !important;
+html body.role-instructor :is(
+  .section.instructor-progress-active #instructorProgressCopy,
+  #yearly-report-view #yearlyStudentRecordsPanel,
+  #mainRecordsWrapper
+) .prc-source-table thead th,
+html body.role-instructor :is(
+  .section.instructor-progress-active #instructorProgressCopy,
+  #yearly-report-view #yearlyStudentRecordsPanel,
+  #mainRecordsWrapper
+) .prc-source-table thead tr:nth-child(2) th {
+  border: 1px solid #000 !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+  min-height: 0 !important;
+  padding: 5px 4px !important;
+  font: 700 11px/1.15 Cambria, "Times New Roman", serif !important;
+  text-transform: none !important;
+  text-align: center !important;
+  vertical-align: middle !important;
 }
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody tr:last-child td:first-child {
-  border-bottom-left-radius: 9px !important;
+html body.role-instructor :is(
+  .section.instructor-progress-active #instructorProgressCopy,
+  #yearly-report-view #yearlyStudentRecordsPanel,
+  #mainRecordsWrapper
+) .prc-source-table tbody td {
+  border: 1px solid #000 !important;
+  min-height: 33px !important;
+  padding: 4px 5px !important;
+  background: #ffffff !important;
+  color: #000 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
 }
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table tbody tr:last-child td:last-child {
-  border-bottom-right-radius: 9px !important;
+
+/* Annual Records button palette. */
+html body.role-instructor #yearly-report-view #yearlyInstructorBackBtn {
+  border-color: #00296b !important;
+  background: #00296b !important;
+  color: #fff !important;
+}
+html body.role-instructor #yearly-report-view #yearlyInstructorBackBtn:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-instructor #yearly-report-view .yearly-procedure-nav button {
+  border-color: #b8cfe8 !important;
+  background: #fff !important;
+  color: #003f88 !important;
+}
+html body.role-instructor #yearly-report-view .yearly-procedure-nav button:hover {
+  border-color: #00509d !important;
+  background: #eaf4ff !important;
+  color: #00296b !important;
+}
+html body.role-instructor #yearly-report-view .yearly-procedure-nav button.active {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #fff !important;
+}
+
+/* Current Records uses the same button palette. */
+html body.role-instructor #currentRecordsBackToStudents {
+  border-color: #00296b !important;
+  background: #00296b !important;
+  color: #fff !important;
+}
+html body.role-instructor #refreshRecordsBtn {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+html body.role-instructor #instructorProcedureTabs .procedure-tab {
+  border-color: #b8cfe8 !important;
+  background: #fff !important;
+  color: #003f88 !important;
+}
+html body.role-instructor #instructorProcedureTabs .procedure-tab:hover {
+  border-color: #00509d !important;
+  background: #eaf4ff !important;
+  color: #00296b !important;
+}
+html body.role-instructor #instructorProcedureTabs .procedure-tab.active {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #fff !important;
+}
+
+/* Record actions shared by Current and Annual Records. */
+html body.role-instructor .prc-source-table .record-action-cell {
+  min-width: 92px !important;
+  padding: 5px !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor .prc-source-table thead th:last-child { min-width: 92px !important; }
+html body.role-instructor .prc-source-table .record-table-actions {
+  display: flex !important;
+  width: 100% !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex-wrap: nowrap !important;
+}
+html body.role-instructor .prc-source-table .record-action-btn {
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  box-sizing: border-box !important;
+  flex: 0 0 56px !important;
+  width: 56px !important;
+  min-width: 56px !important;
+  min-height: 38px !important;
+  padding: 4px !important;
+  border: 1px solid #00509d !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 700 8px/1 Arial, Helvetica, sans-serif !important;
+  white-space: normal !important;
+  cursor: pointer !important;
+}
+html body.role-instructor .prc-source-table .record-action-btn span {
+  display: block !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor .prc-source-table .record-action-btn i {
+  width: 12px !important;
+  height: 12px !important;
+  font-family: "Font Awesome 5 Free" !important;
+  font-size: 12px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 12px !important;
+  text-align: center !important;
+}
+
+/* Compact Registered Blocks workspace. */
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) .section-header-row,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) .section-header-row {
+  padding: 16px 24px 14px !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) #currentRecordsStudentRoster,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) #currentRecordsStudentRoster {
+  padding: 12px 24px 14px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table {
+  border-color: #b8cfe8 !important;
+  border-radius: 10px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table thead th {
+  box-sizing: border-box !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 6px 12px !important;
+  border-color: rgba(255, 255, 255, .24) !important;
+  background: #00296b !important;
+  color: #fff !important;
+  font-size: 9px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td {
+  box-sizing: border-box !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  padding: 6px 12px !important;
+  border-color: #d9e6f2 !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font-size: 10px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:last-child {
+  text-align: center !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .clinical-roster-action {
+  min-height: 26px !important;
+  padding: 0 9px !important;
+  border-color: #00509d !important;
+  border-radius: 5px !important;
+  background: #00509d !important;
+  color: #fff !important;
+  font-size: 9px !important;
+  box-shadow: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .clinical-roster-action:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+html body.role-instructor .prc-source-table .record-action-btn:hover {
+  background: #eaf4ff !important;
+  color: #00296b !important;
+}
+html body.role-instructor .prc-source-table .record-comment-btn {
+  border-color: #fdc500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
 }
 
 /* Shared Instructor data-table contract. Clinical procedure tables deliberately keep their own detailed layout. */
@@ -3083,7 +3285,1623 @@ html body.role-instructor #yearly-report-view .yearly-student-search-result stro
 html body.role-instructor #yearly-report-view .yearly-student-search-result span { margin-top: 3px !important; color: #54719a !important; font: 500 10px/1.2 Inter, Arial, sans-serif !important; }
 html body.role-instructor #yearly-report-view .yearly-student-search-empty { padding: 10px 12px !important; color: #54719a !important; font-size: 11px !important; }
 
+/* Deliberately unstyled record tables: preserve only the native HTML table
+   layout and content, with no dashboard colors, borders, radius, or spacing. */
+html body.role-instructor #mainRecordsWrapper:has(> table.bare-records-table),
+html body.role-instructor #yearlyStudentRecordsPanel .clinical-form-table-container:has(> table.bare-records-table) {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor table.bare-records-table {
+  all: revert !important;
+  width: 100% !important;
+}
+
+html body.role-instructor table.bare-records-table :is(thead, tbody, tr, th, td, button, i, span) {
+  all: revert !important;
+}
+
+/* Direct ID-level reset: these tables also have older ID-based dashboard rules. */
+html body #active-table.bare-records-table,
+html body #yearly-student-records-table.bare-records-table {
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: 0 !important;
+  border-spacing: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body #active-table.bare-records-table :is(thead, tbody, tr, th, td),
+html body #yearly-student-records-table.bare-records-table :is(thead, tbody, tr, th, td) {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  font: inherit !important;
+  letter-spacing: normal !important;
+  text-align: inherit !important;
+  text-transform: none !important;
+}
+html body #active-table.bare-records-table .table-comment-btn {
+  display: inline !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  font: inherit !important;
+}
+
 @media (max-width: 760px) {
   html body.role-instructor #yearly-report-view .workspace-header { align-items: stretch !important; flex-wrap: wrap !important; }
   html body.role-instructor #yearly-report-view .yearly-student-search-wrap { width: 100% !important; margin: 0 !important; order: 3 !important; }
+}
+
+/* Final compact Registered Blocks surface. */
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) .section-header-row,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) .section-header-row {
+  padding: 12px 22px !important;
+}
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display: block"]) #currentRecordsStudentRoster,
+html body.role-instructor .content-section:has(#currentRecordsStudentRoster[style*="display:block"]) #currentRecordsStudentRoster {
+  padding: 10px 22px 12px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table {
+  border: 1px solid #b8cfe8 !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 9px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table thead th {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 5px 12px !important;
+  background: #00296b !important;
+  color: #fff !important;
+  font: 800 9px/1 "Inter", Arial, sans-serif !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody tr,
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td {
+  height: 40px !important;
+  min-height: 40px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td {
+  padding: 5px 12px !important;
+  border-top: 1px solid #d9e6f2 !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 600 10px/1.15 "Inter", Arial, sans-serif !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:last-child {
+  text-align: center !important;
+}
+html body.role-instructor #currentRecordsStudentRoster .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster .clinical-roster-action:hover {
+  min-height: 25px !important;
+  padding: 0 8px !important;
+  border: 1px solid #00509d !important;
+  border-radius: 4px !important;
+  background: #00509d !important;
+  color: #fff !important;
+  font: 700 9px/1 "Inter", Arial, sans-serif !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table td:last-child .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table td:last-child .clinical-roster-action:hover {
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(1),
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(3),
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(4),
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(5) {
+  text-align: center !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table td:last-child .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table td:last-child .clinical-roster-action:hover {
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 0 8px !important;
+  font-size: 9px !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(1) { width: 6% !important; }
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(2) { width: 29% !important; }
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(3) { width: 29% !important; }
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(4) { width: 15% !important; }
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table :is(th, td):nth-child(5) { width: 21% !important; }
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table td:nth-child(4) .current-record-count {
+  display: inline-block !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table td:nth-child(5) .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table td:nth-child(5) .clinical-roster-action:hover {
+  display: inline-flex !important;
+  margin: 0 !important;
+  float: none !important;
+  transform: none !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table thead th,
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table tbody td {
+  text-align: center !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table tbody td:nth-child(4) .current-record-count {
+  display: inline-block !important;
+  width: auto !important;
+  margin: 0 !important;
+  float: none !important;
+  text-align: center !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table tbody td:nth-child(5) {
+  text-align: center !important;
+}
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table tbody td:nth-child(5) .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster table.admin-premium-table tbody td:nth-child(5) .clinical-roster-action:hover {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 22px !important;
+  min-height: 22px !important;
+  margin: 0 !important;
+  padding: 0 6px !important;
+  font-size: 8px !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table {
+  display: table !important;
+  table-layout: fixed !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table thead { display: table-header-group !important; }
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody { display: table-row-group !important; }
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tr { display: table-row !important; }
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table :is(th, td) {
+  display: table-cell !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:nth-child(5) .clinical-roster-action,
+html body.role-instructor #currentRecordsStudentRoster > table.admin-premium-table tbody td:nth-child(5) .clinical-roster-action:hover {
+  box-sizing: border-box !important;
+  width: 78px !important;
+  height: 22px !important;
+  min-height: 22px !important;
+  max-height: 22px !important;
+  padding: 0 5px !important;
+  font-size: 8px !important;
+  line-height: 1 !important;
+}
+
+/* Registered Blocks is intentionally isolated from the legacy dashboard table
+   classes so its header and body always use the same five-column geometry. */
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table {
+  display: table !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  border: 1px solid #b8cfe8 !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table thead {
+  display: table-header-group !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table tbody {
+  display: table-row-group !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table tr {
+  display: table-row !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table :is(th, td) {
+  display: table-cell !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  border-radius: 0 !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table thead th {
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 6px 8px !important;
+  border: 0 !important;
+  background: #00296b !important;
+  color: #ffffff !important;
+  font: 800 9px/1 "Inter", Arial, sans-serif !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table thead tr:first-child th:first-child {
+  border-top-left-radius: 7px !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table thead tr:first-child th:last-child {
+  border-top-right-radius: 7px !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table tbody td {
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 6px 8px !important;
+  border: 0 !important;
+  border-top: 1px solid #d9e6f2 !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  font: 600 10px/1.15 "Inter", Arial, sans-serif !important;
+  white-space: normal !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table tbody tr:hover td {
+  background: #f5f9fd !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table .current-record-student {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  text-align: center !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table :is(.current-record-avatar, .current-record-student small) {
+  display: none !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table .current-record-student strong {
+  color: inherit !important;
+  font: inherit !important;
+  text-align: center !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table .current-record-count {
+  display: inline-block !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  font: inherit !important;
+  line-height: inherit !important;
+  text-align: center !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster .registered-blocks-action,
+html body.role-instructor #currentRecordsStudentRoster .registered-blocks-action:hover {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  min-width: 82px !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  max-height: 26px !important;
+  margin: 0 !important;
+  padding: 0 9px !important;
+  float: none !important;
+  border: 1px solid #00509d !important;
+  border-radius: 5px !important;
+  background: #00509d !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  font: 700 9px/1 "Inter", Arial, sans-serif !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  transform: none !important;
+  cursor: pointer !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster .registered-blocks-action:hover {
+  border-color: #003f88 !important;
+  background: #003f88 !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster .registered-blocks-action:focus-visible {
+  outline: 2px solid #ffd500 !important;
+  outline-offset: 2px !important;
+}
+
+/* Isolated drill-down back control. */
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students .current-records-navigator {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  min-height: 30px !important;
+  margin: 0 0 10px !important;
+  padding: 0 !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students .current-records-navigator > div {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students #currentRecordsBackToBlocks,
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students #currentRecordsBackToBlocks:hover {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  border: 1px solid #00509d !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  color: #00509d !important;
+  font: 700 10px/1 "Inter", Arial, sans-serif !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  transform: none !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students #currentRecordsBackToBlocks:hover {
+  border-color: #003f88 !important;
+  background: #eef6ff !important;
+  color: #003f88 !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students #currentRecordsBackToBlocks i {
+  margin: 0 6px 0 0 !important;
+  color: inherit !important;
+  font-size: 9px !important;
+  line-height: 1 !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster.showing-block-students #currentRecordsBackToBlocks:focus-visible {
+  outline: 2px solid #ffd500 !important;
+  outline-offset: 2px !important;
+}
+
+/* Screen-filling, grouped Record Details modal. */
+html body.role-instructor #detailModalOverlay {
+  padding: 28px 40px !important;
+}
+
+html body.role-instructor #detailModal {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: calc(100vw - 80px) !important;
+  max-width: none !important;
+  height: calc(100vh - 56px) !important;
+  max-height: none !important;
+  padding: 16px 20px 14px !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  border: 1px solid #9fb9d4 !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  box-shadow: 0 20px 50px rgba(0, 41, 107, 0.24) !important;
+}
+
+html body.role-instructor #detailModal .detail-modal-header {
+  min-height: 36px !important;
+  margin: 0 0 10px !important;
+  padding: 0 0 9px !important;
+  border-bottom: 1px solid #b8cce0 !important;
+}
+
+html body.role-instructor #detailModal .detail-modal-title {
+  color: #001f54 !important;
+  font: 800 22px/1.15 "Inter", Arial, sans-serif !important;
+  letter-spacing: -0.02em !important;
+}
+
+html body.role-instructor #detailModal .detail-modal-close,
+html body.role-instructor #detailModal .detail-modal-close:hover {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  border: 1px solid #adc3da !important;
+  border-radius: 7px !important;
+  background: #f4f8fc !important;
+  color: #294f7d !important;
+  font-size: 14px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body.role-instructor #detailModal .detail-modal-close:hover {
+  border-color: #00509d !important;
+  background: #eef6ff !important;
+  color: #003f88 !important;
+}
+
+html body.role-instructor #detailModal #detailContent {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(3, max-content) !important;
+  align-content: start !important;
+  gap: 9px !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: hidden !important;
+  padding-right: 2px !important;
+}
+
+html body.role-instructor #detailModal .detail-group {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 9px 12px 10px !important;
+  border: 1px solid #a9c1da !important;
+  border-left: 1px solid #a9c1da !important;
+  border-radius: 10px !important;
+  background: #f3f7fc !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #detailModal :is(.detail-group-overview, .detail-group-supervisor) {
+  grid-column: 1 / -1 !important;
+}
+
+html body.role-instructor #detailModal .detail-group h3 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  min-height: 20px !important;
+  margin: 0 0 7px !important;
+  padding: 0 0 6px !important;
+  border-bottom: 1px solid #bdcfe2 !important;
+  color: #003676 !important;
+  font: 800 11px/1.1 "Inter", Arial, sans-serif !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+html body.role-instructor #detailModal .detail-group h3 i {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 5px !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+  font-size: 10px !important;
+}
+
+html body.role-instructor #detailModal .detail-group-fields {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 6px 10px !important;
+}
+
+html body.role-instructor #detailModal .detail-group-overview .detail-group-fields {
+  grid-template-columns: minmax(130px, 0.42fr) minmax(0, 1.58fr) !important;
+}
+
+html body.role-instructor #detailModal .detail-group-supervisor .detail-group-fields {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+html body.role-instructor #detailModal .detail-field,
+html body.role-instructor #detailModal .detail-group-fields .detail-field {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html body.role-instructor #detailModal .detail-field-wide {
+  grid-column: 1 / -1 !important;
+}
+
+html body.role-instructor #detailModal .detail-label {
+  margin: 0 0 3px !important;
+  color: #31577f !important;
+  font: 800 9px/1.15 "Inter", Arial, sans-serif !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+html body.role-instructor #detailModal .detail-value {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-sizing: border-box !important;
+  min-height: 33px !important;
+  height: auto !important;
+  padding: 6px 9px !important;
+  border: 1px solid #b7cce1 !important;
+  border-radius: 7px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  color: #0b2d60 !important;
+  font: 650 12px/1.25 "Inter", Arial, sans-serif !important;
+  letter-spacing: 0 !important;
+  overflow-wrap: anywhere !important;
+}
+
+html body.role-instructor #detailModal .detail-value strong {
+  color: #00296b !important;
+  font-weight: 800 !important;
+}
+
+html body.role-instructor #detailModal .detail-inline-meta {
+  margin-left: auto !important;
+  color: #31577f !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor #detailModal .record-status-badge {
+  padding: 5px 9px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+html body.role-instructor #detailModal .detail-actions {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  margin: 10px 0 0 !important;
+  padding: 9px 0 0 !important;
+  border-top: 1px solid #b8cce0 !important;
+}
+
+html body.role-instructor #detailModal .detail-actions button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-height: 34px !important;
+  margin: 0 !important;
+  gap: 7px !important;
+  padding: 0 12px !important;
+  border-radius: 7px !important;
+  font: 750 11px/1 "Inter", Arial, sans-serif !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #detailModal .detail-actions button.secondary {
+  border: 1px solid #a9bfd7 !important;
+  background: #ffffff !important;
+  color: #09275c !important;
+}
+
+html body.role-instructor #detailModal .detail-actions button.secondary:hover {
+  border-color: #356aa1 !important;
+  background: #edf4fb !important;
+  color: #001f54 !important;
+}
+
+html body.role-instructor #detailModal .detail-actions button i {
+  font-size: 12px !important;
+}
+
+html body.role-instructor #detailModal #detailChangesAction {
+  border-color: #d6ad27 !important;
+  background: #fff9e5 !important;
+  color: #604600 !important;
+}
+
+html body.role-instructor #detailModal #detailChangesAction:hover {
+  border-color: #b58900 !important;
+  background: #fff2bd !important;
+  color: #4d3800 !important;
+}
+
+html body.role-instructor #detailModal #detailInvalidAction {
+  border-color: #d8a4a4 !important;
+  background: #fff7f7 !important;
+  color: #8f1d1d !important;
+}
+
+html body.role-instructor #detailModal #detailInvalidAction:hover {
+  border-color: #bd6464 !important;
+  background: #ffecec !important;
+  color: #771313 !important;
+}
+
+html body.role-instructor #detailModal #detailVerifyAction {
+  border: 1px solid #071d58 !important;
+  background: #071d58 !important;
+  color: #ffffff !important;
+}
+
+html body.role-instructor #detailModal #detailVerifyAction:hover {
+  border-color: #00509d !important;
+  background: #00509d !important;
+}
+
+html body.role-instructor #detailModal .detail-actions button:focus-visible,
+html body.role-instructor #detailModal .detail-modal-close:focus-visible {
+  outline: 3px solid #ffd500 !important;
+  outline-offset: 2px !important;
+}
+
+@media (max-width: 760px) {
+  html body.role-instructor #detailModalOverlay {
+    padding: 10px !important;
+  }
+
+  html body.role-instructor #detailModal {
+    width: calc(100vw - 20px) !important;
+    height: calc(100vh - 20px) !important;
+    max-height: calc(100vh - 20px) !important;
+    padding: 15px !important;
+  }
+
+  html body.role-instructor #detailModal #detailContent {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: none !important;
+    overflow-y: auto !important;
+  }
+
+  html body.role-instructor #detailModal :is(.detail-group-overview, .detail-group-supervisor) {
+    grid-column: auto !important;
+  }
+
+  html body.role-instructor #detailModal .detail-group-supervisor .detail-group-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  html body.role-instructor #detailModal .detail-group-fields,
+  html body.role-instructor #detailModal .detail-group-overview .detail-group-fields,
+  html body.role-instructor #detailModal .detail-group-supervisor .detail-group-fields {
+    grid-template-columns: 1fr !important;
+  }
+
+  html body.role-instructor #detailModal .detail-field-wide {
+    grid-column: auto !important;
+  }
+
+  html body.role-instructor #detailModal .detail-inline-meta {
+    margin-left: 0 !important;
+  }
+}
+
+/* In-app recipient field used by the chat Forward action. */
+html body.role-instructor .chat-forward-field {
+  display: grid !important;
+  gap: 7px !important;
+  width: 100% !important;
+  margin: 4px 0 2px !important;
+  color: #31577f !important;
+  text-align: left !important;
+}
+
+html body.role-instructor .chat-forward-field > span {
+  font: 800 10px/1.2 "Inter", Arial, sans-serif !important;
+  letter-spacing: 0.045em !important;
+  text-transform: uppercase !important;
+}
+
+html body.role-instructor .chat-forward-input {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: 42px !important;
+  padding: 9px 12px !important;
+  border: 1px solid #a9bfd7 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #09275c !important;
+  font: 650 13px/1.3 "Inter", Arial, sans-serif !important;
+  outline: 0 !important;
+}
+
+html body.role-instructor .chat-forward-input::placeholder {
+  color: #6a819e !important;
+  opacity: 1 !important;
+}
+
+html body.role-instructor .chat-forward-input:focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.15) !important;
+}
+
+html body.role-instructor #globalOptionPaneActions .option-pane-btn:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+}
+
+/* Annual Records uses one workspace surface and one table frame—no nested cards. */
+html body.role-instructor #mainRecordsWrapper.yearly-mode #yearly-report-view {
+  padding: 2px 0 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #mainRecordsWrapper.yearly-mode #yearly-report-view #yearlyRecordsBreadcrumb {
+  min-height: 0 !important;
+  margin: 4px 0 10px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #mainRecordsWrapper.yearly-mode #yearly-report-view .students-panel {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #mainRecordsWrapper.yearly-mode #yearly-report-view .students-panel > :is(.table-wrap, .prc-source-table-wrap) {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 8px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #mainRecordsWrapper.yearly-mode #yearly-report-view .students-panel > .table-wrap > table {
+  margin: 0 !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 13px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+/* Contextual icon shared by every dynamic Instructor workspace title. */
+html body.role-instructor .instructor-title-heading {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+html body.role-instructor .instructor-title-copy {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+html body.role-instructor .instructor-title-icon {
+  display: inline-grid !important;
+  flex: 0 0 38px !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  width: 38px !important;
+  height: 38px !important;
+  border: 1px solid #e6b900 !important;
+  border-radius: 10px !important;
+  background: #ffd500 !important;
+  box-shadow: 0 5px 12px rgba(0, 41, 107, 0.12) !important;
+  color: #00296b !important;
+}
+
+html body.role-instructor .instructor-title-icon i {
+  color: inherit !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+html body.role-instructor .content-section #active-title {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  margin: 0 !important;
+}
+
+html body.role-instructor .content-section #active-subtitle {
+  display: block !important;
+  margin: 4px 0 0 !important;
+}
+
+html body.role-instructor #instructorProgressCopy .ip-overview > .instructor-title-heading {
+  margin: 0 0 16px !important;
+}
+
+html body.role-instructor #instructorProgressCopy .instructor-title-copy :is(h2, p),
+html body.role-instructor #settingsView .instructor-title-copy :is(h2, p),
+html body.role-instructor #yearly-report-view .instructor-title-copy :is(.workspace-title, .workspace-subtitle) {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+@media (max-width: 620px) {
+  html body.role-instructor .instructor-title-heading {
+    gap: 9px !important;
+  }
+
+  html body.role-instructor .instructor-title-icon {
+    flex-basis: 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 9px !important;
+  }
+
+  html body.role-instructor .instructor-title-icon i {
+    font-size: 14px !important;
+  }
+}
+
+/* Manage Students uses one surface: a flat page heading and one table card. */
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) > .section {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) > .section > .section-header-row {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 52px !important;
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+  align-items: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) .section-header-actions {
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #instructorRefreshSchoolYearsBtn {
+  height: 36px !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  padding: 0 13px !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #students-view,
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #students-view > .students-panel {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #instructorStudentsYearPanel > .table-wrapper {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #cfdced !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  box-shadow: 0 5px 16px rgba(15, 35, 77, .06) !important;
+}
+
+@media (max-width: 700px) {
+  html body.role-instructor .content-section:has(#students-view[style*="display: block"]) > .section > .section-header-row {
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+}
+
+/* Give the simplified Students workspace a comfortable vertical rhythm. */
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) > .section > .section-header-row {
+  min-height: 70px !important;
+  margin-bottom: 18px !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) .instructor-title-icon {
+  flex-basis: 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #active-title {
+  font-size: 20px !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #active-subtitle {
+  font-size: 12px !important;
+}
+
+html body.role-instructor #instructor-school-years-table thead th {
+  height: 50px !important;
+  padding: 0 18px !important;
+  font-size: 10px !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody td {
+  height: 66px !important;
+  min-height: 66px !important;
+  padding: 0 18px !important;
+  font-size: 13px !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody strong {
+  font-size: 13px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .admin-directory-action {
+  min-width: 100px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  font-size: 10px !important;
+}
+
+/* One outer Students container, visibly larger than the content it holds. */
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) > .section {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  padding: 22px 24px 24px !important;
+  overflow: hidden !important;
+  border: 1px solid #d4dfed !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  box-shadow: 0 8px 24px rgba(15, 35, 77, .07) !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) > .section > .section-header-row {
+  margin: 0 0 20px !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #students-view {
+  padding: 0 !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #instructorStudentsYearPanel > .table-wrapper {
+  box-shadow: none !important;
+}
+
+@media (max-width: 700px) {
+  html body.role-instructor .content-section:has(#students-view[style*="display: block"]) > .section {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+}
+
+/* Academic-year directory table. */
+html body.role-instructor #instructorStudentsYearPanel > .table-wrapper {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  border: 1px solid #ccd9ea !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+}
+
+html body.role-instructor #instructor-school-years-table {
+  width: 100% !important;
+  min-width: 720px !important;
+  margin: 0 !important;
+  table-layout: fixed !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: #fff !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-number-column { width: 8% !important; }
+html body.role-instructor #instructor-school-years-table .school-year-count-column { width: 14% !important; }
+html body.role-instructor #instructor-school-years-table .school-year-action-column { width: 20% !important; }
+
+html body.role-instructor #instructor-school-years-table thead th {
+  height: 48px !important;
+  padding: 0 18px !important;
+  border: 0 !important;
+  background: #062f73 !important;
+  color: #fff !important;
+  font: 750 10px/1.2 "Inter", "Poppins", sans-serif !important;
+  letter-spacing: .065em !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody tr,
+html body.role-instructor #instructor-school-years-table tbody tr:nth-child(even) {
+  background: #fff !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody td {
+  height: 72px !important;
+  min-height: 72px !important;
+  padding: 0 18px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #e2e9f2 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  color: #1f3d6d !important;
+  font: 600 12px/1.35 "Inter", "Poppins", sans-serif !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody tr:hover td {
+  background: #f6f9fe !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody tr:focus-visible {
+  outline: 3px solid rgba(0, 80, 157, .2) !important;
+  outline-offset: -3px !important;
+}
+
+html body.role-instructor #instructor-school-years-table :is(th, td):nth-child(3),
+html body.role-instructor #instructor-school-years-table :is(th, td):nth-child(4) {
+  text-align: center !important;
+}
+
+html body.role-instructor #instructor-school-years-table :is(th, td):last-child {
+  padding-right: 22px !important;
+  text-align: right !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-index {
+  color: #607493 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-identity {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-icon {
+  display: inline-grid !important;
+  flex: 0 0 36px !important;
+  place-items: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: 1px solid #f0cf43 !important;
+  border-radius: 10px !important;
+  background: #fff8cf !important;
+  color: #073b7a !important;
+  font-size: 13px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-copy {
+  display: flex !important;
+  min-width: 0 !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-copy strong {
+  overflow: hidden !important;
+  color: #102f67 !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-copy small {
+  display: block !important;
+  color: #7889a3 !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-count {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 34px !important;
+  height: 28px !important;
+  padding: 0 9px !important;
+  border: 1px solid #d5e2f2 !important;
+  border-radius: 999px !important;
+  background: #edf4fc !important;
+  color: #064783 !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-open {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-width: 118px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  border: 1px solid #063c80 !important;
+  border-radius: 8px !important;
+  background: #063c80 !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  font-weight: 750 !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-open:hover {
+  border-color: #00296b !important;
+  background: #00296b !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-open i {
+  font-size: 9px !important;
+  transition: transform .16s ease !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-open:hover i {
+  transform: translateX(2px) !important;
+}
+
+/* Students header now shares the same outer container as the table. */
+html body.role-instructor .content-section > .section:has(#students-view[style*="display: block"]) > .section-header-row {
+  min-height: 54px !important;
+  margin: 0 0 16px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Selected academic year's block directory. */
+html body.role-instructor #instructorStudentsBlockPanel > .table-wrapper {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  border: 1px solid #ccd9ea !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #instructor-blocks-table {
+  width: 100% !important;
+  min-width: 720px !important;
+  margin: 0 !important;
+  table-layout: fixed !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: #fff !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-number-column { width: 8% !important; }
+html body.role-instructor #instructor-blocks-table .block-count-column { width: 16% !important; }
+html body.role-instructor #instructor-blocks-table .block-action-column { width: 28% !important; }
+
+html body.role-instructor #instructor-blocks-table thead th {
+  height: 48px !important;
+  padding: 0 18px !important;
+  border: 0 !important;
+  background: #062f73 !important;
+  color: #fff !important;
+  font: 750 10px/1.2 "Inter", "Poppins", sans-serif !important;
+  letter-spacing: .065em !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #instructor-blocks-table tbody tr,
+html body.role-instructor #instructor-blocks-table tbody tr:nth-child(even) {
+  background: #fff !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body.role-instructor #instructor-blocks-table tbody td {
+  height: 72px !important;
+  min-height: 72px !important;
+  padding: 0 18px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #e2e9f2 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  color: #1f3d6d !important;
+  font: 600 12px/1.35 "Inter", "Poppins", sans-serif !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #instructor-blocks-table tbody tr:last-child td { border-bottom: 0 !important; }
+html body.role-instructor #instructor-blocks-table tbody tr:hover td { background: #f6f9fe !important; }
+
+html body.role-instructor #instructor-blocks-table tbody tr:focus-visible {
+  outline: 3px solid rgba(0, 80, 157, .2) !important;
+  outline-offset: -3px !important;
+}
+
+html body.role-instructor #instructor-blocks-table :is(th, td):nth-child(3) { text-align: center !important; }
+html body.role-instructor #instructor-blocks-table :is(th, td):last-child {
+  padding-right: 22px !important;
+  text-align: right !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-directory-index {
+  color: #607493 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-directory-identity {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-directory-icon {
+  display: inline-grid !important;
+  flex: 0 0 36px !important;
+  place-items: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: 1px solid #f0cf43 !important;
+  border-radius: 10px !important;
+  background: #fff8cf !important;
+  color: #073b7a !important;
+  font-size: 13px !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-directory-copy {
+  display: flex !important;
+  min-width: 0 !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-directory-copy strong {
+  overflow: hidden !important;
+  color: #102f67 !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-directory-copy small {
+  display: block !important;
+  color: #7889a3 !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-directory-count {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 34px !important;
+  height: 28px !important;
+  padding: 0 9px !important;
+  border: 1px solid #d5e2f2 !important;
+  border-radius: 999px !important;
+  background: #edf4fc !important;
+  color: #064783 !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-directory-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+html body.role-instructor #instructor-blocks-table :is(.block-edit-action, .block-open-action) {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  padding: 0 13px !important;
+  border-radius: 8px !important;
+  font: 750 10px/1 "Inter", "Poppins", sans-serif !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-edit-action {
+  min-width: 72px !important;
+  border: 1px solid #b9cbe2 !important;
+  background: #fff !important;
+  color: #16487e !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-edit-action:hover {
+  border-color: #7fa2c8 !important;
+  background: #edf5ff !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-open-action {
+  min-width: 122px !important;
+  border: 1px solid #063c80 !important;
+  background: #063c80 !important;
+  color: #fff !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-open-action:hover {
+  border-color: #00296b !important;
+  background: #00296b !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-open-action i {
+  font-size: 9px !important;
+  transition: transform .16s ease !important;
+}
+
+html body.role-instructor #instructor-blocks-table .block-open-action:hover i {
+  transform: translateX(2px) !important;
+}
+
+/* Compact academic-year directory. */
+html body.role-instructor #instructorStudentsYearPanel > .table-wrapper {
+  border-radius: 8px !important;
+}
+
+html body.role-instructor #instructor-school-years-table thead th {
+  height: 28px !important;
+  padding: 0 10px !important;
+  font-size: 8.5px !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody tr,
+html body.role-instructor #instructor-school-years-table tbody tr:nth-child(odd),
+html body.role-instructor #instructor-school-years-table tbody tr:nth-child(even) {
+  height: 35px !important;
+  min-height: 35px !important;
+}
+
+html body.role-instructor #instructor-school-years-table tbody td {
+  height: 35px !important;
+  min-height: 35px !important;
+  padding: 0 8px !important;
+  font-size: 9px !important;
+}
+
+html body.role-instructor #instructor-school-years-table :is(th, td):last-child {
+  padding-right: 10px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-index {
+  display: inline !important;
+  min-width: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #607493 !important;
+  font-size: 11px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-identity {
+  gap: 6px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-icon {
+  flex-basis: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 5px !important;
+  font-size: 9px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-copy {
+  gap: 0 !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-copy strong {
+  font-size: 10px !important;
+  line-height: 1.05 !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-copy small {
+  font-size: 8px !important;
+  line-height: 1.05 !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-count {
+  display: inline !important;
+  min-width: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  font-size: 9px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-open {
+  min-width: 76px !important;
+  height: 19px !important;
+  min-height: 19px !important;
+  gap: 4px !important;
+  padding: 0 6px !important;
+  border-radius: 5px !important;
+  font-size: 8px !important;
+}
+
+html body.role-instructor #instructor-school-years-table .school-year-open i {
+  margin-left: 1px !important;
+  font-size: 8px !important;
+}
+
+/* Beat the shared premium-table density rules for this directory only. */
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table tbody tr,
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table tbody tr:nth-child(odd),
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table tbody tr:nth-child(even) {
+  height: 35px !important;
+  min-height: 35px !important;
+}
+
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table tbody td,
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table tbody tr:nth-child(odd) td,
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table tbody tr:nth-child(even) td {
+  box-sizing: border-box !important;
+  height: 35px !important;
+  min-height: 35px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 1 !important;
+}
+
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table .mini-btn.admin-directory-action.school-year-open {
+  height: 19px !important;
+  min-height: 19px !important;
+  max-height: 19px !important;
+  font-size: 8px !important;
+}
+
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table thead th {
+  box-sizing: border-box !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  font-size: 8.5px !important;
+  line-height: 1 !important;
+}
+
+/* Center compact row content without allowing text to ride into the header. */
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table tbody td {
+  overflow: hidden !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table .school-year-identity {
+  box-sizing: border-box !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  align-items: center !important;
+}
+
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table .school-year-icon {
+  align-self: center !important;
+}
+
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table .school-year-copy {
+  height: auto !important;
+  min-height: 0 !important;
+  justify-content: center !important;
+  gap: 1px !important;
+  overflow: visible !important;
+}
+
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table .school-year-copy :is(strong, small) {
+  position: static !important;
+  display: block !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+
+/* Bring the year refresh control closer to the directory table. */
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #instructorRefreshSchoolYearsBtn {
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 10px !important;
+  border-radius: 7px !important;
+  font-size: 9px !important;
+  transform: translateY(14px) !important;
+}
+
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #instructorRefreshSchoolYearsBtn i {
+  font-size: 9px !important;
+}
+
+/* Give the primary table action a clearer target. */
+html body.role-instructor #students-view #instructor-school-years-table.admin-premium-table .mini-btn.admin-directory-action.school-year-open {
+  min-width: 88px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  padding: 0 10px !important;
+  border-radius: 6px !important;
+  font-size: 9px !important;
+}
+
+/* Annual Records and Manage Students: keep wrappers for scrolling, not as visible containers. */
+html body.role-instructor #mainRecordsWrapper.yearly-mode #yearly-report-view .students-panel > :is(.table-wrap, .prc-source-table-wrap),
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #students-view .table-wrapper {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #mainRecordsWrapper.yearly-mode #yearly-report-view .students-panel > :is(.table-wrap, .prc-source-table-wrap) > table,
+html body.role-instructor .content-section:has(#students-view[style*="display: block"]) #students-view .table-wrapper > table {
+  border: 1px solid rgba(0, 80, 157, 0.14) !important;
+  box-shadow: none !important;
+}
+
+/* Edit Requests uses the same single faint outline without a second empty-state frame. */
+html body.role-instructor #edit-requests-view #edit-requests-list.edit-requests-list {
+  border: 1px solid rgba(0, 80, 157, 0.14) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #edit-requests-view #edit-requests-list.edit-requests-list > .empty {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }

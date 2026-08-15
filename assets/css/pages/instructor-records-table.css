@@ -296,7 +296,7 @@ html body .dashboard-new-records-table.instructor-records-table .dashboard-new-r
 /* Student Progress and procedure summaries are rendered dynamically; keep their
    record grids on this exact same black outline system. */
 html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table.instructor-records-table,
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table.instructor-records-table {
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.instructor-records-table {
   border: 1px solid #000 !important;
   border-collapse: collapse !important;
   border-spacing: 0 !important;
@@ -307,14 +307,14 @@ html body.role-instructor .section.instructor-progress-active #instructorProgres
 }
 
 html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table.instructor-records-table :is(th, td),
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table.instructor-records-table :is(th, td) {
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.instructor-records-table :is(th, td) {
   border: 1px solid #000 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
 }
 
 html body.role-instructor #summaryProcedures .clinical-form-table.prc-replica-table.instructor-records-table :is(thead, thead tr, thead th),
-html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.prc-replica-table.instructor-records-table :is(thead, thead tr, thead th) {
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-clinical-table.instructor-records-table :is(thead, thead tr, thead th) {
   background: #dcecf6 !important;
   color: #111827 !important;
 }
@@ -544,6 +544,89 @@ html body #instructorProgressCopy .ip-clinical-table.instructor-records-table > 
   color: #003f88 !important;
   font-family: Arial, Helvetica, sans-serif !important;
   font-weight: 400 !important;
+}
+
+/* Use one collapsed grid for grouped clinical headers.  Separate borders leave
+   visible gaps where a spanning heading meets its second header row. */
+html body #mainRecordsWrapper > table#active-table.instructor-records-table,
+html body #allRecordsProcedureTables table.all-records-procedure-table.instructor-records-table,
+html body #yearlyStudentRecordsPanel table#yearly-student-records-table.instructor-records-table {
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+}
+
+html body #mainRecordsWrapper > table#active-table.instructor-records-table :is(th, td),
+html body #allRecordsProcedureTables table.all-records-procedure-table.instructor-records-table :is(th, td),
+html body #yearlyStudentRecordsPanel table#yearly-student-records-table.instructor-records-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Replace the dashboard's pale-blue grid color without changing the table's
+   grouped-header layout.  These selectors deliberately match the legacy rules. */
+html body #mainRecordsWrapper table#active-table.prc-replica-table,
+html body #yearlyStudentRecordsPanel table#yearly-student-records-table.prc-replica-table {
+  border-color: #000 !important;
+  outline-color: #000 !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table :is(th, td),
+html body #yearlyStudentRecordsPanel table#yearly-student-records-table.prc-replica-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-color: #000 !important;
+}
+
+html body #mainRecordsWrapper table#active-table.prc-replica-table thead th,
+html body #yearlyStudentRecordsPanel table#yearly-student-records-table.prc-replica-table thead th {
+  border: 1px solid #000 !important;
+  border-color: #000 !important;
+}
+
+/* Match the student PRC grid exactly once the instructor role is active.  The
+   role-qualified selectors override the older dashboard-palette declarations. */
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table,
+html body.role-instructor #yearlyStudentRecordsPanel table#yearly-student-records-table.prc-replica-table {
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+}
+
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table thead th,
+html body.role-instructor #yearlyStudentRecordsPanel table#yearly-student-records-table.prc-replica-table thead th {
+  border: 1px solid #000 !important;
+  background: #dcecf6 !important;
+}
+
+html body.role-instructor #mainRecordsWrapper table#active-table.prc-replica-table tbody td,
+html body.role-instructor #yearlyStudentRecordsPanel table#yearly-student-records-table.prc-replica-table tbody td {
+  border: 1px solid #000 !important;
+  background: #fff !important;
+}
+
+/* Student Progress creates its tables dynamically, so it needs the same final
+   PRC grid rule under its own wrapper. */
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy table.ip-clinical-table.instructor-records-table {
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy table.ip-clinical-table.instructor-records-table thead th {
+  border: 1px solid #000 !important;
+  background: #dcecf6 !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy table.ip-clinical-table.instructor-records-table tbody td {
+  border: 1px solid #000 !important;
+  background: #fff !important;
 }
 
 @media (max-width: 760px) {

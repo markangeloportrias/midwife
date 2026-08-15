@@ -344,10 +344,9 @@
           aria-label="Close modal"
           >&times;</span
         >
-        <h2>Security Verification Failed</h2>
-        <p>
-          The password you entered is incorrect. Please try again or select an
-          action.
+        <h2 id="passwordErrorTitle">Security Verification Failed</h2>
+        <p id="passwordErrorMessage">
+          The password you entered is incorrect. Please try again.
         </p>
 
         <div class="modal-actions-list">
@@ -357,25 +356,6 @@
             id="tryAgainBtn"
           >
             Try Again
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary modal-btn"
-            id="resetPasswordBtn"
-            style="
-              background: rgba(239, 68, 68, 0.08);
-              border-color: rgba(239, 68, 68, 0.2);
-              color: var(--error);
-            "
-          >
-            Reset Password
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary modal-btn"
-            id="goBackBtn"
-          >
-            Go Back
           </button>
         </div>
       </div>
@@ -447,8 +427,10 @@
       );
       const closePasswordModal = document.getElementById("closePasswordModal");
       const tryAgainBtn = document.getElementById("tryAgainBtn");
-      const resetPasswordBtn = document.getElementById("resetPasswordBtn");
-      const goBackBtn = document.getElementById("goBackBtn");
+      const passwordErrorTitle = document.getElementById("passwordErrorTitle");
+      const passwordErrorMessage = document.getElementById(
+        "passwordErrorMessage",
+      );
 
       const infoModal = document.getElementById("infoModal");
       const infoModalTitle = document.getElementById("infoModalTitle");
@@ -618,7 +600,14 @@
         return /^\d{6}$/.test(id);
       }
 
-      function openPasswordErrorModal() {
+      function openPasswordErrorModal(title, message) {
+        if (passwordErrorTitle) {
+          passwordErrorTitle.textContent = title || "Security Verification Failed";
+        }
+        if (passwordErrorMessage) {
+          passwordErrorMessage.textContent =
+            message || "The password you entered is incorrect. Please try again.";
+        }
         if (incorrectPasswordModal) {
           incorrectPasswordModal.classList.add("active");
         }
@@ -704,7 +693,21 @@
 
             shakeCard();
             closePasswordErrorModal();
-            setTimeout(() => openPasswordErrorModal(), 100);
+            const studentNotFound = /student\s*(id\s*)?not found/i.test(
+              errorMessage,
+            );
+            setTimeout(
+              () =>
+                openPasswordErrorModal(
+                  studentNotFound
+                    ? "Student ID Not Found"
+                    : "Security Verification Failed",
+                  studentNotFound
+                    ? "The student ID you entered was not found. Please try again."
+                    : "The password you entered is incorrect. Please try again.",
+                ),
+              100,
+            );
             }
           })
           .catch((error) => {
@@ -942,25 +945,6 @@
           closePasswordErrorModal();
           passwordInput.value = "";
           passwordInput.focus();
-        });
-      }
-
-      if (resetPasswordBtn) {
-        resetPasswordBtn.addEventListener("click", () => {
-          closePasswordErrorModal();
-          showInfoModal(
-            "Password Reset Assistance",
-            "Automated password resetting is currently locked for academic safety. Please request password recovery directly from your administrative supervisor.",
-          );
-        });
-      }
-
-      if (goBackBtn) {
-        goBackBtn.addEventListener("click", () => {
-          closePasswordErrorModal();
-          studentIdInput.value = "";
-          passwordInput.value = "";
-          studentIdInput.focus();
         });
       }
 

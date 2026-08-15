@@ -94,7 +94,11 @@ try {
         $row = $stmt->fetch();
         $credential = $role === 'admin' ? (string)$data['pin_number'] : (string)$data['password'];
         $stored = $role === 'admin' ? ($row['pin_number'] ?? '') : ($row['password'] ?? '');
-        if (!$row || !passwordMatches($credential, $stored)) respond(['ok' => false, 'message' => 'Invalid credentials.'], 401);
+        if (!$row) {
+            $message = $role === 'student' ? 'Student ID not found.' : 'Invalid credentials.';
+            respond(['ok' => false, 'message' => $message], 401);
+        }
+        if (!passwordMatches($credential, $stored)) respond(['ok' => false, 'message' => 'Invalid credentials.'], 401);
         unset($row['password'], $row['pin_number']);
         $token = createSession($pdo, $role, (string)$row['uid'], (int)$config['session_hours']);
         respond(['ok' => true, 'token' => $token, 'role' => $role, 'user' => $row]);
@@ -132,7 +136,7 @@ try {
             respond(['ok' => true, 'students' => $stmt->fetchAll()]);
         }
         if ($method === 'POST' && $id === '') {
-            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['student_id', 'student_name', 'password', 'parent_name', 'contact_number']); // Password is the student's initial login credential.
             $stmt = $pdo->prepare('INSERT INTO students (student_id, student_name, password, parent_name, contact_number) VALUES (?, ?, ?, ?, ?)');
             $stmt->execute([$data['student_id'], $data['student_name'], password_hash((string)$data['password'], PASSWORD_DEFAULT), $data['parent_name'] ?? null, $data['contact_number'] ?? null]);
@@ -140,7 +144,7 @@ try {
             respond(['ok' => true, 'student_id' => $data['student_id']], 201);
         }
         if ($method === 'PATCH' && $id !== '' && in_array($action, ['archive', 'restore'], true)) {
-            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok'=>false,'message'=>'Access denied.'],403);
             $pdo->beginTransaction();
             try {
                 $sql = $action === 'archive'
@@ -187,7 +191,7 @@ try {
             }
         }
         if ($method === 'PATCH' && $id !== '' && $action === '') {
-            if ($user['role'] !== 'admin' && !($user['role'] === 'student' && $user['user_uid'] === $id)) respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if (!in_array($user['role'], ['admin', 'instructor'], true) && !($user['role'] === 'student' && $user['user_uid'] === $id)) respond(['ok'=>false,'message'=>'Access denied.'],403);
             $fields=[];$params=[];foreach(['student_name','parent_name','contact_number','profile_photo'] as $field){if(array_key_exists($field,$data)){$fields[]="$field=?";$params[]=$data[$field];}}
             if(!empty($data['password'])){$fields[]='password=?';$params[]=password_hash((string)$data['password'],PASSWORD_DEFAULT);}
             if(!$fields)respond(['ok'=>false,'message'=>'No student changes supplied.'],422);$params[]=$id;$stmt=$pdo->prepare('UPDATE students SET '.implode(',',$fields).' WHERE student_id=? AND archived_at IS NULL');$stmt->execute($params);audit($pdo,$user,'update','student',$id);respond(['ok'=>true]);
@@ -282,14 +286,14 @@ try {
             respond(['ok' => true, 'blocks' => $stmt->fetchAll()]);
         }
         if ($method === 'POST') {
-            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['label', 'school_year']);
             $stmt = $pdo->prepare('INSERT INTO student_blocks (school_year_id, label, created_by) SELECT id, ?, ? FROM school_years WHERE label=? AND archived_at IS NULL');
             $stmt->execute([$data['label'], $user['user_uid'], $data['school_year']]);
             respond(['ok' => $stmt->rowCount() > 0, 'id' => $pdo->lastInsertId()], 201);
         }
         if ($method === 'PATCH' && $id !== '') {
-            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['label']);
             $stmt = $pdo->prepare('UPDATE student_blocks SET label=? WHERE id=? AND archived_at IS NULL');
             $stmt->execute([$data['label'], $id]);
@@ -312,7 +316,7 @@ try {
             respond(['ok' => true, 'students' => $stmt->fetchAll()]);
         }
         if ($method === 'POST') {
-            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok'=>false,'message'=>'Access denied.'],403);
             requireFields($data, ['student_id', 'block_id']);
             $stmt = $pdo->prepare('INSERT INTO student_block_assignments (student_id, block_id, assigned_by) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE block_id=VALUES(block_id), assigned_by=VALUES(assigned_by), archived_at=NULL, updated_at=NOW()');
             $stmt->execute([$data['student_id'], $data['block_id'], $user['user_uid']]);
@@ -320,7 +324,7 @@ try {
             respond(['ok' => true]);
         }
         if ($method === 'PATCH' && $id !== '' && $action === 'archive') {
-            if ($user['role'] !== 'admin') respond(['ok'=>false,'message'=>'Access denied.'],403);
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok'=>false,'message'=>'Access denied.'],403);
             $stmt = $pdo->prepare('UPDATE student_block_assignments SET archived_at=NOW() WHERE student_id=? AND archived_at IS NULL');
             $stmt->execute([$id]); respond(['ok' => true]);
         }
@@ -477,7 +481,15 @@ try {
             if ($ownerWhere !== '1=1') $params[] = $user['user_uid'];
             $stmt = $pdo->prepare("UPDATE chat_messages SET message=? WHERE id=? AND archived_at IS NULL AND $ownerWhere");
             $stmt->execute($params);
-            respond(['ok'=>$stmt->rowCount()>0]);
+            $updated = $stmt->rowCount() > 0;
+            if (!$updated) {
+                $existingParams = [$id];
+                if ($ownerWhere !== '1=1') $existingParams[] = $user['user_uid'];
+                $existing = $pdo->prepare("SELECT 1 FROM chat_messages WHERE id=? AND archived_at IS NULL AND $ownerWhere");
+                $existing->execute($existingParams);
+                $updated = (bool)$existing->fetchColumn();
+            }
+            respond(['ok'=>$updated]);
         }
         if ($method === 'PATCH' && $id !== '' && in_array($action, ['unsend', 'delete'], true)) {
             $ownerWhere = $user['role'] === 'student'

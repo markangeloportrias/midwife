@@ -657,20 +657,28 @@ html body.role-admin :is(table.clinical-form-table, table.summary-records-table,
 /* Full shared clinical-record design in Instructor Progress details. */
 #instructorProgressCopy .ip-detail .ip-clinical-table th { width: auto !important; height: auto !important; min-height: 0 !important; padding: 9px 8px !important; text-align: center !important; font-size: 10px !important; font-weight: 750 !important; line-height: 1.2 !important; }
 #instructorProgressCopy .ip-detail .ip-clinical-table td { height: auto !important; min-height: 58px !important; padding: 10px 10px !important; font-size: 10px !important; font-weight: 600 !important; line-height: 1.25 !important; }
-#instructorProgressCopy .ip-detail .ip-clinical-table-wrap { overflow-x: auto !important; border: 1px solid #dbe4f2 !important; border-radius: 10px !important; background: #fff !important; }
-/* Read-only summary header: one continuous grouped header, no Actions column. */
-#instructorProgressCopy .ip-detail .ip-clinical-table thead th {
-  border-radius: 0 !important;
+body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail .ip-clinical-table-wrap {
+  overflow-x: auto !important;
   border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
 }
-#instructorProgressCopy .ip-detail .ip-clinical-table thead tr:first-child th:first-child { border-radius: 10px 0 0 0 !important; }
-#instructorProgressCopy .ip-detail .ip-clinical-table thead tr:first-child th:last-child { border-radius: 0 10px 0 0 !important; }
-#instructorProgressCopy .ip-detail .ip-clinical-table thead tr:nth-child(2) th { border-top: 1px solid rgba(255,255,255,.24) !important; }
-
-/* Instructor detail tables use one header row: no spacing or blank band below supervisor columns. */
-#instructorProgressCopy .ip-detail .ip-clinical-table {
+/* The read-only summary uses the same complete PRC grid as student records. */
+body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail .ip-clinical-table {
+  border: 1px solid #000 !important;
   border-collapse: collapse !important;
   border-spacing: 0 !important;
+  border-radius: 0 !important;
+}
+body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail .ip-clinical-table thead th {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #dcecf6 !important;
+}
+body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail .ip-clinical-table tbody td {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
 }
 #instructorProgressCopy .ip-detail-heading {
   display: flex;

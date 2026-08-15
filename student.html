@@ -14,10 +14,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260729-13" />
-    <link rel="stylesheet" href="assets/css/pages/student.css" />
+    <link rel="stylesheet" href="assets/css/pages/student.css?v=20260815-2" />
     <link rel="stylesheet" href="assets/css/components/hero.css?v=20260728-12" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-22" />
-    <link rel="stylesheet" href="assets/css/pages/student-palette.css?v=20260810-27" />
+    <link rel="stylesheet" href="assets/css/pages/student-palette.css?v=20260814-30" />
     <link rel="stylesheet" href="assets/css/pages/student-prc.css?v=20260811-34" />
   </head>
   <body>
@@ -593,13 +593,13 @@
                   <th id="recordDiagnosisHeader" rowspan="2">Complete Diagnosis</th>
                   <th rowspan="2">Date &amp; Time<br />Performed</th>
                   <th rowspan="2">Full Name, Address of Facility &amp;<br />Contact Number</th>
-                  <th colspan="2">Supervised by</th>
-                  <th rowspan="2">License No /<br />Expiry Date</th>
+                  <th colspan="3">Supervised by</th>
                   <th rowspan="2">Actions</th>
                 </tr>
                 <tr>
                   <th>Printed Name and<br />Contact No.</th>
                   <th>Position/<br />Designation</th>
+                  <th>License No /<br />Expiry Date</th>
                 </tr>
               </thead>
               <tbody id="deliveryRecordsBody"></tbody>
@@ -636,7 +636,7 @@
                 <div><div class="chat-conversation-title" id="chatConversationTitle">Select an instructor</div><div class="chat-conversation-subtitle" id="chatConversationSubtitle">Instructor conversation</div></div>
               </div>
               <div class="chat-thread" id="chatThread" aria-live="polite"></div>
-              <div class="chat-compose"><div class="chat-compose-row"><textarea id="chatMessageInput" aria-label="Message your instructor" placeholder="Write a message..."></textarea><button class="chat-send-button" id="sendChatMessageBtn" type="button" disabled><i class="fas fa-paper-plane"></i><span>Send</span></button></div></div>
+              <div class="chat-compose"><div class="chat-compose-row"><div class="chat-compose-field"><textarea id="chatMessageInput" aria-label="Message your instructor" placeholder="Write a message..."></textarea><button class="chat-edit-clear-button" id="cancelChatMessageEditBtn" type="button" hidden aria-label="Cancel editing" title="Cancel editing"><i class="fas fa-xmark"></i></button></div><button class="chat-send-button" id="sendChatMessageBtn" type="button" disabled><i class="fas fa-paper-plane"></i><span>Send</span></button></div></div>
             </div>
           </div>
         </section>
@@ -774,12 +774,12 @@
                   <th rowspan="2">Complete Diagnosis</th>
                   <th rowspan="2">Date &amp; Time<br />Performed</th>
                   <th rowspan="2">Full Name, Address of Facility &amp;<br />Contact Number</th>
-                  <th colspan="2">Supervised by</th>
-                  <th rowspan="2">License No /<br />Expiry Date</th>
+                  <th colspan="3">Supervised by</th>
                 </tr>
                 <tr>
                   <th>Printed Name and<br />Contact No.</th>
                   <th>Position/<br />Designation</th>
+                  <th>License No /<br />Expiry Date</th>
                 </tr>
               </thead>
               <tbody id="summaryTableBody">
@@ -818,7 +818,7 @@
 
         <div class="input-pane" id="deliveryInputPane">
           <section class="clinical-form-section">
-            <h3 class="clinical-form-section-title">Patient and case information</h3>
+            <h3 class="clinical-form-section-title"><i class="fas fa-user" aria-hidden="true"></i><span>Patient and case information</span></h3>
             <div class="clinical-form-grid">
               <div class="form-group"><label>Patient Name</label><input type="text" id="inputPatientName" placeholder="Full name of patient" /></div>
               <div class="form-group"><label>Patient Address</label><input type="text" id="inputPatientAddress" placeholder="Address" /></div>
@@ -828,7 +828,7 @@
           </section>
 
           <section class="clinical-form-section">
-            <h3 class="clinical-form-section-title">Clinical assessment</h3>
+            <h3 class="clinical-form-section-title"><i class="fas fa-stethoscope" aria-hidden="true"></i><span>Clinical assessment</span></h3>
             <div class="clinical-form-grid">
               <div class="form-group full-span"><label>Complete Diagnosis</label><textarea id="inputDiagnosis" placeholder="Complete diagnosis"></textarea></div>
               <div class="form-group" data-internal-exam-field style="display: none"><label>Cervical Dilation / Effacement</label><input type="text" id="inputDilation" placeholder="e.g. 4cm / 50%" /></div>
@@ -837,7 +837,7 @@
           </section>
 
           <section class="clinical-form-section">
-            <h3 class="clinical-form-section-title">Facility information</h3>
+            <h3 class="clinical-form-section-title"><i class="fas fa-hospital" aria-hidden="true"></i><span>Facility information</span></h3>
             <div class="clinical-form-grid">
               <div class="form-group"><label>Facility Name</label><input type="text" id="inputFacilityName" placeholder="Facility name" /></div>
               <div class="form-group"><label>Facility Address</label><input type="text" id="inputFacilityAddress" placeholder="Facility address" /></div>
@@ -846,7 +846,7 @@
           </section>
 
           <section class="clinical-form-section">
-            <h3 class="clinical-form-section-title">Supervisor and license details</h3>
+            <h3 class="clinical-form-section-title"><i class="fas fa-user-doctor" aria-hidden="true"></i><span>Supervisor and license details</span></h3>
             <div class="clinical-form-grid">
               <div class="form-group"><label>Supervisor Name</label><input type="text" id="inputSupervisorName" placeholder="Full name" /></div>
               <div class="form-group"><label>Supervisor Contact</label><input type="text" id="inputSupervisorContact" placeholder="Contact number" /></div>
@@ -857,13 +857,13 @@
           </section>
           <div class="pane-actions">
             <button class="secondary btn-back" id="deliveryModalBackBtn" type="button">
-              <i class="fas fa-arrow-left"></i> Back
+              <i class="fas fa-xmark" aria-hidden="true"></i><span>Cancel</span>
             </button>
             <button class="secondary" id="clearFormBtn" type="button">
-              Clear
+              <i class="fas fa-eraser" aria-hidden="true"></i><span>Clear Form</span>
             </button>
             <button class="primary" id="addRecordBtn" type="button">
-              Add Record
+              <i class="fas fa-circle-plus" aria-hidden="true"></i><span>Add Record</span>
             </button>
           </div>
         </div>
@@ -925,6 +925,7 @@
     <script src="assets/js/api-client.js?v=20260805-chat-actions-1"></script>
     <script>
       let currentStudent = null;
+      let studentEditingChatMessage = null;
       const STANDALONE_STUDENT_KEY = "thesis_standalone_student_v1";
       const STUDENTS_STORAGE_KEY = "thesis_students_v1";
       const CLINICAL_COORDINATOR = {
@@ -2311,6 +2312,7 @@
       function openDeliveryModal() {
         const modalTitle = document.getElementById("deliveryModalTitle");
         const recordType = document.getElementById("deliveryModalRecordType");
+        const submitButton = document.getElementById("addRecordBtn");
         const procedureLabel = activeProcedureConfig?.procedureName || "Clinical Record";
         if (modalTitle) {
           modalTitle.textContent = deliveryEditingIndex >= 0
@@ -2318,6 +2320,11 @@
             : "Add New Case Record";
         }
         if (recordType) recordType.textContent = procedureLabel;
+        if (submitButton) {
+          submitButton.innerHTML = deliveryEditingIndex >= 0
+            ? '<i class="fas fa-floppy-disk" aria-hidden="true"></i><span>Save Changes</span>'
+            : '<i class="fas fa-circle-plus" aria-hidden="true"></i><span>Add Record</span>';
+        }
         deliveryModalOverlay?.classList.add("active");
         requestAnimationFrame(() => {
           document.getElementById("inputPatientName")?.focus();
@@ -3210,17 +3217,105 @@
       }
 
       function confirmStudentChatAction(action) {
-        const label = action === "unsend" ? "Unsend" : "Delete";
+        const label = "Unsend";
         return new Promise((resolve) => {
           showOptionPane({
             title: `${label} message?`,
-            message: `Are you sure you want to ${action} this message?`,
+            message: "Are you sure you want to unsend this message?",
             buttons: [
               { label: "Cancel", variant: "secondary", onClick: () => resolve(false) },
               { label, variant: "danger", onClick: () => resolve(true) },
             ],
           });
         });
+      }
+
+      function requestStudentForwardRecipient() {
+        return new Promise((resolve) => {
+          let recipientInput;
+          let settled = false;
+          const finish = (value) => {
+            if (settled) return;
+            settled = true;
+            optionPaneClose?.removeEventListener("click", handleDismiss);
+            optionPaneOverlay?.removeEventListener("click", handleOverlayDismiss);
+            resolve(value);
+          };
+          const handleDismiss = () => finish(null);
+          const handleOverlayDismiss = (event) => {
+            if (event.target === optionPaneOverlay) finish(null);
+          };
+
+          showOptionPane({
+            title: "Forward Message",
+            message: "",
+            buttons: [
+              { label: "Cancel", variant: "secondary", onClick: () => finish(null) },
+              { label: "Forward", onClick: () => finish(recipientInput?.value.trim() || "") },
+            ],
+          });
+
+          const field = document.createElement("label");
+          field.className = "chat-forward-field";
+          const caption = document.createElement("span");
+          caption.textContent = "Instructor name or username";
+          recipientInput = document.createElement("input");
+          recipientInput.type = "search";
+          recipientInput.className = "chat-forward-input";
+          recipientInput.placeholder = "Search instructor name or username";
+          recipientInput.autocomplete = "off";
+          recipientInput.setAttribute("list", "studentForwardRecipients");
+          const suggestions = document.createElement("datalist");
+          suggestions.id = "studentForwardRecipients";
+          getChatInstructorOptions().forEach((instructor) => {
+            const option = document.createElement("option");
+            option.value = String(instructor.username || instructor.id || "");
+            option.label = String(instructor.display_name || instructor.username || "Instructor");
+            suggestions.appendChild(option);
+          });
+          field.append(caption, recipientInput, suggestions);
+          optionPaneMessage.replaceChildren(field);
+
+          const forwardButton = optionPaneActions.querySelector(".option-pane-btn.primary");
+          if (forwardButton) forwardButton.disabled = true;
+          recipientInput.addEventListener("input", () => {
+            if (forwardButton) forwardButton.disabled = !recipientInput.value.trim();
+          });
+          recipientInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" && recipientInput.value.trim()) {
+              event.preventDefault();
+              forwardButton?.click();
+            }
+          });
+          optionPaneClose?.addEventListener("click", handleDismiss);
+          optionPaneOverlay?.addEventListener("click", handleOverlayDismiss);
+          requestAnimationFrame(() => recipientInput.focus());
+        });
+      }
+
+      function setStudentMessageEdit(message) {
+        const input = document.getElementById("chatMessageInput");
+        const button = document.getElementById("sendChatMessageBtn");
+        const cancelButton = document.getElementById("cancelChatMessageEditBtn");
+        if (!input || !button) return;
+        studentEditingChatMessage = message;
+        input.value = message.text || "";
+        input.placeholder = "Edit message...";
+        button.innerHTML = '<i class="fas fa-check"></i><span>Save</span>';
+        if (cancelButton) cancelButton.hidden = false;
+        updateChatSendState();
+        input.focus();
+        input.select();
+      }
+
+      function cancelStudentMessageEdit() {
+        const input = document.getElementById("chatMessageInput");
+        const button = document.getElementById("sendChatMessageBtn");
+        const cancelButton = document.getElementById("cancelChatMessageEditBtn");
+        studentEditingChatMessage = null;
+        if (button) button.innerHTML = '<i class="fas fa-paper-plane"></i><span>Send</span>';
+        if (cancelButton) cancelButton.hidden = true;
+        updateChatSendState();
       }
 
       async function runStudentChatAction(action, message) {
@@ -3231,18 +3326,54 @@
         }
         let result;
         if (action === "edit") {
-          const updatedText = prompt("Edit message:", message.text || "");
-          if (updatedText === null) return;
-          if (!updatedText.trim()) {
-            showOptionPane({ title: "Message Required", message: "A message cannot be empty." });
+          setStudentMessageEdit(message);
+          return;
+        } else if (action === "forward") {
+          const recipientQuery = await requestStudentForwardRecipient();
+          if (recipientQuery === null) return;
+          const search = recipientQuery.trim().toLowerCase();
+          if (!search) return;
+          const instructors = getChatInstructorOptions();
+          const exactRecipient = instructors.find((instructor) => {
+            const id = String(instructor.id || "").trim().toLowerCase();
+            const username = String(instructor.username || "").trim().toLowerCase();
+            const name = String(instructor.display_name || "").trim().toLowerCase();
+            return id === search || username === search || name === search;
+          });
+          const partialRecipients = instructors.filter((instructor) => {
+            const id = String(instructor.id || "").trim().toLowerCase();
+            const username = String(instructor.username || "").trim().toLowerCase();
+            const name = String(instructor.display_name || "").trim().toLowerCase();
+            return id.includes(search) || username.includes(search) || name.includes(search);
+          });
+          const recipient = exactRecipient || (partialRecipients.length === 1 ? partialRecipients[0] : null);
+          if (!recipient) {
+            showOptionPane({
+              title: "Instructor Not Found",
+              message: partialRecipients.length > 1
+                ? "More than one instructor matches. Enter the exact username."
+                : "No registered instructor matches that name or username.",
+            });
             return;
           }
-          result = await ApiClient.editChatMessage(message.id, updatedText.trim());
+          result = await ApiClient.sendChatMessage({
+            student_id: getCurrentStudentId(),
+            student_name: currentStudent?.student_name || "Student",
+            instructor_id: recipient.id,
+            instructor_name: recipient.display_name || recipient.username || "Instructor",
+            sender_role: "student",
+            sender_name: currentStudent?.student_name || "Student",
+            message: `[Forwarded]\n${message.text || ""}`,
+          });
+          if (result?.ok) {
+            showOptionPane({
+              title: "Message Forwarded",
+              message: `The message was forwarded to ${recipient.display_name || recipient.username || "the instructor"}.`,
+            });
+          }
         } else {
-          if (!(await confirmStudentChatAction(action))) return;
-          result = action === "unsend"
-            ? await ApiClient.unsendChatMessage(message.id)
-            : await ApiClient.deleteChatMessage(message.id);
+          if (!(await confirmStudentChatAction("unsend"))) return;
+          result = await ApiClient.unsendChatMessage(message.id);
         }
         if (!result || !result.ok) {
           showOptionPane({ title: "Message Not Updated", message: (result && result.message) || "Unable to update this message." });
@@ -3305,7 +3436,7 @@
             toggle.innerHTML = '<i class="fas fa-ellipsis-vertical"></i>';
             const menu = document.createElement("div");
             menu.className = "student-chat-message-menu";
-            menu.innerHTML = '<button type="button" data-student-chat-action="edit"><i class="fas fa-pen"></i>Edit</button><button type="button" data-student-chat-action="unsend"><i class="fas fa-reply"></i>Unsend</button><button type="button" class="danger" data-student-chat-action="delete"><i class="fas fa-trash"></i>Delete</button>';
+            menu.innerHTML = '<button type="button" data-student-chat-action="edit"><i class="fas fa-pen"></i>Edit</button><button type="button" data-student-chat-action="forward"><i class="fas fa-share"></i>Forward</button><button type="button" class="danger" data-student-chat-action="unsend"><i class="fas fa-rotate-left"></i>Unsend</button>';
             toggle.addEventListener("click", (event) => {
               event.stopPropagation();
               const isOpen = menu.classList.contains("open");
@@ -3511,7 +3642,7 @@
           const table = document.createElement("table");
           table.className = "clinical-form-table procedure-records-table prc-procedure-table";
           table.style.minWidth = "1180px";
-          table.innerHTML = `<colgroup><col style="width:20.83%"><col style="width:5.48%"><col style="width:14.01%"><col style="width:7.92%"><col style="width:18.27%"><col style="width:14.01%"><col style="width:9.74%"><col style="width:9.74%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${getPrcDiagnosisHeader(key)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead>`;
+          table.innerHTML = `<colgroup><col style="width:20.83%"><col style="width:5.48%"><col style="width:14.01%"><col style="width:7.92%"><col style="width:18.27%"><col style="width:14.01%"><col style="width:9.74%"><col style="width:9.74%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${getPrcDiagnosisHeader(key)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="3">Supervised by</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th><th>License No /<br>Expiry Date</th></tr></thead>`;
           const body = document.createElement("tbody");
           if (!records.length) {
             const row = document.createElement("tr");
@@ -3785,22 +3916,35 @@
         const selectedInstructor = getResolvedChatInstructor(select?.value || getStoredChatInstructorId());
         if (!text || !selectedInstructor) return;
         setStoredChatInstructorId(selectedInstructor.id);
-        const result = await ApiClient.sendChatMessage({
-          student_id: getCurrentStudentId(),
-          student_name: currentStudent?.student_name || "Student",
-          instructor_id: selectedInstructor.id,
-          instructor_name: selectedInstructor.display_name || selectedInstructor.username || "Instructor",
-          sender_role: "student",
-          sender_name: currentStudent?.student_name || "Student",
-          message: text,
-        });
+        const editingMessage = studentEditingChatMessage;
+        const result = editingMessage
+          ? await ApiClient.editChatMessage(editingMessage.id, text)
+          : await ApiClient.sendChatMessage({
+              student_id: getCurrentStudentId(),
+              student_name: currentStudent?.student_name || "Student",
+              instructor_id: selectedInstructor.id,
+              instructor_name: selectedInstructor.display_name || selectedInstructor.username || "Instructor",
+              sender_role: "student",
+              sender_name: currentStudent?.student_name || "Student",
+              message: text,
+            });
         if (!result?.ok) {
-          showOptionPane({ title: "Message Not Sent", message: result?.message || "Unable to send your message." });
+          showOptionPane({ title: editingMessage ? "Message Not Updated" : "Message Not Sent", message: result?.message || "Unable to update your message." });
           return;
         }
         input.value = "";
+        cancelStudentMessageEdit();
         updateChatSendState();
         renderChatThread();
+      });
+
+      document.getElementById("cancelChatMessageEditBtn")?.addEventListener("click", () => {
+        const input = document.getElementById("chatMessageInput");
+        if (input) {
+          input.value = "";
+          input.focus();
+        }
+        cancelStudentMessageEdit();
       });
 
       const chatMessageInput = document.getElementById("chatMessageInput");
@@ -3817,6 +3961,12 @@
       };
       chatMessageInput?.addEventListener("input", updateChatSendState);
       chatMessageInput?.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && studentEditingChatMessage) {
+          event.preventDefault();
+          chatMessageInput.value = "";
+          cancelStudentMessageEdit();
+          return;
+        }
         if (event.key === "Enter" && !event.shiftKey) {
           event.preventDefault();
           if (!sendChatMessageBtn?.disabled) sendChatMessageBtn.click();
@@ -3830,6 +3980,10 @@
 
       document.getElementById("chatInstructorSelect")?.addEventListener("change", (event) => {
         setStoredChatInstructorId(event.target.value);
+        if (studentEditingChatMessage) {
+          chatMessageInput.value = "";
+          cancelStudentMessageEdit();
+        }
         updateChatInstructorHint();
         renderChatThread();
       });
@@ -4177,7 +4331,7 @@
         const emptyRows = Array.from({ length: blankRows }, () => "<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>").join("");
         return `<table class="prc-export-table">
           <colgroup><col style="width:18.8%"><col style="width:5%"><col style="width:12.6%"><col style="width:7.2%"><col style="width:16.5%"><col style="width:12.8%"><col style="width:8.7%"><col style="width:9%"><col style="width:9.4%"></colgroup>
-          <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case<br>No.</th><th rowspan="2">${getPrcDiagnosisHeader(procedureKey)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of<br>Facility &amp; Contact Number</th><th colspan="3">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position /<br>Designation</th><th>Signature</th></tr></thead>
+          <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case<br>No.</th><th rowspan="2">${getPrcDiagnosisHeader(procedureKey)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of<br>Facility &amp; Contact Number</th><th colspan="4">Supervised by</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position /<br>Designation</th><th>Signature</th><th>License No /<br>Expiry Date</th></tr></thead>
           <tbody>${rows}${emptyRows}</tbody>
         </table>`;
       }

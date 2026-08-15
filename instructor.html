@@ -14,20 +14,15 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260726-12" />
-    <link rel="stylesheet" href="assets/css/pages/instructor.css" />00296b
-003f88
-00509d
-fdc500
-ffd500
-apply these colors
+    <link rel="stylesheet" href="assets/css/pages/instructor.css?v=20260815-51" />
     <link rel="stylesheet" href="assets/css/components/hero.css?v=20260728-12" />
     <link rel="stylesheet" href="assets/css/components/buttons.css" />
     <link rel="stylesheet" href="assets/css/components/forms.css" />
-    <link rel="stylesheet" href="assets/css/components/tables.css?v=20260807-3" />
+    <link rel="stylesheet" href="assets/css/components/tables.css?v=20260813-1" />
     <link rel="stylesheet" href="assets/css/components/modals.css" />
     <link rel="stylesheet" href="assets/css/pages/reports.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-20" />
-<link rel="stylesheet" href="assets/css/pages/instructor-palette.css?v=20260810-18" />
+<link rel="stylesheet" href="assets/css/pages/instructor-palette.css?v=20260815-65" />
   </head>
   <body>
     <div class="dashboard">
@@ -197,6 +192,9 @@ apply these colors
                 <i class="fas fa-comments"></i><span>Messages</span>
               </button>
             <div class="sidebar-label">Administration</div>
+              <button type="button" class="sidebar-nav-item" data-type="students" id="btn-nav-manage-students">
+                <i class="fas fa-user-graduate"></i><span>Manage Students</span>
+              </button>
               <button type="button" class="sidebar-nav-item" data-type="settings" id="btn-nav-settings">
                 <i class="fas fa-gear"></i><span>Account Settings</span>
               </button>
@@ -299,7 +297,12 @@ apply these colors
                 </div>
               </div>
               <div class="messages-composer">
-                <textarea id="messagesTextarea" placeholder="Select a student to write a message..." disabled></textarea>
+                <div class="messages-composer-field">
+                  <textarea id="messagesTextarea" placeholder="Select a student to write a message..." disabled></textarea>
+                  <button id="messagesCancelEditBtn" class="message-edit-clear-button" type="button" hidden aria-label="Cancel editing" title="Cancel editing">
+                    <i class="fas fa-xmark"></i>
+                  </button>
+                </div>
                 <button id="messagesSendBtn" class="btn btn-primary" type="button" disabled>
                   <i class="fas fa-paper-plane"></i><span>Send</span>
                 </button>
@@ -349,9 +352,14 @@ apply these colors
         <section class="settings-view" id="settingsView">
           <div class="settings-card">
             <div class="section-header-row">
-              <div>
-                <h2>Account Settings</h2>
-                <p>Update your profile photo and instructor details.</p>
+              <div class="instructor-title-heading">
+                <span class="instructor-title-icon" aria-hidden="true">
+                  <i class="fas fa-gear"></i>
+                </span>
+                <div class="instructor-title-copy">
+                  <h2>Account Settings</h2>
+                  <p>Update your profile photo and instructor details.</p>
+                </div>
               </div>
             </div>
             <div class="settings-photo-row">
@@ -397,18 +405,34 @@ apply these colors
         <div class="content-section">
           <div class="section">
             <div class="section-header-row">
-              <div>
-                <h2 id="active-title">
-                  <span id="active-title-text">Recent Records Overview</span>
-                  <span class="badge" id="count-active">0</span>
-                </h2>
-                <small id="active-subtitle"
-                  >Latest clinical activities recorded by students.</small
-                >
+              <div class="instructor-title-heading">
+                <span class="instructor-title-icon" aria-hidden="true">
+                  <i id="active-title-icon" class="fas fa-chart-line"></i>
+                </span>
+                <div class="instructor-title-copy">
+                  <h2 id="active-title">
+                    <span id="active-title-text">Recent Records Overview</span>
+                    <span class="badge" id="count-active">0</span>
+                  </h2>
+                  <small id="active-subtitle"
+                    >Latest clinical activities recorded by students.</small
+                  >
+                </div>
               </div>
-              <button class="btn btn-primary view-records-btn" id="refreshRecordsBtn" type="button">
-                <i class="fas fa-sync-alt"></i> Refresh Records
-              </button>
+              <div class="section-header-actions">
+                <button class="btn btn-secondary" id="currentRecordsBackToBlocks" type="button" style="display: none">
+                  <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Blocks
+                </button>
+                <button class="btn btn-secondary" id="currentRecordsBackToStudents" type="button" style="display: none">
+                  <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Students
+                </button>
+                <button class="btn btn-primary view-records-btn" id="refreshRecordsBtn" type="button">
+                  <i class="fas fa-sync-alt"></i> Refresh Records
+                </button>
+                <button class="btn btn-secondary" id="instructorRefreshSchoolYearsBtn" type="button" style="display: none">
+                  <i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh
+                </button>
+              </div>
             </div>
             <div class="procedure-tabs" id="instructorProcedureTabs" aria-label="My Records procedures">
               <button type="button" class="procedure-tab active" data-instructor-procedure="my-records">All Records</button>
@@ -420,22 +444,28 @@ apply these colors
             </div>
             <div id="currentRecordsStudentRoster" class="table-wrapper" style="display:none">
               <div class="current-records-navigator">
-                <button type="button" id="currentRecordsBackToBlocks" class="current-records-back" style="display:none">
-                  <i class="fas fa-arrow-left" aria-hidden="true"></i> Registered blocks
-                </button>
                 <div>
                   <h3 id="currentRecordsLevelTitle">Registered Blocks</h3>
                   <p id="currentRecordsLevelSubtitle">Choose a block to view its students and clinical records.</p>
                 </div>
               </div>
-              <table class="dashboard-data-table admin-premium-table">
+              <table class="registered-blocks-table">
+                <colgroup><col style="width:6%"><col style="width:29%"><col style="width:29%"><col style="width:15%"><col style="width:21%"></colgroup>
                 <thead><tr><th>No.</th><th id="currentRecordsColumnTwo">Registered Block</th><th id="currentRecordsColumnThree">Academic Year</th><th id="currentRecordsColumnFour">Students</th><th>Actions</th></tr></thead>
                 <tbody id="currentRecordsStudentRosterBody"></tbody>
               </table>
               <div class="empty" id="currentRecordsStudentRosterEmpty" style="display:none">No registered blocks found.</div>
             </div>
-            <div id="mainRecordsWrapper" class="table-wrapper">
-              <table id="active-table" class="procedure-records-table" style="display: table">
+            <div id="mainRecordsWrapper" class="prc-source-table-wrap">
+              <table
+                id="active-table"
+                class="prc-source-table"
+                aria-describedby="active-subtitle"
+                style="display: table"
+              >
+                <caption class="sr-only">
+                  Clinical records with patient, facility, supervising professional, and action information.
+                </caption>
                 <colgroup>
                   <col style="width: 210px" />
                   <col style="width: 78px" />
@@ -445,22 +475,22 @@ apply these colors
                   <col style="width: 175px" />
                   <col style="width: 145px" />
                   <col style="width: 135px" />
-                  <col style="width: 96px" />
+                  <col style="width: 136px" />
                 </colgroup>
                 <thead>
                   <tr>
-                    <th rowspan="2">Name and Address of Patient</th>
-                    <th rowspan="2">Case No.</th>
-                    <th rowspan="2">Complete Diagnosis</th>
-                    <th rowspan="2">Date &amp; Time Performed</th>
-                    <th rowspan="2">Full Name, Address of Facility &amp; Contact Number</th>
-                    <th colspan="2">Supervised by</th>
-                    <th rowspan="2">License No /<br />Expiry Date</th>
-                    <th rowspan="2">Action</th>
+                    <th scope="col" rowspan="2">Name and Address of Patient</th>
+                    <th scope="col" rowspan="2">Case No.</th>
+                    <th scope="col" rowspan="2">Complete Diagnosis</th>
+                    <th scope="col" rowspan="2">Date &amp; Time Performed</th>
+                    <th scope="col" rowspan="2">Full Name, Address of Facility &amp; Contact Number</th>
+                    <th scope="colgroup" colspan="3">Supervised by</th>
+                    <th scope="col" rowspan="2">Action</th>
                   </tr>
                   <tr>
-                    <th>Printed Name and Contact No.</th>
-                    <th>Position/<br />Designation</th>
+                    <th scope="col">Printed Name and Contact No.</th>
+                    <th scope="col">Position/<br />Designation</th>
+                    <th scope="col">License No /<br />Expiry Date</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -468,10 +498,15 @@ apply these colors
               <!-- New table for yearly reports -->
               <div id="yearly-report-view" style="display: none; padding: 10px">
               <div class="workspace-header">
-                <div>
-                  <div class="workspace-title">Annual Records</div>
-                  <div class="workspace-subtitle">
-                    Review student records organized by school year, block, and student.
+                <div class="instructor-title-heading">
+                  <span class="instructor-title-icon" aria-hidden="true">
+                    <i class="fas fa-calendar-check"></i>
+                  </span>
+                  <div class="instructor-title-copy">
+                    <div class="workspace-title">Annual Records</div>
+                    <div class="workspace-subtitle">
+                      Review student records organized by school year, block, and student.
+                    </div>
                   </div>
                 </div>
                 <button class="btn btn-secondary btn-back yearly-back-hidden" id="yearlyInstructorBackBtn" type="button" style="display: none"><i class="fas fa-arrow-left"></i> Back</button>
@@ -546,10 +581,10 @@ apply these colors
                   <button type="button" data-yearly-procedure="suturing">Perineal Suturing</button>
                   <button type="button" data-yearly-procedure="iv-insertion">IV Insertion</button>
                   <button type="button" data-yearly-procedure="internal-exam">Internal Examination</button>
-                </nav><div class="table-wrap clinical-form-table-container">
-                  <table id="yearly-student-records-table" class="clinical-form-table procedure-records-table" style="width:100%">
-                    <colgroup><col style="width:16%"><col style="width:7%"><col style="width:18%"><col style="width:10%"><col style="width:18%"><col style="width:14%"><col style="width:9%"><col style="width:8%"></colgroup>
-                    <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised By</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead>
+                </nav><div class="prc-source-table-wrap">
+                  <table id="yearly-student-records-table" class="prc-source-table" style="width:100%">
+                    <colgroup><col style="width:15%"><col style="width:7%"><col style="width:17%"><col style="width:10%"><col style="width:17%"><col style="width:13%"><col style="width:9%"><col style="width:8%"><col style="width:12%"></colgroup>
+                    <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="3">Supervised by</th><th rowspan="2">Action</th></tr><tr><th>Printed Name and Contact No.</th><th>Position/<br>Designation</th><th>License No /<br>Expiry Date</th></tr></thead>
                     <tbody id="yearlyStudentRecordsTbody"></tbody>
                   </table>
                 </div>
@@ -623,7 +658,6 @@ apply these colors
                   ></div>
                 </div>
               </div>
-            </div>
               <!-- Students View -->
               <div id="students-view" class="students-view-shell" style="display: none">
                 <div class="students-panel-header">
@@ -631,8 +665,8 @@ apply these colors
                     <i class="fas fa-user-graduate" aria-hidden="true"></i>
                   </div>
                   <div>
-                    <h3><span id="studentsNavTitle">Student Roster</span> <span id="studentsViewCount">0</span></h3>
-                    <p id="studentsNavSubtitle">Organize students by academic year and block.</p>
+                    <h3><span id="studentsNavTitle">Manage Students</span> <span id="studentsViewCount">0</span></h3>
+                    <p id="studentsNavSubtitle">Manage students within existing academic years and blocks.</p>
                   </div>
                 </div>
                 <div
@@ -657,31 +691,23 @@ apply these colors
                   class="students-panel active"
                   id="instructorStudentsYearPanel"
                 >
-                  <div class="student-panel-toolbar"
-                    style="
-                      display: flex;
-                      gap: 12px;
-                      margin-bottom: 16px;
-                      flex-wrap: wrap;
-                    "
-                  >
-                    <button
-                      id="instructorRefreshSchoolYearsBtn"
-                      class="btn btn-secondary"
-                      type="button"
-                    >
-                      <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                  </div>
                   <div class="table-wrapper">
                     <table id="instructor-school-years-table" class="dashboard-data-table admin-premium-table">
+                      <caption class="sr-only">Academic years with their block and student totals.</caption>
+                      <colgroup>
+                        <col class="school-year-number-column" />
+                        <col />
+                        <col class="school-year-count-column" />
+                        <col class="school-year-count-column" />
+                        <col class="school-year-action-column" />
+                      </colgroup>
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>Academic Year</th>
-                          <th>Blocks</th>
-                          <th>Students</th>
-                          <th aria-label="Open school year"></th>
+                          <th scope="col">No.</th>
+                          <th scope="col">Academic Year</th>
+                          <th scope="col">Blocks</th>
+                          <th scope="col">Students</th>
+                          <th scope="col">Actions</th>
                         </tr>
                       </thead>
                       <tbody id="instructorSchoolYearsTbody"></tbody>
@@ -701,14 +727,26 @@ apply these colors
                   id="instructorStudentsBlockPanel"
                   style="display: none"
                 >
+                  <div class="student-panel-toolbar" style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap">
+                    <button id="instructorOpenAddBlockBtn" class="btn btn-primary" type="button">
+                      <i class="fas fa-plus" aria-hidden="true"></i> Add Block
+                    </button>
+                  </div>
                   <div class="table-wrapper">
                     <table id="instructor-blocks-table" class="dashboard-data-table admin-premium-table">
+                      <caption class="sr-only">Blocks registered for the selected academic year.</caption>
+                      <colgroup>
+                        <col class="block-number-column" />
+                        <col />
+                        <col class="block-count-column" />
+                        <col class="block-action-column" />
+                      </colgroup>
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>Block Label</th>
-                          <th>Students</th>
-                          <th aria-label="Edit or open block"></th>
+                          <th scope="col">No.</th>
+                          <th scope="col">Block Label</th>
+                          <th scope="col">Students</th>
+                          <th scope="col">Actions</th>
                         </tr>
                       </thead>
                       <tbody id="instructorBlocksTbody"></tbody>
@@ -826,8 +864,8 @@ apply these colors
                   </div>
                 </div>
               </div>
+              <div class="empty" id="empty-active">No records saved yet.</div>
             </div>
-            <div class="empty" id="empty-active">No records saved yet.</div>
           </div>
         </div>
       </div>
@@ -835,20 +873,27 @@ apply these colors
 
     <!-- Detail Modal -->
     <div class="detail-modal-overlay" id="detailModalOverlay">
-      <div class="detail-modal" id="detailModal">
+      <div class="detail-modal" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
         <div class="detail-modal-header">
-          <div class="detail-modal-title">Record Details</div>
-          <button class="detail-modal-close" id="detailCloseBtn">
+          <div class="detail-modal-title" id="detailModalTitle">Record Details</div>
+          <button class="detail-modal-close" id="detailCloseBtn" type="button" aria-label="Close record details">
             <i class="fas fa-times"></i>
           </button>
         </div>
         <div id="detailContent"></div>
         <div class="detail-actions">
-          <button class="secondary" id="detailHistoryAction" type="button">Revision History</button>
-          <button class="secondary" id="detailChangesAction" type="button">Request Changes</button>
-          <button class="secondary" id="detailInvalidAction" type="button">Mark Invalid</button>
-          <button class="primary" id="detailVerifyAction" type="button">Verify Record</button>
-          <button class="secondary" id="detailCloseAction">Close</button>
+          <button class="secondary" id="detailHistoryAction" type="button">
+            <i class="fas fa-history" aria-hidden="true"></i><span>History</span>
+          </button>
+          <button class="secondary" id="detailChangesAction" type="button">
+            <i class="fas fa-pen-to-square" aria-hidden="true"></i><span>Request Changes</span>
+          </button>
+          <button class="secondary" id="detailInvalidAction" type="button">
+            <i class="fas fa-ban" aria-hidden="true"></i><span>Mark Invalid</span>
+          </button>
+          <button class="primary" id="detailVerifyAction" type="button">
+            <i class="fas fa-circle-check" aria-hidden="true"></i><span>Verify Record</span>
+          </button>
         </div>
       </div>
     </div>
@@ -978,6 +1023,7 @@ apply these colors
         "globalOptionPaneActions",
       );
       const activeTitleText = document.getElementById("active-title-text");
+      const activeTitleIcon = document.getElementById("active-title-icon");
       const activeSubtitle = document.getElementById("active-subtitle");
       const activeTbody = document.querySelector("#active-table tbody");
       const emptyActive = document.getElementById("empty-active");
@@ -1002,6 +1048,7 @@ apply these colors
       // --- Simple local chat for instructor <> students ---
       let instructorChats = {};
       let activeChatKey = null;      let instructorChatStudents = [];
+      let instructorEditingChatMessage = null;
       let chatStudentMatches = [];
 
       async function loadInstructorChatStudents() {
@@ -1087,6 +1134,7 @@ apply these colors
 
       function selectConversation(key) {
         activeChatKey = key;
+        cancelInstructorMessageEdit();
         renderConversations();
         const meta = instructorChats[key];
         const title = document.getElementById("chatActiveTitle");
@@ -1109,11 +1157,11 @@ apply these colors
       }
 
       function confirmInstructorChatAction(action) {
-        const label = action === "unsend" ? "Unsend" : "Delete";
+        const label = "Unsend";
         return new Promise((resolve) => {
           showGlobalOptionPane({
             title: `${label} message?`,
-            message: `Are you sure you want to ${action} this message?`,
+            message: "Are you sure you want to unsend this message?",
             buttons: [
               { label: "Cancel", variant: "secondary", onClick: () => resolve(false) },
               { label, variant: "danger", onClick: () => resolve(true) },
@@ -1121,24 +1169,133 @@ apply these colors
           });
         });
       }
+
+      function requestInstructorForwardRecipient() {
+        return new Promise((resolve) => {
+          let recipientInput;
+          showGlobalOptionPane({
+            title: "Forward Message",
+            message: "",
+            buttons: [
+              { label: "Cancel", variant: "secondary", onClick: () => resolve(null) },
+              { label: "Forward", onClick: () => resolve(recipientInput?.value.trim() || "") },
+            ],
+          });
+
+          const field = document.createElement("label");
+          field.className = "chat-forward-field";
+          const caption = document.createElement("span");
+          caption.textContent = "Student ID or name";
+          recipientInput = document.createElement("input");
+          recipientInput.type = "search";
+          recipientInput.className = "chat-forward-input";
+          recipientInput.placeholder = "Search student ID or name";
+          recipientInput.autocomplete = "off";
+          recipientInput.setAttribute("list", "instructorForwardRecipients");
+          const suggestions = document.createElement("datalist");
+          suggestions.id = "instructorForwardRecipients";
+          instructorChatStudents.forEach((student) => {
+            const option = document.createElement("option");
+            option.value = String(student.student_id || student.id || "");
+            option.label = String(student.student_name || student.name || "Student");
+            suggestions.appendChild(option);
+          });
+          field.append(caption, recipientInput, suggestions);
+          globalOptionPaneMessage.replaceChildren(field);
+
+          const forwardButton = globalOptionPaneActions.querySelector(".option-pane-btn.primary");
+          if (forwardButton) forwardButton.disabled = true;
+          recipientInput.addEventListener("input", () => {
+            if (forwardButton) forwardButton.disabled = !recipientInput.value.trim();
+          });
+          recipientInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" && recipientInput.value.trim()) {
+              event.preventDefault();
+              forwardButton?.click();
+            }
+          });
+          requestAnimationFrame(() => recipientInput.focus());
+        });
+      }
+
+      function setInstructorMessageEdit(message) {
+        const input = document.getElementById("messagesTextarea");
+        const button = document.getElementById("messagesSendBtn");
+        const cancelButton = document.getElementById("messagesCancelEditBtn");
+        if (!input || !button) return;
+        instructorEditingChatMessage = message;
+        input.value = message.text || "";
+        input.placeholder = "Edit message...";
+        button.disabled = !input.value.trim();
+        button.innerHTML = '<i class="fas fa-check"></i><span>Save</span>';
+        if (cancelButton) cancelButton.hidden = false;
+        input.focus();
+        input.select();
+      }
+
+      function cancelInstructorMessageEdit() {
+        const input = document.getElementById("messagesTextarea");
+        const button = document.getElementById("messagesSendBtn");
+        const cancelButton = document.getElementById("messagesCancelEditBtn");
+        instructorEditingChatMessage = null;
+        if (!input || !button) return;
+        input.placeholder = activeChatKey && instructorChats[activeChatKey]
+          ? `Message ${instructorChats[activeChatKey].name}...`
+          : "Select a student to write a message...";
+        button.innerHTML = '<i class="fas fa-paper-plane"></i><span>Send</span>';
+        if (cancelButton) cancelButton.hidden = true;
+      }
+
       async function runInstructorChatAction(action, message) {
         if (!message || message.from !== "instructor") return;
         if (!message.id) { alert("This message cannot be identified. Refresh the conversation and try again."); return; }
         let result;
         if (action === "edit") {
-          const updatedText = prompt("Edit message:", message.text || "");
-          if (updatedText === null) return;
-          if (!updatedText.trim()) {
-            alert("A message cannot be empty.");
+          setInstructorMessageEdit(message);
+          return;
+        } else if (action === "forward") {
+          if (!instructorChatStudents.length) await loadInstructorChatStudents();
+          const recipientQuery = await requestInstructorForwardRecipient();
+          if (recipientQuery === null) return;
+          const search = recipientQuery.trim().toLowerCase();
+          if (!search) return;
+          const exactRecipient = instructorChatStudents.find((student) => {
+            const id = String(student.student_id || student.id || "").trim().toLowerCase();
+            const name = String(student.student_name || student.name || "").trim().toLowerCase();
+            return id === search || name === search;
+          });
+          const partialRecipients = instructorChatStudents.filter((student) => {
+            const id = String(student.student_id || student.id || "").trim().toLowerCase();
+            const name = String(student.student_name || student.name || "").trim().toLowerCase();
+            return id.includes(search) || name.includes(search);
+          });
+          const recipient = exactRecipient || (partialRecipients.length === 1 ? partialRecipients[0] : null);
+          if (!recipient) {
+            alert(partialRecipients.length > 1
+              ? "More than one student matches. Enter the exact student ID."
+              : "Student not found.");
             return;
           }
-          result = await ApiClient.editChatMessage(message.id, updatedText.trim());
+          const recipientId = String(recipient.student_id || recipient.id || "").trim();
+          const recipientName = String(recipient.student_name || recipient.name || "Student").trim();
+          result = await ApiClient.sendChatMessage({
+            student_id: recipientId,
+            student_name: recipientName,
+            instructor_id: currentInstructor?.id || currentInstructor?.uid || currentInstructor?.username || "",
+            instructor_name: currentInstructor?.display_name || currentInstructorName,
+            sender_role: "instructor",
+            sender_name: currentInstructor?.display_name || currentInstructorName,
+            message: `[Forwarded]\n${message.text || ""}`,
+          });
+          if (result?.ok) {
+            showGlobalOptionPane({
+              title: "Message Forwarded",
+              message: `The message was forwarded to ${recipientName}.`,
+            });
+          }
         } else {
-          const label = action === "unsend" ? "unsend" : "delete";
-          if (!(await confirmInstructorChatAction(label))) return;
-          result = action === "unsend"
-            ? await ApiClient.unsendChatMessage(message.id)
-            : await ApiClient.deleteChatMessage(message.id);
+          if (!(await confirmInstructorChatAction("unsend"))) return;
+          result = await ApiClient.unsendChatMessage(message.id);
         }
         if (!result || !result.ok) {
           alert((result && result.message) || "Unable to update this message.");
@@ -1176,10 +1333,10 @@ apply these colors
             menuButton.className = "chat-message-menu-toggle";
             menuButton.setAttribute("aria-label", "Message options");
             menuButton.setAttribute("title", "Message options");
-            menuButton.innerHTML = '<i class="fas fa-ellipsis"></i>';
+            menuButton.innerHTML = '<i class="fas fa-ellipsis-vertical"></i>';
             const menu = document.createElement("div");
             menu.className = "chat-message-menu";
-            menu.innerHTML = '<button type="button" data-chat-action="edit"><i class="fas fa-pen"></i>Edit</button><button type="button" data-chat-action="unsend"><i class="fas fa-reply"></i>Unsend</button><button type="button" data-chat-action="delete" class="danger"><i class="fas fa-trash"></i>Delete</button>';
+            menu.innerHTML = '<button type="button" data-chat-action="edit"><i class="fas fa-pen"></i>Edit</button><button type="button" data-chat-action="forward"><i class="fas fa-share"></i>Forward</button><button type="button" data-chat-action="unsend" class="danger"><i class="fas fa-rotate-left"></i>Unsend</button>';
             menuButton.addEventListener("click", (event) => {
               event.stopPropagation();
               closeInstructorChatMenus(menu);
@@ -1213,19 +1370,27 @@ apply these colors
       async function sendInstructorMessage(text) {
         if (!activeChatKey) return;
         const conv = instructorChats[activeChatKey];
-        const result = await ApiClient.sendChatMessage({
-          student_id: conv.id,
-          student_name: conv.name,
-          instructor_id: currentInstructor?.id || currentInstructor?.uid || currentInstructor?.username || "",
-          instructor_name: currentInstructor?.display_name || currentInstructorName,
-          sender_role: "instructor",
-          sender_name: currentInstructor?.display_name || currentInstructorName,
-          message: text.trim(),
-        });
-        if (!result?.ok) return;
+        const editingMessage = instructorEditingChatMessage;
+        const result = editingMessage
+          ? await ApiClient.editChatMessage(editingMessage.id, text.trim())
+          : await ApiClient.sendChatMessage({
+              student_id: conv.id,
+              student_name: conv.name,
+              instructor_id: currentInstructor?.id || currentInstructor?.uid || currentInstructor?.username || "",
+              instructor_name: currentInstructor?.display_name || currentInstructorName,
+              sender_role: "instructor",
+              sender_name: currentInstructor?.display_name || currentInstructorName,
+              message: text.trim(),
+            });
+        if (!result?.ok) {
+          showOptionMessage("Message Not Updated", result?.message || "Unable to update this message.");
+          return false;
+        }
+        cancelInstructorMessageEdit();
         await loadInstructorChats();
         renderConversations();
         renderMessages();
+        return true;
       }
 
       // UI wiring
@@ -1250,18 +1415,34 @@ apply these colors
         }
         // Main messages view send
         const sendMain = document.getElementById("messagesSendBtn");
+        const cancelEditMain = document.getElementById("messagesCancelEditBtn");
         if (sendMain) {
           sendMain.addEventListener("click", async () => {
             const input = document.getElementById("messagesTextarea");
             const v = input && input.value;
             if (!v || !v.trim()) return;
             if (!activeChatKey) return;
-            await sendInstructorMessage(v);
-            if (input) input.value = "";
+            const saved = await sendInstructorMessage(v);
+            if (saved && input) input.value = "";
             renderMessages();
           });
         }
+        cancelEditMain?.addEventListener("click", () => {
+          const input = document.getElementById("messagesTextarea");
+          if (input) {
+            input.value = "";
+            input.focus();
+          }
+          cancelInstructorMessageEdit();
+        });
         document.getElementById("messagesTextarea")?.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && instructorEditingChatMessage) {
+            e.preventDefault();
+            const input = e.currentTarget;
+            input.value = "";
+            cancelInstructorMessageEdit();
+            return;
+          }
           if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             sendMain?.click();
@@ -1286,6 +1467,9 @@ apply these colors
       );
       const instructorBlocksEmpty = document.getElementById(
         "instructorBlocksEmpty",
+      );
+      const instructorOpenAddBlockBtn = document.getElementById(
+        "instructorOpenAddBlockBtn",
       );
       const instructorOpenAddStudentBtn = document.getElementById(
         "instructorOpenAddStudentBtn",
@@ -2841,6 +3025,9 @@ apply these colors
             if (field.placeholder) input.placeholder = field.placeholder;
             if (field.maxlength) input.maxLength = field.maxlength;
           }
+          if (field.value !== undefined && field.value !== null) {
+            input.value = String(field.value);
+          }
           wrap.appendChild(input);
           instructorStudentsAddBody.appendChild(wrap);
         });
@@ -2939,6 +3126,44 @@ apply these colors
         });
       }
 
+      function showInstructorAddBlockModal() {
+        if (!instructorStudentsNav.schoolYear) {
+          showInstructorStudentsMessage("Open an academic year first.", "error");
+          return;
+        }
+        openInstructorStudentsAddModal({
+          title: "Add Block",
+          submitLabel: "Add Block",
+          fields: [
+            {
+              id: "instructorModalBlockLabel",
+              key: "label",
+              label: "Block Label",
+              placeholder: "For example, Block A",
+            },
+          ],
+          onSubmit: async (values) => {
+            const label = String(values.label || "").trim();
+            if (!label) return { ok: false, message: "Enter a block label." };
+            const result = await ApiClient.createStudentBlock(
+              label,
+              currentInstructor?.id || currentInstructor?.uid || "",
+              instructorStudentsNav.schoolYear,
+            );
+            if (!result || !result.ok) {
+              return {
+                ok: false,
+                message: (result && result.message) || "Unable to add block.",
+              };
+            }
+            showInstructorStudentsMessage("Block added.", "success");
+            await renderInstructorStudentBlocks();
+            await renderInstructorSchoolYears();
+            return { ok: true };
+          },
+        });
+      }
+
       async function showInstructorAssignStudentModal() {
         const result = await ApiClient.getUnassignedStudents(instructorStudentsNav.schoolYear);
         const students = result && result.ok && Array.isArray(result.students) ? result.students : [];
@@ -2967,9 +3192,11 @@ apply these colors
 
       function renderInstructorStudentsBreadcrumb() {
         if (!instructorStudentsBreadcrumb) return;
+        const isRootLevel = !instructorStudentsNav.schoolYear && !instructorStudentsNav.blockLabel;
+        instructorStudentsBreadcrumb.classList.toggle("is-root-level", isRootLevel);
         const parts = [];
         parts.push(
-          '<button type="button" data-crumb="years">Student Roster</button>',
+          '<button type="button" data-crumb="years">Manage Students</button>',
         );
         if (instructorStudentsNav.schoolYear) {
           parts.push('<span aria-hidden="true">/</span>');
@@ -2994,10 +3221,13 @@ apply these colors
 
       function setInstructorStudentsLevel(level) {
         instructorStudentsNav.level = level;
+        if (instructorRefreshSchoolYearsBtn)
+          instructorRefreshSchoolYearsBtn.style.display =
+            activeType === "students" && level === "years" ? "inline-flex" : "none";
         const title = document.getElementById("studentsNavTitle");
         const subtitle = document.getElementById("studentsNavSubtitle");
         const labels = {
-          years: ["Student Roster", "Browse students by academic year and block."],
+          years: ["Manage Students", "Manage students within existing academic years and blocks."],
           blocks: ["Student Blocks", `Manage blocks for ${instructorStudentsNav.schoolYear || "the selected year"}.`],
           students: ["Student Roster", `Manage students in ${instructorStudentsNav.blockLabel || "the selected block"}.`],
         };
@@ -3137,6 +3367,11 @@ apply these colors
 
       function renderYearlyRecordsBreadcrumb() {
         if (!yearlyRecordsBreadcrumb) return;
+        if (yearlyRecordsNav.level === "years") {
+          yearlyRecordsBreadcrumb.innerHTML = "";
+          yearlyRecordsBreadcrumb.style.display = "none";
+          return;
+        }
         yearlyRecordsBreadcrumb.style.display = "flex";
         const parts = [];
         parts.push('<button type="button" data-crumb="years">Annual Records</button>');
@@ -3290,12 +3525,23 @@ apply these colors
           tr.dataset.yearOpen = year.label || "";
           tr.tabIndex = 0;
           tr.style.cursor = "pointer";
+          const yearLabel = year.label || "";
           tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td><div class="current-record-student"><span class="current-record-avatar"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span><span><strong>${escapeHtml(year.label || "")}</strong><small>Open school year</small></span></div></td>
-            <td><span class="current-record-count">${year.block_count || 0}</span></td>
-            <td><span class="current-record-count">${year.student_count || 0}</span></td>
-            <td class="action-cell"><button class="mini-btn admin-directory-action" type="button">View Blocks</button></td>
+            <td><span class="school-year-index">${index + 1}</span></td>
+            <td>
+              <div class="school-year-identity">
+                <span class="school-year-copy">
+                  <strong>${escapeHtml(yearLabel)}</strong>
+                </span>
+              </div>
+            </td>
+            <td><span class="school-year-count">${year.block_count || 0}</span></td>
+            <td><span class="school-year-count">${year.student_count || 0}</span></td>
+            <td class="action-cell">
+              <button class="mini-btn admin-directory-action school-year-open" type="button" aria-label="View blocks for ${escapeHtml(yearLabel)}">
+                <span>View blocks</span>
+              </button>
+            </td>
           `;
           instructorSchoolYearsTbody.appendChild(tr);
         });
@@ -3324,39 +3570,71 @@ apply these colors
           tr.dataset.blockLabel = block.label || "";
           tr.tabIndex = 0;
           tr.style.cursor = "pointer";
+          const blockId = block.id || "";
+          const blockLabel = block.label || "";
           tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td><div class="current-record-student"><span class="current-record-avatar"><i class="fas fa-layer-group" aria-hidden="true"></i></span><span><strong>${escapeHtml(block.label || "")}</strong><small>Open student roster</small></span></div></td>
-            <td><span class="current-record-count">${block.student_count || 0}</span></td>
+            <td><span class="block-directory-index">${index + 1}</span></td>
+            <td>
+              <div class="block-directory-identity">
+                <span class="block-directory-icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
+                <span class="block-directory-copy">
+                  <strong>${escapeHtml(blockLabel)}</strong>
+                  <small>Student roster</small>
+                </span>
+              </div>
+            </td>
+            <td><span class="block-directory-count">${block.student_count || 0}</span></td>
             <td class="action-cell">
-              <button class="mini-btn" type="button" data-block-action="edit" data-id="${escapeHtml(block.id || "")}" data-label="${escapeHtml(block.label || "")}">Edit</button>
-              <i class="fas fa-chevron-right current-record-open" aria-hidden="true"></i>
+              <div class="block-directory-actions">
+                <button class="block-edit-action" type="button" data-block-action="edit" data-id="${escapeHtml(blockId)}" data-label="${escapeHtml(blockLabel)}" aria-label="Edit ${escapeHtml(blockLabel)}">
+                  <i class="fas fa-pen" aria-hidden="true"></i><span>Edit</span>
+                </button>
+                <button class="block-open-action" type="button" aria-label="View students in ${escapeHtml(blockLabel)}">
+                  <span>View students</span><i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
             </td>
           `;
           instructorBlocksTbody.appendChild(tr);
         });
       }
 
-      async function editInstructorStudentBlock(blockId, currentLabel) {
-        const nextLabel = prompt("Block label:", currentLabel || "");
-        if (nextLabel === null) return;
-        const result = await ApiClient.updateStudentBlockLabel(
-          blockId,
-          nextLabel,
-        );
-        if (result && result.ok) {
-          showInstructorStudentsMessage("Block label updated.", "success");
-          await renderInstructorStudentBlocks();
-          if (instructorStudentsNav.blockId === blockId) {
-            instructorStudentsNav.blockLabel = nextLabel.trim();
-            renderInstructorStudentsBreadcrumb();
-          }
-        } else {
-          showInstructorStudentsMessage(
-            (result && result.message) || "Unable to update block.",
-            "error",
-          );
-        }
+      function editInstructorStudentBlock(blockId, currentLabel) {
+        openInstructorStudentsAddModal({
+          title: "Edit Block",
+          submitLabel: "Save Changes",
+          fields: [
+            {
+              id: "instructorModalEditBlockLabel",
+              key: "label",
+              label: "Block Label",
+              value: currentLabel || "",
+            },
+          ],
+          onSubmit: async (values) => {
+            const nextLabel = String(values.label || "").trim();
+            if (!nextLabel) {
+              return { ok: false, message: "Enter a block label." };
+            }
+            const result = await ApiClient.updateStudentBlockLabel(
+              blockId,
+              nextLabel,
+            );
+            if (!result || !result.ok) {
+              return {
+                ok: false,
+                message: (result && result.message) || "Unable to update block.",
+              };
+            }
+            showInstructorStudentsMessage("Block label updated.", "success");
+            await renderInstructorStudentBlocks();
+            if (String(instructorStudentsNav.blockId) === String(blockId)) {
+              instructorStudentsNav.blockLabel = nextLabel;
+              renderInstructorStudentsBreadcrumb();
+            }
+            return { ok: true };
+          },
+        });
       }
 
       async function deleteInstructorStudentBlock(blockId) {
@@ -3408,16 +3686,13 @@ apply these colors
             <td>${escapeHtml(s.student_id || "")}</td>
             <td>
               <div class="current-record-student"><span class="current-record-avatar">${escapeHtml(String(s.student_name || "S").charAt(0))}</span><span><strong>${escapeHtml(s.student_name || "")}</strong><small>Student profile</small></span></div>
-              <button class="instructor-student-archive-icon" type="button" data-student-action="archive" data-id="${escapeHtml(s.student_id || "")}" title="Move to archive" aria-label="Move ${escapeHtml(s.student_name || "student")} to archive">
-                <i class="fas fa-box-archive" aria-hidden="true"></i>
-              </button>
             </td>
             <td>${escapeHtml(s.registered_school_year || instructorStudentsNav.schoolYear || "")}</td>
             <td>${escapeHtml(s.parent_name || "")}</td>
             <td>${escapeHtml(s.contact_number || "")}</td>
             <td class="action-cell">
-              <button class="mini-btn" type="button" data-student-action="edit" data-id="${escapeHtml(s.student_id || "")}">Edit</button>
-              <button class="mini-btn danger" type="button" data-student-action="remove" data-id="${escapeHtml(s.student_id || "")}">Remove</button>
+              <button class="mini-btn" type="button" data-student-action="edit" data-id="${escapeHtml(s.student_id || "")}"><i class="fas fa-pen" aria-hidden="true"></i> Edit</button>
+              <button class="mini-btn danger" type="button" data-student-action="archive" data-id="${escapeHtml(s.student_id || "")}"><i class="fas fa-box-archive" aria-hidden="true"></i> Archive</button>
             </td>
           `;
           instructorBlockStudentsTbody.appendChild(tr);
@@ -3483,60 +3758,79 @@ apply these colors
         return { ok: true };
       }
 
-      async function removeInstructorStudentFromBlock(studentId) {
-        const result = await ApiClient.removeStudentFromBlock(
-          studentId,
-          instructorStudentsNav.schoolYear,
-        );
-        if (result && result.ok) {
+      async function editInstructorBlockStudent(studentId) {
+        const result = await ApiClient.getStudent(studentId);
+        const target = result && result.ok ? result.student : null;
+        if (!target) {
           showInstructorStudentsMessage(
-            "Student removed from block.",
-            "success",
-          );
-          await renderInstructorBlockStudents();
-          await renderInstructorStudentBlocks();
-          await renderInstructorSchoolYears();
-        } else {
-          showInstructorStudentsMessage(
-            (result && result.message) || "Unable to remove student.",
+            (result && result.message) || "Unable to load the student profile.",
             "error",
           );
+          return;
         }
-      }
-
-      function editInstructorBlockStudent(studentId) {
-        const students = JSON.parse(
-          localStorage.getItem("thesis_students_v1") || "[]",
-        );
-        const target = students.find(
-          (s) => String(s.student_id) === String(studentId),
-        );
-        if (!target) return;
-        const nextName = prompt("Student name:", target.student_name || "");
-        if (nextName === null) return;
-        const nextParent = prompt(
-          "Parent/Guardian name:",
-          target.parent_name || "",
-        );
-        if (nextParent === null) return;
-        const nextContact = prompt(
-          "Contact number:",
-          target.contact_number || "",
-        );
-        if (nextContact === null) return;
-        const nextPassword = prompt("Student password:", target.password || "");
-        if (nextPassword === null) return;
-        const idx = students.findIndex(
-          (s) => String(s.student_id) === String(studentId),
-        );
-        students[idx] = Object.assign({}, target, {
-          student_name: nextName.trim(),
-          parent_name: nextParent.trim(),
-          contact_number: nextContact.trim(),
-          password: nextPassword.trim(),
+        openInstructorStudentsAddModal({
+          title: "Edit Student",
+          submitLabel: "Save Changes",
+          fields: [
+            {
+              id: "instructorModalEditStudentName",
+              key: "student_name",
+              label: "Full Name",
+              value: target.student_name || "",
+            },
+            {
+              id: "instructorModalEditStudentParent",
+              key: "parent_name",
+              label: "Parent/Guardian",
+              value: target.parent_name || "",
+            },
+            {
+              id: "instructorModalEditStudentContact",
+              key: "contact_number",
+              label: "Contact",
+              value: target.contact_number || "",
+            },
+            {
+              id: "instructorModalEditStudentPassword",
+              key: "password",
+              label: "New Password (optional)",
+              type: "password",
+              placeholder: "Leave blank to keep the current password",
+            },
+          ],
+          onSubmit: async (values) => {
+            if (!values.student_name) {
+              return { ok: false, message: "Enter the student's full name." };
+            }
+            if (!values.parent_name) {
+              return { ok: false, message: "Enter the parent or guardian name." };
+            }
+            if (!values.contact_number) {
+              return { ok: false, message: "Enter the student's contact number." };
+            }
+            const payload = {
+              student_name: values.student_name,
+              parent_name: values.parent_name,
+              contact_number: values.contact_number,
+            };
+            if (values.password) payload.password = values.password;
+            const updateResult = await ApiClient.updateStudent(
+              studentId,
+              payload,
+            );
+            if (!updateResult || !updateResult.ok) {
+              return {
+                ok: false,
+                message:
+                  (updateResult && updateResult.message) ||
+                  "Unable to update the student.",
+              };
+            }
+            showInstructorStudentsMessage("Student updated.", "success");
+            await renderInstructorBlockStudents();
+            return { ok: true };
+          },
         });
-        localStorage.setItem("thesis_students_v1", JSON.stringify(students));
-        renderInstructorBlockStudents();
       }
 
       async function renderCurrentRecordsStudentRoster() {
@@ -3604,13 +3898,13 @@ apply these colors
               <td><div class="current-record-student"><span class="current-record-avatar"><i class="fas fa-layer-group" aria-hidden="true"></i></span><span><strong>${escapeHtml(block.label)}</strong><small>Open registered block</small></span></div></td>
               <td>${escapeHtml(block.schoolYear || "Not specified")}</td>
               <td><span class="current-record-count">${block.students.length}</span></td>
-              <td class="action-cell"><button class="clinical-roster-action" type="button">View Students</button></td>
+              <td><button class="registered-blocks-action" type="button">View Students</button></td>
             `;
             const openBlock = () => {
               selectedCurrentRecordsBlock = block;
               renderCurrentRecordsStudentRoster();
             };
-            row.querySelector(".clinical-roster-action")?.addEventListener("click", openBlock);
+            row.querySelector(".registered-blocks-action")?.addEventListener("click", openBlock);
             row.addEventListener("keydown", (event) => {
               if (event.key !== "Enter" && event.key !== " ") return;
               event.preventDefault();
@@ -3648,9 +3942,9 @@ apply these colors
             <td>${escapeHtml(student.student_id || "")}</td>
             <td>${escapeHtml(student.student_name || "")}</td>
             <td>${submissions.length}</td>
-            <td class="action-cell"><button class="clinical-roster-action" type="button">View Records</button></td>
+            <td><button class="registered-blocks-action" type="button">View Records</button></td>
           `;
-          row.querySelector(".clinical-roster-action")?.addEventListener("click", () => {
+          row.querySelector(".registered-blocks-action")?.addEventListener("click", () => {
             selectedCurrentRecordsStudent = {
               student_id: student.student_id,
               student_name: student.student_name,
@@ -3668,6 +3962,11 @@ apply these colors
         renderCurrentRecordsStudentRoster();
       });
 
+      document.getElementById("currentRecordsBackToStudents")?.addEventListener("click", () => {
+        selectedCurrentRecordsStudent = null;
+        setActiveSection("my-records", { preserveCurrentRecordsBlock: true });
+      });
+
       async function loadRecords() {
         if (activeType === "yearly-reports" || activeType === "yearly-records") {
           const currentRecordsRoster = document.getElementById("currentRecordsStudentRoster");
@@ -3681,12 +3980,16 @@ apply these colors
           const contentSection = document.querySelector(".content-section");
           const settingsView = document.getElementById("settingsView");
           const messagesView = document.getElementById("messages-view");
+          const editRequestsView = document.getElementById("edit-requests-view");
           const refreshRecordsBtn = document.getElementById("refreshRecordsBtn");
+          const currentRecordsBackToStudents = document.getElementById("currentRecordsBackToStudents");
           if (contentSection) contentSection.style.display = "block";
           if (settingsView) settingsView.style.display = "none";
           if (messagesView) messagesView.style.display = "none";
+          if (editRequestsView) editRequestsView.style.display = "none";
           if (instructorProcedureTabs) instructorProcedureTabs.style.display = "none";
           if (refreshRecordsBtn) refreshRecordsBtn.style.display = "none";
+          if (currentRecordsBackToStudents) currentRecordsBackToStudents.style.display = "none";
           const dashboardHero = document.querySelector(".dashboard-hero");
           const mainStats = document.getElementById("main-stats-grid");
           const mainControls = document.getElementById("main-action-controls");
@@ -3697,7 +4000,7 @@ apply these colors
           if (studentsView) studentsView.style.display = "none";
           if (notificationsView) notificationsView.style.display = "none";
           if (emptyActive) emptyActive.style.display = "none";
-          if (activeTable) activeTable.style.display = "none";
+          if (activeTable) activeTable.style.setProperty("display", "none", "important");
           if (yearlyReportView) yearlyReportView.style.display = "block";
           setYearlyRecordsLevel(yearlyRecordsNav.level || "years");
           if (yearlyRecordsNav.level === "years") renderYearlyRecordsYears();
@@ -3761,6 +4064,26 @@ apply these colors
           refreshRecordsBtn.style.display =
             isDashboard || isMyRecords || isProcedure ? "inline-flex" : "none";
         }
+        if (instructorRefreshSchoolYearsBtn) {
+          instructorRefreshSchoolYearsBtn.style.display =
+            isStudents && instructorStudentsNav.level === "years"
+              ? "inline-flex"
+              : "none";
+        }
+        const currentRecordsBackToStudents = document.getElementById(
+          "currentRecordsBackToStudents",
+        );
+        if (currentRecordsBackToStudents) {
+          currentRecordsBackToStudents.style.display = isCurrentStudentDetail
+            ? "inline-flex"
+            : "none";
+        }
+        const currentRecordsBackToBlocks = document.getElementById(
+          "currentRecordsBackToBlocks",
+        );
+        if (currentRecordsBackToBlocks && !isMyRecords) {
+          currentRecordsBackToBlocks.style.display = "none";
+        }
         if (instructorProcedureTabs) {
           instructorProcedureTabs.style.display =
             isDashboard || isMyRecords || isProcedure ? "flex" : "none";
@@ -3818,10 +4141,13 @@ apply these colors
         if (currentRecordsRoster) currentRecordsRoster.style.display = "none";
 
         yearlyReportView.style.display = "none";
-        activeTable.style.display =
+        activeTable.style.setProperty(
+          "display",
           isSummary || isStudents || isNotif || isMessages || isSettings || isEditRequests
             ? "none"
-            : "table";
+            : "table",
+          "important",
+        );
 
         if (isSummary || isStudents || isNotif || isMessages || isSettings || isEditRequests)
           return;
@@ -3846,8 +4172,8 @@ apply these colors
             { length: 1 },
             () => `
               <tr class="blank-record-row">
-                <td>&nbsp;</td><td></td><td></td><td></td><td></td>
-                <td></td><td></td><td></td><td></td>
+                <td>&nbsp;</td><td></td><td></td><td></td>
+                <td></td><td></td><td></td>
               </tr>
             `,
           ).join("");
@@ -3860,29 +4186,25 @@ apply these colors
           const tr = document.createElement("tr");
           tr.style.cursor = "pointer";
           tr.innerHTML = `
-		<td>${formatCombined(rec.patient_name, rec.patient_address, "", "<br>")}</td>
-      		<td>${rec.case_no || ""}</td>
-      		<td>${rec.complete_diagnosis || ""}</td>
-      		<td>${rec.date_time_performed || ""}</td>
-		<td>${formatCombined(rec.facility_name, rec.facility_address, rec.facility_contact_number, "<br>")}</td>
-		<td>${formatCombined(rec.supervisor_printed_name, rec.supervisor_contact_number, "", "<br>")}</td>
-			<td>${rec.supervisor_position_designation || ""}</td>
-		<td>${formatCombined(rec.supervisor_license_no, rec.supervisor_license_expiry_date, "", "<br>")}</td>
-            <td class="case-comment-cell"><button class="table-comment-btn" type="button" data-table-comment title="Add instructor comment"><i class="fas fa-comment-medical" aria-hidden="true"></i><span>Comment</span></button></td>
+		<td data-label="Patient">${formatCombined(rec.patient_name, rec.patient_address, "", "<br>")}</td>
+            <td data-label="Case No.">${rec.case_no || ""}</td>
+            <td data-label="Complete Diagnosis">${rec.complete_diagnosis || ""}</td>
+            <td data-label="Date &amp; Time Performed">${rec.date_time_performed || ""}</td>
+		<td data-label="Facility">${formatCombined(rec.facility_name, rec.facility_address, rec.facility_contact_number, "<br>")}</td>
+		<td data-label="Supervisor">${formatCombined(rec.supervisor_printed_name, rec.supervisor_contact_number, "", "<br>")}</td>
+			<td data-label="Position / Designation">${rec.supervisor_position_designation || ""}</td>
+		<td data-label="License No. / Expiry Date">${formatCombined(rec.supervisor_license_no, rec.supervisor_license_expiry_date, "", "<br>")}</td>
+            <td class="record-action-cell" data-label="Action"><div class="record-table-actions"><button class="record-action-btn record-view-btn" type="button" data-record-view><i class="far fa-eye" aria-hidden="true"></i><span>View</span></button><button class="record-action-btn record-comment-btn" type="button" data-record-comment><i class="far fa-comment" aria-hidden="true"></i><span>Comment</span></button></div></td>
       	`;
-          const tableCommentBtn = tr.querySelector("[data-table-comment]");
-          if (tableCommentBtn) {
-            tableCommentBtn?.addEventListener("click", async (event) => {
-              event.stopPropagation();
-              await handleTableComment(rec);
-            });
-          }
+          tr.querySelector("[data-record-view]")?.addEventListener("click", (event) => {
+            event.stopPropagation();
+            showRecordDetail(rec);
+          });
+          tr.querySelector("[data-record-comment]")?.addEventListener("click", async (event) => {
+            event.stopPropagation();
+            await handleTableComment(rec);
+          });
           tr?.addEventListener("click", () => showRecordDetail(rec));
-          tr?.addEventListener(
-            "mouseenter",
-            () => (tr.style.background = "rgba(37, 99, 235, 0.05)"),
-          );
-          tr?.addEventListener("mouseleave", () => (tr.style.background = ""));
           activeTbody.appendChild(tr);
         });
       }
@@ -3894,96 +4216,97 @@ apply these colors
         const detailOverlay = document.getElementById("detailModalOverlay");
         const detailContent = document.getElementById("detailContent");
 
+        const status = rec.status || (rec.checked_by ? "Verified" : "Submitted");
+        const detailValue = (value) => escapeHtml(value || "N/A");
         detailContent.innerHTML = `
-		<div class="detail-row full">
-			<div class="detail-field">
-				<div class="detail-label">Record Status</div>
-				<div class="detail-value"><span class="record-status-badge" data-status="${rec.status || (rec.checked_by ? "Verified" : "Submitted")}">${rec.status || (rec.checked_by ? "Verified" : "Submitted")}</span></div>
-			</div>
-		</div>
-      	<div class="detail-row full">
-      		<div class="detail-field">
-      			<div class="detail-label">Student Information</div>
-      			<div class="detail-value">
-      				<strong>${rec.student_name || "N/A"}</strong> (ID: ${rec.student_id || "N/A"})
-      			</div>
-      		</div>
-      	</div>
-      	<div class="detail-row">
-      		<div class="detail-field">
-      			<div class="detail-label">Patient Name</div>
-      			<div class="detail-value">${rec.patient_name || "N/A"}</div>
-      		</div>
-      		<div class="detail-field">
-      			<div class="detail-label">Patient Address</div>
-      			<div class="detail-value">${rec.patient_address || "N/A"}</div>
-      		</div>
-      	</div>
-      	<div class="detail-row">
-      		<div class="detail-field">
-      			<div class="detail-label">Case No.</div>
-      			<div class="detail-value">${rec.case_no || "N/A"}</div>
-      		</div>
-      		<div class="detail-field">
-      			<div class="detail-label">Date &amp; Time Performed</div>
-      			<div class="detail-value">${rec.date_time_performed || "N/A"}</div>
-      		</div>
-      	</div>
-      	<div class="detail-row full">
-      		<div class="detail-field">
-      			<div class="detail-label">Complete Diagnosis</div>
-      			<div class="detail-value">${rec.complete_diagnosis || "N/A"}</div>
-      		</div>
-      	</div>
-      	<div class="detail-row">
-      		<div class="detail-field">
-      			<div class="detail-label">Facility Name</div>
-      			<div class="detail-value">${rec.facility_name || "N/A"}</div>
-      		</div>
-      		<div class="detail-field">
-      			<div class="detail-label">Facility Address</div>
-      			<div class="detail-value">${rec.facility_address || "N/A"}</div>
-      		</div>
-      	</div>
-      	<div class="detail-row full">
-      		<div class="detail-field">
-      			<div class="detail-label">Facility Contact Number</div>
-      			<div class="detail-value">${rec.facility_contact_number || "N/A"}</div>
-      		</div>
-      	</div>
-      	<div class="detail-row">
-      		<div class="detail-field">
-      			<div class="detail-label">Supervisor Name</div>
-      			<div class="detail-value">${rec.supervisor_printed_name || "N/A"}</div>
-      		</div>
-      		<div class="detail-field">
-      			<div class="detail-label">Supervisor Contact</div>
-      			<div class="detail-value">${rec.supervisor_contact_number || "N/A"}</div>
-      		</div>
-      	</div>
-      	<div class="detail-row">
-      		<div class="detail-field">
-      			<div class="detail-label">Position / Designation</div>
-      			<div class="detail-value">${rec.supervisor_position_designation || "N/A"}</div>
-      		</div>
-      		<div class="detail-field">
-      			<div class="detail-label">License No.</div>
-      			<div class="detail-value">${rec.supervisor_license_no || "N/A"}</div>
-      		</div>
-      	</div>
-      	<div class="detail-row full">
-      		<div class="detail-field">
-      			<div class="detail-label">License Expiry Date</div>
-      			<div class="detail-value">${rec.supervisor_license_expiry_date || "N/A"}</div>
-      		</div>
-      	</div>
-      	<div class="detail-row full">
-      		<div class="detail-field">
-      			<div class="detail-label">Teacher's Remarks</div>
-      			<div class="detail-value">${rec.remarks || rec.teacher_remarks || "N/A"}</div>
-      		</div>
-      	</div>
-      `;
+          <section class="detail-group detail-group-overview">
+            <h3><i class="fas fa-clipboard-check" aria-hidden="true"></i> Record Overview</h3>
+            <div class="detail-group-fields">
+              <div class="detail-field detail-field-status">
+                <div class="detail-label">Status</div>
+                <div class="detail-value"><span class="record-status-badge" data-status="${escapeHtml(status)}">${escapeHtml(status)}</span></div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">Student</div>
+                <div class="detail-value"><strong>${detailValue(rec.student_name)}</strong><span class="detail-inline-meta">ID: ${detailValue(rec.student_id)}</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="detail-group detail-group-patient">
+            <h3><i class="fas fa-user" aria-hidden="true"></i> Patient &amp; Case</h3>
+            <div class="detail-group-fields">
+              <div class="detail-field">
+                <div class="detail-label">Patient Name</div>
+                <div class="detail-value">${detailValue(rec.patient_name)}</div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">Case No.</div>
+                <div class="detail-value">${detailValue(rec.case_no)}</div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">Patient Address</div>
+                <div class="detail-value">${detailValue(rec.patient_address)}</div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">Date &amp; Time Performed</div>
+                <div class="detail-value">${detailValue(rec.date_time_performed)}</div>
+              </div>
+              <div class="detail-field detail-field-wide">
+                <div class="detail-label">Complete Diagnosis</div>
+                <div class="detail-value">${detailValue(rec.complete_diagnosis)}</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="detail-group detail-group-facility">
+            <h3><i class="fas fa-hospital" aria-hidden="true"></i> Facility</h3>
+            <div class="detail-group-fields">
+              <div class="detail-field detail-field-wide">
+                <div class="detail-label">Facility Name</div>
+                <div class="detail-value">${detailValue(rec.facility_name)}</div>
+              </div>
+              <div class="detail-field detail-field-wide">
+                <div class="detail-label">Facility Address</div>
+                <div class="detail-value">${detailValue(rec.facility_address)}</div>
+              </div>
+              <div class="detail-field detail-field-wide">
+                <div class="detail-label">Contact Number</div>
+                <div class="detail-value">${detailValue(rec.facility_contact_number)}</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="detail-group detail-group-supervisor">
+            <h3><i class="fas fa-user-md" aria-hidden="true"></i> Supervisor &amp; License</h3>
+            <div class="detail-group-fields">
+              <div class="detail-field">
+                <div class="detail-label">Supervisor Name</div>
+                <div class="detail-value">${detailValue(rec.supervisor_printed_name)}</div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">Contact Number</div>
+                <div class="detail-value">${detailValue(rec.supervisor_contact_number)}</div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">Position / Designation</div>
+                <div class="detail-value">${detailValue(rec.supervisor_position_designation)}</div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">License No.</div>
+                <div class="detail-value">${detailValue(rec.supervisor_license_no)}</div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">License Expiry Date</div>
+                <div class="detail-value">${detailValue(rec.supervisor_license_expiry_date)}</div>
+              </div>
+              <div class="detail-field">
+                <div class="detail-label">Teacher's Remarks</div>
+                <div class="detail-value">${detailValue(rec.remarks || rec.teacher_remarks)}</div>
+              </div>
+            </div>
+          </section>
+        `;
 
         detailOverlay.classList.add("active");
       }
@@ -3994,13 +4317,16 @@ apply these colors
       }
 
       const detailCloseBtn = document.getElementById("detailCloseBtn");
-      const detailCloseAction = document.getElementById("detailCloseAction");
       const detailModalOverlay = document.getElementById("detailModalOverlay");
 
       detailCloseBtn?.addEventListener("click", closeDetailModal);
-      detailCloseAction?.addEventListener("click", closeDetailModal);
       detailModalOverlay?.addEventListener("click", (e) => {
         if (e.target === detailModalOverlay) {
+          closeDetailModal();
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && detailModalOverlay?.classList.contains("active")) {
           closeDetailModal();
         }
       });
@@ -4090,7 +4416,7 @@ apply these colors
           );
         }
         yearlyStudentRecordsTbody.innerHTML = "";
-        const yearlyRecordsTableWrap = yearlyStudentRecordsTbody.closest(".clinical-form-table-container");
+        const yearlyRecordsTableWrap = yearlyStudentRecordsTbody.closest(".prc-source-table-wrap");
         if (yearlyRecordsTableWrap)
           yearlyRecordsTableWrap.style.display = "block";
         if (yearlyStudentRecordsEmpty)
@@ -4109,6 +4435,10 @@ apply these colors
             <td>${escapeHtml(rec.supervisor_position_designation || "—")}</td>
             <td>${formatCombined(rec.supervisor_license_no, rec.supervisor_license_expiry_date, "", "<br>") || "—"}</td>
           `;
+          tr.insertAdjacentHTML(
+            "beforeend",
+            `<td class="record-action-cell"><div class="record-table-actions"><button class="record-action-btn record-view-btn" type="button" data-yearly-record-index="${index}"><i class="far fa-eye" aria-hidden="true"></i><span>View</span></button><button class="record-action-btn record-comment-btn" type="button" data-yearly-comment-index="${index}"><i class="far fa-comment" aria-hidden="true"></i><span>Comment</span></button></div></td>`,
+          );
           yearlyStudentRecordsTbody.appendChild(tr);
         });
       }
@@ -4190,9 +4520,26 @@ apply these colors
         "edit-requests": "Notifications & Edit Requests",
         messages: "Messages",
         "student-summary": "Student Summary Report",
-        students: "Students",
+        students: "Manage Students",
         "yearly-reports": "Annual Records",
         "yearly-records": "Annual Records",
+      };
+      const sectionIcons = {
+        dashboard: "fas fa-chart-line",
+        "my-records": "fas fa-folder-open",
+        settings: "fas fa-gear",
+        "delivery-handled": "fas fa-baby",
+        "delivery-assisted": "fas fa-hand-holding-medical",
+        suturing: "fas fa-scissors",
+        "iv-insertion": "fas fa-syringe",
+        "internal-exam": "fas fa-stethoscope",
+        notifications: "fas fa-bell",
+        "edit-requests": "fas fa-pen-to-square",
+        messages: "fas fa-comment-dots",
+        "student-summary": "fas fa-chart-column",
+        students: "fas fa-user-graduate",
+        "yearly-reports": "fas fa-calendar-days",
+        "yearly-records": "fas fa-calendar-days",
       };
       const sectionSubtitles = {
         dashboard: "Latest clinical activities recorded by students.",
@@ -4210,17 +4557,13 @@ apply these colors
         messages: "Chat with students and view recent conversations.",
         "student-summary":
           "Search for a specific student to view their complete clinical record history.",
-        students: "Browse school years, blocks, and student rosters.",
+        students: "Add, assign, edit, archive, and restore students within existing academic years.",
         "yearly-reports": "Choose an academic year to view blocks, students, and clinical records.",
         "yearly-records": "Choose an academic year to view blocks, students, and clinical records.",
       };
 
-      function setActiveSection(type) {
-        // Student account, block, and archive administration belongs to the
-        // administrator workspace. Instructors can still review rosters from
-        // Current Records, Annual Records, and Student Progress.
-        if (type === "students") type = "student-summary";
-        if (type === "my-records") {
+      function setActiveSection(type, options = {}) {
+        if (type === "my-records" && !options.preserveCurrentRecordsBlock) {
           selectedCurrentRecordsStudent = null;
           selectedCurrentRecordsBlock = null;
         }
@@ -4268,6 +4611,8 @@ apply these colors
             : isStudents
               ? "Students"
               : sectionTitles[type] || "Instructor Overview";
+        if (activeTitleIcon)
+          activeTitleIcon.className = sectionIcons[type] || "fas fa-table-list";
         if (activeSubtitle)
           activeSubtitle.textContent = isSummary
             ? "Search for a specific student to view their complete clinical record history."
@@ -4378,6 +4723,10 @@ apply these colors
           );
         if (action === "delete") deleteInstructorStudentBlock(blockId);
       });
+      instructorOpenAddBlockBtn?.addEventListener(
+        "click",
+        showInstructorAddBlockModal,
+      );
       instructorOpenAddStudentBtn?.addEventListener(
         "click",
         showInstructorAddStudentModal,
@@ -4412,8 +4761,7 @@ apply these colors
         if (!btn) return;
         const action = btn.getAttribute("data-student-action");
         const studentId = btn.getAttribute("data-id");
-        if (action === "edit") editInstructorBlockStudent(studentId);
-        if (action === "remove") removeInstructorStudentFromBlock(studentId);
+        if (action === "edit") void editInstructorBlockStudent(studentId);
         if (action === "archive") archiveInstructorStudent(studentId);
       });
       instructorBlocksTbody?.addEventListener("keydown", (e) => {
@@ -4427,7 +4775,7 @@ apply these colors
       instructorToggleArchivedStudentsBtn?.addEventListener("click", async () => {
         const isOpening = instructorArchivedStudentsPanel.style.display === "none";
         const activeSearchRow = instructorStudentSearchInput?.parentElement;
-        const activeStudentsTable = instructorBlockStudentsTbody?.closest(".table-wrap");
+        const activeStudentsTable = instructorBlockStudentsTbody?.closest(".table-wrapper");
         instructorArchivedStudentsPanel.style.display = isOpening ? "block" : "none";
         if (activeSearchRow) activeSearchRow.style.display = isOpening ? "none" : "";
         if (activeStudentsTable) activeStudentsTable.style.display = isOpening ? "none" : "";
@@ -4523,9 +4871,14 @@ apply these colors
       });
       yearlyStudentRecordsTbody?.addEventListener("click", (e) => {
         const btn = e.target.closest("button[data-yearly-record-index]");
-        if (!btn) return;
-        const record = yearlyVisibleStudentRecords[Number(btn.getAttribute("data-yearly-record-index"))];
-        if (record) showRecordDetail(record);
+        const commentBtn = e.target.closest("button[data-yearly-comment-index]");
+        if (!btn && !commentBtn) return;
+        const actionButton = btn || commentBtn;
+        const index = Number(actionButton.getAttribute(btn ? "data-yearly-record-index" : "data-yearly-comment-index"));
+        const record = yearlyVisibleStudentRecords[index];
+        if (!record) return;
+        if (commentBtn) handleTableComment(record);
+        else showRecordDetail(record);
       });
 
       // Initial load
@@ -4628,7 +4981,7 @@ apply these colors
         window.__updateEmptyTables = updateEmptyTables;
       })();
     </script>
-    <script src="assets/js/modern-shell.js?v=20260807-4"></script>
+    <script src="assets/js/modern-shell.js?v=20260814-5"></script>
   </body>
 </html>
 
