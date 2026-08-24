@@ -2363,6 +2363,7 @@
       case_no: record.case_no || '',
       academic_year: record.academic_year || '',
       school_year: record.academic_year || '',
+      assigned_school_year: record.assigned_school_year || '',
       complete_diagnosis: record.complete_diagnosis || '',
       date_time_performed: record.date_time_performed || '',
       facility_name: record.facility_name || '',
@@ -2531,7 +2532,15 @@
     try {
       caseData = caseData || {};
       var student = findStudentByPublicId(studentId);
+      var databaseStudent = null;
+      try {
+        var studentResult = await ApiClient.getStudent(studentId);
+        databaseStudent = studentResult && studentResult.ok ? studentResult.student : null;
+      } catch (studentError) {
+        databaseStudent = null;
+      }
       var activeYear = normalizeSchoolYearRange(caseData.academic_year) ||
+        normalizeSchoolYearRange(databaseStudent && databaseStudent.registered_school_year) ||
         (student ? getStudentActiveSchoolYear(student) : getCurrentSchoolYearLabel());
       var result = await mysqlRequest('cases', {
         method: 'POST',

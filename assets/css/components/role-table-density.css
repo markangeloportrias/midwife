@@ -1,0 +1,194 @@
+/* Shared compact density for non-procedure tables on the Instructor and Student dashboards. */
+
+html body.role-instructor :is(
+  #students-view #instructor-school-years-table,
+  #students-view #instructor-blocks-table,
+  #students-view #instructor-block-students-table,
+  #students-view #instructorArchivedStudentsPanel table.dashboard-data-table,
+  #yearly-report-view #yearlyYearPanel > .table-wrap > table,
+  #yearly-report-view #yearlyBlockPanel > .table-wrap > table,
+  #yearly-report-view #yearlyStudentSummaryPanel > .table-wrap > table,
+  #currentRecordsStudentRoster table.registered-blocks-table,
+  #dashboardRecentRecords table.recent-records-log-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-source-table),
+html body.role-student :is(
+  table.recent-records-table,
+  #activityLogTab table.activity-log-table,
+  #editRequestsTab table.edit-requests-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-procedure-table):not(.prc-records-table):not(.prc-export-table) {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+html body.role-instructor :is(
+  #students-view #instructor-school-years-table,
+  #students-view #instructor-blocks-table,
+  #students-view #instructor-block-students-table,
+  #students-view #instructorArchivedStudentsPanel table.dashboard-data-table,
+  #yearly-report-view #yearlyYearPanel > .table-wrap > table,
+  #yearly-report-view #yearlyBlockPanel > .table-wrap > table,
+  #yearly-report-view #yearlyStudentSummaryPanel > .table-wrap > table,
+  #currentRecordsStudentRoster table.registered-blocks-table,
+  #dashboardRecentRecords table.recent-records-log-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-source-table) thead tr,
+html body.role-student :is(
+  table.recent-records-table,
+  #activityLogTab table.activity-log-table,
+  #editRequestsTab table.edit-requests-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-procedure-table):not(.prc-records-table):not(.prc-export-table) thead tr {
+  height: 38px !important;
+  min-height: 38px !important;
+}
+
+html body.role-instructor :is(
+  #students-view #instructor-school-years-table,
+  #students-view #instructor-blocks-table,
+  #students-view #instructor-block-students-table,
+  #students-view #instructorArchivedStudentsPanel table.dashboard-data-table,
+  #yearly-report-view #yearlyYearPanel > .table-wrap > table,
+  #yearly-report-view #yearlyBlockPanel > .table-wrap > table,
+  #yearly-report-view #yearlyStudentSummaryPanel > .table-wrap > table,
+  #currentRecordsStudentRoster table.registered-blocks-table,
+  #dashboardRecentRecords table.recent-records-log-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-source-table) thead th,
+html body.role-student :is(
+  table.recent-records-table,
+  #activityLogTab table.activity-log-table,
+  #editRequestsTab table.edit-requests-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-procedure-table):not(.prc-records-table):not(.prc-export-table) thead th {
+  box-sizing: border-box !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 11px !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 9.5px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor :is(
+  #students-view #instructor-school-years-table,
+  #students-view #instructor-blocks-table,
+  #students-view #instructor-block-students-table,
+  #students-view #instructorArchivedStudentsPanel table.dashboard-data-table,
+  #yearly-report-view #yearlyYearPanel > .table-wrap > table,
+  #yearly-report-view #yearlyBlockPanel > .table-wrap > table,
+  #yearly-report-view #yearlyStudentSummaryPanel > .table-wrap > table,
+  #currentRecordsStudentRoster table.registered-blocks-table,
+  #dashboardRecentRecords table.recent-records-log-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-source-table) tbody tr:not(.recent-records-empty-row),
+html body.role-student :is(
+  table.recent-records-table,
+  #activityLogTab table.activity-log-table,
+  #editRequestsTab table.edit-requests-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-procedure-table):not(.prc-records-table):not(.prc-export-table) tbody tr {
+  height: 42px !important;
+  min-height: 42px !important;
+}
+
+html body.role-instructor :is(
+  #students-view #instructor-school-years-table,
+  #students-view #instructor-blocks-table,
+  #students-view #instructor-block-students-table,
+  #students-view #instructorArchivedStudentsPanel table.dashboard-data-table,
+  #yearly-report-view #yearlyYearPanel > .table-wrap > table,
+  #yearly-report-view #yearlyBlockPanel > .table-wrap > table,
+  #yearly-report-view #yearlyStudentSummaryPanel > .table-wrap > table,
+  #currentRecordsStudentRoster table.registered-blocks-table,
+  #dashboardRecentRecords table.recent-records-log-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-source-table) tbody tr:not(.recent-records-empty-row) > td,
+html body.role-student :is(
+  table.recent-records-table,
+  #activityLogTab table.activity-log-table,
+  #editRequestsTab table.edit-requests-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-procedure-table):not(.prc-records-table):not(.prc-export-table) tbody td {
+  box-sizing: border-box !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 5px 11px !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor :is(
+  #students-view #instructor-school-years-table,
+  #students-view #instructor-blocks-table,
+  #students-view #instructor-block-students-table,
+  #students-view #instructorArchivedStudentsPanel table.dashboard-data-table,
+  #yearly-report-view #yearlyYearPanel > .table-wrap > table,
+  #yearly-report-view #yearlyBlockPanel > .table-wrap > table,
+  #yearly-report-view #yearlyStudentSummaryPanel > .table-wrap > table,
+  #currentRecordsStudentRoster table.registered-blocks-table,
+  #dashboardRecentRecords table.recent-records-log-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-source-table) :is(thead, thead tr, thead th, tbody tr, tbody td),
+html body.role-student :is(
+  table.recent-records-table,
+  #activityLogTab table.activity-log-table,
+  #editRequestsTab table.edit-requests-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-procedure-table):not(.prc-records-table):not(.prc-export-table) :is(thead, thead tr, thead th, tbody tr, tbody td) {
+  border-radius: 0 !important;
+}
+
+html body.role-instructor :is(
+  #students-view #instructor-school-years-table,
+  #students-view #instructor-blocks-table,
+  #students-view #instructor-block-students-table,
+  #students-view #instructorArchivedStudentsPanel table.dashboard-data-table,
+  #yearly-report-view #yearlyYearPanel > .table-wrap > table,
+  #yearly-report-view #yearlyBlockPanel > .table-wrap > table,
+  #yearly-report-view #yearlyStudentSummaryPanel > .table-wrap > table,
+  #currentRecordsStudentRoster table.registered-blocks-table,
+  #dashboardRecentRecords table.recent-records-log-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-source-table) tbody :is(strong, small) {
+  font-size: inherit !important;
+  line-height: 1.25 !important;
+}
+
+html body.role-instructor :is(
+  #students-view #instructor-school-years-table,
+  #students-view #instructor-blocks-table,
+  #students-view #instructor-block-students-table,
+  #students-view #instructorArchivedStudentsPanel table.dashboard-data-table,
+  #yearly-report-view #yearlyYearPanel > .table-wrap > table,
+  #yearly-report-view #yearlyBlockPanel > .table-wrap > table,
+  #yearly-report-view #yearlyStudentSummaryPanel > .table-wrap > table,
+  #currentRecordsStudentRoster table.registered-blocks-table,
+  #dashboardRecentRecords table.recent-records-log-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-source-table) :is(.mini-btn, .admin-directory-action, .registered-blocks-action, .recent-record-action, .block-edit-action, .block-open-action),
+html body.role-student :is(
+  table.recent-records-table,
+  #editRequestsTab table.edit-requests-table
+):not(.clinical-form-table):not(.procedure-records-table):not(.prc-procedure-table):not(.prc-records-table):not(.prc-export-table) :is(.recent-record-open, .delete-edit-notification) {
+  box-sizing: border-box !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 8px !important;
+  border-radius: 6px !important;
+  font-size: 8.5px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+html body.role-instructor #dashboardRecentRecords .record-status-badge,
+html body.role-student table.recent-records-table .recent-record-status,
+html body.role-student #editRequestsTab table.edit-requests-table .edit-request-status {
+  box-sizing: border-box !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  padding: 0 7px !important;
+  font-size: 8px !important;
+  line-height: 1 !important;
+}
+
+/* Instructor Current Records only: restore the table header's upper corners. */
+html body.role-instructor #currentRecordsStudentRoster table.registered-blocks-table thead tr:first-child th:first-child {
+  border-top-left-radius: 10px !important;
+}
+
+html body.role-instructor #currentRecordsStudentRoster table.registered-blocks-table thead tr:first-child th:last-child {
+  border-top-right-radius: 10px !important;
+}

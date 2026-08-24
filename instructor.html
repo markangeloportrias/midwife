@@ -22,7 +22,8 @@
     <link rel="stylesheet" href="assets/css/components/modals.css" />
     <link rel="stylesheet" href="assets/css/pages/reports.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-20" />
-<link rel="stylesheet" href="assets/css/pages/instructor-palette.css?v=20260815-65" />
+<link rel="stylesheet" href="assets/css/pages/instructor-palette.css?v=20260815-68" />
+    <link rel="stylesheet" href="assets/css/components/role-table-density.css?v=20260821-2" />
   </head>
   <body>
     <div class="dashboard">
@@ -429,19 +430,64 @@
                 <button class="btn btn-primary view-records-btn" id="refreshRecordsBtn" type="button">
                   <i class="fas fa-sync-alt"></i> Refresh Records
                 </button>
+                <button class="btn btn-secondary" id="instructorStudentsBackBtn" type="button" style="display: none">
+                  <i class="fas fa-arrow-left" aria-hidden="true"></i> Back
+                </button>
                 <button class="btn btn-secondary" id="instructorRefreshSchoolYearsBtn" type="button" style="display: none">
                   <i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh
                 </button>
               </div>
             </div>
-            <div class="procedure-tabs" id="instructorProcedureTabs" aria-label="My Records procedures">
-              <button type="button" class="procedure-tab active" data-instructor-procedure="my-records">All Records</button>
-              <button type="button" class="procedure-tab" data-instructor-procedure="delivery-handled">Delivery Handled</button>
-              <button type="button" class="procedure-tab" data-instructor-procedure="delivery-assisted">Delivery Assisted</button>
-              <button type="button" class="procedure-tab" data-instructor-procedure="suturing">Perineal Suturing</button>
-              <button type="button" class="procedure-tab" data-instructor-procedure="iv-insertion">IV Insertion</button>
-              <button type="button" class="procedure-tab" data-instructor-procedure="internal-exam">Internal Examination</button>
-            </div>
+            <section
+              id="dashboardRecentRecords"
+              class="dashboard-recent-records"
+              aria-label="Recent clinical records log"
+              style="display: none"
+            >
+              <div
+                class="recent-records-log-wrap"
+                tabindex="0"
+                aria-label="Scrollable recent clinical records log"
+              >
+                <table class="recent-records-log-table">
+                  <caption class="sr-only">
+                    Recent clinical records submitted by students, newest first.
+                  </caption>
+                  <colgroup>
+                    <col style="width: 130px" />
+                    <col style="width: 155px" />
+                    <col style="width: 145px" />
+                    <col style="width: 76px" />
+                    <col style="width: 140px" />
+                    <col style="width: 170px" />
+                    <col style="width: 145px" />
+                    <col style="width: 118px" />
+                    <col style="width: 138px" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col" aria-sort="descending">Date &amp; Time</th>
+                      <th scope="col">Student</th>
+                      <th scope="col">Procedure</th>
+                      <th scope="col">Case No.</th>
+                      <th scope="col">Patient</th>
+                      <th scope="col">Diagnosis</th>
+                      <th scope="col">Facility</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardRecentRecordsBody" aria-live="polite">
+                    <tr class="recent-records-empty-row">
+                      <td colspan="9">
+                        <i class="far fa-folder-open" aria-hidden="true"></i>
+                        <span>No recent clinical records found.</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
             <div id="currentRecordsStudentRoster" class="table-wrapper" style="display:none">
               <div class="current-records-navigator">
                 <div>
@@ -727,11 +773,6 @@
                   id="instructorStudentsBlockPanel"
                   style="display: none"
                 >
-                  <div class="student-panel-toolbar" style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap">
-                    <button id="instructorOpenAddBlockBtn" class="btn btn-primary" type="button">
-                      <i class="fas fa-plus" aria-hidden="true"></i> Add Block
-                    </button>
-                  </div>
                   <div class="table-wrapper">
                     <table id="instructor-blocks-table" class="dashboard-data-table admin-premium-table">
                       <caption class="sr-only">Blocks registered for the selected academic year.</caption>
@@ -881,17 +922,17 @@
           </button>
         </div>
         <div id="detailContent"></div>
-        <div class="detail-actions">
-          <button class="secondary" id="detailHistoryAction" type="button">
+        <div class="detail-actions" id="detailReviewActions">
+          <button class="secondary" id="detailHistoryAction" data-review-action="history" type="button">
             <i class="fas fa-history" aria-hidden="true"></i><span>History</span>
           </button>
-          <button class="secondary" id="detailChangesAction" type="button">
+          <button class="secondary" id="detailChangesAction" data-review-action="Changes Requested" type="button">
             <i class="fas fa-pen-to-square" aria-hidden="true"></i><span>Request Changes</span>
           </button>
-          <button class="secondary" id="detailInvalidAction" type="button">
+          <button class="secondary" id="detailInvalidAction" data-review-action="Invalid" type="button">
             <i class="fas fa-ban" aria-hidden="true"></i><span>Mark Invalid</span>
           </button>
-          <button class="primary" id="detailVerifyAction" type="button">
+          <button class="primary" id="detailVerifyAction" data-review-action="Verified" type="button">
             <i class="fas fa-circle-check" aria-hidden="true"></i><span>Verify Record</span>
           </button>
         </div>
@@ -985,7 +1026,7 @@
 
     <!-- Chat overlay removed — messaging is now in the sidebar -->
 
-    <script src="assets/js/api-client.js?v=20260722-3"></script>
+    <script src="assets/js/api-client.js?v=20260822-1"></script>
     <script>
       // All original JavaScript functionality - preserved exactly as is
       const backLoginBtn = document.getElementById("backLoginBtn");
@@ -1031,6 +1072,13 @@
       const instructorYearSelect = null; // deprecated - use yearlyRecordsNav instead
       const yearlyReportView = document.getElementById("yearly-report-view");
       const activeTable = document.getElementById("active-table");
+      const instructorProcedureTabs = document.getElementById("instructorProcedureTabs");
+      const dashboardRecentRecords = document.getElementById(
+        "dashboardRecentRecords",
+      );
+      const dashboardRecentRecordsBody = document.getElementById(
+        "dashboardRecentRecordsBody",
+      );
       const studentSummaryView = document.getElementById(
         "student-summary-view",
       );
@@ -1468,9 +1516,6 @@
       const instructorBlocksEmpty = document.getElementById(
         "instructorBlocksEmpty",
       );
-      const instructorOpenAddBlockBtn = document.getElementById(
-        "instructorOpenAddBlockBtn",
-      );
       const instructorOpenAddStudentBtn = document.getElementById(
         "instructorOpenAddStudentBtn",
       );
@@ -1479,6 +1524,9 @@
       );
       const instructorRefreshSchoolYearsBtn = document.getElementById(
         "instructorRefreshSchoolYearsBtn",
+      );
+      const instructorStudentsBackBtn = document.getElementById(
+        "instructorStudentsBackBtn",
       );
       const instructorStudentSearchInput = document.getElementById(
         "instructorStudentSearchInput",
@@ -1673,6 +1721,111 @@
         setTextById("overallTeachingProgress", `${percent}%`);
         const fill = document.getElementById("overallTeachingFill");
         if (fill) fill.style.width = `${percent}%`;
+      }
+
+      function renderDashboardRecentRecords(records) {
+        if (!dashboardRecentRecordsBody) return;
+
+        const timestamp = (record) => {
+          const value =
+            record.date_time_performed ||
+            record.submitted_at ||
+            record.updated_at ||
+            record.created_at ||
+            "";
+          const parsed = Date.parse(String(value).replace(" ", "T"));
+          return Number.isNaN(parsed) ? 0 : parsed;
+        };
+        const recentRecords = [...(Array.isArray(records) ? records : [])].sort(
+          (left, right) => {
+            const timeDifference = timestamp(right) - timestamp(left);
+            if (timeDifference) return timeDifference;
+            return String(right.id || "").localeCompare(
+              String(left.id || ""),
+              undefined,
+              { numeric: true },
+            );
+          },
+        );
+
+        if (!recentRecords.length) {
+          dashboardRecentRecordsBody.innerHTML = `
+            <tr class="recent-records-empty-row">
+              <td colspan="9">
+                <i class="far fa-folder-open" aria-hidden="true"></i>
+                <span>No recent clinical records found.</span>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        const cellWithMeta = (primary, secondary, fallback = "—") => `
+          <span class="recent-record-primary">${escapeHtml(primary || fallback)}</span>
+          ${secondary ? `<small>${escapeHtml(secondary)}</small>` : ""}
+        `;
+        const formatLogDateTime = (value) => {
+          const rawValue = String(value || "").trim();
+          const date = new Date(rawValue.replace(" ", "T"));
+          if (!rawValue || Number.isNaN(date.getTime()))
+            return cellWithMeta(rawValue, "");
+          const dateLabel = date.toLocaleDateString("en-PH", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          });
+          const timeLabel = date.toLocaleTimeString("en-PH", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          return `<time datetime="${escapeHtml(rawValue)}">${cellWithMeta(dateLabel, timeLabel)}</time>`;
+        };
+
+        dashboardRecentRecordsBody.innerHTML = "";
+        recentRecords.forEach((record) => {
+          const status =
+            record.status || (record.checked_by ? "Verified" : "Submitted");
+          const logDate =
+            record.date_time_performed ||
+            record.submitted_at ||
+            record.created_at ||
+            "";
+          const caseLabel = record.case_no
+            ? `case ${record.case_no}`
+            : "clinical record";
+          const row = document.createElement("tr");
+          row.title = "Open record details";
+          row.innerHTML = `
+            <td>${formatLogDateTime(logDate)}</td>
+            <td>${cellWithMeta(record.student_name, record.student_id ? `ID: ${record.student_id}` : "")}</td>
+            <td>${escapeHtml(record.procedure_name || "Clinical procedure")}</td>
+            <td>${escapeHtml(record.case_no || "—")}</td>
+            <td>${cellWithMeta(record.patient_name, record.patient_address || "")}</td>
+            <td>${escapeHtml(record.complete_diagnosis || "—")}</td>
+            <td>${cellWithMeta(record.facility_name, record.facility_address || "")}</td>
+            <td><span class="record-status-badge" data-status="${escapeHtml(status)}">${escapeHtml(status)}</span></td>
+            <td class="recent-record-actions-cell">
+              <div class="recent-record-actions">
+                <button class="recent-record-action recent-record-view" type="button" data-dashboard-record-view aria-label="View ${escapeHtml(caseLabel)}">
+                  <i class="far fa-eye" aria-hidden="true"></i><span>View</span>
+                </button>
+                <button class="recent-record-action recent-record-comment" type="button" data-dashboard-record-comment aria-label="Comment on ${escapeHtml(caseLabel)}">
+                  <i class="far fa-comment" aria-hidden="true"></i><span>Comment</span>
+                </button>
+              </div>
+            </td>
+          `;
+          row
+            .querySelector("[data-dashboard-record-view]")
+            ?.addEventListener("click", () => showRecordDetail(record));
+          row
+            .querySelector("[data-dashboard-record-comment]")
+            ?.addEventListener("click", () => handleTableComment(record));
+          row.addEventListener("click", (event) => {
+            if (!event.target.closest("button")) showRecordDetail(record);
+          });
+          dashboardRecentRecordsBody.appendChild(row);
+        });
       }
 
       async function getPendingEditRequests() {
@@ -3224,6 +3377,13 @@
         if (instructorRefreshSchoolYearsBtn)
           instructorRefreshSchoolYearsBtn.style.display =
             activeType === "students" && level === "years" ? "inline-flex" : "none";
+        if (instructorStudentsBackBtn) {
+          const showBack = activeType === "students" && level !== "years";
+          const destination = level === "students" ? "blocks" : "academic years";
+          instructorStudentsBackBtn.style.display = showBack ? "inline-flex" : "none";
+          instructorStudentsBackBtn.setAttribute("aria-label", `Back to ${destination}`);
+          instructorStudentsBackBtn.title = `Back to ${destination}`;
+        }
         const title = document.getElementById("studentsNavTitle");
         const subtitle = document.getElementById("studentsNavSubtitle");
         const labels = {
@@ -3576,10 +3736,8 @@
             <td><span class="block-directory-index">${index + 1}</span></td>
             <td>
               <div class="block-directory-identity">
-                <span class="block-directory-icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
                 <span class="block-directory-copy">
                   <strong>${escapeHtml(blockLabel)}</strong>
-                  <small>Student roster</small>
                 </span>
               </div>
             </td>
@@ -3590,7 +3748,7 @@
                   <i class="fas fa-pen" aria-hidden="true"></i><span>Edit</span>
                 </button>
                 <button class="block-open-action" type="button" aria-label="View students in ${escapeHtml(blockLabel)}">
-                  <span>View students</span><i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  <span>View students</span>
                 </button>
               </div>
             </td>
@@ -3971,6 +4129,8 @@
         if (activeType === "yearly-reports" || activeType === "yearly-records") {
           const currentRecordsRoster = document.getElementById("currentRecordsStudentRoster");
           if (currentRecordsRoster) currentRecordsRoster.style.display = "none";
+          if (dashboardRecentRecords)
+            dashboardRecentRecords.style.display = "none";
           if (mainRecordsWrapper) {
             mainRecordsWrapper.style.display = "block";
             mainRecordsWrapper.classList.remove("students-mode", "summary-mode", "edit-requests-mode");
@@ -3989,6 +4149,7 @@
           if (editRequestsView) editRequestsView.style.display = "none";
           if (instructorProcedureTabs) instructorProcedureTabs.style.display = "none";
           if (refreshRecordsBtn) refreshRecordsBtn.style.display = "none";
+          if (instructorStudentsBackBtn) instructorStudentsBackBtn.style.display = "none";
           if (currentRecordsBackToStudents) currentRecordsBackToStudents.style.display = "none";
           const dashboardHero = document.querySelector(".dashboard-hero");
           const mainStats = document.getElementById("main-stats-grid");
@@ -4070,6 +4231,12 @@
               ? "inline-flex"
               : "none";
         }
+        if (instructorStudentsBackBtn) {
+          instructorStudentsBackBtn.style.display =
+            isStudents && instructorStudentsNav.level !== "years"
+              ? "inline-flex"
+              : "none";
+        }
         const currentRecordsBackToStudents = document.getElementById(
           "currentRecordsBackToStudents",
         );
@@ -4088,7 +4255,10 @@
           instructorProcedureTabs.style.display =
             isDashboard || isMyRecords || isProcedure ? "flex" : "none";
         }
-        const allRecordsTab = document.querySelector('[data-instructor-procedure="my-records"]');
+        if (dashboardRecentRecords) {
+          dashboardRecentRecords.style.display = isDashboard ? "block" : "none";
+        }
+        const allRecordsTab = document.querySelector('[data-instructor-procedure="dashboard"]');
         if (allRecordsTab) allRecordsTab.style.display = isCurrentStudentDetail ? "none" : "";
 
         if (studentsView) {
@@ -4143,7 +4313,7 @@
         yearlyReportView.style.display = "none";
         activeTable.style.setProperty(
           "display",
-          isSummary || isStudents || isNotif || isMessages || isSettings || isEditRequests
+          isDashboard || isSummary || isStudents || isNotif || isMessages || isSettings || isEditRequests
             ? "none"
             : "table",
           "important",
@@ -4157,6 +4327,11 @@
           procedureName,
           "",
         );
+        if (isDashboard) {
+          countActive.textContent = String(list.length);
+          renderDashboardRecentRecords(list);
+          return;
+        }
         const visibleList = selectedCurrentRecordsStudent
           ? list.filter((record) => String(record.student_id || "") === String(selectedCurrentRecordsStudent.student_id || ""))
           : list;
@@ -4318,6 +4493,7 @@
 
       const detailCloseBtn = document.getElementById("detailCloseBtn");
       const detailModalOverlay = document.getElementById("detailModalOverlay");
+      const detailReviewActions = document.getElementById("detailReviewActions");
 
       detailCloseBtn?.addEventListener("click", closeDetailModal);
       detailModalOverlay?.addEventListener("click", (e) => {
@@ -4332,38 +4508,45 @@
       });
 
       async function runRecordReviewAction(status) {
-        if (!currentReviewRecord) return;
-        let remarks = "";
-        if (status === "Changes Requested" || status === "Invalid") {
-          rejectRemarksInput.value = "";
-          remarks = await promptRejectRemarks(
-            { studentId: currentReviewRecord.student_id, type: currentReviewRecord.procedure_name },
-            currentReviewRecord.case_no,
-          );
-          if (remarks === null) return;
-        } else {
-          const confirmed = await showOptionConfirm(
-            "Verify Clinical Record",
-            "Verify this record as complete and correct? Verification is separate from correction authorization.",
-            "Verify Record",
-            "Cancel",
-          );
-          if (!confirmed) return;
-        }
-        const result = await ApiClient.updateRecordStatus(currentReviewRecord.id, status, {
-          remarks,
-          instructorId: currentInstructor?.id || "",
-          instructorName: currentInstructorName,
-          action: status === "Verified" ? "Record Verified" : status,
-        });
-        if (!result?.ok) {
-          showOptionMessage("Action Failed", result?.message || "Unable to update the record.");
+        if (!currentReviewRecord) {
+          showOptionMessage("No Record Selected", "Open a clinical record before using a review action.");
           return;
         }
-        closeDetailModal();
-        await loadRecords();
-        await refreshDashboardCounts();
-        showOptionMessage("Record Updated", `Record status changed to ${status}.`);
+        let remarks = "";
+        try {
+          if (status === "Changes Requested" || status === "Invalid") {
+            rejectRemarksInput.value = "";
+            remarks = await promptRejectRemarks(
+              { studentId: currentReviewRecord.student_id, type: currentReviewRecord.procedure_name },
+              currentReviewRecord.case_no,
+            );
+            if (remarks === null) return;
+          } else {
+            const confirmed = await showOptionConfirm(
+              "Verify Clinical Record",
+              "Verify this record as complete and correct? Verification is separate from correction authorization.",
+              "Verify Record",
+              "Cancel",
+            );
+            if (!confirmed) return;
+          }
+          const result = await ApiClient.updateRecordStatus(currentReviewRecord.id, status, {
+            remarks,
+            instructor_id: currentInstructor?.id || "",
+            instructor_name: currentInstructorName,
+            action: status === "Verified" ? "Record Verified" : status,
+          });
+          if (!result?.ok) {
+            showOptionMessage("Action Failed", result?.message || "Unable to update the record.");
+            return;
+          }
+          closeDetailModal();
+          await loadRecords();
+          await refreshDashboardCounts();
+          showOptionMessage("Record Updated", `Record status changed to ${status}.`);
+        } catch (error) {
+          showOptionMessage("Action Failed", error?.message || "Unable to update the record.");
+        }
       }
 
       async function renderInstructorArchivedStudents() {
@@ -4470,19 +4653,33 @@
         }
       }
 
-      document.getElementById("detailVerifyAction")?.addEventListener("click", () => runRecordReviewAction("Verified"));
-      document.getElementById("detailChangesAction")?.addEventListener("click", () => runRecordReviewAction("Changes Requested"));
-      document.getElementById("detailInvalidAction")?.addEventListener("click", () => runRecordReviewAction("Invalid"));
-      document.getElementById("detailHistoryAction")?.addEventListener("click", async () => {
-        if (!currentReviewRecord) return;
-        const result = await ApiClient.getRecordHistory(currentReviewRecord.id);
-        const history = result?.history || [];
-        showOptionMessage(
-          "Record History",
-          history.length
-            ? history.map((entry) => `${new Date(entry.date_time).toLocaleString()} — ${entry.action}${entry.remarks ? `: ${entry.remarks}` : ""}`).join("\n")
-            : "No revision or review history is available for this record.",
-        );
+      detailReviewActions?.addEventListener("click", async (event) => {
+        const button = event.target.closest("button[data-review-action]");
+        if (!button || !detailReviewActions.contains(button)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const action = button.getAttribute("data-review-action") || "";
+        if (action !== "history") {
+          await runRecordReviewAction(action);
+          return;
+        }
+        if (!currentReviewRecord) {
+          showOptionMessage("No Record Selected", "Open a clinical record before viewing its history.");
+          return;
+        }
+        try {
+          const result = await ApiClient.getRecordHistory(currentReviewRecord.id);
+          if (result && result.ok === false) throw new Error(result.message || "Unable to load record history.");
+          const history = result?.history || [];
+          showOptionMessage(
+            "Record History",
+            history.length
+              ? history.map((entry) => `${new Date(entry.date_time || entry.created_at).toLocaleString()} — ${entry.action}${entry.remarks ? `: ${entry.remarks}` : ""}`).join("\n")
+              : "No revision or review history is available for this record.",
+          );
+        } catch (error) {
+          showOptionMessage("History Failed", error?.message || "Unable to load record history.");
+        }
       });
 
       refreshBtn?.addEventListener("click", async () => {
@@ -4679,6 +4876,12 @@
         if (crumb === "years") backToInstructorStudentsYears();
         if (crumb === "blocks") backToInstructorStudentsBlocks();
       });
+      instructorStudentsBackBtn?.addEventListener("click", () => {
+        if (instructorStudentsNav.level === "students")
+          backToInstructorStudentsBlocks();
+        else if (instructorStudentsNav.level === "blocks")
+          backToInstructorStudentsYears();
+      });
       instructorRefreshSchoolYearsBtn?.addEventListener(
         "click",
         renderInstructorSchoolYears,
@@ -4723,10 +4926,6 @@
           );
         if (action === "delete") deleteInstructorStudentBlock(blockId);
       });
-      instructorOpenAddBlockBtn?.addEventListener(
-        "click",
-        showInstructorAddBlockModal,
-      );
       instructorOpenAddStudentBtn?.addEventListener(
         "click",
         showInstructorAddStudentModal,

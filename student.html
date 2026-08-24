@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-22" />
     <link rel="stylesheet" href="assets/css/pages/student-palette.css?v=20260814-30" />
     <link rel="stylesheet" href="assets/css/pages/student-prc.css?v=20260811-34" />
+    <link rel="stylesheet" href="assets/css/components/role-table-density.css?v=20260821-1" />
   </head>
   <body>
     <div class="dashboard">
@@ -922,7 +923,7 @@
       </div>
     </div>
 
-    <script src="assets/js/api-client.js?v=20260805-chat-actions-1"></script>
+    <script src="assets/js/api-client.js?v=20260822-1"></script>
     <script>
       let currentStudent = null;
       let studentEditingChatMessage = null;
@@ -2818,8 +2819,15 @@
           const caseNumber = record.caseNo || record.case_no;
           const diagnosis = record.diagnosis || record.complete_diagnosis || "Diagnosis not specified";
           const facility = record.facilityName || record.facility_name || "Facility not specified";
-          const isVerified = Boolean(record.checked_by || record.checkedAt || record.checked_at);
-          const statusLabel = isVerified ? "Verified" : "Awaiting review";
+          const recordStatus = String(record.status || record.record_status || "").trim().toLowerCase();
+          const isVerified = recordStatus ? recordStatus === "verified" : Boolean(record.checked_by || record.checkedAt || record.checked_at);
+          const statusLabel = recordStatus === "needs_revision" || recordStatus === "changes requested"
+            ? "Changes Requested"
+            : recordStatus === "invalid"
+              ? "Invalid"
+              : isVerified
+                ? "Verified"
+                : "Awaiting review";
           const meta = caseNumber ? `${patient} · Case #${caseNumber}` : patient;
           const icon = key === "iv-insertion" ? "fa-droplet" : key === "suturing" ? "fa-syringe" : key === "internal-exam" ? "fa-stethoscope" : key === "delivery-assisted" ? "fa-user-nurse" : "fa-baby";
           return `<button type="button" class="recent-record" data-recent-procedure="${escapeHtml(key)}" aria-label="Open ${escapeHtml(procedure)} record"><span class="recent-record-icon"><i class="fas ${icon}" aria-hidden="true"></i></span><span class="recent-record-info"><span class="recent-record-heading"><span class="recent-record-name">${escapeHtml(procedure)}</span><span class="recent-record-status${isVerified ? " verified" : ""}"><i class="fas ${isVerified ? "fa-circle-check" : "fa-clock"}" aria-hidden="true"></i>${escapeHtml(statusLabel)}</span></span><span class="recent-record-meta">${escapeHtml(meta)}</span><span class="recent-record-details"><span title="Diagnosis"><i class="fas fa-notes-medical" aria-hidden="true"></i>${escapeHtml(diagnosis)}</span><span class="recent-record-facility" title="${escapeHtml(facility)}"><i class="fas fa-hospital" aria-hidden="true"></i>${escapeHtml(facility)}</span></span></span><span class="recent-record-date"><span>${escapeHtml(displayDate)}</span>${displayTime ? `<small>${escapeHtml(displayTime)}</small>` : ""}</span><i class="fas fa-chevron-right recent-record-arrow" aria-hidden="true"></i></button>`;
@@ -2837,8 +2845,15 @@
           const caseNumber = record.caseNo || record.case_no || "-";
           const diagnosis = record.diagnosis || record.complete_diagnosis || "Diagnosis not specified";
           const facility = record.facilityName || record.facility_name || "Facility not specified";
-          const isVerified = Boolean(record.checked_by || record.checkedAt || record.checked_at);
-          const statusLabel = isVerified ? "Verified" : "Awaiting review";
+          const recordStatus = String(record.status || record.record_status || "").trim().toLowerCase();
+          const isVerified = recordStatus ? recordStatus === "verified" : Boolean(record.checked_by || record.checkedAt || record.checked_at);
+          const statusLabel = recordStatus === "needs_revision" || recordStatus === "changes requested"
+            ? "Changes Requested"
+            : recordStatus === "invalid"
+              ? "Invalid"
+              : isVerified
+                ? "Verified"
+                : "Awaiting review";
           return `<tr class="recent-record-row" data-recent-procedure="${escapeHtml(key)}" tabindex="0" role="button" aria-label="Open ${escapeHtml(procedure)} record"><td>${escapeHtml(procedure)}</td><td>${escapeHtml(patient)}</td><td>${escapeHtml(caseNumber)}</td><td>${escapeHtml(diagnosis)}</td><td title="${escapeHtml(facility)}">${escapeHtml(facility)}</td><td><span class="recent-record-status${isVerified ? " verified" : ""}"><i class="fas ${isVerified ? "fa-circle-check" : "fa-clock"}" aria-hidden="true"></i>${escapeHtml(statusLabel)}</span></td><td><span class="recent-record-table-date">${escapeHtml(displayDate)}${displayTime ? `<small>${escapeHtml(displayTime)}</small>` : ""}</span></td><td><button class="recent-record-open" type="button" aria-label="Open ${escapeHtml(procedure)} record"><i class="fas fa-arrow-right" aria-hidden="true"></i></button></td></tr>`;
         }).join("");
         list.innerHTML = `<div class="recent-records-table-wrap"><table class="recent-records-table"><thead><tr><th>Procedure</th><th>Patient</th><th>Case No.</th><th>Diagnosis</th><th>Facility</th><th>Status</th><th>Date &amp; Time</th><th><span class="sr-only">Open</span></th></tr></thead><tbody>${recentRows}</tbody></table></div>`;

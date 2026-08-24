@@ -213,14 +213,6 @@ try {
             audit($pdo, $user, 'create', 'instructor', $uid);
             respond(['ok' => true, 'id' => $uid], 201);
         }
-        if ($method === 'PATCH' && $id !== '' && $action === 'review') {
-            if (!in_array($user['role'],['admin','instructor'],true)) respond(['ok'=>false,'message'=>'Access denied.'],403);
-            $statusMap=['Draft'=>'submitted','Submitted'=>'submitted','Under Review'=>'reviewed','Changes Requested'=>'needs_revision','Resubmitted'=>'submitted','Verified'=>'verified','Invalid'=>'needs_revision','Archived'=>'archived'];
-            $requested=(string)($data['status']??'');$status=$statusMap[$requested]??$requested;
-            if(!in_array($status,['submitted','reviewed','verified','needs_revision','archived'],true))respond(['ok'=>false,'message'=>'Invalid record status.'],422);
-            $stmt=$pdo->prepare('UPDATE case_records SET record_status=?,teacher_remarks=?,checked_by=?,checked_at=IF(?="verified",NOW(),checked_at),instructor_uid=COALESCE(?,instructor_uid),instructor_name=COALESCE(?,instructor_name) WHERE id=? AND archived_at IS NULL');
-            $stmt->execute([$status,$data['remarks']??null,$data['instructor_name']??null,$status,$data['instructor_id']??null,$data['instructor_name']??null,$id]);audit($pdo,$user,'review','case',$id,['status'=>$requested,'remarks'=>$data['remarks']??null]);respond(['ok'=>$stmt->rowCount()>=0]);
-        }
         if ($method === 'PATCH' && $id !== '' && $action === '') {
             $fields=[];$params=[];
             if ($user['role'] === 'instructor' && $user['user_uid'] !== $id) respond(['ok'=>false,'message'=>'Access denied.'],403);
@@ -380,14 +372,48 @@ try {
             elseif (!empty($_GET['student_id'])) { $conditions[] = 'c.student_id=?'; $params[] = $_GET['student_id']; }
             if (!empty($_GET['school_year'])) { $conditions[] = 'c.academic_year=?'; $params[] = $_GET['school_year']; }
             if (!empty($_GET['procedure'])) { $conditions[] = 'c.procedure_key=?'; $params[] = $_GET['procedure']; }
-            $stmt = $pdo->prepare('SELECT c.* FROM case_records c WHERE ' . implode(' AND ', $conditions) . ' ORDER BY c.date_time_performed DESC, c.id DESC');
+            $stmt = $pdo->prepare("SELECT c.*,
+                (SELECT y.label
+                 FROM student_block_assignments a
+                 JOIN student_blocks b ON b.id=a.block_id AND b.archived_at IS NULL
+                 JOIN school_years y ON y.id=b.school_year_id AND y.archived_at IS NULL
+                 WHERE a.student_id=c.student_id AND a.archived_at IS NULL
+                 ORDER BY (y.label=c.academic_year) DESC,(y.status='active') DESC,y.start_year DESC
+                 LIMIT 1) AS assigned_school_year
+                FROM case_records c WHERE " . implode(' AND ', $conditions) . ' ORDER BY c.date_time_performed DESC, c.id DESC');
             $stmt->execute($params); respond(['ok' => true, 'cases' => $stmt->fetchAll()]);
+        }
+        if ($method === 'PATCH' && $id !== '' && $action === 'review') {
+            if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok' => false, 'message' => 'Access denied.'], 403);
+            $statusMap = ['Draft' => 'submitted', 'Submitted' => 'submitted', 'Under Review' => 'reviewed', 'Changes Requested' => 'needs_revision', 'Resubmitted' => 'submitted', 'Verified' => 'verified', 'Invalid' => 'needs_revision', 'Archived' => 'archived'];
+            $requested = (string)($data['status'] ?? '');
+            $status = $statusMap[$requested] ?? $requested;
+            if (!in_array($status, ['submitted', 'reviewed', 'verified', 'needs_revision', 'archived'], true)) respond(['ok' => false, 'message' => 'Invalid record status.'], 422);
+            $instructorId = $data['instructor_id'] ?? $data['instructorId'] ?? null;
+            $instructorName = $data['instructor_name'] ?? $data['instructorName'] ?? null;
+            $stmt = $pdo->prepare('UPDATE case_records SET record_status=?,teacher_remarks=?,checked_by=IF(?="verified",?,NULL),checked_at=IF(?="verified",NOW(),NULL),instructor_uid=COALESCE(?,instructor_uid),instructor_name=COALESCE(?,instructor_name) WHERE id=? AND archived_at IS NULL');
+            $stmt->execute([$status, $data['remarks'] ?? null, $status, $instructorName, $status, $instructorId, $instructorName, $id]);
+            audit($pdo, $user, 'review', 'case', $id, ['status' => $requested, 'remarks' => $data['remarks'] ?? null]);
+            respond(['ok' => $stmt->rowCount() >= 0]);
         }
         if ($method === 'POST') {
             requireFields($data, ['student_id', 'procedure_key']);
             if ($user['role'] === 'student' && $user['user_uid'] !== (string)$data['student_id']) respond(['ok' => false, 'message' => 'Access denied.'], 403);
+            $requestedAcademicYear = trim((string)($data['academic_year'] ?? ''));
+            $yearStmt = $pdo->prepare("SELECT y.label
+                FROM student_block_assignments a
+                JOIN student_blocks b ON b.id=a.block_id AND b.archived_at IS NULL
+                JOIN school_years y ON y.id=b.school_year_id AND y.archived_at IS NULL
+                WHERE a.student_id=? AND a.archived_at IS NULL
+                ORDER BY (y.label=?) DESC,(y.status='active') DESC,y.start_year DESC
+                LIMIT 1");
+            $yearStmt->execute([$data['student_id'], $requestedAcademicYear]);
+            $assignedAcademicYear = trim((string)($yearStmt->fetchColumn() ?: ''));
+            $academicYear = $assignedAcademicYear !== ''
+                ? $assignedAcademicYear
+                : ($requestedAcademicYear !== '' ? $requestedAcademicYear : null);
             $stmt = $pdo->prepare('INSERT INTO case_records (student_id, student_name, instructor_uid, instructor_name, academic_year, procedure_key, procedure_name, case_no, complete_diagnosis, date_time_performed, patient_name, patient_address, facility_name, facility_address, facility_contact_number, supervisor_printed_name, supervisor_contact_number, supervisor_position_designation, supervisor_license_no, supervisor_license_expiry_date) SELECT s.student_id,s.student_name,?,?,?,p.procedure_key,p.procedure_name,?,?,?,?,?,?,?,?,?,?,?,?,? FROM students s JOIN procedures p ON p.procedure_key=? WHERE s.student_id=? AND s.archived_at IS NULL');
-            $stmt->execute([$data['instructor_uid'] ?? null,$data['instructor_name'] ?? null,$data['academic_year'] ?? null,$data['case_no'] ?? null,$data['complete_diagnosis'] ?? null,$data['date_time_performed'] ?? null,$data['patient_name'] ?? null,$data['patient_address'] ?? null,$data['facility_name'] ?? null,$data['facility_address'] ?? null,$data['facility_contact_number'] ?? null,$data['supervisor_printed_name'] ?? null,$data['supervisor_contact_number'] ?? null,$data['supervisor_position_designation'] ?? null,$data['supervisor_license_no'] ?? null,$data['supervisor_license_expiry_date'] ?? null,$data['procedure_key'],$data['student_id']]);
+            $stmt->execute([$data['instructor_uid'] ?? null,$data['instructor_name'] ?? null,$academicYear,$data['case_no'] ?? null,$data['complete_diagnosis'] ?? null,$data['date_time_performed'] ?? null,$data['patient_name'] ?? null,$data['patient_address'] ?? null,$data['facility_name'] ?? null,$data['facility_address'] ?? null,$data['facility_contact_number'] ?? null,$data['supervisor_printed_name'] ?? null,$data['supervisor_contact_number'] ?? null,$data['supervisor_position_designation'] ?? null,$data['supervisor_license_no'] ?? null,$data['supervisor_license_expiry_date'] ?? null,$data['procedure_key'],$data['student_id']]);
             respond(['ok' => $stmt->rowCount() > 0, 'id' => $pdo->lastInsertId()], 201);
         }
         if ($method === 'PATCH' && $id !== '' && $action === 'comment') {

@@ -1022,3 +1022,1823 @@ html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical
   box-shadow: none !important;
 }
 html body.role-admin:has(#casesCard) #casesCard #adminProcedureSummary .clinical-form-table.prc-replica-table { max-width: none !important; }
+
+/* Branded instructor account form shared by Add and Edit Instructor. */
+html body.role-admin #instructorsAddOverlay {
+  background: rgba(0, 27, 76, 0.58) !important;
+  backdrop-filter: blur(9px) saturate(115%) !important;
+}
+
+html body.role-admin #instructorsAddDialog.instructor-account-modal {
+  position: relative;
+  width: min(94vw, 680px) !important;
+  max-height: min(88vh, 720px) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(0, 80, 157, 0.22) !important;
+  border-radius: 22px !important;
+  background: #ffffff !important;
+  box-shadow: 0 30px 75px rgba(0, 29, 79, 0.34), 0 8px 24px rgba(0, 41, 107, 0.16) !important;
+}
+
+html body.role-admin .instructor-modal-accent {
+  height: 6px;
+  background: linear-gradient(90deg, #ffd500 0 18%, #00509d 18% 58%, #00296b 58% 100%);
+}
+
+html body.role-admin .instructor-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid #d9e6f3;
+  background:
+    radial-gradient(circle at 88% 4%, rgba(255, 213, 0, 0.17), transparent 28%),
+    linear-gradient(135deg, #f8fbff 0%, #edf5fc 100%);
+}
+
+html body.role-admin .instructor-modal-avatar {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 213, 0, 0.72);
+  border-radius: 15px;
+  color: #00296b;
+  background: linear-gradient(145deg, #ffe56a 0%, #ffd500 55%, #fdc500 100%);
+  box-shadow: 0 9px 20px rgba(0, 41, 107, 0.15);
+  font-size: 21px;
+}
+
+html body.role-admin .instructor-modal-heading {
+  min-width: 0;
+  flex: 1;
+}
+
+html body.role-admin .instructor-modal-heading .block-manage-title {
+  margin: 0 !important;
+  color: #00296b !important;
+  font-size: 21px !important;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+html body.role-admin .instructor-modal-heading p {
+  margin: 5px 0 0;
+  color: #617b9c;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+html body.role-admin .instructor-modal-close {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #cbdced;
+  border-radius: 10px;
+  color: #54719a;
+  background: rgba(255,255,255,.82);
+  cursor: pointer;
+  transition: 150ms ease;
+}
+
+html body.role-admin .instructor-modal-close:hover {
+  border-color: #00509d;
+  color: #ffffff;
+  background: #00509d;
+  transform: rotate(4deg);
+}
+
+html body.role-admin .instructor-modal-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 22px 24px 8px;
+}
+
+html body.role-admin .instructor-modal-form > .instructor-account-field:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+html body.role-admin .instructor-account-field {
+  min-width: 0;
+  margin: 0 !important;
+}
+
+html body.role-admin .instructor-account-field > label {
+  display: block;
+  margin: 0 0 7px;
+  color: #27496f !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+html body.role-admin .instructor-input-shell {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #c7d9ea;
+  border-radius: 11px;
+  background: #f9fbfe;
+  box-shadow: inset 0 1px 2px rgba(0, 41, 107, 0.025);
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+html body.role-admin .instructor-input-shell:focus-within {
+  border-color: #00509d;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 80, 157, 0.12), 0 7px 18px rgba(0, 41, 107, 0.07);
+}
+
+html body.role-admin .instructor-input-icon {
+  width: 45px;
+  align-self: stretch;
+  flex: 0 0 45px;
+  display: grid;
+  place-items: center;
+  border-right: 1px solid #d9e6f3;
+  color: #00509d;
+  background: #edf5fc;
+  font-size: 13px;
+}
+
+html body.role-admin .instructor-input-shell:focus-within .instructor-input-icon {
+  color: #00296b;
+  background: #fff5bf;
+  border-right-color: #ffe46c;
+}
+
+html body.role-admin #instructorsAddDialog .instructor-input-shell > input,
+html body.role-admin #instructorsAddDialog .instructor-input-shell > input:hover,
+html body.role-admin #instructorsAddDialog .instructor-input-shell > input:focus {
+  width: 100% !important;
+  min-width: 0;
+  height: 46px !important;
+  margin: 0 !important;
+  padding: 0 13px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  color: #00296b !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  appearance: none;
+  font-size: 13px !important;
+  font-weight: 600;
+}
+
+html body.role-admin #instructorsAddDialog .instructor-input-shell > input::placeholder {
+  color: #8ca0ba;
+  font-weight: 500;
+}
+
+html body.role-admin .instructor-field-hint {
+  display: block;
+  margin-top: 7px;
+  color: #6c83a2;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+html body.role-admin .instructor-password-toggle {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  margin-right: 3px;
+  border: 0;
+  border-radius: 9px;
+  color: #54719a;
+  background: transparent;
+  cursor: pointer;
+}
+
+html body.role-admin .instructor-password-toggle:hover {
+  color: #00296b;
+  background: #e8f2fb;
+}
+
+html body.role-admin .instructor-modal-error {
+  min-height: 0 !important;
+  margin: 10px 24px 0 !important;
+  padding: 10px 12px !important;
+  border: 1px solid #f3c8c8;
+  border-radius: 9px;
+  color: #a61b1b !important;
+  background: #fff3f3;
+  font-size: 11px !important;
+  font-weight: 700;
+}
+
+html body.role-admin .instructor-modal-error:empty {
+  display: none;
+}
+
+html body.role-admin .instructor-modal-actions {
+  margin-top: 18px !important;
+  padding: 16px 24px 20px;
+  border-top: 1px solid #d9e6f3;
+  background: #f7fafd;
+}
+
+html body.role-admin .instructor-modal-actions .logout-confirm-btn {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px !important;
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+html body.role-admin .instructor-modal-actions .logout-confirm-btn.no {
+  border: 1px solid #bfd1e3 !important;
+  color: #27496f !important;
+  background: #ffffff !important;
+}
+
+html body.role-admin .instructor-modal-actions .logout-confirm-btn.no:hover {
+  border-color: #7fa7cc !important;
+  background: #edf5fc !important;
+}
+
+html body.role-admin .instructor-modal-actions .logout-confirm-btn.yes {
+  border: 1px solid #00509d !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #003f88 0%, #00509d 100%) !important;
+  box-shadow: 0 8px 18px rgba(0, 80, 157, 0.22) !important;
+}
+
+html body.role-admin .instructor-modal-actions .logout-confirm-btn.yes:hover {
+  border-color: #00296b !important;
+  background: linear-gradient(135deg, #00296b 0%, #003f88 100%) !important;
+  transform: translateY(-1px);
+}
+
+html body.role-admin #instructorsAddDialog.is-editing .instructor-modal-avatar {
+  color: #ffd500;
+  border-color: rgba(255,255,255,.2);
+  background: linear-gradient(145deg, #00296b 0%, #00509d 100%);
+}
+
+@media (max-width: 620px) {
+  html body.role-admin .instructor-modal-header {
+    padding: 18px;
+  }
+  html body.role-admin .instructor-modal-form {
+    grid-template-columns: 1fr;
+    padding: 18px 18px 6px;
+  }
+  html body.role-admin .instructor-modal-form > .instructor-account-field:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+  html body.role-admin .instructor-modal-actions {
+    padding: 14px 18px 18px;
+  }
+}
+
+/* Flatten only the nested card layers in the selected admin workspaces. */
+html body.role-admin :is(
+  #instructorsCard,
+  #studentsCard,
+  #yearlyReportsCard,
+  #notificationsCard,
+  #systemToolsCard
+) .table-wrap {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin #studentsCard .students-panel.active,
+html body.role-admin #yearlyReportsCard .students-panel.active {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin #studentsCard .students-panel.active > .row:first-child {
+  margin-top: 0 !important;
+}
+
+html body.role-admin #systemToolsCard .system-tool-panel {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin #systemToolsCard .system-tools-grid {
+  gap: 0 !important;
+}
+
+html body.role-admin #systemToolsCard .system-tools-grid > .system-tool-panel {
+  padding: 0 22px 0 0 !important;
+}
+
+html body.role-admin #systemToolsCard .system-tools-grid > .system-tool-panel + .system-tool-panel {
+  padding: 0 0 0 22px !important;
+  border-left: 1px solid #d8e4f1 !important;
+}
+
+html body.role-admin #systemToolsCard > .audit-panel {
+  margin-top: 20px !important;
+  padding: 20px 0 0 !important;
+  border-top: 1px solid #d8e4f1 !important;
+}
+
+@media (max-width: 900px) {
+  html body.role-admin #systemToolsCard .system-tools-grid {
+    gap: 18px !important;
+  }
+
+  html body.role-admin #systemToolsCard .system-tools-grid > .system-tool-panel,
+  html body.role-admin #systemToolsCard .system-tools-grid > .system-tool-panel + .system-tool-panel {
+    padding: 0 !important;
+    border-left: 0 !important;
+  }
+
+  html body.role-admin #systemToolsCard .system-tools-grid > .system-tool-panel + .system-tool-panel {
+    padding-top: 18px !important;
+    border-top: 1px solid #d8e4f1 !important;
+  }
+}
+
+/* Standard tables in the flattened workspaces use continuous rows, not row cards. */
+html body.role-admin :is(
+  #instructorsCard,
+  #studentsCard,
+  #yearlyReportsCard,
+  #notificationsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #bdd4ea !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin :is(
+  #instructorsCard,
+  #studentsCard,
+  #yearlyReportsCard,
+  #notificationsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) tbody tr {
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  transform: none !important;
+}
+
+/* Flatten only Annual Records, Progress Overview, and Edit Requests. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard :is(
+  #yearlyYearPanel,
+  #yearlyBlockPanel,
+  #yearlyStudentListPanel,
+  #yearlyReportPanel
+).active,
+html body.role-admin:has(#casesCard) #casesCard .cases-panel {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .table-wrap,
+html body.role-admin:has(#casesCard) #casesCard .table-wrap:not(.clinical-form-table-container),
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .table-wrap {
+  margin-top: 10px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Designed directory tables; PRC/clinical record tables are intentionally excluded. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table),
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table),
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) {
+  width: 100% !important;
+  border: 1px solid #bdd4ea !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 11px !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  box-shadow: 0 8px 20px rgba(0, 41, 107, 0.07) !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) thead th,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) thead th,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) thead th {
+  height: 44px !important;
+  padding: 0 14px !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.13) !important;
+  color: #ffffff !important;
+  background: linear-gradient(110deg, #00296b 0%, #003f88 58%, #00509d 100%) !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .045em !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) thead th:last-child,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) thead th:last-child,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) thead th:last-child {
+  border-right: 0 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr {
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td {
+  height: 52px !important;
+  padding: 10px 14px !important;
+  border: 0 !important;
+  border-right: 1px solid #e6eef6 !important;
+  border-bottom: 1px solid #dbe7f2 !important;
+  border-radius: 0 !important;
+  color: #163b6c !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  vertical-align: middle !important;
+  transition: background-color 150ms ease, border-left-color 150ms ease !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:nth-child(even) td,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:nth-child(even) td,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:nth-child(even) td {
+  background: #f7fafe !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child {
+  border-left: 3px solid transparent !important;
+  color: #00509d !important;
+  font-weight: 800 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:last-child,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:last-child,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:last-child {
+  border-right: 0 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:last-child td,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:last-child td,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td {
+  background: #eaf3fb !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td:first-child,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td:first-child,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td:first-child {
+  border-left-color: #ffd500 !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard .empty,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .empty,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .empty {
+  margin-top: 8px !important;
+  padding: 24px 16px !important;
+  border: 0 !important;
+  border-top: 1px dashed #bdd4ea !important;
+  border-radius: 0 !important;
+  color: #54719a !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin :is(
+  #instructorsCard,
+  #studentsCard,
+  #yearlyReportsCard,
+  #notificationsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) tbody td {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin :is(
+  #instructorsCard,
+  #studentsCard,
+  #yearlyReportsCard,
+  #notificationsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child {
+  border-left: 0 !important;
+}
+
+html body.role-admin :is(
+  #instructorsCard,
+  #studentsCard,
+  #yearlyReportsCard,
+  #notificationsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover,
+html body.role-admin :is(
+  #instructorsCard,
+  #studentsCard,
+  #yearlyReportsCard,
+  #notificationsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Student Management and Annual Records: one workspace surface, no nested cards. */
+html body.role-admin:has(#studentsCard) #studentsCard :is(
+  #studentsYearPanel,
+  #studentsBlockPanel,
+  #studentsListPanel
+).students-panel.active,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard :is(
+  #yearlyYearPanel,
+  #yearlyBlockPanel,
+  #yearlyStudentListPanel,
+  #yearlyReportPanel
+).students-panel.active {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard .students-panel > .table-wrap,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .students-panel > .table-wrap {
+  width: 100% !important;
+  margin: 10px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Clean, border-light directory tables for only these two workspaces. */
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table),
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) {
+  width: 100% !important;
+  border: 1px solid #cbdced !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) thead th,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) thead th {
+  height: 43px !important;
+  padding: 0 14px !important;
+  border: 0 !important;
+  color: #ffffff !important;
+  background: #003f88 !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .025em !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td {
+  height: 50px !important;
+  padding: 10px 14px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #e1ebf4 !important;
+  border-radius: 0 !important;
+  color: #173b68 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  vertical-align: middle !important;
+  transition: background-color 140ms ease !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:last-child td,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:nth-child(even) td,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:nth-child(even) td {
+  background: #ffffff !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td {
+  background: #f2f7fc !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child {
+  border-left: 0 !important;
+  color: #00509d !important;
+  font-weight: 700 !important;
+}
+
+html body.role-admin:has(#studentsCard) #studentsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td:first-child,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td:first-child {
+  border-left: 0 !important;
+}
+
+/* Progress Overview, Edit Requests, and Activity Log: remove inner card surfaces. */
+html body.role-admin:has(#casesCard) #casesCard .cases-panel,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard > .table-wrap,
+html body.role-admin:has(#notificationsCard) #notificationsCard > .table-wrap {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard .cases-panel > .table-wrap:not(.clinical-form-table-container) {
+  width: 100% !important;
+  margin: 10px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Match the clean directory table used in Student Management and Annual Records. */
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table),
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table),
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) {
+  width: 100% !important;
+  border: 1px solid #cbdced !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) thead th,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) thead th,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) thead th {
+  height: 43px !important;
+  padding: 0 14px !important;
+  border: 0 !important;
+  color: #ffffff !important;
+  background: #003f88 !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .025em !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td {
+  height: 50px !important;
+  padding: 10px 14px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #e1ebf4 !important;
+  border-radius: 0 !important;
+  color: #173b68 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  vertical-align: middle !important;
+  transition: background-color 140ms ease !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:nth-child(even) td,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:nth-child(even) td,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:nth-child(even) td {
+  background: #ffffff !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:last-child td,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:last-child td,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td {
+  background: #f2f7fc !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody td:first-child,
+html body.role-admin:has(#casesCard) #casesCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td:first-child,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td:first-child,
+html body.role-admin:has(#notificationsCard) #notificationsCard table:not(.clinical-form-table):not(.procedure-records-table) tbody tr:hover td:first-child {
+  border-left: 0 !important;
+  color: #00509d !important;
+  font-weight: 700 !important;
+}
+
+html body.role-admin:has(#casesCard) #casesCard .empty,
+html body.role-admin:has(#editRequestsCard) #editRequestsCard .empty,
+html body.role-admin:has(#notificationsCard) #notificationsCard .empty {
+  margin-top: 8px !important;
+  padding: 24px 12px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: #54719a !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Uniform compact sizing for every regular Admin table. */
+html body.role-admin:has(:is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+)) :is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) thead tr,
+html body.role-admin:has(:is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+)) :is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) thead th {
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 11px !important;
+  border-radius: 0 !important;
+  font-size: 9.5px !important;
+  line-height: 1.2 !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+
+html body.role-admin:has(:is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+)) :is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) tbody tr {
+  height: 42px !important;
+  min-height: 42px !important;
+}
+
+html body.role-admin:has(:is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+)) :is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) tbody td {
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 5px 11px !important;
+  border-radius: 0 !important;
+  font-size: 10px !important;
+  line-height: 1.25 !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin:has(:is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+)) :is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) tbody td > strong {
+  font-size: 10px !important;
+  line-height: 1.25 !important;
+}
+
+html body.role-admin:has(:is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+)) :is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) :is(.mini-btn, .admin-directory-action) {
+  box-sizing: border-box !important;
+  min-height: 28px !important;
+  height: 28px !important;
+  padding: 0 8px !important;
+  border-radius: 6px !important;
+  font-size: 8.5px !important;
+  line-height: 26px !important;
+  margin-right: 4px !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin:has(:is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+)) :is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) :is(.account-status-badge, .edit-request-status) {
+  box-sizing: border-box !important;
+  min-height: 20px !important;
+  height: 20px !important;
+  padding: 0 7px !important;
+  font-size: 8px !important;
+  line-height: 18px !important;
+}
+
+/* Keep header and body joined: only the outer table owns the corner radius. */
+html body.role-admin:has(:is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+)) :is(
+  #instructorsCard,
+  #studentsCard,
+  #casesCard,
+  #editRequestsCard,
+  #notificationsCard,
+  #yearlyReportsCard,
+  #systemToolsCard
+) table:not(.clinical-form-table):not(.procedure-records-table) :is(
+  thead,
+  thead tr,
+  thead th,
+  thead th:first-child,
+  thead th:last-child,
+  tbody tr,
+  tbody td,
+  tbody td:first-child,
+  tbody td:last-child
+) {
+  border-radius: 0 !important;
+}
+
+/* Academic-year creation belongs to Annual Records. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard #openAddSchoolYearBtn {
+  border-color: #ffd500 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 6px 14px rgba(253, 197, 0, 0.2) !important;
+}
+
+/* Annual procedure records: flat table with the shared admin/student table type. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel .clinical-form-table-container {
+  padding: 0 !important;
+  border: 1px solid #b9d2e8 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  overflow-x: auto !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel table.clinical-form-table {
+  border: 0 !important;
+  border-radius: 0 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  font-family: "Inter", "Poppins", sans-serif !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel table.clinical-form-table :is(
+  thead,
+  thead tr,
+  thead th,
+  thead tr:first-child th,
+  thead tr:nth-child(2) th
+) {
+  border-radius: 0 !important;
+  border-color: #b9d2e8 !important;
+  background: #eaf3fb !important;
+  color: #00296b !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel table.clinical-form-table th {
+  padding: 10px 9px !important;
+  border: 1px solid #b9d2e8 !important;
+  font-family: "Inter", "Poppins", sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel table.clinical-form-table td {
+  padding: 11px 10px !important;
+  border: 1px solid #d7e4ef !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #4f607d !important;
+  font-family: "Inter", "Poppins", sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  line-height: 1.25 !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel table.clinical-form-table tbody tr:hover td {
+  background: #f4f9fd !important;
+}
+
+/* Annual report controls and progress bars mirror the Student Progress workspace. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel .admin-yearly-report-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel .admin-yearly-report-toolbar .admin-yearly-procedure-nav {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-bottom: 0 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #exportYearlyPrcBtn {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 12px;
+  border-color: #fdc500 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+  font: 800 10px/1 "Inter", "Poppins", sans-serif !important;
+  box-shadow: 0 5px 12px rgba(253, 197, 0, 0.18) !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #exportYearlyPrcBtn:hover {
+  border-color: #ffd500 !important;
+  background: #ffd500 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary .admin-yearly-progress-item {
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid #c5d9ec;
+  background: #f5f9fd;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary .admin-yearly-progress-item.is-complete {
+  border-color: #8fc9b3;
+  background: #f1fbf6;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary .admin-yearly-progress-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 7px;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary .admin-yearly-progress-heading h3 {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: #00296b;
+  font: 800 9px/1.2 "Inter", "Poppins", sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary .admin-yearly-progress-heading strong {
+  flex: 0 0 auto;
+  color: #365978;
+  font: 800 9px/1 Arial, sans-serif;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary .admin-yearly-progress-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #d9e7f2;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary .admin-yearly-progress-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #00509d;
+  transition: width 0.35s ease;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary .is-complete .admin-yearly-progress-track i {
+  background: #07845a;
+}
+
+@media (max-width: 900px) {
+  html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel .admin-yearly-report-toolbar { align-items: stretch; flex-direction: column; }
+  html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #exportYearlyPrcBtn { width: 100%; }
+  html body.role-admin:has(#yearlyReportsCard) #yearlyProgressSummary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Annual records use the same stacked procedure summaries as Student Progress. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables {
+  display: grid;
+  gap: 12px;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .admin-yearly-procedure-section {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #8fb8d8;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-heading h3 {
+  min-width: 0;
+  margin: 0 !important;
+  color: #00296b;
+  font: 800 15px/1.2 "Inter", "Poppins", sans-serif;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-heading h3::before {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 8px 2px 0;
+  border-radius: 50%;
+  background: #fdc500;
+  content: "";
+  vertical-align: middle;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 178px;
+  color: #365978;
+  font: 800 10px/1 Arial, Helvetica, sans-serif;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress-label {
+  min-width: 34px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress-track {
+  display: block;
+  width: 120px;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #d9e7f2;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #00509d;
+  transition: width 0.35s ease;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress.is-complete .summary-procedure-progress-track i {
+  background: #07845a;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .prc-procedure-table-container {
+  margin: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables table.prc-procedure-table {
+  width: 100%;
+  min-width: 1180px;
+  table-layout: fixed;
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-radius: 0 !important;
+  border-spacing: 0;
+  background: #ffffff;
+  color: #000;
+  font-family: Cambria, "Times New Roman", serif !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables table.prc-procedure-table :is(
+  thead,
+  thead tr,
+  tbody,
+  tbody tr,
+  th,
+  td
+) {
+  border-color: #000 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables table.prc-procedure-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables table.prc-procedure-table th {
+  padding: 6px 5px !important;
+  background: #d7e8f3 !important;
+  color: #000 !important;
+  font: 700 11px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center;
+  vertical-align: middle;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables table.prc-procedure-table td {
+  height: 54px;
+  padding: 7px 6px !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  font: 400 11px/1.2 Cambria, "Times New Roman", serif !important;
+  vertical-align: middle;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables table.prc-procedure-table tbody tr:hover td {
+  background: #ffffff !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .admin-procedure-empty {
+  height: 42px;
+  color: #667a92 !important;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Student PRC procedure table form, copied for Admin Annual Records. */
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables .prc-procedure-table-container {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow-x: auto !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table {
+  table-layout: fixed !important;
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  background: #fff !important;
+  color: #000 !important;
+  font-family: Cambria, "Times New Roman", serif !important;
+}
+
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table :is(
+  thead,
+  thead tr,
+  thead th,
+  thead tr:first-child th,
+  thead tr:nth-child(2) th
+) {
+  border-color: #000 !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table th {
+  height: auto !important;
+  padding: 5px 4px !important;
+  border: 1px solid #000 !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+  font: 700 12px/1.15 Cambria, "Times New Roman", serif !important;
+  font-size: 12px !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table td,
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table tbody tr:nth-child(odd) td,
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table tbody tr:nth-child(even) td {
+  height: 33px !important;
+  padding: 4px 5px !important;
+  border: 1px solid #000 !important;
+  background: #fff !important;
+  color: #000 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table tbody td :where(span, small, div) {
+  display: block;
+  color: #000 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
+
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table .record-detail-secondary {
+  margin-top: 3px;
+}
+
+html body.role-admin #yearlyReportPanel #yearlyProcedureTables table.prc-procedure-table tbody tr:hover td {
+  background: #fff !important;
+}
+
+/* Admin's global table reset suppresses collapsed body borders; draw each grid edge explicitly. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables table.clinical-form-table.prc-procedure-table {
+  border: 0 !important;
+  border-top: 1px solid #000 !important;
+  border-left: 1px solid #000 !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  outline: 0 !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables table.clinical-form-table.prc-procedure-table :is(th, td),
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables table.clinical-form-table.prc-procedure-table tbody tr:last-child td {
+  border: 0 !important;
+  border-right: 1px solid #000 !important;
+  border-bottom: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+
+/* Fluid annual tables: fit the desktop panel, scroll only when columns become too narrow. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables .summary-procedure-section,
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables .prc-procedure-table-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables .prc-procedure-table-container {
+  overflow-x: hidden !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables table.clinical-form-table.prc-procedure-table {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables table.clinical-form-table.prc-procedure-table :is(th, td) {
+  min-width: 0 !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+  white-space: normal !important;
+}
+
+@media (max-width: 1280px) {
+  html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables .prc-procedure-table-container {
+    overflow-x: auto !important;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedureTables table.clinical-form-table.prc-procedure-table {
+    width: 1080px !important;
+    max-width: none !important;
+    min-width: 1080px !important;
+  }
+}
+
+/* Annual Records year search. */
+html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-year-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-search {
+  position: relative;
+  display: block;
+  flex: 0 1 340px;
+  min-width: 250px;
+  margin-left: auto;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-search > i {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 13px;
+  color: #557493;
+  font-size: 12px;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel #yearlyYearSearchInput {
+  width: 100% !important;
+  height: 38px !important;
+  padding: 0 38px 0 36px !important;
+  border: 1px solid #b8cfe4 !important;
+  border-radius: 8px !important;
+  outline: 0 !important;
+  background: #ffffff !important;
+  color: #00296b !important;
+  font: 600 11px/1 "Inter", "Poppins", sans-serif !important;
+  box-shadow: none !important;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel #yearlyYearSearchInput::placeholder {
+  color: #71859d;
+  opacity: 1;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel #yearlyYearSearchInput:focus {
+  border-color: #00509d !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, 0.12) !important;
+}
+
+@media (max-width: 640px) {
+  html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-year-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel :is(#openAddSchoolYearBtn, .annual-records-search) {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+  }
+}
+
+/* Admin PRC export preview: landscape proof before Instructor-style DOCX download. */
+#adminPrcPreviewOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 37, 83, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+#adminPrcPreviewOverlay.is-open {
+  display: flex !important;
+}
+
+#adminPrcPreviewOverlay .admin-prc-preview-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(1440px, 98vw);
+  height: min(930px, 94vh);
+  overflow: hidden;
+  border: 1px solid #9cc4e5;
+  border-radius: 16px;
+  background: #eef6fc;
+  box-shadow: 0 24px 58px rgba(0, 28, 70, 0.35);
+}
+
+#adminPrcPreviewOverlay :is(.admin-prc-preview-toolbar, .admin-prc-preview-actions) {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  background: #ffffff;
+}
+
+#adminPrcPreviewOverlay .admin-prc-preview-toolbar {
+  border-bottom: 1px solid #c5ddec;
+}
+
+#adminPrcPreviewOverlay .admin-prc-preview-toolbar strong {
+  display: block;
+  color: #003f88;
+  font: 800 16px/1.2 "Inter", sans-serif;
+}
+
+#adminPrcPreviewOverlay .admin-prc-preview-toolbar span {
+  display: block;
+  margin-top: 2px;
+  color: #55718c;
+  font: 500 12px/1.2 "Inter", sans-serif;
+}
+
+#adminPrcPreviewOverlay .admin-prc-preview-close {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid #b9d2e8;
+  border-radius: 50%;
+  background: #f4f9fd;
+  color: #00509d;
+  cursor: pointer;
+}
+
+#adminPrcPreviewOverlay .admin-prc-preview-pages {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 28px;
+  background: #dceaf5;
+}
+
+#adminPrcPreviewOverlay .prc-page {
+  position: relative;
+  box-sizing: border-box;
+  width: 1120px;
+  min-height: 865px;
+  margin: 0 auto 28px;
+  padding: 45px 42px 32px;
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: Cambria, "Times New Roman", serif !important;
+  font-size: 13px;
+  box-shadow: 0 5px 18px rgba(22, 49, 74, 0.2);
+}
+
+#adminPrcPreviewOverlay .prc-page:last-child {
+  margin-bottom: 0;
+}
+
+#adminPrcPreviewOverlay .prc-heading {
+  display: flex;
+  min-height: 75px;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  color: #000000 !important;
+  line-height: 1.15;
+  text-align: center;
+}
+
+#adminPrcPreviewOverlay .prc-heading img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+#adminPrcPreviewOverlay .prc-heading :is(div, b, h1) {
+  color: #000000 !important;
+  font-family: Cambria, "Times New Roman", serif !important;
+}
+
+#adminPrcPreviewOverlay .prc-heading .prc-agency {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+#adminPrcPreviewOverlay .prc-heading h1 {
+  margin: 4px 0 0 !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  text-transform: none !important;
+}
+
+#adminPrcPreviewOverlay .applicant-type {
+  margin: 0 0 13px;
+  color: #000000 !important;
+  text-align: right;
+}
+
+#adminPrcPreviewOverlay .prc-check-box {
+  display: inline-block;
+  width: 27px;
+  height: 20px;
+  box-sizing: border-box;
+  margin: 0 5px 0 13px;
+  border: 1px solid #000000;
+  color: #000000 !important;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#adminPrcPreviewOverlay .identity {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 42px;
+  margin: 0 0 12px;
+  color: #000000 !important;
+}
+
+#adminPrcPreviewOverlay .identity div {
+  padding: 0 5px 2px;
+  border-bottom: 1px solid #000000;
+  color: #000000 !important;
+}
+
+#adminPrcPreviewOverlay .prc-page table {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  border: 1px solid #000000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  table-layout: fixed !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: Cambria, "Times New Roman", serif !important;
+}
+
+#adminPrcPreviewOverlay .prc-page table :is(thead, tbody, tr, th, td) {
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+#adminPrcPreviewOverlay .prc-page table :is(th, td) {
+  box-sizing: border-box !important;
+  padding: 3px 5px !important;
+  border: 1px solid #000000 !important;
+  vertical-align: middle !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+#adminPrcPreviewOverlay .prc-page table th {
+  height: auto !important;
+  font: 700 10px/1.08 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  text-transform: none !important;
+}
+
+#adminPrcPreviewOverlay .prc-page table td {
+  height: 31px !important;
+  font: 400 10.67px/1.15 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+}
+
+#adminPrcPreviewOverlay .prc-note {
+  margin: 10px 0 5px;
+  color: #000000 !important;
+  font: 11px/1.25 Cambria, "Times New Roman", serif !important;
+}
+
+#adminPrcPreviewOverlay .prc-certified {
+  color: #000000 !important;
+  font: 12px/1.5 Cambria, "Times New Roman", serif !important;
+  text-align: right;
+}
+
+#adminPrcPreviewOverlay .continued {
+  color: #000000 !important;
+  font: 11px/1.2 Cambria, "Times New Roman", serif !important;
+  text-align: right;
+}
+
+#adminPrcPreviewOverlay .admin-prc-preview-actions {
+  justify-content: flex-end;
+  border-top: 1px solid #c5ddec;
+}
+
+#adminPrcPreviewOverlay .admin-prc-preview-actions .btn {
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+#adminPrcPreviewOverlay #adminPrcPreviewDownloadBtn {
+  border-color: #e4b500 !important;
+  background: #ffd500 !important;
+  color: #063e7c !important;
+}
+
+@media (max-width: 720px) {
+  #adminPrcPreviewOverlay {
+    padding: 8px;
+  }
+
+  #adminPrcPreviewOverlay .admin-prc-preview-dialog {
+    height: 96vh;
+  }
+
+  #adminPrcPreviewOverlay .admin-prc-preview-pages {
+    padding: 14px;
+  }
+
+  #adminPrcPreviewOverlay :is(.admin-prc-preview-toolbar, .admin-prc-preview-actions) {
+    padding: 11px 13px;
+  }
+}
