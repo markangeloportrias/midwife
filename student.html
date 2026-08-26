@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="assets/css/pages/student.css?v=20260815-2" />
     <link rel="stylesheet" href="assets/css/components/hero.css?v=20260728-12" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-22" />
-    <link rel="stylesheet" href="assets/css/pages/student-palette.css?v=20260814-30" />
-    <link rel="stylesheet" href="assets/css/pages/student-prc.css?v=20260811-34" />
+    <link rel="stylesheet" href="assets/css/pages/student-palette.css?v=20260824-1" />
+    <link rel="stylesheet" href="assets/css/pages/student-prc.css?v=20260825-3" />
     <link rel="stylesheet" href="assets/css/components/role-table-density.css?v=20260821-1" />
   </head>
   <body>
@@ -580,32 +580,7 @@
             </select>
           </div>
 
-          <div class="clinical-form-table-container prc-procedure-table-container" style="overflow-x: auto">
-            <table class="clinical-form-table procedure-records-table prc-procedure-table" style="width: 100%; min-width: 1180px">
-              <colgroup>
-                <col style="width: 19%" /><col style="width: 5%" /><col style="width: 13%" />
-                <col style="width: 7%" /><col style="width: 17%" /><col style="width: 13%" />
-                <col style="width: 9%" /><col style="width: 8%" /><col style="width: 9%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th rowspan="2">Name and Address of Patient</th>
-                  <th rowspan="2">Case No.</th>
-                  <th id="recordDiagnosisHeader" rowspan="2">Complete Diagnosis</th>
-                  <th rowspan="2">Date &amp; Time<br />Performed</th>
-                  <th rowspan="2">Full Name, Address of Facility &amp;<br />Contact Number</th>
-                  <th colspan="3">Supervised by</th>
-                  <th rowspan="2">Actions</th>
-                </tr>
-                <tr>
-                  <th>Printed Name and<br />Contact No.</th>
-                  <th>Position/<br />Designation</th>
-                  <th>License No /<br />Expiry Date</th>
-                </tr>
-              </thead>
-              <tbody id="deliveryRecordsBody"></tbody>
-            </table>
-          </div>
+          <div id="recordProcedureTables" aria-live="polite"></div>
 
         </section>
 
@@ -1671,8 +1646,8 @@
       const deliveryWorkspace = document.getElementById(
         "deliveryAssistedWorkspace",
       );
-      const deliveryRecordsBody = document.getElementById(
-        "deliveryRecordsBody",
+      const recordProcedureTables = document.getElementById(
+        "recordProcedureTables",
       );
       const fabAddDeliveryBtn = document.getElementById("fabAddDeliveryBtn");
       const deliveryModalOverlay = document.getElementById(
@@ -2278,11 +2253,6 @@
         if (recordWorkspaceSubtitle) {
           recordWorkspaceSubtitle.textContent = activeProcedureConfig.subtitle;
         }
-        const diagnosisHeader = document.getElementById("recordDiagnosisHeader");
-        if (diagnosisHeader) {
-          diagnosisHeader.textContent = getPrcDiagnosisHeader(nextKey);
-        }
-
         // Dynamic Form Field Toggling
         document.querySelectorAll("[data-internal-exam-field]").forEach((field) => {
           field.style.display = procedureKey === "internal-exam" ? "block" : "none";
@@ -2430,9 +2400,9 @@
       }
 
       function renderDeliveryRecordsTable() {
-        if (!deliveryRecordsBody) return;
+        if (!recordProcedureTables) return;
 
-        deliveryRecordsBody.innerHTML = "";
+        recordProcedureTables.innerHTML = "";
 
         const searchTerm = String(
           document.getElementById("recordSearch")?.value || "",
@@ -2466,24 +2436,6 @@
             return true;
           });
 
-        const deliveryTableContainer = deliveryRecordsBody.closest(
-          ".clinical-form-table-container",
-        );
-        if (deliveryTableContainer) deliveryTableContainer.style.display = "";
-
-        if (!visibleRecords.length) {
-          const row = document.createElement("tr");
-          row.className = "procedure-empty-row";
-          const cell = document.createElement("td");
-          cell.colSpan = 9;
-          cell.textContent = deliveryRecords.length
-            ? "No records match the current search or date filter."
-            : "No records for this procedure.";
-          row.appendChild(cell);
-          deliveryRecordsBody.appendChild(row);
-          return;
-        }
-
         const formatTableDateTime = (value) => {
           if (!value) return "-";
           const date = new Date(value);
@@ -2510,7 +2462,91 @@
           });
         };
 
+        const resolveRecordProcedureKey = (record) => {
+          const key = normalizeProcedureKey(
+            record.procedureKey || record.procedureName,
+          );
+          if (procedureNames[key]) return key;
+          return activeProcedureKey === "all-records" ? key : activeProcedureKey;
+        };
+        const procedureKeys = activeProcedureKey === "all-records"
+          ? Object.keys(procedureNames)
+          : [activeProcedureKey];
+        const procedureTableBodies = new Map();
+
+        procedureKeys.forEach((procedureKey) => {
+          const procedureLabel = procedureNames[procedureKey]
+            || PROCEDURE_CONFIGS[procedureKey]?.procedureName
+            || "Clinical Records";
+          const procedureRecords = deliveryRecords.filter(
+            (record) => resolveRecordProcedureKey(record) === procedureKey,
+          );
+          const target = PROCEDURE_TARGETS[procedureKey] || 0;
+
+          const section = document.createElement("section");
+          section.className = "record-procedure-section";
+          section.id = `recordProcedure-${procedureKey}`;
+
+          const heading = document.createElement("div");
+          heading.className = "summary-procedure-heading";
+          const title = document.createElement("h3");
+          title.id = `recordProcedureTitle-${procedureKey}`;
+          title.textContent = `${procedureLabel} (${procedureRecords.length})`;
+
+          const progressGroup = createProcedureProgressGroup(
+            procedureRecords,
+            target,
+            procedureLabel,
+          );
+          heading.append(title, progressGroup);
+
+          const wrap = document.createElement("div");
+          wrap.className = "clinical-form-table-container prc-procedure-table-container";
+          wrap.style.overflowX = "auto";
+
+          const table = document.createElement("table");
+          table.className = "clinical-form-table procedure-records-table prc-procedure-table";
+          table.style.width = "100%";
+          table.style.minWidth = "1180px";
+          table.setAttribute("aria-labelledby", title.id);
+          table.innerHTML = `
+            <colgroup>
+              <col style="width:19%"><col style="width:5%"><col style="width:13%">
+              <col style="width:7%"><col style="width:17%"><col style="width:13%">
+              <col style="width:9%"><col style="width:8%"><col style="width:9%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th rowspan="2">Name and Address of Patient</th>
+                <th rowspan="2">Case No.</th>
+                <th rowspan="2">${getPrcDiagnosisHeader(procedureKey)}</th>
+                <th rowspan="2">Date &amp; Time<br>Performed</th>
+                <th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th>
+                <th colspan="3">Supervised by</th>
+                <th rowspan="2">Actions</th>
+              </tr>
+              <tr>
+                <th>Printed Name and<br>Contact No.</th>
+                <th>Position/<br>Designation</th>
+                <th>License No /<br>Expiry Date</th>
+              </tr>
+            </thead>`;
+          const body = document.createElement("tbody");
+          table.appendChild(body);
+          wrap.appendChild(table);
+          section.append(heading, wrap);
+          recordProcedureTables.appendChild(section);
+          procedureTableBodies.set(procedureKey, {
+            body,
+            totalCount: procedureRecords.length,
+          });
+        });
+
         visibleRecords.forEach(({ rec, index }) => {
+          const procedureTable = procedureTableBodies.get(
+            resolveRecordProcedureKey(rec),
+          );
+          if (!procedureTable) return;
           const row = document.createElement("tr");
           const isFocusedCase = focusedCaseKey === getCaseKey(rec);
           if (isFocusedCase) row.classList.add("case-highlight");
@@ -2553,7 +2589,7 @@
               <button class="case-action-btn trash" type="button" title="Move to trash" aria-label="Move to trash"><i class="fas fa-trash-can"></i></button>
             </div>`;
           row.appendChild(actions);
-          deliveryRecordsBody.appendChild(row);
+          procedureTable.body.appendChild(row);
           if (isFocusedCase) {
             setTimeout(() => row.scrollIntoView({ behavior: "smooth", block: "center" }), 0);
             focusedCaseKey = null;
@@ -2649,6 +2685,19 @@
           });
         });
 
+        procedureTableBodies.forEach(({ body, totalCount }) => {
+          if (body.childElementCount) return;
+          const row = document.createElement("tr");
+          row.className = "procedure-empty-row";
+          const cell = document.createElement("td");
+          cell.colSpan = 9;
+          cell.textContent = totalCount
+            ? "No records match the current search or date filter."
+            : "No records for this procedure.";
+          row.appendChild(cell);
+          body.appendChild(row);
+        });
+
       }
 
       async function loadActiveWorkspaceRecords() {
@@ -2683,6 +2732,10 @@
             licenseExpiry: rec.supervisor_license_expiry_date || "",
             teacherRemarks: rec.teacher_remarks || rec.remarks || "",
             checkedBy: rec.checked_by || "",
+            status:
+              rec.status ||
+              rec.record_status ||
+              (rec.checked_by ? "Verified" : "Submitted"),
             editRequestStatus: rec.edit_request_status || "",
           }));
 
@@ -3018,6 +3071,91 @@
         suturing: 5,
         "iv-insertion": 5,
       };
+
+      function getProcedureRecordReviewStatus(record) {
+        const status = String(
+          record?.status || record?.record_status || "",
+        )
+          .trim()
+          .toLowerCase()
+          .replace(/[\s-]+/g, "_");
+        if (status === "verified") return "verified";
+        if (status === "invalid") return "invalid";
+        if (
+          !status &&
+          (record?.checked_by || record?.checkedBy || record?.checked_at)
+        ) {
+          return "verified";
+        }
+        return status;
+      }
+
+      function createProcedureProgressMetric({
+        name,
+        count,
+        maximum,
+        kind,
+        procedureLabel,
+      }) {
+        const safeMaximum = Math.max(0, Number(maximum) || 0);
+        const safeCount = Math.max(0, Number(count) || 0);
+        const percent = safeMaximum
+          ? Math.min(100, Math.round((safeCount / safeMaximum) * 100))
+          : 0;
+        const progress = document.createElement("div");
+        progress.className = `summary-procedure-progress progress-${kind}${kind === "required" && safeMaximum && safeCount >= safeMaximum ? " is-complete" : ""}`;
+        progress.setAttribute("role", "progressbar");
+        progress.setAttribute(
+          "aria-label",
+          `${procedureLabel} ${name.toLowerCase()} records`,
+        );
+        progress.setAttribute("aria-valuemin", "0");
+        progress.setAttribute("aria-valuemax", String(safeMaximum || 1));
+        progress.setAttribute(
+          "aria-valuenow",
+          String(Math.min(safeCount, safeMaximum || 1)),
+        );
+        progress.title = `${name}: ${safeCount} of ${safeMaximum} (${percent}%)`;
+        progress.innerHTML = `<span class="summary-procedure-progress-name">${name}</span><span class="summary-procedure-progress-label">${safeCount} / ${safeMaximum}</span><span class="summary-procedure-progress-track"><i style="width:${percent}%"></i></span>`;
+        return progress;
+      }
+
+      function createProcedureProgressGroup(records, target, procedureLabel) {
+        const safeRecords = Array.isArray(records) ? records : [];
+        const verifiedCount = safeRecords.filter(
+          (record) => getProcedureRecordReviewStatus(record) === "verified",
+        ).length;
+        const invalidCount = safeRecords.filter(
+          (record) => getProcedureRecordReviewStatus(record) === "invalid",
+        ).length;
+        const group = document.createElement("div");
+        group.className = "procedure-progress-group";
+        group.setAttribute("aria-label", `${procedureLabel} record progress`);
+        group.append(
+          createProcedureProgressMetric({
+            name: "Required",
+            count: safeRecords.length,
+            maximum: target,
+            kind: "required",
+            procedureLabel,
+          }),
+          createProcedureProgressMetric({
+            name: "Verified",
+            count: verifiedCount,
+            maximum: safeRecords.length,
+            kind: "verified",
+            procedureLabel,
+          }),
+          createProcedureProgressMetric({
+            name: "Invalid",
+            count: invalidCount,
+            maximum: safeRecords.length,
+            kind: "invalid",
+            procedureLabel,
+          }),
+        );
+        return group;
+      }
 
       const PROCEDURE_ICONS = {
         "delivery-handled": "fa-baby",
@@ -3635,21 +3773,16 @@
           section.id = `summaryProcedure-${key}`;
           const records = cases.filter((record) => normalizeProcedureKey(record.procedure_name) === key);
           const target = PROCEDURE_TARGETS[key] || 0;
-          const percent = target ? Math.min(100, Math.round((records.length / target) * 100)) : 0;
           const heading = document.createElement("div");
           heading.className = "summary-procedure-heading";
           const title = document.createElement("h3");
           title.textContent = `${procedureNames[key]} (${records.length})`;
-          const progress = document.createElement("div");
-          progress.className = `summary-procedure-progress${records.length >= target ? " is-complete" : ""}`;
-          progress.setAttribute("role", "progressbar");
-          progress.setAttribute("aria-label", `${procedureNames[key]} progress`);
-          progress.setAttribute("aria-valuemin", "0");
-          progress.setAttribute("aria-valuemax", String(target));
-          progress.setAttribute("aria-valuenow", String(Math.min(records.length, target)));
-          progress.title = `${records.length} of ${target} required cases (${percent}%)`;
-          progress.innerHTML = `<span class="summary-procedure-progress-label">${records.length} / ${target}</span><span class="summary-procedure-progress-track"><i style="width:${percent}%"></i></span>`;
-          heading.append(title, progress);
+          const progressGroup = createProcedureProgressGroup(
+            records,
+            target,
+            procedureNames[key],
+          );
+          heading.append(title, progressGroup);
           section.appendChild(heading);
           const wrap = document.createElement("div");
           wrap.className = "clinical-form-table-container prc-procedure-table-container";

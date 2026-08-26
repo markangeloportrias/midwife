@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS case_records (
   teacher_remarks TEXT NULL,
   checked_by VARCHAR(255) NULL,
   checked_at DATETIME NULL,
-  record_status ENUM('submitted', 'reviewed', 'verified', 'needs_revision', 'archived') NOT NULL DEFAULT 'submitted',
+  record_status ENUM('submitted', 'reviewed', 'verified', 'needs_revision', 'invalid', 'archived') NOT NULL DEFAULT 'submitted',
   archived_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

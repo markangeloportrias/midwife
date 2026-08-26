@@ -2074,10 +2074,6 @@
       .dashboard-activity-empty { padding: 18px; color: #8b98ad; text-align: center; font-size: 11px; }
       #instructorsCard .workspace-header { margin-bottom: 14px; }
       #instructorsCard #instructorMessage:empty { display: none; }
-      #instructorsCard thead th:last-child,
-      #instructorsCard tbody .action-cell {
-        text-align: right !important;
-      }
       #instructorsCard > .table-wrap {
         margin-top: 10px !important;
         padding-top: 6px !important;

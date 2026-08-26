@@ -14,7 +14,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260726-12" />
-    <link rel="stylesheet" href="assets/css/pages/instructor.css?v=20260815-51" />
+    <link rel="stylesheet" href="assets/css/pages/instructor.css?v=20260824-3" />
     <link rel="stylesheet" href="assets/css/components/hero.css?v=20260728-12" />
     <link rel="stylesheet" href="assets/css/components/buttons.css" />
     <link rel="stylesheet" href="assets/css/components/forms.css" />
@@ -22,8 +22,9 @@
     <link rel="stylesheet" href="assets/css/components/modals.css" />
     <link rel="stylesheet" href="assets/css/pages/reports.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-20" />
-<link rel="stylesheet" href="assets/css/pages/instructor-palette.css?v=20260815-68" />
-    <link rel="stylesheet" href="assets/css/components/role-table-density.css?v=20260821-2" />
+<link rel="stylesheet" href="assets/css/pages/instructor-palette.css?v=20260826-1" />
+    <link rel="stylesheet" href="assets/css/components/role-table-density.css?v=20260824-3" />
+    <link rel="stylesheet" href="assets/css/pages/instructor-annual-records-table.css?v=20260826-2" />
   </head>
   <body>
     <div class="dashboard">
@@ -488,6 +489,28 @@
                 </table>
               </div>
             </section>
+            <div id="instructorRecordNavigation" class="instructor-record-navigation">
+              <nav id="instructorProcedureTabs" class="procedure-tabs" aria-label="Filter clinical records by procedure">
+                <button type="button" class="procedure-tab active" data-instructor-procedure="dashboard">
+                  <i class="fas fa-list" aria-hidden="true"></i> All Records
+                </button>
+                <button type="button" class="procedure-tab" data-instructor-procedure="delivery-handled">
+                  <i class="fas fa-baby" aria-hidden="true"></i> Delivery Handled
+                </button>
+                <button type="button" class="procedure-tab" data-instructor-procedure="delivery-assisted">
+                  <i class="fas fa-hand-holding-medical" aria-hidden="true"></i> Delivery Assisted
+                </button>
+                <button type="button" class="procedure-tab" data-instructor-procedure="suturing">
+                  <i class="fas fa-scissors" aria-hidden="true"></i> Perineal Suturing
+                </button>
+                <button type="button" class="procedure-tab" data-instructor-procedure="iv-insertion">
+                  <i class="fas fa-syringe" aria-hidden="true"></i> IV Insertion
+                </button>
+                <button type="button" class="procedure-tab" data-instructor-procedure="internal-exam">
+                  <i class="fas fa-stethoscope" aria-hidden="true"></i> Internal Examination
+                </button>
+              </nav>
+            </div>
             <div id="currentRecordsStudentRoster" class="table-wrapper" style="display:none">
               <div class="current-records-navigator">
                 <div>
@@ -502,7 +525,18 @@
               </table>
               <div class="empty" id="currentRecordsStudentRosterEmpty" style="display:none">No registered blocks found.</div>
             </div>
+            <div
+              id="instructorActiveRecordProgress"
+              class="instructor-record-progress"
+              style="display: none"
+              aria-live="polite"
+            ></div>
             <div id="mainRecordsWrapper" class="prc-source-table-wrap">
+              <div
+                id="instructorStudentProcedureTables"
+                class="instructor-student-procedure-tables"
+                style="display: none"
+              ></div>
               <table
                 id="active-table"
                 class="prc-source-table"
@@ -620,6 +654,42 @@
                 </div>
               </div>
               <div class="students-panel" id="yearlyStudentRecordsPanel">
+                <section
+                  class="annual-student-profile"
+                  id="yearlyStudentProfile"
+                  aria-label="Selected student information"
+                  style="display: none"
+                >
+                  <div class="annual-student-identity">
+                    <div class="annual-student-photo" aria-hidden="true">
+                      <img id="yearlyStudentProfilePhoto" src="" alt="" hidden />
+                      <span id="yearlyStudentProfileInitials">ST</span>
+                    </div>
+                    <div class="annual-student-name">
+                      <span>Student profile</span>
+                      <strong id="yearlyStudentProfileName">Student</strong>
+                      <small>Student ID: <b id="yearlyStudentProfileId">—</b></small>
+                    </div>
+                  </div>
+                  <div class="annual-student-details">
+                    <div>
+                      <span>Academic Year</span>
+                      <strong id="yearlyStudentProfileYear">—</strong>
+                    </div>
+                    <div>
+                      <span>Registered Block</span>
+                      <strong id="yearlyStudentProfileBlock">—</strong>
+                    </div>
+                    <div>
+                      <span>Contact Number</span>
+                      <strong id="yearlyStudentProfileContact">Not provided</strong>
+                    </div>
+                    <div>
+                      <span>Parent / Guardian</span>
+                      <strong id="yearlyStudentProfileGuardian">Not provided</strong>
+                    </div>
+                  </div>
+                </section>
                 <nav class="yearly-procedure-nav" aria-label="Filter annual clinical records by procedure">
                   <button type="button" class="active" data-yearly-procedure="">All Records</button>
                   <button type="button" data-yearly-procedure="delivery-handled">Delivery Handled</button>
@@ -627,7 +697,19 @@
                   <button type="button" data-yearly-procedure="suturing">Perineal Suturing</button>
                   <button type="button" data-yearly-procedure="iv-insertion">IV Insertion</button>
                   <button type="button" data-yearly-procedure="internal-exam">Internal Examination</button>
-                </nav><div class="prc-source-table-wrap">
+                </nav>
+                <div
+                  id="instructorYearlyProcedureTables"
+                  class="instructor-student-procedure-tables instructor-yearly-procedure-tables"
+                  style="display: none"
+                ></div>
+                <div
+                  id="instructorYearlyRecordProgress"
+                  class="instructor-record-progress"
+                  style="display: none"
+                  aria-live="polite"
+                ></div>
+                <div class="prc-source-table-wrap">
                   <table id="yearly-student-records-table" class="prc-source-table" style="width:100%">
                     <colgroup><col style="width:15%"><col style="width:7%"><col style="width:17%"><col style="width:10%"><col style="width:17%"><col style="width:13%"><col style="width:9%"><col style="width:8%"><col style="width:12%"></colgroup>
                     <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="3">Supervised by</th><th rowspan="2">Action</th></tr><tr><th>Printed Name and Contact No.</th><th>Position/<br>Designation</th><th>License No /<br>Expiry Date</th></tr></thead>
@@ -1072,6 +1154,15 @@
       const instructorYearSelect = null; // deprecated - use yearlyRecordsNav instead
       const yearlyReportView = document.getElementById("yearly-report-view");
       const activeTable = document.getElementById("active-table");
+      const instructorStudentProcedureTables = document.getElementById(
+        "instructorStudentProcedureTables",
+      );
+      const instructorActiveRecordProgress = document.getElementById(
+        "instructorActiveRecordProgress",
+      );
+      const instructorRecordNavigation = document.getElementById(
+        "instructorRecordNavigation",
+      );
       const instructorProcedureTabs = document.getElementById("instructorProcedureTabs");
       const dashboardRecentRecords = document.getElementById(
         "dashboardRecentRecords",
@@ -1594,6 +1685,21 @@
       const yearlyStudentSummaryEmpty = document.getElementById("yearlyStudentSummaryEmpty");
       const yearlyStudentRecordsTbody = document.getElementById("yearlyStudentRecordsTbody");
       const yearlyStudentRecordsEmpty = document.getElementById("yearlyStudentRecordsEmpty");
+      const yearlyStudentProfile = document.getElementById("yearlyStudentProfile");
+      const yearlyStudentProfilePhoto = document.getElementById("yearlyStudentProfilePhoto");
+      const yearlyStudentProfileInitials = document.getElementById("yearlyStudentProfileInitials");
+      const yearlyStudentProfileName = document.getElementById("yearlyStudentProfileName");
+      const yearlyStudentProfileId = document.getElementById("yearlyStudentProfileId");
+      const yearlyStudentProfileYear = document.getElementById("yearlyStudentProfileYear");
+      const yearlyStudentProfileBlock = document.getElementById("yearlyStudentProfileBlock");
+      const yearlyStudentProfileContact = document.getElementById("yearlyStudentProfileContact");
+      const yearlyStudentProfileGuardian = document.getElementById("yearlyStudentProfileGuardian");
+      const instructorYearlyProcedureTables = document.getElementById(
+        "instructorYearlyProcedureTables",
+      );
+      const instructorYearlyRecordProgress = document.getElementById(
+        "instructorYearlyRecordProgress",
+      );
       const yearlyInstructorBackBtn = document.getElementById("yearlyInstructorBackBtn");
 
       const yearlyRecordsNav = {
@@ -1603,6 +1709,7 @@
         blockLabel: "",
         studentId: "",
         studentName: "",
+        studentProfile: null,
       };
       let yearlyVisibleStudentRecords = [];
       let yearlyProcedureFilterValue = "";
@@ -1643,6 +1750,299 @@
         "iv-insertion": "IV Insertion",
         "internal-exam": "Internal Exam",
       };
+
+      const instructorProcedureTargets = {
+        "delivery-handled": 20,
+        "delivery-assisted": 20,
+        suturing: 5,
+        "iv-insertion": 5,
+        "internal-exam": 20,
+      };
+
+      const instructorProcedureProgressLabels = {
+        "delivery-handled": "Delivery Handled",
+        "delivery-assisted": "Delivery Assisted",
+        suturing: "Perineal Suturing",
+        "iv-insertion": "IV Insertion",
+        "internal-exam": "Internal Examination",
+      };
+
+      function getInstructorProcedureRecordReviewStatus(record) {
+        const status = String(
+          record?.status || record?.record_status || "",
+        )
+          .trim()
+          .toLowerCase()
+          .replace(/[\s-]+/g, "_");
+        if (status === "verified") return "verified";
+        if (status === "invalid") return "invalid";
+        if (
+          !status &&
+          (record?.checked_by || record?.checkedBy || record?.checked_at)
+        ) {
+          return "verified";
+        }
+        return status;
+      }
+
+      function createInstructorProcedureProgressMetric({
+        name,
+        count,
+        maximum,
+        kind,
+        procedureLabel,
+      }) {
+        const safeMaximum = Math.max(0, Number(maximum) || 0);
+        const safeCount = Math.max(0, Number(count) || 0);
+        const percent = safeMaximum
+          ? Math.min(100, Math.round((safeCount / safeMaximum) * 100))
+          : 0;
+        const progress = document.createElement("div");
+        progress.className = `summary-procedure-progress progress-${kind}${kind === "required" && safeMaximum && safeCount >= safeMaximum ? " is-complete" : ""}`;
+        progress.setAttribute("role", "progressbar");
+        progress.setAttribute(
+          "aria-label",
+          `${procedureLabel} ${name.toLowerCase()} records`,
+        );
+        progress.setAttribute("aria-valuemin", "0");
+        progress.setAttribute("aria-valuemax", String(safeMaximum || 1));
+        progress.setAttribute(
+          "aria-valuenow",
+          String(Math.min(safeCount, safeMaximum || 1)),
+        );
+        progress.title = `${name}: ${safeCount} of ${safeMaximum} (${percent}%)`;
+        progress.innerHTML = `<span class="summary-procedure-progress-name">${name}</span><span class="summary-procedure-progress-label">${safeCount} / ${safeMaximum}</span><span class="summary-procedure-progress-track"><i style="width:${percent}%"></i></span>`;
+        return progress;
+      }
+
+      function createInstructorProcedureProgressGroup(
+        records,
+        target,
+        procedureLabel,
+      ) {
+        const safeRecords = Array.isArray(records) ? records : [];
+        const verifiedCount = safeRecords.filter(
+          (record) =>
+            getInstructorProcedureRecordReviewStatus(record) === "verified",
+        ).length;
+        const invalidCount = safeRecords.filter(
+          (record) =>
+            getInstructorProcedureRecordReviewStatus(record) === "invalid",
+        ).length;
+        const group = document.createElement("div");
+        group.className = "procedure-progress-group";
+        group.setAttribute("aria-label", `${procedureLabel} record progress`);
+        group.append(
+          createInstructorProcedureProgressMetric({
+            name: "Required",
+            count: safeRecords.length,
+            maximum: target,
+            kind: "required",
+            procedureLabel,
+          }),
+          createInstructorProcedureProgressMetric({
+            name: "Verified",
+            count: verifiedCount,
+            maximum: safeRecords.length,
+            kind: "verified",
+            procedureLabel,
+          }),
+          createInstructorProcedureProgressMetric({
+            name: "Invalid",
+            count: invalidCount,
+            maximum: safeRecords.length,
+            kind: "invalid",
+            procedureLabel,
+          }),
+        );
+        return group;
+      }
+
+      function createInstructorProcedureProgressHeading(records, procedureKey) {
+        const safeRecords = Array.isArray(records) ? records : [];
+        const procedureLabel =
+          instructorProcedureProgressLabels[procedureKey] || "Clinical Records";
+        const heading = document.createElement("div");
+        heading.className = "summary-procedure-heading";
+        const title = document.createElement("h3");
+        title.textContent = `${procedureLabel} (${safeRecords.length})`;
+        heading.append(
+          title,
+          createInstructorProcedureProgressGroup(
+            safeRecords,
+            instructorProcedureTargets[procedureKey] || 0,
+            procedureLabel,
+          ),
+        );
+        return heading;
+      }
+
+      function hideInstructorProcedureProgress(container) {
+        if (!container) return;
+        container.replaceChildren();
+        container.classList.remove("is-single");
+        container.style.display = "none";
+      }
+
+      function renderInstructorProcedureProgressCollection(
+        container,
+        records,
+        selectedProcedure = "",
+      ) {
+        if (!container) return;
+        const safeRecords = Array.isArray(records) ? records : [];
+        const procedureKeys = selectedProcedure
+          ? [selectedProcedure]
+          : Object.keys(instructorProcedureTargets);
+        container.replaceChildren();
+        container.classList.toggle("is-single", procedureKeys.length === 1);
+        procedureKeys.forEach((procedureKey) => {
+          if (!instructorProcedureTargets[procedureKey]) return;
+          const procedureRecords = safeRecords.filter(
+            (record) =>
+              normalizeProcedureKey(
+                record.procedure_name || record.procedure_key,
+              ) === procedureKey,
+          );
+          const row = document.createElement("section");
+          row.className = "instructor-progress-row";
+          row.appendChild(
+            createInstructorProcedureProgressHeading(
+              procedureRecords,
+              procedureKey,
+            ),
+          );
+          container.appendChild(row);
+        });
+        container.style.removeProperty("display");
+      }
+
+      function renderInstructorProcedureTables(
+        container,
+        records,
+        selectedProcedure = "",
+      ) {
+        if (!container) return;
+        const safeRecords = Array.isArray(records) ? records : [];
+        const procedureKeys = selectedProcedure
+          ? [selectedProcedure]
+          : Object.keys(instructorProcedureTargets);
+        container.replaceChildren();
+        container.classList.toggle(
+          "is-single",
+          procedureKeys.length === 1,
+        );
+
+        procedureKeys.forEach((procedureKey) => {
+          const procedureLabel =
+            instructorProcedureProgressLabels[procedureKey] || "Clinical Records";
+          const procedureRecords = safeRecords.filter(
+            (record) =>
+              normalizeProcedureKey(
+                record.procedure_name || record.procedure_key,
+              ) === procedureKey,
+          );
+          const section = document.createElement("section");
+          section.className = "summary-procedure-section instructor-current-procedure-section";
+          section.appendChild(
+            createInstructorProcedureProgressHeading(
+              procedureRecords,
+              procedureKey,
+            ),
+          );
+
+          const tableWrap = document.createElement("div");
+          tableWrap.className = "ip-table-wrap ip-clinical-table-wrap clinical-form-table-container instructor-current-table-wrap";
+          const table = document.createElement("table");
+          table.className = "ip-clinical-table clinical-form-table prc-source-table prc-replica-table instructor-current-procedure-table";
+          if (container === instructorYearlyProcedureTables) {
+            table.classList.remove("clinical-form-table");
+          }
+          table.setAttribute("aria-label", `${procedureLabel} clinical records`);
+          table.innerHTML = `<colgroup><col style="width:15%"><col style="width:6%"><col style="width:18%"><col style="width:8%"><col style="width:16%"><col style="width:13%"><col style="width:9%"><col style="width:8%"><col style="width:7%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="3">Supervised by</th><th rowspan="2">Actions</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th><th>License No /<br>Expiry Date</th></tr></thead>`;
+          table.style.setProperty("border", "1px solid #000", "important");
+          table.style.setProperty("border-collapse", "collapse", "important");
+          const body = document.createElement("tbody");
+
+          if (!procedureRecords.length) {
+            const emptyRow = document.createElement("tr");
+            emptyRow.innerHTML = '<td colspan="9" class="instructor-procedure-empty">No records for this procedure.</td>';
+            body.appendChild(emptyRow);
+          } else {
+            procedureRecords.forEach((record) => {
+              const row = document.createElement("tr");
+              const values = [
+                `${record.patient_name || "-"}${record.patient_address ? `\n${record.patient_address}` : ""}`,
+                record.case_no || "-",
+                record.complete_diagnosis || "-",
+                record.date_time_performed || "-",
+                `${record.facility_name || "-"}${record.facility_address ? `\n${record.facility_address}` : ""}${record.facility_contact_number ? `\n${record.facility_contact_number}` : ""}`,
+                `${record.supervisor_printed_name || "-"}${record.supervisor_contact_number ? `\n${record.supervisor_contact_number}` : ""}`,
+                record.supervisor_position_designation || "-",
+                `${record.supervisor_license_no || "-"}${record.supervisor_license_expiry_date ? `\n${record.supervisor_license_expiry_date}` : ""}`,
+              ];
+              values.forEach((value) => {
+                const cell = document.createElement("td");
+                cell.textContent = value;
+                cell.style.whiteSpace = "pre-line";
+                row.appendChild(cell);
+              });
+              const actionCell = document.createElement("td");
+              actionCell.className = "record-action-cell";
+              const actions = document.createElement("div");
+              actions.className = "record-table-actions";
+              const viewButton = document.createElement("button");
+              viewButton.type = "button";
+              viewButton.className = "record-action-btn record-view-btn";
+              viewButton.innerHTML = '<i class="far fa-eye" aria-hidden="true"></i><span>View</span>';
+              viewButton.addEventListener("click", (event) => {
+                event.stopPropagation();
+                showRecordDetail(record);
+              });
+              const commentButton = document.createElement("button");
+              commentButton.type = "button";
+              commentButton.className = "record-action-btn record-comment-btn";
+              commentButton.innerHTML = '<i class="far fa-comment" aria-hidden="true"></i><span>Comment</span>';
+              commentButton.addEventListener("click", async (event) => {
+                event.stopPropagation();
+                await handleTableComment(record);
+              });
+              actions.append(viewButton, commentButton);
+              actionCell.appendChild(actions);
+              row.appendChild(actionCell);
+              row.addEventListener("click", () => showRecordDetail(record));
+              body.appendChild(row);
+            });
+          }
+
+          table.appendChild(body);
+          tableWrap.appendChild(table);
+          section.appendChild(tableWrap);
+          container.appendChild(section);
+        });
+        container.style.removeProperty("display");
+      }
+
+      function renderInstructorStudentProcedureTables(records, selectedProcedure = "") {
+        renderInstructorProcedureTables(
+          instructorStudentProcedureTables,
+          records,
+          selectedProcedure,
+        );
+      }
+
+      function renderInstructorYearlyProcedureTables(records, selectedProcedure = "") {
+        renderInstructorProcedureTables(
+          instructorYearlyProcedureTables,
+          records,
+          selectedProcedure,
+        );
+      }
+
+      window.createInstructorProcedureProgressHeading =
+        createInstructorProcedureProgressHeading;
+      window.createInstructorProcedureProgressGroup =
+        createInstructorProcedureProgressGroup;
 
       const displayType = {
         "delivery-handled": "Delivery Handled",
@@ -3013,16 +3413,27 @@
             );
             const section = document.createElement("section");
             section.className = "summary-procedure-section";
-            const title = document.createElement("h3");
-            title.textContent = `${label} (${records.length})`;
-            section.appendChild(title);
+            section.appendChild(
+              createInstructorProcedureProgressHeading(records, key),
+            );
 
             const wrap = document.createElement("div");
             wrap.className = "clinical-form-table-container";
             const table = document.createElement("table");
             table.className = "clinical-form-table procedure-records-table";
-            table.innerHTML = `<colgroup><col style="width:15%"><col style="width:6%"><col style="width:18%"><col style="width:8%"><col style="width:16%"><col style="width:13%"><col style="width:9%"><col style="width:8%"><col style="width:7%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th>
-                        <th rowspan="2">Action</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead>`;
+            table.innerHTML = `<colgroup><col style="width:15%"><col style="width:6%"><col style="width:18%"><col style="width:8%"><col style="width:16%"><col style="width:13%"><col style="width:9%"><col style="width:8%"><col style="width:7%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">Complete Diagnosis</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="3">Supervised by</th><th rowspan="2">Action</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th><th>License No /<br>Expiry Date</th></tr></thead>`;
+            table.style.setProperty("border", "1px solid #000", "important");
+            table.style.setProperty("border-collapse", "collapse", "important");
+            table.querySelectorAll("thead th").forEach((headerCell) => {
+              headerCell.style.setProperty("border", "1px solid #000", "important");
+              headerCell.style.setProperty("border-radius", "0", "important");
+              headerCell.style.setProperty("box-sizing", "border-box", "important");
+              headerCell.style.setProperty(
+                "box-shadow",
+                "inset -1px 0 0 #000, inset 0 -1px 0 #000",
+                "important",
+              );
+            });
             const body = document.createElement("tbody");
             if (!records.length) {
               const row = document.createElement("tr");
@@ -3447,6 +3858,78 @@
       }
 
       // Yearly Records Navigation Functions
+      function renderYearlyStudentProfile(student) {
+        if (!yearlyStudentProfile) return;
+        if (!student || !yearlyRecordsNav.studentId) {
+          yearlyStudentProfile.style.display = "none";
+          return;
+        }
+
+        const studentName = String(
+          student.student_name || yearlyRecordsNav.studentName || "Student",
+        ).trim();
+        const studentId = String(
+          student.student_id || yearlyRecordsNav.studentId || "—",
+        ).trim();
+        const initials = studentName
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((part) => part.charAt(0).toUpperCase())
+          .join("") || "ST";
+
+        if (yearlyStudentProfileName) yearlyStudentProfileName.textContent = studentName;
+        if (yearlyStudentProfileId) yearlyStudentProfileId.textContent = studentId;
+        if (yearlyStudentProfileYear) {
+          yearlyStudentProfileYear.textContent = yearlyRecordsNav.year ||
+            student.registered_school_year || student.active_school_year || "Not assigned";
+        }
+        if (yearlyStudentProfileBlock) {
+          yearlyStudentProfileBlock.textContent = yearlyRecordsNav.blockLabel ||
+            student.block_label || "Not assigned";
+        }
+        if (yearlyStudentProfileContact) {
+          yearlyStudentProfileContact.textContent = student.contact_number || "Not provided";
+        }
+        if (yearlyStudentProfileGuardian) {
+          yearlyStudentProfileGuardian.textContent = student.parent_name || "Not provided";
+        }
+        if (yearlyStudentProfileInitials) {
+          yearlyStudentProfileInitials.textContent = initials;
+          yearlyStudentProfileInitials.hidden = false;
+        }
+
+        const photoSource = String(student.profile_photo || "").trim();
+        if (yearlyStudentProfilePhoto) {
+          const showPhotoFallback = () => {
+            yearlyStudentProfilePhoto.hidden = true;
+            yearlyStudentProfilePhoto.removeAttribute("src");
+            if (yearlyStudentProfileInitials) yearlyStudentProfileInitials.hidden = false;
+          };
+          yearlyStudentProfilePhoto.alt = `${studentName} profile photo`;
+          yearlyStudentProfilePhoto.onload = () => {
+            yearlyStudentProfilePhoto.hidden = false;
+            if (yearlyStudentProfileInitials) yearlyStudentProfileInitials.hidden = true;
+          };
+          yearlyStudentProfilePhoto.onerror = showPhotoFallback;
+          if (photoSource) {
+            yearlyStudentProfilePhoto.hidden = true;
+            yearlyStudentProfilePhoto.src = photoSource;
+            if (
+              yearlyStudentProfilePhoto.complete &&
+              yearlyStudentProfilePhoto.naturalWidth > 0
+            ) {
+              yearlyStudentProfilePhoto.hidden = false;
+              if (yearlyStudentProfileInitials) yearlyStudentProfileInitials.hidden = true;
+            }
+          } else {
+            showPhotoFallback();
+          }
+        }
+
+        yearlyStudentProfile.style.removeProperty("display");
+      }
+
       function setYearlyRecordsLevel(level) {
         yearlyRecordsNav.level = level;
         const title = document.getElementById("yearlyContextTitle");
@@ -3473,6 +3956,7 @@
         yearlyBlockPanel?.classList.toggle("active", level === "blocks");
         yearlyStudentSummaryPanel?.classList.toggle("active", level === "students");
         yearlyStudentRecordsPanel?.classList.toggle("active", level === "records");
+        if (level !== "records") renderYearlyStudentProfile(null);
         if (yearlyInstructorBackBtn) { yearlyInstructorBackBtn.classList.toggle("yearly-back-hidden", level === "years"); yearlyInstructorBackBtn.style.display = level === "years" ? "none" : ""; }
         renderYearlyRecordsBreadcrumb();
       }
@@ -3481,6 +3965,9 @@
         yearlyRecordsNav.year = year || "";
         yearlyRecordsNav.blockId = "";
         yearlyRecordsNav.blockLabel = "";
+        yearlyRecordsNav.studentId = "";
+        yearlyRecordsNav.studentName = "";
+        yearlyRecordsNav.studentProfile = null;
         setYearlyRecordsLevel("blocks");
         renderYearlyRecordsBlocks();
       }
@@ -3490,6 +3977,7 @@
         yearlyRecordsNav.blockLabel = blockLabel || "";
         yearlyRecordsNav.studentId = "";
         yearlyRecordsNav.studentName = "";
+        yearlyRecordsNav.studentProfile = null;
         setYearlyRecordsLevel("students");
         renderYearlyRecordsStudents();
       }
@@ -3497,7 +3985,12 @@
       function openYearlyStudentRecords(studentId, studentName) {
         yearlyRecordsNav.studentId = studentId || "";
         yearlyRecordsNav.studentName = studentName || studentId || "";
+        yearlyRecordsNav.studentProfile = null;
         setYearlyRecordsLevel("records");
+        renderYearlyStudentProfile({
+          student_id: yearlyRecordsNav.studentId,
+          student_name: yearlyRecordsNav.studentName,
+        });
         renderYearlyStudentRecords();
       }
 
@@ -3507,6 +4000,7 @@
         yearlyRecordsNav.blockLabel = "";
         yearlyRecordsNav.studentId = "";
         yearlyRecordsNav.studentName = "";
+        yearlyRecordsNav.studentProfile = null;
         setYearlyRecordsLevel("years");
         renderYearlyRecordsYears();
       }
@@ -3514,6 +4008,9 @@
       function backToYearlyRecordsBlocks() {
         yearlyRecordsNav.blockId = "";
         yearlyRecordsNav.blockLabel = "";
+        yearlyRecordsNav.studentId = "";
+        yearlyRecordsNav.studentName = "";
+        yearlyRecordsNav.studentProfile = null;
         setYearlyRecordsLevel("blocks");
         renderYearlyRecordsBlocks();
       }
@@ -3521,6 +4018,7 @@
       function backToYearlyRecordsStudents() {
         yearlyRecordsNav.studentId = "";
         yearlyRecordsNav.studentName = "";
+        yearlyRecordsNav.studentProfile = null;
         setYearlyRecordsLevel("students");
         renderYearlyRecordsStudents();
       }
@@ -4108,7 +4606,10 @@
               student_name: student.student_name,
               block_label: student.block_label,
             };
-            setActiveSection("delivery-handled");
+            setActiveSection("my-records", {
+              preserveCurrentRecordsBlock: true,
+              preserveSelectedStudent: true,
+            });
           });
           body.appendChild(row);
         });
@@ -4126,6 +4627,11 @@
       });
 
       async function loadRecords() {
+        hideInstructorProcedureProgress(instructorActiveRecordProgress);
+        if (instructorStudentProcedureTables) {
+          instructorStudentProcedureTables.replaceChildren();
+          instructorStudentProcedureTables.style.display = "none";
+        }
         if (activeType === "yearly-reports" || activeType === "yearly-records") {
           const currentRecordsRoster = document.getElementById("currentRecordsStudentRoster");
           if (currentRecordsRoster) currentRecordsRoster.style.display = "none";
@@ -4148,6 +4654,7 @@
           if (messagesView) messagesView.style.display = "none";
           if (editRequestsView) editRequestsView.style.display = "none";
           if (instructorProcedureTabs) instructorProcedureTabs.style.display = "none";
+          if (instructorRecordNavigation) instructorRecordNavigation.style.display = "none";
           if (refreshRecordsBtn) refreshRecordsBtn.style.display = "none";
           if (instructorStudentsBackBtn) instructorStudentsBackBtn.style.display = "none";
           if (currentRecordsBackToStudents) currentRecordsBackToStudents.style.display = "none";
@@ -4182,7 +4689,9 @@
         const isMessages = activeType === "messages";
         const isEditRequests = activeType === "edit-requests";
         const isSettings = activeType === "settings";
-        const isCurrentStudentDetail = !!selectedCurrentRecordsStudent && isProcedure;
+        const isCurrentStudentDetail =
+          !!selectedCurrentRecordsStudent && (isMyRecords || isProcedure);
+        const isSelectedStudentRecords = isMyRecords && Boolean(selectedCurrentRecordsStudent);
 
         // Hide global dashboard stats and controls when viewing student summary
         const dashboardHero = document.querySelector(".dashboard-hero");
@@ -4251,15 +4760,24 @@
         if (currentRecordsBackToBlocks && !isMyRecords) {
           currentRecordsBackToBlocks.style.display = "none";
         }
+        const showProcedureNavigation = isProcedure || isSelectedStudentRecords;
+        if (instructorRecordNavigation) {
+          instructorRecordNavigation.style.display = showProcedureNavigation
+            ? "flex"
+            : "none";
+        }
         if (instructorProcedureTabs) {
-          instructorProcedureTabs.style.display =
-            isDashboard || isMyRecords || isProcedure ? "flex" : "none";
+          instructorProcedureTabs.style.display = showProcedureNavigation
+            ? "flex"
+            : "none";
         }
         if (dashboardRecentRecords) {
-          dashboardRecentRecords.style.display = isDashboard ? "block" : "none";
+          dashboardRecentRecords.style.display = isDashboard && !selectedCurrentRecordsStudent
+            ? "block"
+            : "none";
         }
         const allRecordsTab = document.querySelector('[data-instructor-procedure="dashboard"]');
-        if (allRecordsTab) allRecordsTab.style.display = isCurrentStudentDetail ? "none" : "";
+        if (allRecordsTab) allRecordsTab.style.display = "";
 
         if (studentsView) {
           studentsView.style.display = isStudents ? "block" : "none";
@@ -4299,10 +4817,11 @@
         }
 
         const currentRecordsRoster = document.getElementById("currentRecordsStudentRoster");
-        if (isMyRecords) {
+        if (isMyRecords && !selectedCurrentRecordsStudent) {
           if (currentRecordsRoster) currentRecordsRoster.style.display = "block";
           if (mainRecordsWrapper) mainRecordsWrapper.style.display = "none";
           if (instructorProcedureTabs) instructorProcedureTabs.style.display = "none";
+          if (instructorRecordNavigation) instructorRecordNavigation.style.display = "none";
           if (refreshRecordsBtn) refreshRecordsBtn.style.display = "none";
           if (yearlyReportView) yearlyReportView.style.display = "none";
           await renderCurrentRecordsStudentRoster();
@@ -4328,6 +4847,30 @@
           "",
         );
         if (isDashboard) {
+          if (selectedCurrentRecordsStudent) {
+            if (activeTitleText) {
+              activeTitleText.textContent = `${selectedCurrentRecordsStudent.student_name || "Student"} — Records`;
+            }
+            if (activeSubtitle) {
+              activeSubtitle.textContent = "Review all clinical records by procedure.";
+            }
+            if (activeTable) activeTable.style.setProperty("display", "none", "important");
+            if (countActive) countActive.textContent = String(
+              list.filter(
+                (record) =>
+                  String(record.student_id || "") ===
+                  String(selectedCurrentRecordsStudent.student_id || ""),
+              ).length,
+            );
+            renderInstructorStudentProcedureTables(
+              list.filter(
+                (record) =>
+                  String(record.student_id || "") ===
+                  String(selectedCurrentRecordsStudent.student_id || ""),
+              ),
+            );
+            return;
+          }
           countActive.textContent = String(list.length);
           renderDashboardRecentRecords(list);
           return;
@@ -4338,6 +4881,27 @@
 
         if (selectedCurrentRecordsStudent && activeTitleText) {
           activeTitleText.textContent = `${selectedCurrentRecordsStudent.student_name || "Student"} — Records`;
+          if (activeSubtitle) {
+            activeSubtitle.textContent = "Review all clinical records by procedure.";
+          }
+        }
+
+        if (selectedCurrentRecordsStudent && (isMyRecords || isProcedure)) {
+          if (activeTable) activeTable.style.setProperty("display", "none", "important");
+          renderInstructorStudentProcedureTables(
+            visibleList,
+            isProcedure ? activeType : "",
+          );
+          if (countActive) countActive.textContent = String(visibleList.length);
+          return;
+        }
+
+        if (isCurrentStudentDetail) {
+          renderInstructorProcedureProgressCollection(
+            instructorActiveRecordProgress,
+            visibleList,
+            activeType,
+          );
         }
 
         countActive.textContent = visibleList.length;
@@ -4579,12 +5143,43 @@
       }
 
       async function renderYearlyStudentRecords() {
-        if (!yearlyStudentRecordsTbody || !yearlyRecordsNav.studentId) return;
-        const cases = await ApiClient.getJoinedCases(yearlyRecordsNav.studentId, "", "");
+        if (!instructorYearlyProcedureTables || !yearlyRecordsNav.studentId) {
+          renderYearlyStudentProfile(null);
+          hideInstructorProcedureProgress(instructorYearlyRecordProgress);
+          if (instructorYearlyProcedureTables) {
+            instructorYearlyProcedureTables.replaceChildren();
+            instructorYearlyProcedureTables.style.display = "none";
+          }
+          return;
+        }
+        const requestedStudentId = String(yearlyRecordsNav.studentId);
+        const profileRequest = yearlyRecordsNav.studentProfile
+          ? Promise.resolve({ ok: true, student: yearlyRecordsNav.studentProfile })
+          : ApiClient.getStudent(yearlyRecordsNav.studentId);
+        const [caseResult, profileResult] = await Promise.all([
+          ApiClient.getJoinedCases(yearlyRecordsNav.studentId, "", ""),
+          profileRequest,
+        ]);
+        if (
+          yearlyRecordsNav.level !== "records" ||
+          String(yearlyRecordsNav.studentId) !== requestedStudentId
+        ) {
+          return;
+        }
+        const cases = Array.isArray(caseResult) ? caseResult : [];
+        const studentProfile =
+          profileResult && profileResult.ok && profileResult.student
+            ? profileResult.student
+            : {
+                student_id: yearlyRecordsNav.studentId,
+                student_name: yearlyRecordsNav.studentName,
+              };
+        yearlyRecordsNav.studentProfile = studentProfile;
+        renderYearlyStudentProfile(studentProfile);
         const selectedYear = String(yearlyRecordsNav.year || "").trim();
         const normalizedSelectedYear = selectedYear.replace(/\s+/g, "");
         const yearParts = selectedYear.match(/(\d{4})\s*-\s*(\d{4})/);
-        yearlyVisibleStudentRecords = cases.filter((rec) => {
+        const yearlyStudentYearRecords = cases.filter((rec) => {
           const recordYear = String(rec.academic_year || rec.school_year || "").trim();
           if (recordYear.replace(/\s+/g, "") === normalizedSelectedYear) return true;
           if (!yearParts || !rec.date_time_performed) return false;
@@ -4593,19 +5188,26 @@
           const recordCalendarYear = recordDate.getFullYear();
           return recordCalendarYear === Number(yearParts[1]) || recordCalendarYear === Number(yearParts[2]);
         });
+        yearlyVisibleStudentRecords = yearlyStudentYearRecords;
         if (yearlyProcedureFilterValue) {
           yearlyVisibleStudentRecords = yearlyVisibleStudentRecords.filter((rec) =>
             normalizeProcedureKey(rec.procedure_name || rec.procedure_key) === yearlyProcedureFilterValue
           );
         }
+        hideInstructorProcedureProgress(instructorYearlyRecordProgress);
+        renderInstructorYearlyProcedureTables(
+          yearlyStudentYearRecords,
+          yearlyProcedureFilterValue,
+        );
         yearlyStudentRecordsTbody.innerHTML = "";
         const yearlyRecordsTableWrap = yearlyStudentRecordsTbody.closest(".prc-source-table-wrap");
         if (yearlyRecordsTableWrap)
-          yearlyRecordsTableWrap.style.display = "block";
+          yearlyRecordsTableWrap.style.display = "none";
         if (yearlyStudentRecordsEmpty)
-          yearlyStudentRecordsEmpty.style.display = yearlyVisibleStudentRecords.length ? "none" : "block";
+          yearlyStudentRecordsEmpty.style.display = "none";
         const contextCount = document.getElementById("yearlyContextCount");
         if (contextCount) contextCount.textContent = String(yearlyVisibleStudentRecords.length);
+        return;
         yearlyVisibleStudentRecords.forEach((rec, index) => {
           const tr = document.createElement("tr");
           tr.innerHTML = `
@@ -4698,8 +5300,14 @@
         tab.addEventListener("click", (event) => {
           event.preventDefault();
           event.stopPropagation();
+          const procedureType =
+            tab.getAttribute("data-instructor-procedure") || "dashboard";
           setActiveSection(
-            tab.getAttribute("data-instructor-procedure") || "dashboard",
+            procedureType === "dashboard" ? "my-records" : procedureType,
+            {
+              preserveCurrentRecordsBlock: true,
+              preserveSelectedStudent: true,
+            },
           );
         });
       });
@@ -4764,6 +5372,10 @@
           selectedCurrentRecordsStudent = null;
           selectedCurrentRecordsBlock = null;
         }
+        if (type === "dashboard" && !options.preserveSelectedStudent) {
+          selectedCurrentRecordsStudent = null;
+          selectedCurrentRecordsBlock = null;
+        }
         activeType = type;
         const isRecordsRoute =
           type === "my-records" ||
@@ -4781,7 +5393,13 @@
           el.classList.add("active");
           el.setAttribute("aria-current", "page");
         });
-        document.querySelectorAll("[data-instructor-procedure]").forEach((tab) => tab.classList.toggle("active", tab.getAttribute("data-instructor-procedure") === type));
+        const procedureTabType = type === "my-records" ? "dashboard" : type;
+        document.querySelectorAll("[data-instructor-procedure]").forEach((tab) =>
+          tab.classList.toggle(
+            "active",
+            tab.getAttribute("data-instructor-procedure") === procedureTabType,
+          ),
+        );
 
         const isSummary = type === "student-summary";
         const isStudents = type === "students";
@@ -5180,7 +5798,7 @@
         window.__updateEmptyTables = updateEmptyTables;
       })();
     </script>
-    <script src="assets/js/modern-shell.js?v=20260814-5"></script>
+    <script src="assets/js/modern-shell.js?v=20260825-1"></script>
   </body>
 </html>
 

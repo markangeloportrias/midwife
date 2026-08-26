@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="assets/css/components/modals.css" />
     <link rel="stylesheet" href="assets/css/pages/reports.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-20" />
-    <link rel="stylesheet" href="assets/css/pages/admin-palette.css?v=20260821-44" />
+    <link rel="stylesheet" href="assets/css/pages/admin-palette.css?v=20260825-2" />
   </head>
   <body>
     <div class="wrap">
@@ -351,7 +351,7 @@
                       <th>Display Name</th>
                       <th style="width: 100px">Status</th>
                       <th>Created</th>
-                      <th style="width: 270px">Actions</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody id="instructorsTbody"></tbody>
@@ -1770,9 +1770,11 @@
             <td><span class="account-status-badge ${isActive ? "active" : "inactive"}">${isActive ? "Active" : "Inactive"}</span></td>
             <td>${created}</td>
             <td class="action-cell">
-              <button class="mini-btn" data-ins-action="view-info" data-id="${acc.id || ""}">View Info</button>
-              <button class="mini-btn" data-ins-action="edit" data-id="${acc.id || ""}">Edit</button>
-              <button class="mini-btn ${isActive ? "danger" : "success"}" data-ins-action="toggle-status" data-id="${acc.id || ""}" data-next-status="${isActive ? "inactive" : "active"}">${isActive ? "Deactivate" : "Activate"}</button>
+              <div class="instructor-row-actions">
+                <button class="mini-btn" data-ins-action="view-info" data-id="${acc.id || ""}">View Info</button>
+                <button class="mini-btn" data-ins-action="edit" data-id="${acc.id || ""}">Edit</button>
+                <button class="mini-btn ${isActive ? "danger" : "success"}" data-ins-action="toggle-status" data-id="${acc.id || ""}" data-next-status="${isActive ? "inactive" : "active"}">${isActive ? "Deactivate" : "Activate"}</button>
+              </div>
             </td>
           `;
             instructorsTbody.appendChild(tr);
@@ -3535,6 +3537,88 @@
         renderYearlyProcedureTables(filteredCases, selectedProc);
       }
 
+      function getAdminProcedureRecordReviewStatus(record) {
+        const status = String(
+          record?.status || record?.record_status || "",
+        )
+          .trim()
+          .toLowerCase()
+          .replace(/[\s-]+/g, "_");
+        if (status === "verified") return "verified";
+        if (status === "invalid") return "invalid";
+        if (!status && (record?.checked_by || record?.checked_at)) {
+          return "verified";
+        }
+        return status;
+      }
+
+      function createAdminProcedureProgressMetric({
+        name,
+        count,
+        maximum,
+        kind,
+        procedureLabel,
+      }) {
+        const safeMaximum = Math.max(0, Number(maximum) || 0);
+        const safeCount = Math.max(0, Number(count) || 0);
+        const percent = safeMaximum
+          ? Math.min(100, Math.round((safeCount / safeMaximum) * 100))
+          : 0;
+        const progress = document.createElement("div");
+        progress.className = `summary-procedure-progress progress-${kind}${kind === "required" && safeMaximum && safeCount >= safeMaximum ? " is-complete" : ""}`;
+        progress.setAttribute("role", "progressbar");
+        progress.setAttribute(
+          "aria-label",
+          `${procedureLabel} ${name.toLowerCase()} records`,
+        );
+        progress.setAttribute("aria-valuemin", "0");
+        progress.setAttribute("aria-valuemax", String(safeMaximum || 1));
+        progress.setAttribute(
+          "aria-valuenow",
+          String(Math.min(safeCount, safeMaximum || 1)),
+        );
+        progress.title = `${name}: ${safeCount} of ${safeMaximum} (${percent}%)`;
+        progress.innerHTML = `<span class="summary-procedure-progress-name">${name}</span><span class="summary-procedure-progress-label">${safeCount} / ${safeMaximum}</span><span class="summary-procedure-progress-track"><i style="width:${percent}%"></i></span>`;
+        return progress;
+      }
+
+      function createAdminProcedureProgressGroup(records, target, procedureLabel) {
+        const safeRecords = Array.isArray(records) ? records : [];
+        const verifiedCount = safeRecords.filter(
+          (record) => getAdminProcedureRecordReviewStatus(record) === "verified",
+        ).length;
+        const invalidCount = safeRecords.filter(
+          (record) => getAdminProcedureRecordReviewStatus(record) === "invalid",
+        ).length;
+        const group = document.createElement("div");
+        group.className = "procedure-progress-group";
+        group.setAttribute("aria-label", `${procedureLabel} record progress`);
+        group.append(
+          createAdminProcedureProgressMetric({
+            name: "Required",
+            count: safeRecords.length,
+            maximum: target,
+            kind: "required",
+            procedureLabel,
+          }),
+          createAdminProcedureProgressMetric({
+            name: "Verified",
+            count: verifiedCount,
+            maximum: safeRecords.length,
+            kind: "verified",
+            procedureLabel,
+          }),
+          createAdminProcedureProgressMetric({
+            name: "Invalid",
+            count: invalidCount,
+            maximum: safeRecords.length,
+            kind: "invalid",
+            procedureLabel,
+          }),
+        );
+        return group;
+      }
+
       function renderYearlyProcedureTables(records, selectedProcedure) {
         if (!yearlyProcedureTables) return;
         const targets = {
@@ -3585,7 +3669,6 @@
           );
           const count = procedureRecords.length;
           const target = targets[procedure] || 1;
-          const percent = Math.min(100, Math.round((count / target) * 100));
           const label = CASE_PROCEDURE_LABELS[procedure] || titleCase(procedure);
           const diagnosisHeader = ["delivery handled", "delivery assisted"].includes(procedure)
             ? "Complete Diagnosis (Gravida, Para)"
@@ -3595,16 +3678,12 @@
           heading.className = "summary-procedure-heading";
           const title = document.createElement("h3");
           title.textContent = `${label} (${count})`;
-          const progress = document.createElement("div");
-          progress.className = `summary-procedure-progress${count >= target ? " is-complete" : ""}`;
-          progress.setAttribute("role", "progressbar");
-          progress.setAttribute("aria-label", `${label} progress`);
-          progress.setAttribute("aria-valuemin", "0");
-          progress.setAttribute("aria-valuemax", String(target));
-          progress.setAttribute("aria-valuenow", String(Math.min(count, target)));
-          progress.title = `${count} of ${target} required cases (${percent}%)`;
-          progress.innerHTML = `<span class="summary-procedure-progress-label">${count} / ${target}</span><span class="summary-procedure-progress-track"><i style="width:${percent}%"></i></span>`;
-          heading.append(title, progress);
+          const progressGroup = createAdminProcedureProgressGroup(
+            procedureRecords,
+            target,
+            label,
+          );
+          heading.append(title, progressGroup);
           section.appendChild(heading);
 
           const wrap = document.createElement("div");

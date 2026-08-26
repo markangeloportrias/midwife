@@ -11,6 +11,17 @@ html body.role-student #deliveryAssistedWorkspace .prc-procedure-table-container
 html body.role-student #summaryTabSection .prc-procedure-table-container {
   width: 100% !important;
   box-sizing: border-box !important;
+}
+
+html body.role-student #deliveryAssistedWorkspace .prc-procedure-table-container {
+  padding: 10px !important;
+  border: 1px solid #c5d7e8 !important;
+  border-radius: 12px !important;
+  background: #f7fbff !important;
+  box-shadow: none !important;
+}
+
+html body.role-student #summaryTabSection .prc-procedure-table-container {
   padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
@@ -645,44 +656,83 @@ html body.role-student .prc-preview-actions .btn-primary {
 #dashboardProgressSection .stats-row > .stat-card-h:nth-child(5) .stat-progress > span { background: #d59f00; }
 #dashboardProgressSection .stat-progress.is-complete > span { background: #07845a !important; }
 
-/* My Progress procedure completion bars. */
-#summaryProcedureTables .summary-procedure-heading {
+/* Separate procedure tables and shared completion bars for My Records / My Progress. */
+#recordProcedureTables {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+#recordProcedureTables .record-procedure-section {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 8px;
 }
-#summaryProcedureTables .summary-procedure-heading h3 { margin: 0 !important; }
-#summaryProcedureTables .summary-procedure-progress {
-  display: inline-flex;
-  align-items: center;
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-heading h3 { margin: 0 !important; }
+#recordProcedureTables .summary-procedure-heading h3 {
+  color: #00296b;
+  font: 800 14px/1.2 "Inter", Arial, Helvetica, sans-serif;
+}
+:is(#summaryProcedureTables, #recordProcedureTables) .procedure-progress-group {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
-  min-width: 178px;
+  width: 430px;
+}
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name label"
+    "track track";
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
   color: #365978;
   font: 800 10px/1 Arial, Helvetica, sans-serif;
 }
-#summaryProcedureTables .summary-procedure-progress-label {
-  min-width: 34px;
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress-name {
+  grid-area: name;
+  white-space: nowrap;
+}
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress-label {
+  grid-area: label;
+  min-width: 0;
   text-align: right;
   white-space: nowrap;
 }
-#summaryProcedureTables .summary-procedure-progress-track {
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress-track {
+  grid-area: track;
   display: block;
-  width: 120px;
+  width: 100%;
   height: 7px;
   overflow: hidden;
   border-radius: 999px;
   background: #d9e7f2;
 }
-#summaryProcedureTables .summary-procedure-progress-track i {
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress-track i {
   display: block;
   height: 100%;
   border-radius: inherit;
   background: #00509d;
   transition: width .35s ease;
 }
-#summaryProcedureTables .summary-procedure-progress.is-complete .summary-procedure-progress-track i { background: #07845a; }
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress.is-complete .summary-procedure-progress-track i { background: #07845a; }
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress.progress-verified .summary-procedure-progress-name { color: #067454; }
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress.progress-verified .summary-procedure-progress-track i { background: #07845a; }
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress.progress-invalid .summary-procedure-progress-name { color: #c62828; }
+:is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress.progress-invalid .summary-procedure-progress-track i { background: #d63b45; }
 @media (max-width: 600px) {
-  #summaryProcedureTables .summary-procedure-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  :is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  :is(#summaryProcedureTables, #recordProcedureTables) .procedure-progress-group { width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  :is(#summaryProcedureTables, #recordProcedureTables) .summary-procedure-progress { grid-template-columns: minmax(0, 1fr) auto; }
 }

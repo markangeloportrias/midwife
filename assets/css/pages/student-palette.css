@@ -1264,3 +1264,9 @@ html body.role-student #optionPaneActions .option-pane-btn:disabled {
   cursor: not-allowed !important;
   opacity: 0.5 !important;
 }
+
+/* Match the same page-heading divider throughout the student workspace. */
+html body.role-student .record-workspace > .workspace-header,
+html body.role-student #chatTab :is(.chat-directory-header, .chat-conversation-header) {
+  border-bottom: 1px solid #b9cee1 !important;
+}

@@ -2490,7 +2490,18 @@ html body.role-instructor #instructorRecordNavigation {
   display: flex;
   align-items: stretch;
   gap: 10px;
-  margin: 0 0 10px;
+  width: 100%;
+  margin: 8px 0 12px !important;
+  order: 2;
+}
+
+/* Keep the procedure navigation directly below the recent-records table. */
+html body.role-instructor #dashboardRecentRecords {
+  order: 1;
+}
+
+html body.role-instructor #mainRecordsWrapper {
+  order: 3;
 }
 
 html body.role-instructor #instructorRecordNavigation #instructorProcedureTabs {
@@ -3497,7 +3508,7 @@ html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks
   border: 1px solid #b8cfe8 !important;
   border-collapse: separate !important;
   border-spacing: 0 !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   overflow: hidden !important;
   background: #ffffff !important;
 }
@@ -3534,14 +3545,6 @@ html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks
   letter-spacing: 0 !important;
   text-transform: uppercase !important;
   white-space: nowrap !important;
-}
-
-html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table thead tr:first-child th:first-child {
-  border-top-left-radius: 7px !important;
-}
-
-html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table thead tr:first-child th:last-child {
-  border-top-right-radius: 7px !important;
 }
 
 html body.role-instructor #currentRecordsStudentRoster > table.registered-blocks-table tbody td {
@@ -4390,7 +4393,6 @@ html body.role-instructor #instructor-school-years-table :is(th, td):nth-child(4
 
 html body.role-instructor #instructor-school-years-table :is(th, td):last-child {
   padding-right: 22px !important;
-  text-align: right !important;
 }
 
 html body.role-instructor #instructor-school-years-table .school-year-index {
@@ -5253,4 +5255,882 @@ html body.role-instructor #dashboardRecentRecords .recent-records-empty-row i {
   html body.role-instructor #dashboardRecentRecords .recent-records-log-wrap {
     max-height: 62vh !important;
   }
+}
+
+/* Keep the page heading and its content visually separated in every instructor view. */
+html body.role-instructor .content-section > .section > .section-header-row,
+html body.role-instructor #yearly-report-view > .workspace-header,
+html body.role-instructor #edit-requests-view > .edit-requests-panel-header,
+html body.role-instructor #settingsView .settings-card > .section-header-row,
+html body.role-instructor #messages-view :is(.messages-pane-heading, .messages-chat-header) {
+  border-bottom: 1px solid #d9e6f2 !important;
+}
+
+/* Required, verified, and invalid progress for Instructor record tables. */
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-heading {
+  display: flex !important;
+  width: 100% !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
+  margin: 0 0 9px !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-heading h3 {
+  min-width: 0 !important;
+  margin: 0 !important;
+  color: #00296b !important;
+  font: 800 14px/1.2 Inter, Arial, Helvetica, sans-serif !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .procedure-progress-group {
+  display: grid !important;
+  flex: 0 0 auto !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  width: 430px !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas:
+    "name label"
+    "track track" !important;
+  align-items: center !important;
+  gap: 4px 6px !important;
+  min-width: 0 !important;
+  color: #365978 !important;
+  font: 800 10px/1 Arial, Helvetica, sans-serif !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress-name {
+  grid-area: name !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress-label {
+  grid-area: label !important;
+  min-width: 0 !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress-track {
+  grid-area: track !important;
+  display: block !important;
+  width: 100% !important;
+  height: 7px !important;
+  overflow: hidden !important;
+  border-radius: 999px !important;
+  background: #d9e7f2 !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress-track i {
+  display: block !important;
+  height: 100% !important;
+  border-radius: inherit !important;
+  background: #00509d !important;
+  transition: width 0.35s ease !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress.is-complete .summary-procedure-progress-track i,
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress.progress-verified .summary-procedure-progress-track i {
+  background: #07845a !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress.progress-verified .summary-procedure-progress-name {
+  color: #067454 !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress.progress-invalid .summary-procedure-progress-name {
+  color: #c62828 !important;
+}
+
+html body.role-instructor :is(
+  #summaryProcedures,
+  #ipRecords,
+  #instructorActiveRecordProgress,
+  #instructorYearlyRecordProgress
+) .summary-procedure-progress.progress-invalid .summary-procedure-progress-track i {
+  background: #d63b45 !important;
+}
+
+html body.role-instructor .instructor-record-progress {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 0 10px;
+}
+
+html body.role-instructor #instructorYearlyRecordProgress {
+  margin-top: 10px;
+}
+
+html body.role-instructor .instructor-record-progress.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+html body.role-instructor .instructor-record-progress .instructor-progress-row {
+  min-width: 0;
+  margin: 0;
+  padding: 9px 11px;
+  border: 1px solid #d4e2ef;
+  border-radius: 10px;
+  background: #f8fbfe;
+}
+
+html body.role-instructor .instructor-record-progress .instructor-progress-row .summary-procedure-heading {
+  margin: 0 !important;
+}
+
+html body.role-instructor .instructor-record-progress:not(.is-single) .summary-procedure-heading {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 7px !important;
+}
+
+html body.role-instructor .instructor-record-progress:not(.is-single) .procedure-progress-group {
+  width: 100% !important;
+}
+
+html body.role-instructor .section.instructor-progress-active #instructorProgressCopy #ipRecords .summary-procedure-section .summary-procedure-heading .ip-procedure {
+  margin: 0 !important;
+}
+
+@media (max-width: 680px) {
+  html body.role-instructor :is(
+    #summaryProcedures,
+    #ipRecords,
+    #instructorActiveRecordProgress,
+    #instructorYearlyRecordProgress
+  ) .summary-procedure-heading {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 7px !important;
+  }
+
+  html body.role-instructor :is(
+    #summaryProcedures,
+    #ipRecords,
+    #instructorActiveRecordProgress,
+    #instructorYearlyRecordProgress
+  ) .procedure-progress-group {
+    width: 100% !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  html body.role-instructor :is(
+    #summaryProcedures,
+    #ipRecords,
+    #instructorActiveRecordProgress,
+    #instructorYearlyRecordProgress
+  ) .summary-procedure-progress {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+}
+
+/* Instructor selected-student records mirror the Student All Clinical Records layout. */
+html body.role-instructor #instructorStudentProcedureTables {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  margin: 0;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-section {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 8px !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-heading h3 {
+  margin: 0 !important;
+  color: #00296b !important;
+  font: 800 17px/1.2 Inter, Arial, Helvetica, sans-serif !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .procedure-progress-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  flex: 0 0 auto;
+  gap: 8px;
+  width: 430px;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name label"
+    "track track";
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
+  color: #365978;
+  font: 800 10px/1 Arial, Helvetica, sans-serif;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress-name { grid-area: name; white-space: nowrap; }
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress-label { grid-area: label; text-align: right; white-space: nowrap; }
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress-track { grid-area: track; display: block; width: 100%; height: 7px; overflow: hidden; border-radius: 999px; background: #d9e7f2; }
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress-track i { display: block; height: 100%; border-radius: inherit; background: #00509d; transition: width .35s ease; }
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress.is-complete .summary-procedure-progress-track i,
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress.progress-verified .summary-procedure-progress-track i { background: #07845a; }
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress.progress-verified .summary-procedure-progress-name { color: #067454; }
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress.progress-invalid .summary-procedure-progress-name { color: #c62828; }
+html body.role-instructor #instructorStudentProcedureTables .summary-procedure-progress.progress-invalid .summary-procedure-progress-track i { background: #d63b45; }
+
+html body.role-instructor #instructorStudentProcedureTables .instructor-current-table-wrap {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 13px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  overflow-x: auto;
+}
+
+html body.role-instructor #instructorStudentProcedureTables table.instructor-current-procedure-table {
+  width: 100% !important;
+  min-width: 1180px;
+  table-layout: fixed;
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables table.instructor-current-procedure-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables table.instructor-current-procedure-table thead th {
+  padding: 6px 5px !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+  font: 700 11px/1.15 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables table.instructor-current-procedure-table tbody td {
+  min-height: 50px;
+  padding: 7px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables table.instructor-current-procedure-table tbody tr:hover td {
+  background: #fff !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .instructor-procedure-empty {
+  height: 70px;
+  color: #003f88 !important;
+  font-weight: 700 !important;
+  text-align: left;
+}
+
+@media (max-width: 760px) {
+  html body.role-instructor #instructorStudentProcedureTables .summary-procedure-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  html body.role-instructor #instructorStudentProcedureTables .procedure-progress-group {
+    width: 100%;
+  }
+}
+
+/* Annual Records uses the same per-procedure layout as Current Records. */
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-profile {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(250px, 0.8fr) minmax(0, 2.2fr);
+  align-items: center;
+  gap: 14px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  overflow: hidden;
+  border: 1px solid #c8d9ec;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-profile[style*="display: none"] {
+  display: none !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-profile::before {
+  display: none;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding-right: 14px;
+  border-right: 1px solid #d9e6f2;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-photo {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid #b8cfe8;
+  border-radius: 9px;
+  background: #00509d;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-photo img[hidden],
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-photo span[hidden] {
+  display: none !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-photo span {
+  color: #ffffff;
+  font: 800 16px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.03em;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-name {
+  min-width: 0;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-name > span,
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-details span {
+  display: block;
+  color: #54719a;
+  font: 750 8px/1.2 Inter, Arial, sans-serif;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-name > strong {
+  display: block;
+  overflow: hidden;
+  margin: 3px 0 2px;
+  color: #00296b;
+  font: 800 15px/1.2 Inter, Arial, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-name small {
+  display: block;
+  color: #365978;
+  font: 600 9px/1.25 Inter, Arial, sans-serif;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-name small b {
+  color: #00509d;
+  font-weight: 800;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-details {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-details > div {
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid #e0eaf3;
+  border-radius: 7px;
+  background: #f7fafc;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .annual-student-details strong {
+  display: block;
+  overflow: hidden;
+  margin-top: 3px;
+  color: #003f88;
+  font: 750 10px/1.25 Inter, Arial, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 1050px) {
+  html body.role-instructor #yearlyStudentRecordsPanel .annual-student-details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  html body.role-instructor #yearlyStudentRecordsPanel .annual-student-profile {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  html body.role-instructor #yearlyStudentRecordsPanel .annual-student-identity {
+    padding: 0 0 12px;
+    border-right: 0;
+    border-bottom: 1px solid #d6e4f1;
+  }
+}
+
+@media (max-width: 460px) {
+  html body.role-instructor #yearlyStudentRecordsPanel .annual-student-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+html body.role-instructor #instructorYearlyProcedureTables {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin: 0 !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .yearly-procedure-nav {
+  margin: 0 0 10px !important;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-section {
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 6px !important;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-heading h3 {
+  margin: 0 !important;
+  color: #00296b !important;
+  font: 800 17px/1.2 Inter, Arial, Helvetica, sans-serif !important;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables .procedure-progress-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  flex: 0 0 auto;
+  gap: 8px;
+  width: 430px;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "name label" "track track";
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
+  color: #365978;
+  font: 800 10px/1 Arial, Helvetica, sans-serif;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress-name { grid-area: name; white-space: nowrap; }
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress-label { grid-area: label; text-align: right; white-space: nowrap; }
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress-track { grid-area: track; display: block; width: 100%; height: 7px; overflow: hidden; border-radius: 999px; background: #d9e7f2; }
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress-track i { display: block; height: 100%; border-radius: inherit; background: #00509d; transition: width .35s ease; }
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress.is-complete .summary-procedure-progress-track i,
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress.progress-verified .summary-procedure-progress-track i { background: #07845a; }
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress.progress-verified .summary-procedure-progress-name { color: #067454; }
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress.progress-invalid .summary-procedure-progress-name { color: #c62828; }
+html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-progress.progress-invalid .summary-procedure-progress-track i { background: #d63b45; }
+
+html body.role-instructor #instructorYearlyProcedureTables .instructor-current-table-wrap {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 !important;
+  padding: 12px !important;
+  border: 1px solid #c8d9ec !important;
+  border-radius: 13px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  overflow-x: auto;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables table.instructor-current-procedure-table {
+  width: 100% !important;
+  min-width: 1180px;
+  table-layout: fixed;
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables table.instructor-current-procedure-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables table.instructor-current-procedure-table thead th {
+  padding: 6px 5px !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+  font: 700 11px/1.15 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables table.instructor-current-procedure-table tbody td {
+  min-height: 50px;
+  padding: 7px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables table.instructor-current-procedure-table tbody tr:hover td { background: #fff !important; }
+html body.role-instructor #instructorYearlyProcedureTables .instructor-procedure-empty { height: 70px; color: #003f88 !important; font-weight: 700 !important; text-align: left; }
+
+@media (max-width: 760px) {
+  html body.role-instructor #instructorYearlyProcedureTables .summary-procedure-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  html body.role-instructor #instructorYearlyProcedureTables .procedure-progress-group { width: 100%; }
+}
+
+/* Keep the normal-sized View and Comment buttons inside a wider Actions box. */
+html body.role-instructor #instructorStudentProcedureTables table.instructor-current-procedure-table col:last-child {
+  width: 150px !important;
+  transition: width 180ms ease;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-action-cell {
+  width: 150px !important;
+  min-width: 0 !important;
+  padding: 4px !important;
+  overflow: visible !important;
+  transition: width 180ms ease, padding 180ms ease;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-table-actions {
+  width: 100% !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  transition: width 180ms ease, gap 180ms ease;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-action-btn {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 36px !important;
+  padding: 4px 5px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 5px rgba(0, 41, 107, 0.08) !important;
+  font-size: 9px !important;
+  line-height: 1.05 !important;
+  white-space: nowrap !important;
+  transition: flex-basis 180ms ease, width 180ms ease, padding 180ms ease, transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-view-btn {
+  flex-grow: 0.8 !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-comment-btn {
+  flex-grow: 1.2 !important;
+  border-color: #f2c200 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #ffcb05 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 3px 7px rgba(253, 197, 0, 0.22) !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-view-btn {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #00509d !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-action-btn:hover {
+  transform: translateY(-1px);
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-view-btn:hover {
+  background: #edf6ff !important;
+  box-shadow: 0 4px 9px rgba(0, 80, 157, 0.16) !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-comment-btn:hover {
+  background: #ffc400 !important;
+  box-shadow: 0 4px 9px rgba(253, 197, 0, 0.3) !important;
+}
+
+html body.role-instructor #instructorStudentProcedureTables .record-action-btn:focus-visible {
+  outline: 2px solid #00509d;
+  outline-offset: 2px;
+}
+
+/* Follow the shell's hover-expand behavior without changing the other columns. */
+html body.role-instructor .dashboard.sidebar-collapsed #instructorStudentProcedureTables table.instructor-current-procedure-table col:last-child {
+  width: 150px !important;
+}
+
+html body.role-instructor .dashboard.sidebar-collapsed #instructorStudentProcedureTables .record-action-cell {
+  width: 150px !important;
+}
+
+html body.role-instructor .dashboard:not(.sidebar-collapsed) #instructorStudentProcedureTables table.instructor-current-procedure-table col:last-child,
+html body.role-instructor .dashboard:not(.sidebar-collapsed) #instructorStudentProcedureTables .record-action-cell {
+  width: 128px !important;
+}
+
+/* Annual Records: keep each procedure's three progress indicators inside its card. */
+html body.role-instructor #instructorYearlyRecordProgress:not(.is-single) .procedure-progress-group {
+  width: 100% !important;
+}
+
+html body.role-instructor #instructorYearlyRecordProgress:not(.is-single) .summary-procedure-progress {
+  gap: 3px 4px !important;
+  font-size: 9px !important;
+}
+
+/* Match the compact Current Records actions in the Annual Records table. */
+html body.role-instructor #yearlyStudentRecordsPanel .record-action-cell {
+  min-width: 0 !important;
+  padding: 4px !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .record-table-actions {
+  width: 100% !important;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .record-action-btn {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 36px !important;
+  padding: 4px 5px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 5px rgba(0, 41, 107, 0.08) !important;
+  font-size: 9px !important;
+  line-height: 1.05 !important;
+  white-space: nowrap !important;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .record-view-btn {
+  flex-grow: 0.8 !important;
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #00509d !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .record-comment-btn {
+  flex-grow: 1.2 !important;
+  border-color: #f2c200 !important;
+  background: linear-gradient(135deg, #ffd500 0%, #ffcb05 100%) !important;
+  color: #00296b !important;
+  box-shadow: 0 3px 7px rgba(253, 197, 0, 0.22) !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .record-action-btn:hover {
+  transform: translateY(-1px);
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .record-view-btn:hover {
+  background: #edf6ff !important;
+  box-shadow: 0 4px 9px rgba(0, 80, 157, 0.16) !important;
+}
+
+html body.role-instructor #yearlyStudentRecordsPanel .record-comment-btn:hover {
+  background: #ffc400 !important;
+  box-shadow: 0 4px 9px rgba(253, 197, 0, 0.3) !important;
+}
+
+/* Annual procedure tables share the same compact Actions-box sizing as Current Records. */
+html body.role-instructor #instructorYearlyProcedureTables table.instructor-current-procedure-table col:last-child {
+  width: 150px !important;
+  transition: width 180ms ease;
+}
+
+html body.role-instructor #instructorYearlyProcedureTables .record-action-cell {
+  width: 150px !important;
+  min-width: 0 !important;
+  padding: 4px !important;
+  overflow: visible !important;
+  transition: width 180ms ease, padding 180ms ease;
+}
+
+html body.role-instructor .dashboard.sidebar-collapsed #instructorYearlyProcedureTables table.instructor-current-procedure-table col:last-child,
+html body.role-instructor .dashboard.sidebar-collapsed #instructorYearlyProcedureTables .record-action-cell {
+  width: 150px !important;
+}
+
+html body.role-instructor .dashboard:not(.sidebar-collapsed) #instructorYearlyProcedureTables table.instructor-current-procedure-table col:last-child,
+html body.role-instructor .dashboard:not(.sidebar-collapsed) #instructorYearlyProcedureTables .record-action-cell {
+  width: 128px !important;
+}
+
+/* Preserve the ruled PRC table outline inside Annual Records. */
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.instructor-current-procedure-table {
+  border: 1px solid #000000 !important;
+  border-collapse: collapse !important;
+  outline: 1px solid #000000 !important;
+  outline-offset: -1px !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.instructor-current-procedure-table :is(th, td) {
+  border: 1px solid #000000 !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.instructor-current-procedure-table thead th {
+  box-shadow: none !important;
+  background-clip: padding-box !important;
+}
+
+/* Annual Records uses the same clinical-table treatment as Student Progress. */
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.ip-clinical-table {
+  width: 100% !important;
+  min-width: 1180px !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.ip-clinical-table :is(th, td) {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.ip-clinical-table thead th {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 5px 4px !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+  font: 700 12px/1.1 Cambria, "Times New Roman", serif !important;
+  text-align: center !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.ip-clinical-table thead tr:nth-child(2) th {
+  border-top: 1px solid #000 !important;
+  background: #dcecf6 !important;
+  color: #000 !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.ip-clinical-table tbody td {
+  height: 50px !important;
+  min-height: 50px !important;
+  padding: 5px 6px !important;
+  background: #fff !important;
+  color: #003f88 !important;
+  font: 500 11px/1.25 Arial, Helvetica, sans-serif !important;
+  vertical-align: middle !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.ip-clinical-table tbody tr:hover td {
+  background: #fff !important;
 }

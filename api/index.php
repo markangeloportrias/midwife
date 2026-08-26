@@ -385,10 +385,10 @@ try {
         }
         if ($method === 'PATCH' && $id !== '' && $action === 'review') {
             if (!in_array($user['role'], ['admin', 'instructor'], true)) respond(['ok' => false, 'message' => 'Access denied.'], 403);
-            $statusMap = ['Draft' => 'submitted', 'Submitted' => 'submitted', 'Under Review' => 'reviewed', 'Changes Requested' => 'needs_revision', 'Resubmitted' => 'submitted', 'Verified' => 'verified', 'Invalid' => 'needs_revision', 'Archived' => 'archived'];
+            $statusMap = ['Draft' => 'submitted', 'Submitted' => 'submitted', 'Under Review' => 'reviewed', 'Changes Requested' => 'needs_revision', 'Resubmitted' => 'submitted', 'Verified' => 'verified', 'Invalid' => 'invalid', 'Archived' => 'archived'];
             $requested = (string)($data['status'] ?? '');
             $status = $statusMap[$requested] ?? $requested;
-            if (!in_array($status, ['submitted', 'reviewed', 'verified', 'needs_revision', 'archived'], true)) respond(['ok' => false, 'message' => 'Invalid record status.'], 422);
+            if (!in_array($status, ['submitted', 'reviewed', 'verified', 'needs_revision', 'invalid', 'archived'], true)) respond(['ok' => false, 'message' => 'Invalid record status.'], 422);
             $instructorId = $data['instructor_id'] ?? $data['instructorId'] ?? null;
             $instructorName = $data['instructor_name'] ?? $data['instructorName'] ?? null;
             $stmt = $pdo->prepare('UPDATE case_records SET record_status=?,teacher_remarks=?,checked_by=IF(?="verified",?,NULL),checked_at=IF(?="verified",NOW(),NULL),instructor_uid=COALESCE(?,instructor_uid),instructor_name=COALESCE(?,instructor_name) WHERE id=? AND archived_at IS NULL');

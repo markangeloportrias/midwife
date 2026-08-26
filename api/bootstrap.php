@@ -77,6 +77,30 @@ function ensureAuditTrailTable(PDO $pdo): void
 }
 
 ensureAuditTrailTable($pdo);
+
+function ensureInvalidCaseRecordStatus(PDO $pdo): void
+{
+    $stmt = $pdo->query("SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='case_records' AND COLUMN_NAME='record_status'");
+    $columnType = (string)$stmt->fetchColumn();
+    if ($columnType === '' || stripos($columnType, "'invalid'") !== false) return;
+
+    $pdo->exec("ALTER TABLE case_records MODIFY COLUMN record_status ENUM('submitted','reviewed','verified','needs_revision','invalid','archived') NOT NULL DEFAULT 'submitted'");
+    $pdo->exec("UPDATE case_records c
+        SET c.record_status='invalid'
+        WHERE c.record_status='needs_revision'
+          AND (
+            SELECT JSON_UNQUOTE(JSON_EXTRACT(a.details, '$.status'))
+            FROM audit_trail a
+            WHERE a.entity_type='case'
+              AND a.entity_uid=CAST(c.id AS CHAR)
+              AND a.action_name='review'
+            ORDER BY a.id DESC
+            LIMIT 1
+          )='Invalid'");
+}
+
+ensureInvalidCaseRecordStatus($pdo);
+
 function input(): array
 {
     $raw = file_get_contents('php://input') ?: '';

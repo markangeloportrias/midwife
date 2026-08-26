@@ -469,7 +469,7 @@ html body.role-admin:has(#studentsListPanel.active) #studentsListPanel .mini-btn
 html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard {
   border-color: #c8d9ec !important;
   background: #ffffff !important;
-  border-top: 4px solid #fdc500 !important;
+  border-top: 1px solid #c8d9ec !important;
 }
 html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard :is(.workspace-title, .workspace-subtitle) { color: #00296b !important; }
 html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard .workspace-subtitle { color: #54719a !important; }
@@ -2049,10 +2049,14 @@ html body.role-admin:has(:is(
 
 /* Academic-year creation belongs to Annual Records. */
 html body.role-admin:has(#yearlyReportsCard) #yearlyReportsCard #openAddSchoolYearBtn {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 12px !important;
   border-color: #ffd500 !important;
+  border-radius: 7px !important;
   background: linear-gradient(135deg, #ffd500 0%, #fdc500 100%) !important;
   color: #00296b !important;
-  box-shadow: 0 6px 14px rgba(253, 197, 0, 0.2) !important;
+  box-shadow: none !important;
 }
 
 /* Annual procedure records: flat table with the shared admin/student table type. */
@@ -2260,24 +2264,43 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-pro
   vertical-align: middle;
 }
 
-html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress {
-  display: inline-flex;
-  align-items: center;
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .procedure-progress-group {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
-  min-width: 178px;
+  width: 430px;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name label"
+    "track track";
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
   color: #365978;
   font: 800 10px/1 Arial, Helvetica, sans-serif;
 }
 
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress-name {
+  grid-area: name;
+  white-space: nowrap;
+}
+
 html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress-label {
-  min-width: 34px;
+  grid-area: label;
+  min-width: 0;
   text-align: right;
   white-space: nowrap;
 }
 
 html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress-track {
+  grid-area: track;
   display: block;
-  width: 120px;
+  width: 100%;
   height: 7px;
   overflow: hidden;
   border-radius: 999px;
@@ -2294,6 +2317,22 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-pro
 
 html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress.is-complete .summary-procedure-progress-track i {
   background: #07845a;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress.progress-verified .summary-procedure-progress-name {
+  color: #067454;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress.progress-verified .summary-procedure-progress-track i {
+  background: #07845a;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress.progress-invalid .summary-procedure-progress-name {
+  color: #c62828;
+}
+
+html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress.progress-invalid .summary-procedure-progress-track i {
+  background: #d63b45;
 }
 
 html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .prc-procedure-table-container {
@@ -2371,7 +2410,12 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .admin-proce
 
   html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .summary-procedure-progress {
     width: 100%;
-    justify-content: flex-end;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  html body.role-admin:has(#yearlyReportsCard) #yearlyProcedureTables .procedure-progress-group {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -2521,14 +2565,16 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-ye
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  min-height: 34px;
   margin-bottom: 10px;
 }
 
 html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-search {
   position: relative;
   display: block;
-  flex: 0 1 340px;
-  min-width: 250px;
+  flex: 0 1 280px;
+  min-width: 220px;
+  height: 34px;
   margin-left: auto;
 }
 
@@ -2545,7 +2591,8 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-se
 
 html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel #yearlyYearSearchInput {
   width: 100% !important;
-  height: 38px !important;
+  height: 34px !important;
+  min-height: 34px !important;
   padding: 0 38px 0 36px !important;
   border: 1px solid #b8cfe4 !important;
   border-radius: 8px !important;
@@ -2825,6 +2872,37 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel #yearlyYearSearchI
   color: #063e7c !important;
 }
 
+/* Keep Instructor Management actions compact and anchored to the far-right edge. */
+html body.role-admin #instructorsCard table th:last-child,
+html body.role-admin #instructorsCard table td.action-cell {
+  width: 230px !important;
+  min-width: 230px !important;
+  white-space: nowrap !important;
+}
+
+html body.role-admin #instructorsCard table th:last-child {
+  padding-right: 14px !important;
+  text-align: center !important;
+}
+
+html body.role-admin #instructorsCard table td.action-cell {
+  padding-right: 11px !important;
+}
+
+html body.role-admin #instructorsCard .instructor-row-actions {
+  display: grid;
+  grid-template-columns: 70px 42px 78px;
+  justify-content: end;
+  align-items: center;
+  gap: 7px;
+}
+
+html body.role-admin #instructorsCard .instructor-row-actions .mini-btn {
+  width: 100% !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
+
 @media (max-width: 720px) {
   #adminPrcPreviewOverlay {
     padding: 8px;
@@ -2841,4 +2919,11 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel #yearlyYearSearchI
   #adminPrcPreviewOverlay :is(.admin-prc-preview-toolbar, .admin-prc-preview-actions) {
     padding: 11px 13px;
   }
+}
+
+/* Use the same quiet divider below every admin page heading. */
+html body.role-admin .main-content > .grid > .card:not(#dashboardCard) > .workspace-header,
+html body.role-admin .main-content > .grid > :is(#studentsCard, #casesCard, #editRequestsCard, #notificationsCard) > p:first-of-type {
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid #d9e6f2 !important;
 }

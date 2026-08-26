@@ -3764,10 +3764,7 @@
       ) tbody tr:hover td {
         background: #fff !important;
       }
-      body.role-instructor :is(
-        table.dashboard-data-table,
-        #currentRecordsStudentRoster table
-      ) tbody tr:hover td:first-child {
+      body.role-instructor table.dashboard-data-table tbody tr:hover td:first-child {
         box-shadow: inset 3px 0 #1d2d83 !important;
       }
       body.role-instructor :is(
@@ -6132,7 +6129,8 @@ html body.role-instructor :is(#currentRecordsStudentRoster, #yearly-report-view,
 html body.role-instructor :is(#currentRecordsStudentRoster, #yearly-report-view, #students-view) table.admin-premium-table tbody strong {
   font-size: 10px !important;
 }
-html body.role-instructor :is(#currentRecordsStudentRoster, #yearly-report-view, #students-view) table.admin-premium-table :is(th, td):last-child {
+html body.role-instructor :is(#currentRecordsStudentRoster, #yearly-report-view, #students-view) table.admin-premium-table :is(th, td):last-child,
+html body.role-instructor #students-view .students-panel table#instructor-school-years-table :is(th, td):last-child {
   padding: 0 18px !important;
   text-align: center !important;
 }

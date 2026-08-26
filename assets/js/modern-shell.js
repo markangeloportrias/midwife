@@ -278,11 +278,21 @@
       const section = document.createElement('section');
       section.className = 'summary-procedure-section';
       section.dataset.ipProcedure = filterKey;
+      const progressHeading = typeof window.createInstructorProcedureProgressHeading === 'function'
+        ? window.createInstructorProcedureProgressHeading(group, filterKey)
+        : null;
       const rowsHtml = group.length
         ? group.map((row) => `<tr><td>${escape(row.patient_name || '-')}<br>${escape(row.patient_address || '')}</td><td>${escape(row.case_no || '-')}</td><td>${escape(row.complete_diagnosis || '-')}</td><td>${escape(row.date_time_performed || '-')}</td><td>${escape(row.facility_name || '-')}<br>${escape(row.facility_address || '')}<br>${escape(row.facility_contact_number || '')}</td><td>${escape(row.supervisor_printed_name || '-')}<br>${escape(row.supervisor_contact_number || '')}</td><td>${escape(row.supervisor_position_designation || '-')}</td><td>${escape(row.supervisor_license_no || '-')}<br>${escape(row.supervisor_license_expiry_date || '')}</td></tr>`).join('')
         : '<tr><td class="ip-no-records" colspan="8">No records for this procedure.</td></tr>';
       const diagnosisHeader = ['delivery-handled', 'delivery-assisted'].includes(filterKey) ? 'Complete Diagnosis<br>(Gravida, Para)' : filterKey === 'internal-exam' ? 'Internal Examination<br>(Cervical Dilation, Effacement, BOW,<br>Presentation and Station)' : 'Complete Diagnosis';
-      section.innerHTML = `<h3 class="ip-procedure">${escape(procedure)} (${group.length})</h3><div class="ip-table-wrap ip-clinical-table-wrap prc-source-table-wrap"><table class="ip-clinical-table prc-source-table" aria-label="${escape(procedure)} clinical records"><colgroup><col style="width:23.23%"><col style="width:6.11%"><col style="width:15.63%"><col style="width:8.83%"><col style="width:20.38%"><col style="width:15.63%"><col style="width:10.87%"><col style="width:10.87%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${diagnosisHeader}</th><th rowspan="2">Date &amp; Time Performed</th><th rowspan="2">Full Name, Address of Facility &amp; Contact Number</th><th colspan="3">Supervised by</th></tr><tr><th>Printed Name and Contact No.</th><th>Position/<br>Designation</th><th>License No /<br>Expiry Date</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
+      section.innerHTML = `<div class="ip-table-wrap ip-clinical-table-wrap prc-source-table-wrap"><table class="ip-clinical-table prc-source-table" aria-label="${escape(procedure)} clinical records"><colgroup><col style="width:23.23%"><col style="width:6.11%"><col style="width:15.63%"><col style="width:8.83%"><col style="width:20.38%"><col style="width:15.63%"><col style="width:10.87%"><col style="width:10.87%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${diagnosisHeader}</th><th rowspan="2">Date &amp; Time Performed</th><th rowspan="2">Full Name, Address of Facility &amp; Contact Number</th><th colspan="3">Supervised by</th></tr><tr><th>Printed Name and Contact No.</th><th>Position/<br>Designation</th><th>License No /<br>Expiry Date</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
+      if (progressHeading) {
+        progressHeading.classList.add('ip-procedure-heading');
+        progressHeading.querySelector('h3')?.classList.add('ip-procedure');
+        section.prepend(progressHeading);
+      } else {
+        section.insertAdjacentHTML('afterbegin', `<h3 class="ip-procedure">${escape(procedure)} (${group.length})</h3>`);
+      }
       output.append(section);
     });
     root.querySelectorAll('.ip-detail-tab').forEach((tab) => {

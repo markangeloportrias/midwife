@@ -1,0 +1,23 @@
+/* Student PRC table grid, scoped to Instructor Annual Records only. */
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel :is(
+  #instructorYearlyProcedureTables table.instructor-current-procedure-table,
+  table#yearly-student-records-table
+) {
+  border: 1px solid #000 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel :is(
+  #instructorYearlyProcedureTables table.instructor-current-procedure-table,
+  table#yearly-student-records-table
+) > thead > tr > th,
+html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel :is(
+  #instructorYearlyProcedureTables table.instructor-current-procedure-table,
+  table#yearly-student-records-table
+) > tbody > tr > td {
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
