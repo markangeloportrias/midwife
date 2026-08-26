@@ -2560,7 +2560,10 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyReportPanel #yearlyProcedure
 }
 
 /* Annual Records year search. */
-html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-year-toolbar {
+html body.role-admin:has(#yearlyReportsCard) :is(
+  #yearlyYearPanel .annual-records-year-toolbar,
+  #yearlyBlockPanel .annual-records-block-toolbar
+) {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2614,12 +2617,18 @@ html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel #yearlyYearSearchI
 }
 
 @media (max-width: 640px) {
-  html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel .annual-records-year-toolbar {
+  html body.role-admin:has(#yearlyReportsCard) :is(
+    #yearlyYearPanel .annual-records-year-toolbar,
+    #yearlyBlockPanel .annual-records-block-toolbar
+  ) {
     align-items: stretch;
     flex-direction: column;
   }
 
-  html body.role-admin:has(#yearlyReportsCard) #yearlyYearPanel :is(#openAddSchoolYearBtn, .annual-records-search) {
+  html body.role-admin:has(#yearlyReportsCard) :is(
+    #yearlyYearPanel :is(#openAddSchoolYearBtn, .annual-records-search),
+    #yearlyBlockPanel #openAddYearlyBlockBtn
+  ) {
     flex: 0 0 auto;
     width: 100%;
     max-width: none;

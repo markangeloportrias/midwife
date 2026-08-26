@@ -829,6 +829,15 @@
               </div>
 
               <div class="students-panel" id="yearlyBlockPanel">
+                <div class="row annual-records-block-toolbar">
+                  <button
+                    class="btn btn-primary"
+                    id="openAddYearlyBlockBtn"
+                    type="button"
+                  >
+                    Add Block
+                  </button>
+                </div>
                 <div class="table-wrap">
                   <table style="min-width: 720px">
                     <thead>
@@ -1214,6 +1223,9 @@
       );
       const openAddSchoolYearBtn = document.getElementById(
         "openAddSchoolYearBtn",
+      );
+      const openAddYearlyBlockBtn = document.getElementById(
+        "openAddYearlyBlockBtn",
       );
       const openAddBlockBtn = document.getElementById("openAddBlockBtn");
       const openAddStudentBtn = document.getElementById("openAddStudentBtn");
@@ -2252,6 +2264,22 @@
         });
       }
 
+      function showAddYearlyBlockModal() {
+        openStudentsAddModal({
+          title: `Add Block to ${yearlyNav.schoolYear || "Academic Year"}`,
+          submitLabel: "Add Block",
+          fields: [
+            {
+              id: "modalYearlyBlockLabel",
+              key: "blockLabel",
+              label: "Block Label",
+              placeholder: "e.g. Block A, Batch 1",
+            },
+          ],
+          onSubmit: async (values) => submitAddYearlyBlock(values.blockLabel),
+        });
+      }
+
       function showAddStudentModal() {
         openStudentsAddModal({
           title: "Add Student",
@@ -2491,6 +2519,30 @@
           showStudentsNavMessage("Block created.", "success");
           await renderStudentBlocks();
           await renderSchoolYears();
+          return { ok: true };
+        }
+        return {
+          ok: false,
+          message: (result && result.message) || "Unable to create block.",
+        };
+      }
+
+      async function submitAddYearlyBlock(label) {
+        const nextLabel = String(label || "").trim();
+        if (!nextLabel) {
+          return { ok: false, message: "Enter a block label." };
+        }
+        if (!yearlyNav.schoolYear) {
+          return { ok: false, message: "Select an academic year first." };
+        }
+        const result = await ApiClient.createStudentBlock(
+          nextLabel,
+          "admin",
+          yearlyNav.schoolYear,
+        );
+        if (result && result.ok) {
+          showYearlyNavMessage("Block created.", "success");
+          await Promise.all([renderYearlyBlocks(), renderYearlyYears()]);
           return { ok: true };
         }
         return {
@@ -5536,6 +5588,7 @@
         if (crumb === "blocks") backToYearlyBlocks();
         if (crumb === "students") backToYearlyStudents();
       });
+      openAddYearlyBlockBtn?.addEventListener("click", showAddYearlyBlockModal);
       yearlyYearsTbody?.addEventListener("click", (event) => {
         const row = event.target.closest("tr[data-year-open]");
         if (!row) return;
