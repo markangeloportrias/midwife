@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="assets/css/pages/reports.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-20" />
     <link rel="stylesheet" href="assets/css/pages/admin-palette.css?v=20260825-2" />
+    <link rel="stylesheet" href="assets/css/pages/instructor-annual-records-table.css?v=20260826-12" />
   </head>
   <body>
     <div class="wrap">
@@ -773,16 +774,29 @@
 
             <div class="card hidden" id="yearlyReportsCard">
               <div class="workspace-header">
-                <div>
-                  <div class="workspace-title">Annual Records</div>
-                  <div class="workspace-subtitle">
-                    Create academic years and review student records organized by school year, block, and student.
+                <div class="instructor-title-heading">
+                  <span class="instructor-title-icon" id="yearlyContextIcon" aria-hidden="true">
+                    <i class="fas fa-calendar-check"></i>
+                  </span>
+                  <div class="instructor-title-copy">
+                    <div class="workspace-title" id="yearlyContextTitle">Annual Records</div>
+                    <div class="workspace-subtitle" id="yearlyContextSubtitle">
+                      Browse annual records by academic year, block, and student.
+                    </div>
                   </div>
                 </div>
                 <button class="btn btn-secondary btn-back yearly-back-hidden" id="yearlyBackBtn" type="button" style="display: none"><i class="fas fa-arrow-left"></i> Back</button>
               </div>
               <div class="students-breadcrumb" id="yearlyBreadcrumb"></div>
               <div class="message" id="yearlyNavMessage"></div>
+
+              <div class="yearly-progress-search-shell" id="yearlyProgressSearchShell" style="display: none">
+                <label class="yearly-progress-search" for="yearlyProgressSearchInput">
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                  <input id="yearlyProgressSearchInput" type="search" placeholder="Search student ID or name" autocomplete="off" aria-controls="yearlyProgressSearchResults" />
+                </label>
+                <div class="yearly-progress-search-results" id="yearlyProgressSearchResults" role="listbox"></div>
+              </div>
 
               <div class="students-panel active" id="yearlyYearPanel">
                 <div class="row annual-records-year-toolbar">
@@ -793,15 +807,6 @@
                   >
                     Add Academic Year
                   </button>
-                  <label class="annual-records-search" for="yearlyYearSearchInput">
-                    <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
-                    <input
-                      id="yearlyYearSearchInput"
-                      type="search"
-                      placeholder="Search academic year..."
-                      autocomplete="off"
-                    />
-                  </label>
                 </div>
                 <div class="table-wrap">
                   <table style="min-width: 560px">
@@ -864,7 +869,7 @@
               </div>
 
               <div class="students-panel" id="yearlyReportPanel">
-                <div class="admin-yearly-report-toolbar">
+                <div class="admin-yearly-report-toolbar" id="adminYearlyReportToolbar">
                 <nav class="admin-yearly-procedure-nav" aria-label="Filter annual clinical records by procedure">
                   <button type="button" class="active" data-admin-yearly-procedure="" onclick="document.getElementById('yearlyProcedureFilter').value='';document.querySelectorAll('[data-admin-yearly-procedure]').forEach((b)=>b.classList.toggle('active',b===this));renderYearlyReports();">All Records</button>
                   <button type="button" data-admin-yearly-procedure="delivery handled" onclick="document.getElementById('yearlyProcedureFilter').value='delivery handled';document.querySelectorAll('[data-admin-yearly-procedure]').forEach((b)=>b.classList.toggle('active',b===this));renderYearlyReports();">Delivery Handled</button>
@@ -876,12 +881,20 @@
                 </nav>
                 <button class="btn btn-primary" id="exportYearlyPrcBtn" type="button"><i class="fas fa-file-word" aria-hidden="true"></i> Export PRC Form</button>
                 </div>
+                <div
+                  id="yearlyProgressLegacyMount"
+                  class="section instructor-progress-active yearly-progress-legacy-mount"
+                  style="display: none"
+                ></div>
                 <div id="yearlyProcedureTables" class="admin-yearly-procedure-tables" aria-live="polite"></div>
                 <div class="empty" id="yearlyEmpty">
                   No records found for this student.
                 </div>
               </div>
             </div>
+
+            <!-- Hidden host used by the shared Student/Instructor progress detail renderer. -->
+            <div id="student-summary-view" class="section" style="display: none" aria-hidden="true"></div>
 
             <div class="card hidden" id="systemToolsCard">
               <div class="workspace-header">
@@ -1085,36 +1098,36 @@
     </div>
 
     <div
-      class="admin-prc-preview-overlay"
-      id="adminPrcPreviewOverlay"
+      class="prc-preview-overlay"
+      id="prcPreviewOverlay"
       aria-hidden="true"
     >
       <div
-        class="admin-prc-preview-dialog"
+        class="prc-preview-dialog"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="adminPrcPreviewTitle"
+        aria-labelledby="prcPreviewTitle"
       >
-        <div class="admin-prc-preview-toolbar">
+        <div class="prc-preview-toolbar">
           <div>
-            <strong id="adminPrcPreviewTitle">PRC Form Preview</strong>
-            <span>Review the landscape document before downloading.</span>
+            <strong id="prcPreviewTitle">PRC Form Preview</strong>
+            <span>Review the landscape form before downloading.</span>
           </div>
           <button
             type="button"
-            class="admin-prc-preview-close"
-            id="adminPrcPreviewCloseBtn"
+            class="prc-preview-close"
+            id="prcPreviewCloseBtn"
             aria-label="Close preview"
           >
             <i class="fas fa-times" aria-hidden="true"></i>
           </button>
         </div>
-        <div class="admin-prc-preview-pages" id="adminPrcPreviewPages"></div>
-        <div class="admin-prc-preview-actions">
-          <button type="button" class="btn btn-secondary" id="adminPrcPreviewCancelBtn">
+        <div class="prc-preview-pages" id="prcPreviewPages"></div>
+        <div class="prc-preview-actions">
+          <button type="button" class="btn btn-secondary" id="prcPreviewCancelBtn">
             Back
           </button>
-          <button type="button" class="btn btn-primary" id="adminPrcPreviewDownloadBtn">
+          <button type="button" class="btn btn-primary" id="prcPreviewDownloadBtn">
             <i class="fas fa-download" aria-hidden="true"></i>
             Download DOCX Form
           </button>
@@ -1271,6 +1284,21 @@
         "yearlyStudentListPanel",
       );
       const yearlyReportPanel = document.getElementById("yearlyReportPanel");
+      const yearlyProgressSearchShell = document.getElementById(
+        "yearlyProgressSearchShell",
+      );
+      const yearlyProgressSearchInput = document.getElementById(
+        "yearlyProgressSearchInput",
+      );
+      const yearlyProgressSearchResults = document.getElementById(
+        "yearlyProgressSearchResults",
+      );
+      const yearlyProgressLegacyMount = document.getElementById(
+        "yearlyProgressLegacyMount",
+      );
+      const adminYearlyReportToolbar = document.getElementById(
+        "adminYearlyReportToolbar",
+      );
       const yearlyBackBtn = document.getElementById("yearlyBackBtn");
       const yearlyProcedureTables = document.getElementById("yearlyProcedureTables");
       const yearlyYearsTbody = document.getElementById("yearlyYearsTbody");
@@ -1287,22 +1315,13 @@
         "yearlyStudentListEmpty",
       );
       const exportYearlyPrcBtn = document.getElementById("exportYearlyPrcBtn");
-      const adminPrcPreviewOverlay = document.getElementById(
-        "adminPrcPreviewOverlay",
-      );
-      const adminPrcPreviewPages = document.getElementById(
-        "adminPrcPreviewPages",
-      );
-      const adminPrcPreviewCloseBtn = document.getElementById(
-        "adminPrcPreviewCloseBtn",
-      );
-      const adminPrcPreviewCancelBtn = document.getElementById(
-        "adminPrcPreviewCancelBtn",
-      );
-      const adminPrcPreviewDownloadBtn = document.getElementById(
-        "adminPrcPreviewDownloadBtn",
-      );
+      const adminPrcPreviewOverlay = document.getElementById("prcPreviewOverlay");
+      const adminPrcPreviewPages = document.getElementById("prcPreviewPages");
+      const adminPrcPreviewCloseBtn = document.getElementById("prcPreviewCloseBtn");
+      const adminPrcPreviewCancelBtn = document.getElementById("prcPreviewCancelBtn");
+      const adminPrcPreviewDownloadBtn = document.getElementById("prcPreviewDownloadBtn");
       const yearlyEmpty = document.getElementById("yearlyEmpty");
+      let yearlyProgressSearchStudents = [];
       const yearlyNav = {
         level: "years",
         schoolYear: "",
@@ -1684,9 +1703,11 @@
           }
         }
         if (targetId === "yearlyReportsCard") {
+          loadYearlyProgressSearchStudents();
           if (yearlyNav.level !== "years") {
             backToYearlyYears();
           } else {
+            setYearlyNavLevel("years");
             renderYearlyYears();
           }
         }
@@ -3181,45 +3202,53 @@
       }
 
       function renderYearlyBreadcrumb() {
+        if (!yearlyBreadcrumb) return;
+        if (yearlyNav.level === "years") {
+          yearlyBreadcrumb.innerHTML = "";
+          yearlyBreadcrumb.style.display = "none";
+          return;
+        }
+        yearlyBreadcrumb.style.display = "flex";
         const parts = [];
-        parts.push(
-          `<button type="button" class="mini-btn" onclick="backToYearlyYears()">Annual Records</button>`,
-        );
+        parts.push('<button type="button" data-crumb="years">Annual Records</button>');
         if (yearlyNav.schoolYear) {
-          parts.push('<span class="sep">/</span>');
+          parts.push('<span aria-hidden="true">/</span>');
           if (yearlyNav.level === "blocks") {
-            parts.push(
-              `<span class="current">${yearlyNav.schoolYear}</span>`,
-            );
+            parts.push(`<span class="current">${escapeHtml(yearlyNav.schoolYear)}</span>`);
           } else {
-            parts.push(
-              `<button type="button" class="mini-btn" onclick="backToYearlyBlocks()">${yearlyNav.schoolYear}</button>`,
-            );
+            parts.push(`<button type="button" data-crumb="blocks">${escapeHtml(yearlyNav.schoolYear)}</button>`);
           }
         }
         if (yearlyNav.blockLabel) {
-          parts.push('<span class="sep">/</span>');
+          parts.push('<span aria-hidden="true">/</span>');
           if (yearlyNav.level === "students") {
-            parts.push(
-              `<span class="current">${yearlyNav.blockLabel}</span>`,
-            );
+            parts.push(`<span class="current">${escapeHtml(yearlyNav.blockLabel)}</span>`);
           } else {
-            parts.push(
-              `<button type="button" class="mini-btn" onclick="backToYearlyStudents()">${yearlyNav.blockLabel}</button>`,
-            );
+            parts.push(`<button type="button" data-crumb="students">${escapeHtml(yearlyNav.blockLabel)}</button>`);
           }
         }
         if (yearlyNav.studentName) {
-          parts.push('<span class="sep">/</span>');
-          parts.push(
-            `<span class="current">${yearlyNav.studentName}</span>`,
-          );
+          parts.push('<span aria-hidden="true">/</span>');
+          parts.push(`<span class="current">${escapeHtml(yearlyNav.studentName)}</span>`);
         }
-        if (yearlyBreadcrumb) yearlyBreadcrumb.innerHTML = parts.join("");
+        yearlyBreadcrumb.innerHTML = parts.join("");
       }
 
       function setYearlyNavLevel(level) {
         yearlyNav.level = level;
+        const yearlyContextTitle = document.getElementById("yearlyContextTitle");
+        const yearlyContextSubtitle = document.getElementById("yearlyContextSubtitle");
+        const yearlyContextIcon = document.querySelector("#yearlyContextIcon i");
+        const copy = {
+          years: ["Annual Records", "Browse annual records by academic year, block, and student."],
+          blocks: ["Academic Blocks", `Review blocks for ${yearlyNav.schoolYear || "the selected year"}.`],
+          students: ["Students", `Review clinical progress in ${yearlyNav.blockLabel || "the selected block"}.`],
+          report: ["Student Clinical Records", `Review records for ${yearlyNav.studentName || "the selected student"}.`],
+        };
+        if (yearlyContextTitle) yearlyContextTitle.textContent = (copy[level] || copy.years)[0];
+        if (yearlyContextSubtitle) yearlyContextSubtitle.textContent = (copy[level] || copy.years)[1];
+        if (yearlyContextIcon) yearlyContextIcon.className = "fas fa-calendar-check";
+        if (yearlyProgressSearchShell) yearlyProgressSearchShell.style.display = "block";
         if (yearlyYearPanel)
           yearlyYearPanel.classList.toggle("active", level === "years");
         if (yearlyBlockPanel)
@@ -3231,6 +3260,15 @@
           );
         if (yearlyReportPanel)
           yearlyReportPanel.classList.toggle("active", level === "report");
+        if (yearlyProgressLegacyMount && level !== "report") {
+          yearlyProgressLegacyMount.style.display = "none";
+          if (typeof window.closeInstructorProgressStudent === "function") {
+            window.closeInstructorProgressStudent();
+          }
+        }
+        if (adminYearlyReportToolbar && level !== "report") {
+          adminYearlyReportToolbar.style.removeProperty("display");
+        }
         if (yearlyBackBtn) { yearlyBackBtn.classList.toggle("yearly-back-hidden", level === "years"); yearlyBackBtn.style.display = level === "years" ? "none" : ""; }
         renderYearlyBreadcrumb();
       }
@@ -3288,6 +3326,78 @@
         setYearlyNavLevel("students");
         renderYearlyStudentList();
       };
+
+      function renderYearlyProgressSearchResults() {
+        if (!yearlyProgressSearchResults || !yearlyProgressSearchInput) return;
+        const term = String(yearlyProgressSearchInput.value || "").trim().toLowerCase();
+        yearlyProgressSearchResults.replaceChildren();
+        if (!term) {
+          yearlyProgressSearchResults.style.display = "none";
+          return;
+        }
+        const matches = yearlyProgressSearchStudents
+          .filter((student) => {
+            const studentId = String(student.student_id || "").toLowerCase();
+            const studentName = String(student.student_name || "").toLowerCase();
+            return studentId.includes(term) || studentName.includes(term);
+          })
+          .slice(0, 8);
+        yearlyProgressSearchResults.style.display = "block";
+        if (!matches.length) {
+          yearlyProgressSearchResults.innerHTML = '<div class="yearly-progress-search-empty">No matching assigned students found.</div>';
+          return;
+        }
+        matches.forEach((student) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.setAttribute("role", "option");
+          button.dataset.yearlyProgressStudent = String(student.student_id || "");
+          button.innerHTML = `<i class="fas fa-user-graduate" aria-hidden="true"></i><span><strong>${escapeHtml(student.student_name || "Student")}</strong><small>${escapeHtml(student.student_id || "No ID")} · ${escapeHtml(student.registered_school_year || student.school_year || "No year")} · ${escapeHtml(student.block_label || "No block")}</small></span>`;
+          yearlyProgressSearchResults.appendChild(button);
+        });
+      }
+
+      async function loadYearlyProgressSearchStudents(force = false) {
+        if (yearlyProgressSearchStudents.length && !force) {
+          renderYearlyProgressSearchResults();
+          return;
+        }
+        try {
+          const result = await ApiClient.getAllAssignedStudents();
+          yearlyProgressSearchStudents = result && result.ok && Array.isArray(result.students)
+            ? result.students
+            : [];
+        } catch (error) {
+          console.error(error);
+          yearlyProgressSearchStudents = [];
+        }
+        renderYearlyProgressSearchResults();
+      }
+
+      async function openYearlyProgressSearchStudent(studentId) {
+        const student = yearlyProgressSearchStudents.find((item) =>
+          String(item.student_id || "") === String(studentId || ""),
+        );
+        if (!student) return;
+        const schoolYear = String(student.registered_school_year || student.school_year || "").trim();
+        const blockId = String(student.block_id || "").trim();
+        if (!schoolYear || !blockId) {
+          if (yearlyProgressSearchResults) {
+            yearlyProgressSearchResults.style.display = "block";
+            yearlyProgressSearchResults.innerHTML = '<div class="yearly-progress-search-empty">This student is not assigned to an academic year and block.</div>';
+          }
+          return;
+        }
+        yearlyNav.schoolYear = schoolYear;
+        yearlyNav.blockId = blockId;
+        yearlyNav.blockLabel = student.block_label || blockId;
+        yearlyNav.studentId = String(student.student_id || "");
+        yearlyNav.studentName = student.student_name || student.student_id || "Student";
+        if (yearlyProgressSearchInput) yearlyProgressSearchInput.value = yearlyNav.studentName;
+        if (yearlyProgressSearchResults) yearlyProgressSearchResults.style.display = "none";
+        setYearlyNavLevel("report");
+        await renderYearlyReports();
+      }
 
       function applyYearlyYearSearch() {
         if (!yearlyYearsTbody) return;
@@ -3385,16 +3495,17 @@
             ? yearStudentIds.size
             : Number(year.student_count || 0);
           const tr = document.createElement("tr");
+          tr.dataset.yearOpen = yearLabel;
+          tr.tabIndex = 0;
+          tr.style.cursor = "pointer";
           tr.innerHTML = `
-          <td>${index + 1}</td>
-          <td><strong>${escapeHtml(year.label)}</strong></td>
-          <td>${blockCount}</td>
-          <td>${studentCount}</td>
-          <td>${yearCases.length}</td>
-          <td class="action-cell">
-            <button class="mini-btn" type="button" onclick="openYearlyReportYear('${year.label}')">Open</button>
-          </td>
-        `;
+            <td><span class="school-year-index">${index + 1}</span></td>
+            <td><div class="school-year-identity"><span class="school-year-copy"><strong>${escapeHtml(year.label)}</strong></span></div></td>
+            <td><span class="school-year-count">${blockCount}</span></td>
+            <td><span class="school-year-count">${studentCount}</span></td>
+            <td><span class="school-year-count">${yearCases.length}</span></td>
+            <td class="action-cell"><button class="mini-btn admin-directory-action school-year-open" type="button" aria-label="View blocks for ${escapeHtml(yearLabel)}"><span>View blocks</span></button></td>
+          `;
           if (yearlyYearsTbody) yearlyYearsTbody.appendChild(tr);
         });
         applyYearlyYearSearch();
@@ -3430,12 +3541,16 @@
               recordMatchesSchoolYear(record, yearlyNav.schoolYear),
           ).length;
           const tr = document.createElement("tr");
+          tr.dataset.blockOpen = block.id || "";
+          tr.dataset.blockLabel = block.label || "";
+          tr.tabIndex = 0;
+          tr.style.cursor = "pointer";
           tr.innerHTML = `
-          <td>${index + 1}</td>
-          <td><strong>${block.label || ""}</strong></td>
-          <td>${Number(block.student_count || 0)}</td>
-          <td>${caseCount}</td>
-          <td class="action-cell"><button class="mini-btn" type="button" onclick="openYearlyBlock('${block.id || ""}', '${(block.label || "").replace(/'/g, "\\'")}')">Open</button></td>`;
+            <td><span class="block-directory-index">${index + 1}</span></td>
+            <td><div class="block-directory-identity"><span class="block-directory-copy"><strong>${escapeHtml(block.label || "")}</strong></span></div></td>
+            <td><span class="block-directory-count">${Number(block.student_count || 0)}</span></td>
+            <td><span class="block-directory-count">${caseCount}</span></td>
+            <td class="action-cell"><button class="mini-btn admin-directory-action block-open-action" type="button" aria-label="View students in ${escapeHtml(block.label || "")}"><span>View students</span></button></td>`;
           if (yearlyBlocksTbody) yearlyBlocksTbody.appendChild(tr);
         });
       }
@@ -3462,15 +3577,15 @@
               recordMatchesSchoolYear(record, yearlyNav.schoolYear),
           ).length;
           const tr = document.createElement("tr");
+          tr.dataset.studentOpen = String(s.student_id || "");
+          tr.dataset.studentName = s.student_name || "";
           tr.innerHTML = `
-          <td>${index + 1}</td>
-          <td>${s.student_id || ""}</td>
-          <td><strong>${s.student_name || ""}</strong></td>
-          <td>${caseCount}</td>
-          <td class="action-cell">
-            <button class="mini-btn" type="button" onclick="openYearlyStudentReport('${s.student_id || ""}', '${(s.student_name || "").replace(/'/g, "\\'")}')">View Report</button>
-          </td>
-        `;
+            <td>${index + 1}</td>
+            <td>${escapeHtml(s.student_id || "—")}</td>
+            <td><strong>${escapeHtml(s.student_name || "Student")}</strong></td>
+            <td>${caseCount}</td>
+            <td class="action-cell"><button class="mini-btn admin-directory-action" type="button" data-yearly-student-open="${escapeHtml(s.student_id || "")}" data-yearly-student-name="${escapeHtml(s.student_name || s.student_id || "Student")}">View Records</button></td>
+          `;
           if (yearlyStudentListTbody) yearlyStudentListTbody.appendChild(tr);
         });
       }
@@ -3481,6 +3596,8 @@
         const schoolYear = yearlyNav.schoolYear;
 
         if (!studentId || !schoolYear) {
+          if (adminYearlyReportToolbar) adminYearlyReportToolbar.style.removeProperty("display");
+          if (yearlyProgressLegacyMount) yearlyProgressLegacyMount.style.display = "none";
           renderYearlyProcedureTables([], "");
           if (yearlyEmpty) {
             yearlyEmpty.style.display = "block";
@@ -3493,6 +3610,8 @@
         try {
           cases = await ApiClient.getJoinedCases(studentId, "", "");
         } catch (error) {
+          if (adminYearlyReportToolbar) adminYearlyReportToolbar.style.removeProperty("display");
+          if (yearlyProgressLegacyMount) yearlyProgressLegacyMount.style.display = "none";
           renderYearlyProcedureTables([], "");
           if (yearlyEmpty) {
             yearlyEmpty.style.display = "block";
@@ -3502,39 +3621,46 @@
           return;
         }
 
-        let filteredCases = cases.filter(
+        const yearlyStudentYearRecords = cases.filter(
           (record) =>
             String(record.student_id || "").trim() ===
               String(studentId || "").trim() &&
             recordMatchesSchoolYear(record, schoolYear),
         );
-        // Apply procedure filter dropdown if selected
-        const filterDropdown = document.getElementById("yearlyProcedureFilter");
-        const selectedProc = procedureLabel(
-          filterDropdown ? filterDropdown.value : "",
-        );
-        if (selectedProc) {
-          filteredCases = filteredCases.filter(
-            (record) =>
-              procedureLabel(
-                record.procedure_key || record.procedure_name,
-              ) === selectedProc,
-          );
-        }
-
-        if (!filteredCases.length) {
-          renderYearlyProcedureTables([], selectedProc);
-          if (yearlyEmpty) {
-            yearlyEmpty.style.display = "block";
-            yearlyEmpty.textContent = selectedProc
-              ? `No ${caseProcedureDisplayName(selectedProc)} records found for ${yearlyNav.studentName} in ${schoolYear}.`
-              : `No records found for ${yearlyNav.studentName} in ${schoolYear}.`;
+        let studentProfile = {
+          student_id: studentId,
+          student_name: yearlyNav.studentName,
+        };
+        try {
+          const profileResult = await ApiClient.getStudent(studentId);
+          if (profileResult && profileResult.ok && profileResult.student) {
+            studentProfile = profileResult.student;
           }
-          return;
+        } catch (error) {
+          console.warn("Unable to load the selected student profile.", error);
         }
-
+        const progressStudent = {
+          ...studentProfile,
+          student_id: studentProfile.student_id || studentId,
+          student_name: studentProfile.student_name || yearlyNav.studentName || studentId,
+          registered_school_year: schoolYear || studentProfile.registered_school_year,
+          active_school_year: schoolYear || studentProfile.active_school_year,
+          block_label: yearlyNav.blockLabel || studentProfile.block_label,
+        };
+        if (adminYearlyReportToolbar) adminYearlyReportToolbar.style.display = "none";
+        if (yearlyProcedureTables) yearlyProcedureTables.style.display = "none";
         if (yearlyEmpty) yearlyEmpty.style.display = "none";
-        renderYearlyProcedureTables(filteredCases, selectedProc);
+        if (yearlyProgressLegacyMount) {
+          yearlyProgressLegacyMount.style.removeProperty("display");
+          if (typeof window.openInstructorProgressStudent === "function") {
+            await window.openInstructorProgressStudent(progressStudent, {
+              mount: yearlyProgressLegacyMount,
+              records: yearlyStudentYearRecords,
+            });
+          } else {
+            yearlyProgressLegacyMount.textContent = "Unable to load the annual records layout.";
+          }
+        }
       }
 
       function getAdminProcedureRecordReviewStatus(record) {
@@ -3992,6 +4118,20 @@
 
       async function exportYearlyPrcForm() {
         if (!yearlyNav.studentId || !yearlyNav.schoolYear) return;
+        const annualRecords = (await ApiClient.getJoinedCases(yearlyNav.studentId, "", ""))
+          .filter((record) =>
+            String(record.student_id || "").trim() === String(yearlyNav.studentId || "").trim() &&
+            recordMatchesSchoolYear(record, yearlyNav.schoolYear),
+          );
+        return studentPrcExportInstructor({
+          student: {
+            student_id: yearlyNav.studentId,
+            student_name: yearlyNav.studentName,
+            school_year: yearlyNav.schoolYear,
+          },
+          button: exportYearlyPrcBtn,
+          records: annualRecords,
+        });
         setButtonLoading(exportYearlyPrcBtn, true);
         try {
           const selectedProcedure = procedureLabel(
@@ -4073,6 +4213,701 @@
         } finally {
           setButtonLoading(exportYearlyPrcBtn, false);
         }
+      }
+
+      function normalizeProcedureKey(value) {
+        return procedureLabel(value).replace(/\s+/g, "-");
+      }
+      let selectedSummaryStudent = null;
+      const STUDENT_PRC_DIAGNOSIS_HEADERS = {
+        "delivery-handled": "Complete Diagnosis (Gravida, Para)",
+        "delivery-assisted": "Complete Diagnosis (Gravida, Para)",
+        suturing: "Complete Diagnosis",
+        "iv-insertion": "Complete Diagnosis",
+        "internal-exam": "Complete Diagnosis",
+      };
+      const STUDENT_PRC_FORM_TITLES = {
+        "delivery-handled": "Record of Normal Deliveries Handled",
+        "delivery-assisted": "Record of Delivery Assisted",
+        suturing: "Record of Actual Suturing of Perineal Lacerations",
+        "iv-insertion": "Record of Actual Intravenous Fluid Insertions",
+        "internal-exam": "Record of Actual Internal Examination",
+      };
+      function studentPrcGetDiagnosisHeader(procedureKey) {
+        return STUDENT_PRC_DIAGNOSIS_HEADERS[procedureKey] || "Complete Diagnosis";
+      }
+      const studentPrcProcedureNames = {
+        "delivery-handled": "Delivery Handled",
+        "delivery-assisted": "Delivery Assisted",
+        suturing: "Suturing",
+        "iv-insertion": "IV Insertion",
+        "internal-exam": "Internal Exam",
+      };
+      const STUDENT_PRC_PROCEDURE_TARGETS = {
+        "delivery-handled": 20,
+        "delivery-assisted": 20,
+        "internal-exam": 20,
+        suturing: 5,
+        "iv-insertion": 5,
+      };
+
+      let studentPrcExportStudent = null;
+
+      function studentPrcFormatExportDateTime(value) {
+        if (!value) return "";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return escapeHtml(String(value));
+        return `${date.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })}<br>${date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}`;
+      }
+
+      function studentPrcFormatExportDate(value) {
+        if (!value || /^0{4}-0{2}-0{2}$/.test(String(value))) return "";
+        const date = new Date(`${String(value).slice(0, 10)}T00:00:00`);
+        if (Number.isNaN(date.getTime())) return String(value);
+        return date.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+      }
+
+      function studentPrcExportCell(...values) {
+        const lines = values
+          .filter((value) => value !== undefined && value !== null && String(value).trim() !== "")
+          .map((value) => escapeHtml(value));
+        return lines.length ? lines.join("<br>") : "&nbsp;";
+      }
+
+      function studentPrcBuildExportTable(procedureKey, records, startIndex = 0, rowCount = STUDENT_PRC_PROCEDURE_TARGETS[procedureKey] || 5) {
+        const pageRecords = records.slice(startIndex, startIndex + rowCount);
+        const rows = pageRecords.map((record) => `<tr>
+          <td>${studentPrcExportCell(record.patient_name, record.patient_address)}</td>
+          <td>${studentPrcExportCell(record.case_no)}</td>
+          <td>${studentPrcExportCell(record.complete_diagnosis)}</td>
+          <td>${studentPrcFormatExportDateTime(record.date_time_performed) || "&nbsp;"}</td>
+          <td>${studentPrcExportCell(record.facility_name, record.facility_address, record.facility_contact_number)}</td>
+          <td>${studentPrcExportCell(record.supervisor_printed_name, record.supervisor_contact_number)}</td>
+          <td>${studentPrcExportCell(record.supervisor_position_designation)}</td>
+          <td>&nbsp;</td>
+          <td>${studentPrcExportCell(record.supervisor_license_no, studentPrcFormatExportDate(record.supervisor_license_expiry_date))}</td>
+        </tr>`).join("");
+        const blankRows = Math.max(0, rowCount - pageRecords.length);
+        const emptyRows = Array.from({ length: blankRows }, () => "<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>").join("");
+        return `<table class="prc-export-table">
+          <colgroup><col style="width:18.8%"><col style="width:5%"><col style="width:12.6%"><col style="width:7.2%"><col style="width:16.5%"><col style="width:12.8%"><col style="width:8.7%"><col style="width:9%"><col style="width:9.4%"></colgroup>
+          <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case<br>No.</th><th rowspan="2">${studentPrcGetDiagnosisHeader(procedureKey)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of<br>Facility &amp; Contact Number</th><th colspan="4">Supervised by</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position /<br>Designation</th><th>Signature</th><th>License No /<br>Expiry Date</th></tr></thead>
+          <tbody>${rows}${emptyRows}</tbody>
+        </table>`;
+      }
+
+      let studentPrcPreviewRecords = [];
+      let studentPrcLogoDataUrl = "";
+
+      async function studentPrcGetLogoDataUrl() {
+        if (studentPrcLogoDataUrl) return studentPrcLogoDataUrl;
+        const logoPath = "assets/images/prc-form-image1.jpeg";
+        try {
+          const response = await fetch(logoPath);
+          if (!response.ok) throw new Error("PRC logo could not be loaded.");
+          const logoBlob = await response.blob();
+          studentPrcLogoDataUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(logoBlob);
+          });
+        } catch (error) {
+          studentPrcLogoDataUrl = logoPath;
+        }
+        return studentPrcLogoDataUrl;
+      }
+
+      function studentPrcBuildExportForms(records, logoSource) {
+        const studentName = studentPrcExportStudent.student_name || studentPrcExportStudent.name || "";
+        const school = studentPrcExportStudent.school_name || studentPrcExportStudent.school || "";
+        return Object.keys(STUDENT_PRC_PROCEDURE_TARGETS).flatMap((procedureKey) => {
+          const procedureRecords = records.filter((record) => normalizeProcedureKey(record.procedure_name) === procedureKey);
+          const target = STUDENT_PRC_PROCEDURE_TARGETS[procedureKey] || 5;
+          const pageSize = target > 10 ? 10 : target;
+          const pageCount = Math.ceil(target / pageSize);
+          return Array.from({ length: pageCount }, (_, pageIndex) => {
+            const isContinuation = pageIndex > 0;
+            return `<section class="prc-export-form${isContinuation ? " prc-export-continuation" : ""}">
+            ${isContinuation ? "" : `
+            <div class="prc-export-heading">
+              <img class="prc-export-logo" src="${logoSource}" alt="Professional Regulation Commission seal">
+              <div class="prc-export-heading-text">
+                <div class="prc-export-agency">PROFESSIONAL REGULATION COMMISSION</div>
+                <div class="prc-export-city">Cebu City</div>
+                <div class="prc-export-board">BOARD OF MIDWIFERY</div>
+              </div>
+            </div>
+            <h1>${STUDENT_PRC_FORM_TITLES[procedureKey] || studentPrcProcedureNames[procedureKey]}</h1>
+            <p class="prc-export-check">Please check if applicant is: <span class="prc-check-box is-checked">Ã¢Å“â€œ</span> Graduate Midwife <span class="prc-check-box"></span> Registered Nurse</p>
+            <p class="prc-export-applicant"><span>Name of Applicant:</span><span class="prc-export-line">${escapeHtml(studentName)}</span><span class="prc-export-school-label">School:</span><span class="prc-export-line prc-export-school">${escapeHtml(school)}</span></p>`}
+            ${studentPrcBuildExportTable(procedureKey, procedureRecords, pageIndex * pageSize, pageSize)}
+          </section>`;
+          });
+        }).join("");
+      }
+
+      function studentPrcBuildWordDocument(forms) {
+        return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+          @page Section1 { size: 936pt 612pt; mso-page-orientation: landscape; margin: 25.2pt 25.2pt 25.2pt 25.2pt; }
+          div.Section1 { page: Section1; }
+          body { margin: 0; color: #000; background: #fff; font-family: Cambria, "Times New Roman", serif; font-size: 10pt; }
+          .prc-export-form { padding-top: 57pt; page-break-after: always; }
+          .prc-export-form:last-child { page-break-after: auto; }
+          .prc-export-heading { position: relative; min-height: 44pt; margin: 0; }
+          .prc-export-logo { position: absolute; left: 150pt; top: 0; width: 58pt; height: 58pt; object-fit: contain; }
+          .prc-export-heading-text { padding-top: 7pt; text-align: center; }
+          .prc-export-agency, .prc-export-city, .prc-export-board, .prc-export-form h1 { text-align: center; margin: 0; }
+          .prc-export-agency { font-size: 10pt; font-weight: 400; }
+          .prc-export-city, .prc-export-board { font-size: 9pt; font-weight: 400; }
+          .prc-export-board { font-weight: 700; }
+          .prc-export-form h1 { margin: 2pt 0 0; font-size: 14pt; font-weight: 700; }
+          .prc-export-check { margin: 0 0 13pt; text-align: right; font-size: 10pt; }
+          .prc-check-box { display: inline-block; width: 21pt; height: 16pt; margin: 0 5pt 0 11pt; border: 1px solid #000; text-align: center; line-height: 15pt; vertical-align: middle; }
+          .prc-export-applicant { margin: 0 0 10pt; font-size: 10pt; }
+          .prc-export-line { display: inline-block; min-width: 255pt; border-bottom: 1px solid #000; font-weight: 700; }
+          .prc-export-school-label { margin-left: 72pt; }
+          .prc-export-school { min-width: 205pt; }
+          .prc-export-table { width: 92%; border: 1px solid #000; border-collapse: collapse; border-spacing: 0; table-layout: fixed; color: #000; background: #fff; }
+          .prc-export-table th, .prc-export-table td { border: 1px solid #000; padding: 2pt 3pt; color: #000; background: #fff; text-align: center; vertical-align: middle; word-wrap: break-word; }
+          .prc-export-table th { font-size: 8pt; font-weight: 700; line-height: 1.1; }
+          .prc-export-table td { height: 22pt; font-size: 8pt; font-weight: 400; line-height: 1.1; text-align: left; }
+        </style></head><body><div class="Section1">${forms}</div></body></html>`;
+      }
+
+      const STUDENT_PRC_TEMPLATE_URL = "assets/templates/prc-forms-template.docx";
+      const STUDENT_PRC_WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+      const STUDENT_PRC_XML_NS = "http://www.w3.org/XML/1998/namespace";
+      const STUDENT_PRC_CRC_TABLE = (() => {
+        const table = new Uint32Array(256);
+        for (let index = 0; index < 256; index += 1) {
+          let value = index;
+          for (let bit = 0; bit < 8; bit += 1) value = (value & 1) ? (0xedb88320 ^ (value >>> 1)) : (value >>> 1);
+          table[index] = value >>> 0;
+        }
+        return table;
+      })();
+
+      function prcCrc32(bytes) {
+        let crc = 0xffffffff;
+        for (let index = 0; index < bytes.length; index += 1) crc = STUDENT_PRC_CRC_TABLE[(crc ^ bytes[index]) & 0xff] ^ (crc >>> 8);
+        return (crc ^ 0xffffffff) >>> 0;
+      }
+
+      function prcZipU16(view, offset) { return view.getUint16(offset, true); }
+      function prcZipU32(view, offset) { return view.getUint32(offset, true); }
+
+      async function studentPrcInflate(bytes, compression) {
+        if (compression === 0) return bytes;
+        if (compression !== 8 || typeof DecompressionStream === "undefined") throw new Error("This browser cannot read the PRC document template.");
+        const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+        return new Uint8Array(await new Response(stream).arrayBuffer());
+      }
+
+      async function studentPrcReadTemplateZip(arrayBuffer) {
+        const source = new Uint8Array(arrayBuffer);
+        const view = new DataView(source.buffer, source.byteOffset, source.byteLength);
+        let endOffset = -1;
+        for (let offset = Math.max(0, source.length - 65557); offset <= source.length - 22; offset += 1) {
+          if (prcZipU32(view, offset) === 0x06054b50) endOffset = offset;
+        }
+        if (endOffset < 0) throw new Error("The PRC template is not a valid DOCX file.");
+        const count = prcZipU16(view, endOffset + 10);
+        let offset = prcZipU32(view, endOffset + 16);
+        const decoder = new TextDecoder();
+        const entries = [];
+        for (let index = 0; index < count; index += 1) {
+          if (prcZipU32(view, offset) !== 0x02014b50) throw new Error("The PRC template directory is invalid.");
+          const compression = prcZipU16(view, offset + 10);
+          const compressedSize = prcZipU32(view, offset + 20);
+          const nameLength = prcZipU16(view, offset + 28);
+          const extraLength = prcZipU16(view, offset + 30);
+          const commentLength = prcZipU16(view, offset + 32);
+          const localOffset = prcZipU32(view, offset + 42);
+          const name = decoder.decode(source.slice(offset + 46, offset + 46 + nameLength));
+          const localNameLength = prcZipU16(view, localOffset + 26);
+          const localExtraLength = prcZipU16(view, localOffset + 28);
+          const compressed = source.slice(localOffset + 30 + localNameLength + localExtraLength, localOffset + 30 + localNameLength + localExtraLength + compressedSize);
+          entries.push({ name, data: await studentPrcInflate(compressed, compression) });
+          offset += 46 + nameLength + extraLength + commentLength;
+        }
+        return entries;
+      }
+
+      function studentPrcCreateDocxZip(entries) {
+        const encoder = new TextEncoder();
+        const chunks = [];
+        const central = [];
+        let offset = 0;
+        entries.forEach((entry) => {
+          const name = encoder.encode(entry.name);
+          const data = entry.data;
+          const crc = prcCrc32(data);
+          const local = new Uint8Array(30 + name.length);
+          const localView = new DataView(local.buffer);
+          localView.setUint32(0, 0x04034b50, true);
+          localView.setUint16(4, 20, true);
+          localView.setUint16(6, 0x0800, true);
+          localView.setUint16(8, 0, true);
+          localView.setUint32(14, crc, true);
+          localView.setUint32(18, data.length, true);
+          localView.setUint32(22, data.length, true);
+          localView.setUint16(26, name.length, true);
+          local.set(name, 30);
+          chunks.push(local, data);
+          const directory = new Uint8Array(46 + name.length);
+          const directoryView = new DataView(directory.buffer);
+          directoryView.setUint32(0, 0x02014b50, true);
+          directoryView.setUint16(4, 20, true);
+          directoryView.setUint16(6, 20, true);
+          directoryView.setUint16(8, 0x0800, true);
+          directoryView.setUint16(10, 0, true);
+          directoryView.setUint32(16, crc, true);
+          directoryView.setUint32(20, data.length, true);
+          directoryView.setUint32(24, data.length, true);
+          directoryView.setUint16(28, name.length, true);
+          directoryView.setUint32(42, offset, true);
+          directory.set(name, 46);
+          central.push(directory);
+          offset += local.length + data.length;
+        });
+        const centralSize = central.reduce((total, chunk) => total + chunk.length, 0);
+        const end = new Uint8Array(22);
+        const endView = new DataView(end.buffer);
+        endView.setUint32(0, 0x06054b50, true);
+        endView.setUint16(8, entries.length, true);
+        endView.setUint16(10, entries.length, true);
+        endView.setUint32(12, centralSize, true);
+        endView.setUint32(16, offset, true);
+        const result = new Uint8Array(offset + centralSize + end.length);
+        let cursor = 0;
+        [...chunks, ...central, end].forEach((chunk) => { result.set(chunk, cursor); cursor += chunk.length; });
+        return result;
+      }
+
+      function studentPrcWordText(node) {
+        return Array.from(node.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "t")).map((item) => item.textContent || "").join("");
+      }
+
+      function studentPrcEnsureWordChild(documentNode, parent, localName) {
+        let child = Array.from(parent.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === localName);
+        if (!child) {
+          child = documentNode.createElementNS(STUDENT_PRC_WORD_NS, `w:${localName}`);
+          parent.appendChild(child);
+        }
+        return child;
+      }
+
+      function studentPrcSetTemplateLegalTableMargins(xml) {
+        const section = xml.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "sectPr")[0];
+        if (section) {
+          const pageMargins = studentPrcEnsureWordChild(xml, section, "pgMar");
+          pageMargins.setAttributeNS(STUDENT_PRC_WORD_NS, "w:left", "720");
+          pageMargins.setAttributeNS(STUDENT_PRC_WORD_NS, "w:right", "720");
+        }
+        const tableWidth = 17280; // 13in legal width minus 0.5in left and right margins.
+        Array.from(xml.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "tbl")).forEach((table) => {
+          const tableProperties = studentPrcEnsureWordChild(xml, table, "tblPr");
+          const width = studentPrcEnsureWordChild(xml, tableProperties, "tblW");
+          width.setAttributeNS(STUDENT_PRC_WORD_NS, "w:w", String(tableWidth));
+          width.setAttributeNS(STUDENT_PRC_WORD_NS, "w:type", "dxa");
+          const layout = studentPrcEnsureWordChild(xml, tableProperties, "tblLayout");
+          layout.setAttributeNS(STUDENT_PRC_WORD_NS, "w:type", "fixed");
+          const gridColumns = Array.from(table.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "gridCol"));
+          const originalWidths = gridColumns.map((column) => Number(column.getAttributeNS(STUDENT_PRC_WORD_NS, "w")) || 0);
+          const originalTotal = originalWidths.reduce((sum, value) => sum + value, 0);
+          let usedWidth = 0;
+          const scaledWidths = [];
+          gridColumns.forEach((column, index) => {
+            const nextWidth = index === gridColumns.length - 1
+              ? tableWidth - usedWidth
+              : Math.round((originalWidths[index] / originalTotal) * tableWidth);
+            column.setAttributeNS(STUDENT_PRC_WORD_NS, "w:w", String(nextWidth));
+            usedWidth += nextWidth;
+            scaledWidths.push(nextWidth);
+          });
+          Array.from(table.children)
+            .filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "tr")
+            .forEach((row) => {
+              let columnIndex = 0;
+              Array.from(row.children)
+                .filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "tc")
+                .forEach((cell) => {
+                  const cellProperties = studentPrcEnsureWordChild(xml, cell, "tcPr");
+                  const spanNode = Array.from(cellProperties.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "gridSpan");
+                  const span = Math.max(1, Number(spanNode?.getAttributeNS(STUDENT_PRC_WORD_NS, "val")) || 1);
+                  const cellWidth = studentPrcEnsureWordChild(xml, cellProperties, "tcW");
+                  cellWidth.setAttributeNS(STUDENT_PRC_WORD_NS, "w:w", String(scaledWidths.slice(columnIndex, columnIndex + span).reduce((sum, value) => sum + value, 0)));
+                  cellWidth.setAttributeNS(STUDENT_PRC_WORD_NS, "w:type", "dxa");
+                  columnIndex += span;
+                });
+            });
+        });
+      }
+
+      function studentPrcAddDeliveryAssistedSheet(xml) {
+        const body = xml.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "body")[0];
+        if (!body) return;
+        const bodyChildren = Array.from(body.children);
+        const normalTitle = bodyChildren.find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "p" && studentPrcWordText(node).includes("Record of Normal"));
+        const suturingTitle = bodyChildren.find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "p" && studentPrcWordText(node).includes("Record of Actual Suturing"));
+        if (!normalTitle || !suturingTitle) return;
+        const normalTitleIndex = bodyChildren.indexOf(normalTitle);
+        const suturingTitleIndex = bodyChildren.indexOf(suturingTitle);
+        const findSheetStart = (titleIndex) => {
+          for (let index = titleIndex; index >= 0; index -= 1) {
+            const node = bodyChildren[index];
+            if (node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "p" && node.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "drawing").length) return index;
+          }
+          return titleIndex;
+        };
+        const startIndex = findSheetStart(normalTitleIndex);
+        const endIndex = findSheetStart(suturingTitleIndex);
+        if (endIndex <= startIndex) return;
+        const copiedNodes = bodyChildren.slice(startIndex, endIndex).map((node) => node.cloneNode(true));
+        const copiedTitle = copiedNodes.find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "p" && studentPrcWordText(node).includes("Record of Normal"));
+        if (copiedTitle) {
+          const titleParts = Array.from(copiedTitle.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "t"));
+          if (titleParts.length) titleParts[0].textContent = "Record of Delivery Assisted";
+          titleParts.slice(1).forEach((part) => { part.textContent = ""; });
+        }
+        copiedNodes.forEach((node) => body.insertBefore(node, bodyChildren[endIndex]));
+      }
+
+      function studentPrcSetTemplateCell(cell, value) {
+        const paragraph = cell.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "p")[0];
+        if (!paragraph) return;
+        const cellProperties = studentPrcEnsureWordChild(paragraph.ownerDocument, cell, "tcPr");
+        const verticalAlignment = studentPrcEnsureWordChild(paragraph.ownerDocument, cellProperties, "vAlign");
+        verticalAlignment.setAttributeNS(STUDENT_PRC_WORD_NS, "w:val", "center");
+        const paragraphProperties = studentPrcEnsureWordChild(paragraph.ownerDocument, paragraph, "pPr");
+        Array.from(paragraphProperties.children)
+          .filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "numPr")
+          .forEach((node) => node.remove());
+        let alignment = Array.from(paragraphProperties.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "jc");
+        if (!alignment) {
+          alignment = paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:jc");
+          const characterProperties = Array.from(paragraphProperties.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "rPr");
+          paragraphProperties.insertBefore(alignment, characterProperties || null);
+        }
+        alignment.setAttributeNS(STUDENT_PRC_WORD_NS, "w:val", "left");
+        const firstRun = paragraph.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "r")[0];
+        const runProperties = firstRun?.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "rPr")[0]?.cloneNode(true) || paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:rPr");
+        let fonts = Array.from(runProperties.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "rFonts");
+        if (!fonts) {
+          fonts = paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:rFonts");
+          runProperties.insertBefore(fonts, runProperties.firstChild);
+        }
+        ["ascii", "hAnsi", "cs"].forEach((script) => fonts.setAttributeNS(STUDENT_PRC_WORD_NS, `w:${script}`, "Arial"));
+        ["sz", "szCs"].forEach((property) => {
+          let size = Array.from(runProperties.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === property);
+          if (!size) {
+            size = paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, `w:${property}`);
+            runProperties.appendChild(size);
+          }
+          size.setAttributeNS(STUDENT_PRC_WORD_NS, "w:val", "16");
+        });
+        Array.from(paragraph.childNodes).forEach((node) => {
+          if (!(node.nodeType === 1 && node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "pPr")) paragraph.removeChild(node);
+        });
+        const lines = String(value || "").split("\n");
+        lines.forEach((line, index) => {
+          const run = paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:r");
+          run.appendChild(runProperties.cloneNode(true));
+          const text = paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:t");
+          text.setAttributeNS(STUDENT_PRC_XML_NS, "xml:space", "preserve");
+          text.textContent = line;
+          run.appendChild(text);
+          paragraph.appendChild(run);
+          if (index < lines.length - 1) {
+            const breakRun = paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:r");
+            breakRun.appendChild(paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:br"));
+            paragraph.appendChild(breakRun);
+          }
+        });
+      }
+
+      function studentPrcFormatDocxDateTime(value) {
+        if (!value) return "";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return String(value);
+        return `${date.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })}\n${date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}`;
+      }
+
+      function studentPrcFormatDocxDate(value) { return studentPrcFormatExportDate(value).replace(/<[^>]+>/g, ""); }
+
+      function studentPrcFillTemplateTable(table, records) {
+        const rows = Array.from(table.children).filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "tr").slice(2);
+        rows.forEach((row, index) => {
+          const record = records[index] || {};
+          const cells = Array.from(row.children).filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "tc");
+          const values = [
+            [record.patient_name, record.patient_address].filter(Boolean).join("\n"),
+            record.case_no,
+            record.complete_diagnosis,
+            studentPrcFormatDocxDateTime(record.date_time_performed),
+            [record.facility_name, record.facility_address, record.facility_contact_number].filter(Boolean).join("\n"),
+            [record.supervisor_printed_name, record.supervisor_contact_number].filter(Boolean).join("\n"),
+            record.supervisor_position_designation,
+            "",
+            [record.supervisor_license_no, studentPrcFormatDocxDate(record.supervisor_license_expiry_date)].filter(Boolean).join("\n"),
+          ];
+          cells.forEach((cell, cellIndex) => studentPrcSetTemplateCell(cell, values[cellIndex] || ""));
+        });
+      }
+
+      function studentPrcSetInternalDiagnosisHeader(table) {
+        const headerRow = Array.from(table.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "tr");
+        const headerCells = headerRow ? Array.from(headerRow.children).filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "tc") : [];
+        const diagnosisCell = headerCells[2];
+        if (!diagnosisCell) return;
+        const textNodes = Array.from(diagnosisCell.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "t"));
+        if (!textNodes.length) return;
+        textNodes[0].textContent = "Complete Diagnosis";
+        textNodes.slice(1).forEach((node) => { node.textContent = ""; });
+      }
+
+      async function studentPrcBuildTemplateDocx(records) {
+        const response = await fetch(STUDENT_PRC_TEMPLATE_URL, { cache: "no-store" });
+        if (!response.ok) throw new Error("The PRC Word template could not be loaded.");
+        const entries = await studentPrcReadTemplateZip(await response.arrayBuffer());
+        const documentEntry = entries.find((entry) => entry.name === "word/document.xml");
+        if (!documentEntry) throw new Error("The PRC Word template is missing its document layout.");
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(new TextDecoder().decode(documentEntry.data), "application/xml");
+        if (xml.querySelector("parsererror")) throw new Error("The PRC Word template could not be read.");
+        studentPrcAddDeliveryAssistedSheet(xml);
+        studentPrcSetTemplateLegalTableMargins(xml);
+        const studentName = studentPrcExportStudent.student_name || studentPrcExportStudent.name || "";
+        const school = studentPrcExportStudent.school_name || studentPrcExportStudent.school || "";
+        Array.from(xml.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "p")).forEach((paragraph) => {
+          if (!studentPrcWordText(paragraph).includes("Name of Applicant:")) return;
+          const textNodes = Array.from(paragraph.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "t"));
+          const applicantNode = textNodes.find((node) => /_{10,}/.test(node.textContent || ""));
+          const schoolNode = textNodes.find((node) => (node.textContent || "").includes("BOHOL ISLAND STATE UNIVERSITY CALAPE"));
+          if (studentName && applicantNode) {
+            const originalLength = (applicantNode.textContent || "").length;
+            applicantNode.textContent = `${studentName}${"_".repeat(Math.max(3, originalLength - studentName.length))}`;
+          }
+          if (school && schoolNode) schoolNode.textContent = school;
+        });
+        const recordsByProcedure = { "delivery-handled": [], "delivery-assisted": [], suturing: [], "iv-insertion": [], "internal-exam": [] };
+        records.forEach((record) => {
+          const key = normalizeProcedureKey(record.procedure_key || record.procedure_name);
+          if (recordsByProcedure[key]) recordsByProcedure[key].push(record);
+        });
+        const tables = Array.from(xml.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "tbl"));
+        studentPrcFillTemplateTable(tables[0], recordsByProcedure["delivery-handled"].slice(0, 10));
+        studentPrcFillTemplateTable(tables[1], recordsByProcedure["delivery-handled"].slice(10, 20));
+        studentPrcFillTemplateTable(tables[2], recordsByProcedure["delivery-assisted"].slice(0, 10));
+        studentPrcFillTemplateTable(tables[3], recordsByProcedure["delivery-assisted"].slice(10, 20));
+        studentPrcFillTemplateTable(tables[4], recordsByProcedure.suturing.slice(0, 5));
+        studentPrcFillTemplateTable(tables[5], recordsByProcedure["iv-insertion"].slice(0, 5));
+        studentPrcSetInternalDiagnosisHeader(tables[6]);
+        studentPrcSetInternalDiagnosisHeader(tables[7]);
+        studentPrcFillTemplateTable(tables[6], recordsByProcedure["internal-exam"].slice(0, 10));
+        studentPrcFillTemplateTable(tables[7], recordsByProcedure["internal-exam"].slice(10, 20));
+        documentEntry.data = new TextEncoder().encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>${new XMLSerializer().serializeToString(xml.documentElement)}`);
+        return new Blob([studentPrcCreateDocxZip(entries)], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+      }
+
+      function studentPrcClosePreview() {
+        const overlay = document.getElementById("prcPreviewOverlay");
+        overlay?.classList.remove("is-open");
+        overlay?.setAttribute("aria-hidden", "true");
+      }
+
+
+      async function studentPrcExportInstructor(options = {}) {
+        const exportStudent = options?.student_id
+          ? options
+          : options?.student || selectedSummaryStudent;
+        const exportButton =
+          options?.button ||
+          (typeof options?.currentTarget?.setAttribute === "function" ? options.currentTarget : null) ||
+          document.getElementById("summaryExportDocxBtn");
+        if (!exportStudent?.student_id) {
+          await showMessageDialog("Search for and select a registered student before exporting the PRC forms.", "Select a Student");
+          return;
+        }
+        studentPrcExportStudent = exportStudent;
+        exportButton?.setAttribute("disabled", "disabled");
+        try {
+          const sourceRecords = Array.isArray(options?.records)
+            ? options.records
+            : await ApiClient.getJoinedCases(exportStudent.student_id, "", "");
+          const records = sourceRecords.filter((record) =>
+            String(record.student_id || "") === String(exportStudent.student_id || ""),
+          );
+          const logoSource = await studentPrcGetLogoDataUrl();
+          const forms = studentPrcBuildExportForms(records, logoSource);
+          studentPrcPreviewRecords = records;
+          const pages = document.getElementById("prcPreviewPages");
+          if (pages) pages.innerHTML = forms;
+          const overlay = document.getElementById("prcPreviewOverlay");
+          overlay?.classList.add("is-open");
+          overlay?.setAttribute("aria-hidden", "false");
+        } catch (error) {
+          console.error("Unable to prepare the PRC form preview.", error);
+          window.alert("Unable to prepare the PRC form preview. Please try again.");
+        } finally {
+          exportButton?.removeAttribute("disabled");
+        }
+      }
+
+      document.getElementById("prcPreviewCloseBtn")?.addEventListener("click", studentPrcClosePreview);
+      document.getElementById("prcPreviewCancelBtn")?.addEventListener("click", studentPrcClosePreview);
+      document.getElementById("prcPreviewOverlay")?.addEventListener("click", (event) => {
+        if (event.target === event.currentTarget) studentPrcClosePreview();
+      });
+      document.getElementById("prcPreviewDownloadBtn")?.addEventListener("click", async () => {
+        if (!studentPrcPreviewRecords.length && !studentPrcExportStudent?.student_id) return;
+        const button = document.getElementById("prcPreviewDownloadBtn");
+        button?.setAttribute("disabled", "disabled");
+        try {
+          const blob = await studentPrcBuildTemplateDocx(studentPrcPreviewRecords);
+          const link = document.createElement("a");
+          const fileUrl = URL.createObjectURL(blob);
+          link.href = fileUrl;
+          link.download = "PRC-clinical-forms-" + new Date().toISOString().slice(0, 10) + ".docx";
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(() => URL.revokeObjectURL(fileUrl), 1000);
+        } catch (error) {
+          console.error("Unable to create the PRC DOCX file.", error);
+          window.alert("Unable to create the PRC DOCX file. Please try again.");
+        } finally {
+          button?.removeAttribute("disabled");
+        }
+      });
+
+      window.openInstructorPrcExport = (student, button, records) =>
+        studentPrcExportInstructor({ student, button, records });
+      const instructorProcedureTargets = {
+        "delivery-handled": 20,
+        "delivery-assisted": 20,
+        suturing: 5,
+        "iv-insertion": 5,
+        "internal-exam": 20,
+      };
+
+      const instructorProcedureProgressLabels = {
+        "delivery-handled": "Delivery Handled",
+        "delivery-assisted": "Delivery Assisted",
+        suturing: "Perineal Suturing",
+        "iv-insertion": "IV Insertion",
+        "internal-exam": "Internal Examination",
+      };
+
+      function getInstructorProcedureRecordReviewStatus(record) {
+        const status = String(
+          record?.status || record?.record_status || "",
+        )
+          .trim()
+          .toLowerCase()
+          .replace(/[\s-]+/g, "_");
+        if (status === "verified") return "verified";
+        if (status === "invalid") return "invalid";
+        if (
+          !status &&
+          (record?.checked_by || record?.checkedBy || record?.checked_at)
+        ) {
+          return "verified";
+        }
+        return status;
+      }
+
+      function createInstructorProcedureProgressMetric({
+        name,
+        count,
+        maximum,
+        kind,
+        procedureLabel,
+      }) {
+        const safeMaximum = Math.max(0, Number(maximum) || 0);
+        const safeCount = Math.max(0, Number(count) || 0);
+        const percent = safeMaximum
+          ? Math.min(100, Math.round((safeCount / safeMaximum) * 100))
+          : 0;
+        const progress = document.createElement("div");
+        progress.className = `summary-procedure-progress progress-${kind}${kind === "required" && safeMaximum && safeCount >= safeMaximum ? " is-complete" : ""}`;
+        progress.setAttribute("role", "progressbar");
+        progress.setAttribute(
+          "aria-label",
+          `${procedureLabel} ${name.toLowerCase()} records`,
+        );
+        progress.setAttribute("aria-valuemin", "0");
+        progress.setAttribute("aria-valuemax", String(safeMaximum || 1));
+        progress.setAttribute(
+          "aria-valuenow",
+          String(Math.min(safeCount, safeMaximum || 1)),
+        );
+        progress.title = `${name}: ${safeCount} of ${safeMaximum} (${percent}%)`;
+        progress.innerHTML = `<span class="summary-procedure-progress-name">${name}</span><span class="summary-procedure-progress-label">${safeCount} / ${safeMaximum}</span><span class="summary-procedure-progress-track"><i style="width:${percent}%"></i></span>`;
+        return progress;
+      }
+
+      function createInstructorProcedureProgressGroup(
+        records,
+        target,
+        procedureLabel,
+      ) {
+        const safeRecords = Array.isArray(records) ? records : [];
+        const verifiedCount = safeRecords.filter(
+          (record) =>
+            getInstructorProcedureRecordReviewStatus(record) === "verified",
+        ).length;
+        const invalidCount = safeRecords.filter(
+          (record) =>
+            getInstructorProcedureRecordReviewStatus(record) === "invalid",
+        ).length;
+        const group = document.createElement("div");
+        group.className = "procedure-progress-group";
+        group.setAttribute("aria-label", `${procedureLabel} record progress`);
+        group.append(
+          createInstructorProcedureProgressMetric({
+            name: "Required",
+            count: safeRecords.length,
+            maximum: target,
+            kind: "required",
+            procedureLabel,
+          }),
+          createInstructorProcedureProgressMetric({
+            name: "Verified",
+            count: verifiedCount,
+            maximum: safeRecords.length,
+            kind: "verified",
+            procedureLabel,
+          }),
+          createInstructorProcedureProgressMetric({
+            name: "Invalid",
+            count: invalidCount,
+            maximum: safeRecords.length,
+            kind: "invalid",
+            procedureLabel,
+          }),
+        );
+        return group;
+      }
+
+      function createInstructorProcedureProgressHeading(records, procedureKey) {
+        const safeRecords = Array.isArray(records) ? records : [];
+        const procedureLabel =
+          instructorProcedureProgressLabels[procedureKey] || "Clinical Records";
+        const heading = document.createElement("div");
+        heading.className = "summary-procedure-heading";
+        const title = document.createElement("h3");
+        title.textContent = `${procedureLabel} (${safeRecords.length})`;
+        heading.append(
+          title,
+          createInstructorProcedureProgressGroup(
+            safeRecords,
+            instructorProcedureTargets[procedureKey] || 0,
+            procedureLabel,
+          ),
+        );
+        return heading;
       }
 
       function getCasesForSchoolYear(selectedYear) {
@@ -4693,15 +5528,80 @@
             else if (yearlyNav.level === "report") backToYearlyStudents();
           });
       }
+      yearlyBreadcrumb?.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-crumb]");
+        if (!button) return;
+        const crumb = button.getAttribute("data-crumb");
+        if (crumb === "years") backToYearlyYears();
+        if (crumb === "blocks") backToYearlyBlocks();
+        if (crumb === "students") backToYearlyStudents();
+      });
+      yearlyYearsTbody?.addEventListener("click", (event) => {
+        const row = event.target.closest("tr[data-year-open]");
+        if (!row) return;
+        openYearlyReportYear(row.getAttribute("data-year-open") || "");
+      });
+      yearlyYearsTbody?.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        const row = event.target.closest("tr[data-year-open]");
+        if (!row) return;
+        event.preventDefault();
+        openYearlyReportYear(row.getAttribute("data-year-open") || "");
+      });
+      yearlyBlocksTbody?.addEventListener("click", (event) => {
+        const row = event.target.closest("tr[data-block-open]");
+        if (!row) return;
+        openYearlyBlock(
+          row.getAttribute("data-block-open") || "",
+          row.getAttribute("data-block-label") || "",
+        );
+      });
+      yearlyBlocksTbody?.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        const row = event.target.closest("tr[data-block-open]");
+        if (!row) return;
+        event.preventDefault();
+        openYearlyBlock(
+          row.getAttribute("data-block-open") || "",
+          row.getAttribute("data-block-label") || "",
+        );
+      });
+      yearlyStudentListTbody?.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-yearly-student-open]");
+        if (!button) return;
+        openYearlyStudentReport(
+          button.getAttribute("data-yearly-student-open") || "",
+          button.getAttribute("data-yearly-student-name") || "",
+        );
+      });
+      yearlyProgressSearchInput?.addEventListener("input", async () => {
+        if (!yearlyProgressSearchStudents.length) {
+          await loadYearlyProgressSearchStudents();
+        } else {
+          renderYearlyProgressSearchResults();
+        }
+      });
+      yearlyProgressSearchInput?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          const firstMatch = yearlyProgressSearchResults?.querySelector("button[data-yearly-progress-student]");
+          if (!firstMatch) return;
+          event.preventDefault();
+          openYearlyProgressSearchStudent(firstMatch.dataset.yearlyProgressStudent || "");
+        } else if (event.key === "Escape") {
+          yearlyProgressSearchResults?.replaceChildren();
+          if (yearlyProgressSearchResults) yearlyProgressSearchResults.style.display = "none";
+        }
+      });
+      yearlyProgressSearchResults?.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-yearly-progress-student]");
+        if (!button) return;
+        openYearlyProgressSearchStudent(button.dataset.yearlyProgressStudent || "");
+      });
       if (exportYearlyPrcBtn) {
         exportYearlyPrcBtn.addEventListener("click", exportYearlyPrcForm);
       }
       adminPrcPreviewCloseBtn?.addEventListener("click", closeAdminPrcPreview);
       adminPrcPreviewCancelBtn?.addEventListener("click", closeAdminPrcPreview);
-      adminPrcPreviewDownloadBtn?.addEventListener(
-        "click",
-        downloadAdminPrcPreview,
-      );
       adminPrcPreviewOverlay?.addEventListener("click", (event) => {
         if (event.target === event.currentTarget) closeAdminPrcPreview();
       });

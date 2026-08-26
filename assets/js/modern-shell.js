@@ -237,10 +237,13 @@
     }
     if (!matches.length) body.innerHTML = '<tr><td colspan="5">No matching students found.</td></tr>';
   }
-  async function openStudent(student, count) {
+  async function openStudent(student, count, options = {}) {
     root.classList.add('focused');
-    const rows = (await window.ApiClient?.getJoinedCases(student.student_id, '', '')) || [];
+    const rows = Array.isArray(options.records)
+      ? options.records
+      : (await window.ApiClient?.getJoinedCases(student.student_id, '', '')) || [];
     const records = rows.filter((row) => String(row.student_id) === String(student.student_id));
+    count = records.length;
     const procedureFilters = [
       ['all', 'All Procedures'],
       ['delivery-handled', 'Delivery Handled'],
@@ -269,7 +272,7 @@
     });
     byId('ipExport').addEventListener('click', async (event) => {
       if (typeof window.openInstructorPrcExport === 'function') {
-        await window.openInstructorPrcExport(student, event.currentTarget);
+        await window.openInstructorPrcExport(student, event.currentTarget, options.records);
       }
     });
     const output = byId('ipRecords'); output.innerHTML = '';
@@ -305,6 +308,17 @@
       });
     });
   }
+  window.openInstructorProgressStudent = async (student, options = {}) => {
+    const mount = options.mount;
+    if (mount && root.parentNode !== mount) mount.append(root);
+    root.classList.add('yearly-progress-detail');
+    await openStudent(student, 0, options);
+  };
+  window.closeInstructorProgressStudent = () => {
+    if (!root.classList.contains('yearly-progress-detail')) return;
+    root.classList.remove('yearly-progress-detail', 'focused');
+    if (root.parentNode !== host) host.append(root);
+  };
   byId('ipSearch').addEventListener('input', renderStudents);
   byId('ipRefresh').addEventListener('click', loadStudents);
   byId('ipBack').addEventListener('click', () => {
