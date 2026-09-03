@@ -1,0 +1,24 @@
+{
+  "name": "midwife-clinical-portal",
+  "version": "2.0.0",
+  "private": true,
+  "description": "MIDWIFE Clinical Portal powered by Node.js and Supabase PostgreSQL",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:init": "node tools/init-database.js",
+    "db:check": "node tools/check-database.js",
+    "admin:reset-pin": "node tools/reset-admin-pin.js",
+    "check": "node --check server.js && node --check api/index.js && node --check api/bootstrap.js && node --check tools/init-database.js && node --check tools/check-database.js && node --check tools/check-admin.js && node --check tools/reset-admin-pin.js && node --check tools/check-instructor.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}

@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="portal-auth-pending">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
+    <style id="portal-auth-guard">html.portal-auth-pending .dashboard,html.portal-auth-pending .app-shell{visibility:hidden!important}</style>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       rel="stylesheet"
@@ -13,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260726-12" />
+    <link rel="stylesheet" href="assets/css/layout/app-shell.css?v=20260827-3" />
     <link rel="stylesheet" href="assets/css/pages/admin.css" />
     <link rel="stylesheet" href="assets/css/components/hero.css?v=20260821-16" />
     <link rel="stylesheet" href="assets/css/components/buttons.css" />
@@ -22,8 +23,36 @@
     <link rel="stylesheet" href="assets/css/components/modals.css" />
     <link rel="stylesheet" href="assets/css/pages/reports.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-20" />
-    <link rel="stylesheet" href="assets/css/pages/admin-palette.css?v=20260825-2" />
-    <link rel="stylesheet" href="assets/css/pages/instructor-annual-records-table.css?v=20260826-12" />
+    <link rel="stylesheet" href="assets/css/pages/admin-palette.css?v=20260901-student-buttons-1" />
+    <link rel="stylesheet" href="assets/css/pages/student-prc.css?v=20260827-1" />
+    <link rel="stylesheet" href="assets/css/pages/instructor-annual-records-table.css?v=20260831-9" />
+    <link rel="stylesheet" href="assets/css/components/prc-export-preview.css?v=20260831-1" />
+    <style id="admin-notifications-single-search-field">
+      html body.role-admin #notificationsCard .notifications-search {
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+
+      html body.role-admin #notificationsCard #notificationsSearchInput {
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        border: 0 !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+      }
+
+      html body.role-admin #notificationsCard #notificationsSearchInput::-webkit-search-cancel-button,
+      html body.role-admin #notificationsCard #notificationsSearchInput::-webkit-search-decoration {
+        display: none !important;
+      }
+
+      html body.role-admin #notificationsCard .notification-row-actions {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+      }
+    </style>
   </head>
   <body>
     <div class="wrap">
@@ -152,17 +181,6 @@
               <span class="sidebar-label">Annual Records</span>
               <span class="sidebar-count" id="sidebarCountCases">0</span>
             </button>
-            <button
-              class="sidebar-item"
-              data-target="casesCard"
-              title="Progress Overview"
-            >
-              <span class="sidebar-icon"
-                ><i class="fas fa-calendar-alt"></i
-              ></span>
-              <span class="sidebar-label">Progress Overview</span>
-              <span class="sidebar-count" id="sidebarCountYears">0</span>
-            </button>
             <div class="sidebar-group-label">Workflow</div>
             <button
               class="sidebar-item"
@@ -173,13 +191,13 @@
               <span class="sidebar-label">Edit Requests</span>
               <span class="sidebar-count" id="sidebarCountRequests">0</span>
             </button>
-            <button
-              class="sidebar-item"
-              data-target="notificationsCard"
-              title="Notifications"
-            >
-              <span class="sidebar-icon"><i class="fas fa-bell"></i></span>
-              <span class="sidebar-label">Activity Log</span>
+              <button
+                class="sidebar-item"
+                data-target="notificationsCard"
+                title="Notifications"
+              >
+                <span class="sidebar-icon"><i class="fas fa-bell"></i></span>
+                <span class="sidebar-label">Notifications</span>
               <span class="sidebar-count" id="sidebarCountNotifications"
                 >0</span
               >
@@ -191,8 +209,11 @@
             </button>
           </nav>
           <div class="sidebar-user-card">
-            <div class="sidebar-user-avatar"><i class="fas fa-user-shield"></i></div>
-            <div class="sidebar-user-copy"><strong>Administrator</strong><span>System access</span></div>
+            <div class="sidebar-user-avatar">
+              <img id="sidebarAdminPhoto" src="" alt="Administrator profile photo" style="display:none">
+              <i class="fas fa-user-shield" id="sidebarAdminPhotoFallback" aria-hidden="true"></i>
+            </div>
+            <div class="sidebar-user-copy"><strong id="sidebarAdminName">Administrator</strong><span id="sidebarAdminRole">System administrator</span></div>
           </div>
           <div class="sidebar-footer">
             <button class="btn" id="adminLogoutBtn">
@@ -303,23 +324,12 @@
                   <span class="action-copy"><strong>Review Clinical Records</strong><small>Inspect submitted procedure entries.</small></span>
                   <i class="fas fa-arrow-right action-arrow"></i>
                 </button>
-                <button
-                  class="dashboard-action-card"
-                  type="button"
-                  data-target="casesCard"
-                >
-                  <span class="action-icon"
-                    ><i class="fas fa-folder-open"></i
-                  ></span>
-                  <span class="action-copy"><strong>View Progress Overview</strong><small>Track progress by year and block.</small></span>
-                  <i class="fas fa-arrow-right action-arrow"></i>
-                </button>
               </div>
 
               <section class="dashboard-activity-card">
                 <div class="dashboard-activity-header">
-                  <div><h3>Recent Activity</h3><p>Latest administrative changes in this browser.</p></div>
-                  <button class="btn btn-secondary" type="button" data-target="systemToolsCard">View Audit Log</button>
+                  <div><h3>Activity Log</h3><p>Latest administrative changes across the portal.</p></div>
+                  <button class="btn btn-secondary" type="button" data-target="systemToolsCard">View Full Activity Log</button>
                 </div>
                 <div id="dashboardRecentActivity" class="dashboard-activity-list"></div>
               </section>
@@ -327,9 +337,12 @@
 
             <div class="card hidden" id="instructorsCard">
               <div class="workspace-header">
-                <div>
-                  <div class="workspace-title">Instructor Management</div>
-                  <div class="workspace-subtitle">Create, update, and manage instructor access to the clinical portal.</div>
+                <div class="instructor-title-heading">
+                  <span class="instructor-title-icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
+                  <div class="instructor-title-copy">
+                    <div class="workspace-title">Instructor Management</div>
+                    <div class="workspace-subtitle">Create, update, and manage instructor access to the clinical portal.</div>
+                  </div>
                 </div>
               </div>
 
@@ -364,17 +377,15 @@
             </div>
 
             <div class="card hidden" id="studentsCard">
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  margin-bottom: 6px;
-                "
-              >
-                <h3 style="margin: 0">Student Management</h3>
+              <div class="workspace-header">
+                <div class="instructor-title-heading">
+                  <span class="instructor-title-icon" aria-hidden="true"><i class="fas fa-users"></i></span>
+                  <div class="instructor-title-copy">
+                    <div class="workspace-title">Student Management</div>
+                    <div class="workspace-subtitle">Manage blocks, student assignments, and restore archived students.</div>
+                  </div>
+                </div>
               </div>
-              <p>Manage blocks, student assignments, and restore archived students.</p>
               <div class="students-breadcrumb" id="studentsBreadcrumb"></div>
               <div class="message" id="studentsNavMessage"></div>
 
@@ -467,7 +478,7 @@
                     type="button"
                   >
                     <i class="fas fa-box-archive"></i>
-                    <span>Archived Students</span>
+                    <span id="archivedStudentsBtnLabel">Archived Students</span>
                     <span id="archivedStudentsCount">0</span>
                   </button>
                 </div>
@@ -503,7 +514,7 @@
                   No students in this block yet.
                 </div>
                 <div id="archivedStudentsPanel" style="display: none; margin-top: 18px">
-                  <div class="row" style="justify-content: space-between; align-items: center; margin-bottom: 10px"><h4 style="margin: 0">Archived Students</h4><button class="btn btn-secondary" id="backToActiveStudentsBtn" type="button"><i class="fas fa-arrow-left"></i> Back to Students</button></div>
+                  <h4 style="margin: 0 0 10px">Archived Students</h4>
                   <div class="table-wrap">
                     <table>
                       <thead>
@@ -526,18 +537,16 @@
             </div>
 
             <div class="card hidden" id="casesCard">
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  margin-bottom: 6px;
-                "
-              >
-                <h3 style="margin: 0">Progress Overview</h3>
+              <div class="workspace-header">
+                <div class="instructor-title-heading">
+                  <span class="instructor-title-icon" aria-hidden="true"><i class="fas fa-calendar-alt"></i></span>
+                  <div class="instructor-title-copy">
+                    <div class="workspace-title">Progress Overview</div>
+                    <div class="workspace-subtitle" id="casesNavigationInfo">Search for a student to view their clinical progress.</div>
+                  </div>
+                </div>
                 <button class="btn btn-primary" id="adminProgressExportBtn" type="button" style="min-height:32px; padding:0 10px; font-size:11px; box-shadow:none"><i class="fas fa-file-export"></i> Export</button>
               </div>
-              <p id="casesNavigationInfo">Search for a student to view their clinical progress.</p>
               <div class="row" style="margin-bottom: 10px">
                 <div class="field" id="casesSearchField" style="display: block; flex: 1; min-width: 220px; margin: 0">
                   <input
@@ -671,17 +680,15 @@
             </div>
 
             <div class="card hidden" id="editRequestsCard">
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  margin-bottom: 6px;
-                "
-              >
-                <h3 style="margin: 0">Edit Requests</h3>
+              <div class="workspace-header">
+                <div class="instructor-title-heading">
+                  <span class="instructor-title-icon" aria-hidden="true"><i class="fas fa-pencil-alt"></i></span>
+                  <div class="instructor-title-copy">
+                    <div class="workspace-title">Edit Requests</div>
+                    <div class="workspace-subtitle">Review student correction requests and track their approval status.</div>
+                  </div>
+                </div>
               </div>
-              <p>Review student correction requests and track their approval status.</p>
               <div class="row" style="margin-bottom: 10px">
                 <div class="field" style="flex: 1; min-width: 220px; margin: 0">
                   <input
@@ -698,6 +705,9 @@
                     <option value="rejected">Rejected</option>
                   </select>
                 </div>
+                <button class="btn btn-secondary" id="toggleArchivedEditRequestsBtn" type="button">
+                  <i class="fas fa-box-archive" aria-hidden="true"></i> View Archived
+                </button>
                 <button class="btn btn-secondary" id="refreshEditRequestsBtn">
                   Refresh
                 </button>
@@ -724,51 +734,61 @@
             </div>
 
             <div class="card hidden" id="notificationsCard">
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  margin-bottom: 6px;
-                "
-              >
-                <h3 style="margin: 0">Activity Log</h3>
+              <div class="notifications-page-header">
+                <div class="notifications-title-group">
+                  <span class="notifications-title-icon" aria-hidden="true"><i class="fas fa-bell"></i></span>
+                  <div>
+                    <h3>Notifications</h3>
+                    <p>Keep track of student request updates and archive entries when they are no longer needed.</p>
+                  </div>
+                </div>
+                <span class="notifications-view-state" id="notificationsViewState" aria-live="polite">
+                  <i class="fas fa-circle" aria-hidden="true"></i> Active
+                </span>
               </div>
-              <p>Review database-backed system activity and archive entries that are no longer needed.</p>
-              <div class="row" style="margin-bottom: 10px">
-                <div class="field" style="flex: 1; min-width: 220px; margin: 0">
+              <div class="notifications-toolbar">
+                <label class="notifications-search" for="notificationsSearchInput">
+                  <i class="fas fa-search" aria-hidden="true"></i>
                   <input
                     id="notificationsSearchInput"
-                    type="text"
-                    placeholder="Search by student ID, event type, or message..."
+                    type="search"
+                    placeholder="Search student ID, event, procedure, or message"
+                    autocomplete="off"
                   />
+                  <button class="notifications-search-clear" id="clearNotificationsSearchBtn" type="button" aria-label="Clear notification search" title="Clear search" hidden>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                  </button>
+                </label>
+                <div class="notifications-actions">
+                  <button class="btn btn-secondary" id="refreshNotificationsBtn" type="button">
+                    <i class="fas fa-sync-alt" aria-hidden="true"></i><span>Refresh</span>
+                  </button>
+                  <button class="btn btn-secondary" id="viewArchivedNotificationsBtn" type="button">
+                    <i class="fas fa-box-archive" aria-hidden="true"></i><span>View Archive</span>
+                  </button>
+                  <button class="btn btn-secondary" id="deleteAllNotificationsBtn" type="button">
+                    <i class="fas fa-box-archive" aria-hidden="true"></i><span>Archive All</span>
+                  </button>
                 </div>
-                <button class="btn btn-secondary" id="refreshNotificationsBtn">
-                  Refresh
-                </button>
-                <button class="btn btn-secondary" id="viewArchivedNotificationsBtn">View Archive</button>
-                <button class="btn btn-secondary" id="deleteAllNotificationsBtn">
-                  Archive All
-                </button>
               </div>
+              <div class="notifications-list-meta" id="notificationsResultsSummary" aria-live="polite"></div>
               <div class="table-wrap">
-                <table>
+                <table class="notifications-table">
                   <thead>
                     <tr>
-                      <th style="width: 55px">No.</th>
-                      <th>Event Type</th>
-                      <th>Student ID</th>
-                      <th>Procedure Type</th>
-                      <th>Case No.</th>
+                      <th style="width: 230px">Notification</th>
+                      <th style="width: 130px">Student ID</th>
+                      <th style="width: 185px">Procedure</th>
+                      <th style="width: 110px">Case No.</th>
                       <th>Message</th>
-                      <th style="width: 130px">Actions</th>
+                      <th style="width: 190px">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="notificationsTbody"></tbody>
                 </table>
               </div>
               <div class="empty" id="notificationsEmpty">
-                No notifications found.
+                No active notifications.
               </div>
             </div>
 
@@ -791,15 +811,7 @@
               <div class="message" id="yearlyNavMessage"></div>
 
               <div class="yearly-progress-search-shell" id="yearlyProgressSearchShell" style="display: none">
-                <label class="yearly-progress-search" for="yearlyProgressSearchInput">
-                  <i class="fas fa-search" aria-hidden="true"></i>
-                  <input id="yearlyProgressSearchInput" type="search" placeholder="Search student ID or name" autocomplete="off" aria-controls="yearlyProgressSearchResults" />
-                </label>
-                <div class="yearly-progress-search-results" id="yearlyProgressSearchResults" role="listbox"></div>
-              </div>
-
-              <div class="students-panel active" id="yearlyYearPanel">
-                <div class="row annual-records-year-toolbar">
+                <div class="yearly-progress-year-actions" id="yearlyProgressYearActions">
                   <button
                     class="btn btn-primary"
                     id="openAddSchoolYearBtn"
@@ -808,6 +820,26 @@
                     Add Academic Year
                   </button>
                 </div>
+                <label class="yearly-progress-search" for="yearlyProgressSearchInput">
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                  <input id="yearlyProgressSearchInput" type="search" placeholder="Search student ID or name" autocomplete="off" aria-controls="yearlyProgressSearchResults" />
+                </label>
+                <div class="yearly-progress-block-actions" id="yearlyProgressBlockActions">
+                  <button
+                    class="btn btn-primary yearly-progress-add-block"
+                    id="openAddYearlyBlockBtn"
+                    type="button"
+                  >
+                    <i class="fas fa-plus" aria-hidden="true"></i> Add Block
+                  </button>
+                  <button class="btn btn-secondary" id="refreshYearlyBlocksBtn" type="button">
+                    <i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh
+                  </button>
+                </div>
+                <div class="yearly-progress-search-results" id="yearlyProgressSearchResults" role="listbox"></div>
+              </div>
+
+              <div class="students-panel active" id="yearlyYearPanel">
                 <div class="table-wrap">
                   <table style="min-width: 560px">
                     <thead>
@@ -817,7 +849,7 @@
                         <th style="width: 100px">Blocks</th>
                         <th style="width: 110px">Students</th>
                         <th style="width: 130px">Records</th>
-                        <th style="width: 120px">Actions</th>
+                        <th style="width: 230px">Actions</th>
                       </tr>
                     </thead>
                     <tbody id="yearlyYearsTbody"></tbody>
@@ -907,39 +939,44 @@
 
             <div class="card hidden" id="systemToolsCard">
               <div class="workspace-header">
-                <div>
-                  <div class="workspace-title">System Tools</div>
-                  <div class="workspace-subtitle">Manage administrator security, database backups, and activity history.</div>
+                <div class="instructor-title-heading">
+                  <span class="instructor-title-icon" aria-hidden="true"><i class="fas fa-cog"></i></span>
+                  <div class="instructor-title-copy">
+                    <div class="workspace-title">System Tools</div>
+                    <div class="workspace-subtitle">Manage administrator security, database backups, and activity history.</div>
+                  </div>
                 </div>
               </div>
 
               <div class="system-tools-grid">
                 <section class="system-tool-panel">
-                  <h3><i class="fas fa-shield-halved"></i> Admin Security</h3>
+                  <h3><i class="fas fa-shield-halved"></i> Admin Security <button class="btn btn-secondary admin-settings-edit-button" id="openAdminPinEditBtn" type="button"><i class="fas fa-pen-to-square" aria-hidden="true"></i> Edit</button></h3>
                   <p>Replace the administrator PIN used on the login page.</p>
-                  <div class="field"><label for="currentAdminPin">Current PIN</label><input id="currentAdminPin" type="password" inputmode="numeric" /></div>
-                  <div class="field"><label for="newAdminPin">New PIN</label><input id="newAdminPin" type="password" inputmode="numeric" minlength="6" /></div>
-                  <div class="field"><label for="confirmAdminPin">Confirm New PIN</label><input id="confirmAdminPin" type="password" inputmode="numeric" minlength="6" /></div>
-                  <button class="btn btn-primary" id="saveAdminPinBtn" type="button"><i class="fas fa-key"></i> Update PIN</button>
-                  <div class="message" id="adminPinSettingsMessage"></div>
+                  <div class="admin-pin-edit-fields">
+                    <div class="field"><label for="currentAdminPin">Current PIN</label><input id="currentAdminPin" type="password" inputmode="numeric" /></div>
+                    <div class="field"><label for="newAdminPin">New PIN</label><input id="newAdminPin" type="password" inputmode="numeric" minlength="6" /></div>
+                    <div class="field"><label for="confirmAdminPin">Confirm New PIN</label><input id="confirmAdminPin" type="password" inputmode="numeric" minlength="6" /></div>
+                    <button class="btn btn-primary" id="saveAdminPinBtn" type="button"><i class="fas fa-key"></i> Update PIN</button>
+                    <div class="message" id="adminPinSettingsMessage"></div>
+                  </div>
                 </section>
 
                 <section class="system-tool-panel">
                   <h3><i class="fas fa-database"></i> Backup &amp; Restore</h3>
-                  <p>Download all local portal data or restore a previously exported backup.</p>
+                  <p>Download a database backup or restore a previously exported portal snapshot.</p>
                   <div class="row">
                     <button class="btn btn-primary" id="downloadBackupBtn" type="button"><i class="fas fa-download"></i> Download Backup</button>
                     <button class="btn btn-secondary" id="chooseRestoreBtn" type="button"><i class="fas fa-upload"></i> Restore Backup</button>
                     <input id="restoreBackupInput" type="file" accept="application/json,.json" hidden />
                   </div>
-                  <small>Restoring replaces the portal data stored in this browser.</small>
+                  <small>Restoring replaces database records. The current administrator account and active session are preserved.</small>
                 </section>
               </div>
 
               <section class="system-tool-panel audit-panel">
                 <div class="row" style="justify-content: space-between; align-items: center">
-                  <div><h3><i class="fas fa-clock-rotate-left"></i> Audit Log</h3><p>Recent administrative changes made in this browser.</p></div>
-                  <button class="btn btn-secondary" id="clearAuditLogBtn" type="button">Clear Log</button>
+                  <div><h3><i class="fas fa-clock-rotate-left"></i> Activity Log</h3><p>Database-backed administrative activity across the portal.</p></div>
+                  <button class="btn btn-secondary" id="refreshAuditLogBtn" type="button">Refresh Log</button>
                 </div>
                 <div class="table-wrap">
                   <table>
@@ -1122,14 +1159,19 @@
             <strong id="prcPreviewTitle">PRC Form Preview</strong>
             <span>Review the landscape form before downloading.</span>
           </div>
-          <button
-            type="button"
-            class="prc-preview-close"
-            id="prcPreviewCloseBtn"
-            aria-label="Close preview"
-          >
-            <i class="fas fa-times" aria-hidden="true"></i>
-          </button>
+          <div class="prc-preview-toolbar-controls">
+            <label class="prc-preview-zoom-control" for="prcPreviewZoomRange">
+              <span>Zoom</span>
+              <button type="button" class="prc-preview-zoom-btn" id="prcPreviewZoomOutBtn" aria-label="Zoom out">−</button>
+              <input id="prcPreviewZoomRange" type="range" min="50" max="200" step="10" value="100" aria-label="Preview zoom percentage">
+              <button type="button" class="prc-preview-zoom-btn" id="prcPreviewZoomInBtn" aria-label="Zoom in">+</button>
+              <span class="prc-preview-zoom-value" id="prcPreviewZoomValue">100%</span>
+              <button type="button" class="prc-preview-zoom-reset" id="prcPreviewZoomResetBtn">Reset</button>
+            </label>
+            <button type="button" class="prc-preview-close" id="prcPreviewCloseBtn" aria-label="Close preview">
+              <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
         <div class="prc-preview-pages" id="prcPreviewPages"></div>
         <div class="prc-preview-actions">
@@ -1144,13 +1186,87 @@
       </div>
     </div>
 
-    <script src="assets/js/api-client.js?v=20260822-1"></script>
+    <script src="assets/js/api-client.js?v=20260902-10"></script>
+    <script>
+      (() => {
+        const redirectToLogin = () => {
+          sessionStorage.removeItem("thesis_admin_authenticated");
+          sessionStorage.removeItem("currentAdmin");
+          sessionStorage.removeItem("thesis_admin_quick_access");
+          sessionStorage.removeItem("thesis_api_token");
+          window.location.replace("login.html");
+        };
+        window.__portalAdminSessionReady = ApiClient.getSession()
+          .then((session) => {
+            if (!session?.ok || session.role !== "admin") {
+              redirectToLogin();
+              return null;
+            }
+            document.documentElement.classList.remove("portal-auth-pending");
+            window.__portalAdminPinChangeRequired = Boolean(session.must_change_pin);
+            return session;
+          })
+          .catch(() => {
+            redirectToLogin();
+            return null;
+          });
+        window.addEventListener("portal-session-expired", redirectToLogin);
+      })();
+    </script>
     <script>
       const AUTH_KEY = "thesis_admin_authenticated";
       const STUDENTS_KEY = "thesis_students_v1";
       const CASES_KEY = "thesis_cases_v1";
       const REQUESTS_KEY = "editRequests";
       const NOTIFICATIONS_KEY = "thesis_notification_history_v1";
+      const currentAdmin = (() => {
+        try {
+          return JSON.parse(sessionStorage.getItem("currentAdmin") || "null");
+        } catch (_) {
+          return null;
+        }
+      })();
+
+      function isAdminPinChangeRequired() {
+        return Boolean(
+          window.__portalAdminPinChangeRequired || currentAdmin?.must_change_pin,
+        );
+      }
+
+      function clearAdminPinChangeRequirement() {
+        window.__portalAdminPinChangeRequired = false;
+        if (currentAdmin && typeof currentAdmin === "object") {
+          currentAdmin.must_change_pin = false;
+          sessionStorage.setItem("currentAdmin", JSON.stringify(currentAdmin));
+        }
+      }
+
+      function populateAdminSidebarProfile() {
+        const name = String(
+          currentAdmin?.display_name ||
+          currentAdmin?.name ||
+          currentAdmin?.username ||
+          "Administrator",
+        ).trim() || "Administrator";
+        const role = String(
+          currentAdmin?.role ||
+          currentAdmin?.role_title ||
+          "System administrator",
+        ).trim() || "System administrator";
+        const photo = String(currentAdmin?.profile_photo || "").trim();
+        const nameLabel = document.getElementById("sidebarAdminName");
+        const roleLabel = document.getElementById("sidebarAdminRole");
+        const image = document.getElementById("sidebarAdminPhoto");
+        const fallback = document.getElementById("sidebarAdminPhotoFallback");
+        if (nameLabel) nameLabel.textContent = name;
+        if (roleLabel) roleLabel.textContent = role;
+        if (image) {
+          image.src = photo;
+          image.style.display = photo ? "block" : "none";
+          image.alt = `${name} profile photo`;
+        }
+        if (fallback) fallback.style.display = photo ? "none" : "inline-block";
+      }
 
       const adminLogoutBtn = document.getElementById("adminLogoutBtn");
       const addInstructorBtn = document.getElementById("addInstructorBtn");
@@ -1192,8 +1308,9 @@
         "instructorsAddSubmitIcon",
       );
       let instructorsAddModalConfig = null;
+      let instructorsAddSubmitting = false;
 
-      sessionStorage.setItem("thesis_admin_quick_access", "1");
+      populateAdminSidebarProfile();
 
       const studentSearchInput = document.getElementById("studentSearchInput");
       const studentsTbody = document.getElementById("studentsTbody");
@@ -1203,7 +1320,9 @@
       const archivedStudentsTbody = document.getElementById("archivedStudentsTbody");
       const archivedStudentsEmpty = document.getElementById("archivedStudentsEmpty");
       const archivedStudentsCount = document.getElementById("archivedStudentsCount");
+      const archivedStudentsBtnLabel = document.getElementById("archivedStudentsBtnLabel");
       let adminEditRequests = [];
+      let viewingArchivedEditRequests = false;
       let adminNotifications = [];
       let viewingArchivedNotifications = false;
       const studentsBreadcrumb = document.getElementById("studentsBreadcrumb");
@@ -1226,6 +1345,12 @@
       );
       const openAddYearlyBlockBtn = document.getElementById(
         "openAddYearlyBlockBtn",
+      );
+      const refreshYearlyBlocksBtn = document.getElementById(
+        "refreshYearlyBlocksBtn",
+      );
+      const yearlyProgressBlockActions = document.getElementById(
+        "yearlyProgressBlockActions",
       );
       const openAddBlockBtn = document.getElementById("openAddBlockBtn");
       const openAddStudentBtn = document.getElementById("openAddStudentBtn");
@@ -1275,6 +1400,18 @@
       );
       const notificationsTbody = document.getElementById("notificationsTbody");
       const notificationsEmpty = document.getElementById("notificationsEmpty");
+      const notificationsResultsSummary = document.getElementById(
+        "notificationsResultsSummary",
+      );
+      const notificationsViewState = document.getElementById(
+        "notificationsViewState",
+      );
+      const clearNotificationsSearchBtn = document.getElementById(
+        "clearNotificationsSearchBtn",
+      );
+      const viewArchivedNotificationsBtn = document.getElementById(
+        "viewArchivedNotificationsBtn",
+      );
 
       const editRequestsSearchInput = document.getElementById(
         "editRequestsSearchInput",
@@ -1284,6 +1421,9 @@
       );
       const refreshEditRequestsBtn = document.getElementById(
         "refreshEditRequestsBtn",
+      );
+      const toggleArchivedEditRequestsBtn = document.getElementById(
+        "toggleArchivedEditRequestsBtn",
       );
       const editRequestsTbody = document.getElementById("editRequestsTbody");
       const editRequestsEmpty = document.getElementById("editRequestsEmpty");
@@ -1395,30 +1535,85 @@
         localStorage.setItem(key, JSON.stringify(value));
       }
 
-      const AUDIT_LOG_KEY = "thesis_admin_audit_log";
+      let adminActivityEntries = [];
+      let adminActivityLoadError = "";
 
-      function addAuditEntry(action, details) {
-        const entries = readJson(AUDIT_LOG_KEY, []);
-        entries.unshift({
-          timestamp: new Date().toISOString(),
-          action: String(action || "Administrative action"),
-          details: String(details || ""),
-        });
-        writeJson(AUDIT_LOG_KEY, entries.slice(0, 250));
+      function activityEntityLabel(value) {
+        return String(value || "system activity")
+          .replace(/[_-]+/g, " ")
+          .replace(/\b\w/g, (letter) => letter.toUpperCase());
+      }
+
+      function activityActionLabel(entry) {
+        const action = String(entry?.action_name || entry?.action || "Administrative action")
+          .replace(/[_-]+/g, " ")
+          .trim();
+        const entity = entry?.entity_type ? activityEntityLabel(entry.entity_type) : "";
+        const isGenericEntity = ["System", "Admin Tool"].includes(entity);
+        return entity && !isGenericEntity && !action.toLowerCase().includes(entity.toLowerCase())
+          ? `${action.replace(/^\w/, (letter) => letter.toUpperCase())} ${entity}`
+          : action.replace(/^\w/, (letter) => letter.toUpperCase());
+      }
+
+      function activityDetails(entry) {
+        let details = entry?.details;
+        if (typeof details === "string") {
+          try { details = JSON.parse(details); } catch (error) { /* Keep plain-text details. */ }
+        }
+        let message = "";
+        if (details && typeof details === "object") {
+          message = Object.entries(details)
+            .filter(([, value]) => value !== null && value !== undefined && value !== "")
+            .map(([key, value]) => `${activityEntityLabel(key)}: ${typeof value === "object" ? JSON.stringify(value) : value}`)
+            .join(" • ");
+        } else {
+          message = String(details || "");
+        }
+        const actor = entry?.actor_role
+          ? `By ${activityEntityLabel(entry.actor_role)}${entry.actor_uid ? ` (${entry.actor_uid})` : ""}`
+          : "";
+        return [message, actor].filter(Boolean).join(" • ") || "No additional details";
+      }
+
+      async function loadAdminActivityLog() {
+        try {
+          const result = await ApiClient.getActivityLog();
+          if (!result?.ok) throw new Error(result?.message || "Unable to load activity log.");
+          adminActivityEntries = Array.isArray(result.entries) ? result.entries : [];
+          adminActivityLoadError = "";
+        } catch (error) {
+          adminActivityEntries = [];
+          adminActivityLoadError = error.message || "Unable to load activity log.";
+          console.error(adminActivityLoadError);
+        }
         renderAuditLog();
         renderDashboardRecentActivity();
+      }
+
+      async function addAuditEntry(action, details) {
+        const result = await ApiClient.addActivityLog({
+          action,
+          entity: "admin_tool",
+          details: { message: String(details || "") },
+        });
+        if (!result?.ok) console.error(result?.message || "Unable to record activity.");
+        await loadAdminActivityLog();
       }
 
       function renderAuditLog() {
         const tbody = document.getElementById("auditLogTbody");
         const empty = document.getElementById("auditLogEmpty");
         if (!tbody) return;
-        const entries = readJson(AUDIT_LOG_KEY, []);
+        const entries = adminActivityEntries;
         tbody.innerHTML = "";
-        if (empty) empty.style.display = entries.length ? "none" : "block";
+        if (empty) {
+          empty.textContent = adminActivityLoadError || "No administrative activity recorded yet.";
+          empty.style.display = entries.length ? "none" : "block";
+        }
         entries.forEach((entry) => {
           const tr = document.createElement("tr");
-          tr.innerHTML = `<td>${new Date(entry.timestamp).toLocaleString()}</td><td><strong>${escapeHtml(entry.action)}</strong></td><td>${escapeHtml(entry.details)}</td>`;
+          const timestamp = entry.created_at || entry.timestamp || entry.date_time;
+          tr.innerHTML = `<td>${escapeHtml(formatAdminTimestamp(timestamp, "Not available"))}</td><td><strong>${escapeHtml(activityActionLabel(entry))}</strong></td><td>${escapeHtml(activityDetails(entry))}</td>`;
           tbody.appendChild(tr);
         });
       }
@@ -1426,32 +1621,27 @@
       function renderDashboardRecentActivity() {
         const container = document.getElementById("dashboardRecentActivity");
         if (!container) return;
-        const entries = readJson(AUDIT_LOG_KEY, []).slice(0, 5);
+        const entries = adminActivityEntries.slice(0, 5);
         if (!entries.length) {
-          container.innerHTML = '<div class="dashboard-activity-empty"><i class="fas fa-clock-rotate-left"></i> Administrative activity will appear here.</div>';
+          container.innerHTML = `<div class="dashboard-activity-empty"><i class="fas fa-clock-rotate-left"></i> ${escapeHtml(adminActivityLoadError || "No administrative activity recorded yet.")}</div>`;
           return;
         }
         container.innerHTML = entries.map((entry) => `
           <div class="dashboard-activity-item">
             <i class="fas fa-shield-halved" aria-hidden="true"></i>
-            <div><strong>${escapeHtml(entry.action)}</strong><small>${escapeHtml(entry.details || "System update")}</small></div>
-            <time>${new Date(entry.timestamp).toLocaleString()}</time>
+            <div><strong>${escapeHtml(activityActionLabel(entry))}</strong><small>${escapeHtml(activityDetails(entry))}</small></div>
+            <time>${escapeHtml(formatAdminTimestamp(entry.created_at || entry.timestamp, "Not available"))}</time>
           </div>
         `).join("");
       }
 
-      function downloadPortalBackup() {
-        const data = {};
-        for (let index = 0; index < localStorage.length; index += 1) {
-          const key = localStorage.key(index);
-          if (key) data[key] = localStorage.getItem(key);
+      async function downloadPortalBackup() {
+        const result = await ApiClient.createDatabaseBackup();
+        if (!result?.ok || !result.backup) {
+          await showMessageDialog(result?.message || "Unable to create the database backup.", "Backup Failed");
+          return;
         }
-        const payload = JSON.stringify({
-          app: "midwife-clinical-portal",
-          version: 1,
-          exported_at: new Date().toISOString(),
-          local_storage: data,
-        }, null, 2);
+        const payload = JSON.stringify(result.backup, null, 2);
         const blob = new Blob([payload], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -1459,24 +1649,22 @@
         link.download = `midwife-backup-${new Date().toISOString().slice(0, 10)}.json`;
         link.click();
         URL.revokeObjectURL(url);
-        addAuditEntry("Database backup downloaded", "Complete local portal backup");
+        await showMessageDialog("Database backup downloaded successfully.", "Backup Ready");
       }
 
       async function restorePortalBackup(file) {
         if (!file) return;
         try {
           const parsed = JSON.parse(await file.text());
-          if (parsed.app !== "midwife-clinical-portal" || !parsed.local_storage) {
+          if (parsed.app !== "midwife-clinical-portal" || !parsed.tables) {
             throw new Error("Invalid backup file.");
           }
           if (!await showOptionPane(
             "Restore this backup? Current browser data will be replaced.",
             { title: "Restore Backup", confirmLabel: "Restore" },
           )) return;
-          Object.entries(parsed.local_storage).forEach(([key, value]) => {
-            localStorage.setItem(key, value);
-          });
-          addAuditEntry("Database backup restored", file.name);
+          const result = await ApiClient.restoreDatabaseBackup(parsed);
+          if (!result?.ok) throw new Error(result?.message || "Unable to restore the database backup.");
           await showMessageDialog("Backup restored successfully. The dashboard will reload.", "Backup Restored");
           window.location.reload();
         } catch (error) {
@@ -1687,7 +1875,7 @@
             sidebarCountInstructors.textContent = accounts.length;
         });
 
-        // Dashboard totals must reflect MySQL, never stale browser storage.
+        // Dashboard totals must reflect Supabase, never stale browser storage.
         fetch("api/dashboard-stats", { cache: "no-store" })
           .then((response) => {
             if (!response.ok) throw new Error("Database statistics unavailable.");
@@ -1726,6 +1914,15 @@
         // Hide only the main cards (Dashboard, Instructors, Students, Cases, EditRequests, Notifications)
         if (targetId === "casesCard") {
           renderProgressOverview();
+        }
+        if (targetId === "systemToolsCard") {
+          loadAdminActivityLog();
+        }
+        if (targetId === "editRequestsCard") {
+          loadAdminEditRequests();
+        }
+        if (targetId === "notificationsCard") {
+          loadAdminNotifications();
         }
         const mainCardIds = [
           "dashboardCard",
@@ -1768,7 +1965,7 @@
             : null;
           if (!account) { await showMessageDialog("Instructor account not found.", "Instructor Information"); return; }
           const status = String(account.status || "active").replace(/^./, (letter) => letter.toUpperCase());
-          const created = account.created_at ? new Date(account.created_at).toLocaleString() : "Not available";
+          const created = formatAdminTimestamp(account.created_at, "Not available");
           const dialog = showOptionPane("", { title: "Instructor Information", confirmLabel: "Done", hideCancel: true });
           optionPaneMessage.innerHTML = `<section class="instructor-info-premium"><div class="instructor-info-avatar"><i class="fas fa-user-tie"></i></div><div><strong>${escapeHtml(account.display_name || "Instructor")}</strong><span>@${escapeHtml(account.username || "not-provided")}</span></div><b class="instructor-info-status ${String(account.status || "active").toLowerCase() === "active" ? "active" : "inactive"}">${escapeHtml(status)}</b><dl><div><dt>Account ID</dt><dd>${escapeHtml(account.id || "Not available")}</dd></div><div><dt>Created</dt><dd>${escapeHtml(created)}</dd></div></dl></section>`;
           await dialog;
@@ -1792,9 +1989,7 @@
 
           list.forEach((acc, index) => {
             const tr = document.createElement("tr");
-            const created = acc.created_at
-              ? new Date(acc.created_at).toLocaleString()
-              : "";
+            const created = formatAdminTimestamp(acc.created_at, "");
             const isActive = String(acc.status || "active").toLowerCase() === "active";
             tr.innerHTML = `
             <td>${index + 1}</td>
@@ -1813,10 +2008,8 @@
             instructorsTbody.appendChild(tr);
           });
         } catch (error) {
-          showInstructorMessage("Database unavailable. Start Apache and MySQL.", "error");
+          showInstructorMessage("Database unavailable. Start the Node server.", "error");
         }
-        if (targetId === "editRequestsCard") loadAdminEditRequests();
-        if (targetId === "notificationsCard") loadAdminNotifications();
       }
 
       async function addInstructorAccount(values) {
@@ -1837,7 +2030,6 @@
             displayName || username,
           );
           if (result && result.ok) {
-            addAuditEntry("Instructor created", username);
             showInstructorMessage("Instructor account created.", "success");
             await renderInstructorAccounts();
             return { ok: true };
@@ -1936,7 +2128,6 @@
               };
             }
 
-            addAuditEntry("Instructor updated", target.username || accountId);
             showInstructorMessage("Instructor account updated.", "success");
             await renderInstructorAccounts();
             return { ok: true };
@@ -1956,7 +2147,6 @@
         if (!ok) return;
         const result = await ApiClient.setInstructorStatus(accountId, nextStatus);
         if (result && result.ok) {
-          addAuditEntry(`Instructor ${activating ? "activated" : "deactivated"}`, accountId);
           showInstructorMessage(`Instructor account ${activating ? "activated" : "deactivated"}.`, "success");
           await renderInstructorAccounts();
         } else {
@@ -2082,15 +2272,20 @@
       }
 
       async function submitInstructorsAddModal() {
+        if (instructorsAddSubmitting) return;
         if (
           !instructorsAddModalConfig ||
           typeof instructorsAddModalConfig.onSubmit !== "function"
         )
           return;
+        instructorsAddSubmitting = true;
         if (instructorsAddError) instructorsAddError.textContent = "";
         if (instructorsAddSubmitBtn) {
           instructorsAddSubmitBtn.disabled = true;
+          instructorsAddSubmitBtn.setAttribute("aria-busy", "true");
         }
+        if (instructorsAddSubmitText)
+          instructorsAddSubmitText.textContent = "Saving...";
         try {
           const values = collectInstructorsAddModalValues(
             instructorsAddModalConfig.fields,
@@ -2107,9 +2302,14 @@
             instructorsAddError.textContent =
               error && error.message ? error.message : "An error occurred";
         } finally {
+          instructorsAddSubmitting = false;
           if (instructorsAddSubmitBtn) {
             instructorsAddSubmitBtn.disabled = false;
+            instructorsAddSubmitBtn.removeAttribute("aria-busy");
           }
+          if (instructorsAddSubmitText)
+            instructorsAddSubmitText.textContent =
+              instructorsAddModalConfig?.submitLabel || "Add";
         }
       }
 
@@ -2660,7 +2860,6 @@
         if (!permitted) return;
         const result = await ApiClient.archiveStudent(studentId);
         if (result && result.ok) {
-          addAuditEntry("Student archived", studentId);
           showStudentsNavMessage("Student moved to archive.", "success");
           await renderBlockStudents();
           await renderArchivedStudents();
@@ -2675,7 +2874,6 @@
       async function restoreArchivedStudent(studentId) {
         const result = await ApiClient.restoreStudent(studentId);
         if (result && result.ok) {
-          addAuditEntry("Student restored", studentId);
           const placementMessage = Number(result.assignments_restored || 0) > 0
             ? " Previous block assignment restored."
             : "";
@@ -2701,7 +2899,6 @@
           studentsNav.schoolYear,
         );
         if (result && result.ok) {
-          addAuditEntry("Student restored", studentId);
           showStudentsNavMessage("Student assigned to block.", "success");
           await renderBlockStudents();
           await renderStudentBlocks();
@@ -2757,39 +2954,61 @@
       }
 
       async function editStudent(studentId) {
-        const students = readJson(STUDENTS_KEY, []);
-        const idx = students.findIndex(
-          (s) =>
-            String(s.student_id || "").trim() ===
-            String(studentId || "").trim(),
-        );
-        if (idx < 0) return;
+        const studentResult = await ApiClient.getStudent(studentId);
+        const target = studentResult?.ok ? studentResult.student : null;
+        if (!target) {
+          showStudentsNavMessage(
+            studentResult?.message || "Student account not found.",
+            "error",
+          );
+          return;
+        }
 
-        const target = students[idx];
-        const nextName = await showTextPrompt("Student name:", target.student_name || "", { title: "Edit Student" });
-        if (nextName === null) return;
-        const nextParent = await showTextPrompt(
-          "Parent/Guardian name:",
-          target.parent_name || "",
-        );
-        if (nextParent === null) return;
-        const nextContact = await showTextPrompt(
-          "Contact number:",
-          target.contact_number || "",
-        );
-        if (nextContact === null) return;
-        const nextPassword = await showTextPrompt("Student password:", "", { type: "password", title: "Edit Student", placeholder: "Leave blank to keep the current password" });
-        if (nextPassword === null) return;
+        const response = showOptionPane("", {
+          title: "Edit Student",
+          confirmLabel: "Save",
+          cancelLabel: "Cancel",
+        });
+        optionPaneMessage.innerHTML = `
+          <form class="admin-settings-edit-form" id="studentEditForm">
+            <label>Student name<input name="studentName" type="text" value="${escapeHtml(target.student_name || "")}" autocomplete="name" required></label>
+            <label>Parent/Guardian name<input name="parentName" type="text" value="${escapeHtml(target.parent_name || "")}" autocomplete="name" required></label>
+            <label>Contact number<input name="contactNumber" type="tel" value="${escapeHtml(target.contact_number || "")}" inputmode="numeric" autocomplete="tel"></label>
+            <label>Parent/Guardian contact<input name="parentContact" type="tel" value="${escapeHtml(target.parent_contact || "")}" inputmode="numeric" autocomplete="tel"></label>
+            <label>New password <span class="muted">(leave blank to keep current)</span><input name="studentPassword" type="password" autocomplete="new-password" minlength="8"></label>
+          </form>`;
+        const accepted = await response;
+        if (!accepted) return;
+        const form = document.getElementById("studentEditForm");
+        const nextName = form?.querySelector("[name='studentName']")?.value.trim() || "";
+        const nextParent = form?.querySelector("[name='parentName']")?.value.trim() || "";
+        const nextContact = form?.querySelector("[name='contactNumber']")?.value.trim() || "";
+        const nextParentContact = form?.querySelector("[name='parentContact']")?.value.trim() || "";
+        const nextPassword = form?.querySelector("[name='studentPassword']")?.value.trim() || "";
+        if (!nextName || !nextParent) {
+          showStudentsNavMessage("Student and parent names are required.", "error");
+          return;
+        }
 
-        students[idx] = Object.assign({}, target, {
+        const update = {
           student_name: nextName.trim(),
           parent_name: nextParent.trim(),
           contact_number: nextContact.trim(),
-          password: nextPassword.trim(),
-        });
-        writeJson(STUDENTS_KEY, students);
-        renderBlockStudents();
-        refreshOverview();
+          parent_contact: nextParentContact,
+        };
+        if (nextPassword.trim()) update.password = nextPassword.trim();
+
+        const result = await ApiClient.updateStudent(studentId, update);
+        if (!result?.ok) {
+          showStudentsNavMessage(
+            result?.message || "Unable to update student account.",
+            "error",
+          );
+          return;
+        }
+        showStudentsNavMessage("Student account updated.", "success");
+        await renderBlockStudents();
+        await refreshOverview();
       }
 
       function deleteStudent(studentId) {
@@ -2865,11 +3084,11 @@
           <td>${c.patient_name || ""}${c.patient_address ? `<br><small>${c.patient_address}</small>` : ""}</td>
           <td>${c.case_no || ""}</td>
           <td>${c.complete_diagnosis || ""}</td>
-          <td>${c.date_time_performed || ""}</td>
+          <td>${escapeHtml(formatAdminTimestamp(c.date_time_performed, ""))}</td>
           <td>${c.facility_name || ""}${c.facility_address ? `<br><small>${c.facility_address}</small>` : ""}${c.facility_contact_number ? `<br><small>${c.facility_contact_number}</small>` : ""}</td>
           <td>${c.supervisor_printed_name || "-"}${c.supervisor_contact_number ? `<br><small>${c.supervisor_contact_number}</small>` : ""}</td>
           <td>${c.supervisor_position_designation || "-"}</td>
-          <td>${c.supervisor_license_no || "-"}${c.supervisor_license_expiry_date ? `<br><small>${c.supervisor_license_expiry_date}</small>` : ""}</td>
+          <td>${c.supervisor_license_no || "-"}${c.supervisor_license_expiry_date ? `<br><small>${window.formatPortalDate ? window.formatPortalDate(c.supervisor_license_expiry_date) : c.supervisor_license_expiry_date}</small>` : ""}</td>
           <td class="action-cell"><button class="mini-btn" type="button" data-action="comment-case" data-id="${c.id || ""}"><i class="fas fa-comment"></i> Comment</button></td>
         `;
           casesTbody.appendChild(tr);
@@ -2902,9 +3121,9 @@
         const procedureTable = (procedure) => {
           const records = cases.filter((record) => procedureLabel(record.procedure_name) === procedure);
           const diagnosisHeader = ["delivery handled", "delivery assisted"].includes(procedure)
-            ? "Complete Diagnosis (Gravida, Para)"
+            ? "Complete Diagnosis(Gravida, Para)"
             : "Complete Diagnosis";
-          const rows = records.length ? records.map((record) => `<tr><td>${escapeHtml(record.patient_name || "")}${record.patient_address ? `<br><small>${escapeHtml(record.patient_address)}</small>` : ""}</td><td>${escapeHtml(record.case_no || "")}</td><td>${escapeHtml(record.complete_diagnosis || "")}</td><td>${escapeHtml(record.date_time_performed || "")}</td><td>${escapeHtml(record.facility_name || "")}${record.facility_address ? `<br><small>${escapeHtml(record.facility_address)}</small>` : ""}${record.facility_contact_number ? `<br><small>${escapeHtml(record.facility_contact_number)}</small>` : ""}</td><td>${escapeHtml(record.supervisor_printed_name || "-")}${record.supervisor_contact_number ? `<br><small>${escapeHtml(record.supervisor_contact_number)}</small>` : ""}</td><td>${escapeHtml(record.supervisor_position_designation || "-")}</td><td>${escapeHtml(record.supervisor_license_no || "-")}${record.supervisor_license_expiry_date ? `<br><small>${escapeHtml(record.supervisor_license_expiry_date)}</small>` : ""}</td></tr>`).join("") : `<tr><td colspan="8" class="admin-procedure-empty">No records for this procedure.</td></tr>`;
+          const rows = records.length ? records.map((record) => `<tr><td>${escapeHtml(record.patient_name || "")}${record.patient_address ? `<br><small>${escapeHtml(record.patient_address)}</small>` : ""}</td><td>${escapeHtml(record.case_no || "")}</td><td>${escapeHtml(record.complete_diagnosis || "")}</td><td>${escapeHtml(formatAdminTimestamp(record.date_time_performed, ""))}</td><td>${escapeHtml(record.facility_name || "")}${record.facility_address ? `<br><small>${escapeHtml(record.facility_address)}</small>` : ""}${record.facility_contact_number ? `<br><small>${escapeHtml(record.facility_contact_number)}</small>` : ""}</td><td>${escapeHtml(record.supervisor_printed_name || "-")}${record.supervisor_contact_number ? `<br><small>${escapeHtml(record.supervisor_contact_number)}</small>` : ""}</td><td>${escapeHtml(record.supervisor_position_designation || "-")}</td><td>${escapeHtml(record.supervisor_license_no || "-")}${record.supervisor_license_expiry_date ? `<br><small>${escapeHtml(window.formatPortalDate ? window.formatPortalDate(record.supervisor_license_expiry_date) : record.supervisor_license_expiry_date)}</small>` : ""}</td></tr>`).join("") : `<tr><td colspan="8" class="admin-procedure-empty">No records for this procedure.</td></tr>`;
           const target = targets[procedure] || 1;
           const percent = Math.min(100, Math.round((records.length / target) * 100));
           return `<section class="admin-procedure-section"><div class="replica-admin-progress-heading"><h4>${escapeHtml(CASE_PROCEDURE_LABELS[procedure])} (${records.length})</h4><div class="replica-admin-progress-bar${records.length >= target ? " is-complete" : ""}"><span>${records.length} / ${target}</span><i><b style="width:${percent}%"></b></i></div></div><div class="table-wrap clinical-form-table-container"><table class="clinical-form-table procedure-records-table prc-replica-table"><colgroup><col style="width:20.83%"><col style="width:5.48%"><col style="width:14.01%"><col style="width:7.92%"><col style="width:18.27%"><col style="width:14.01%"><col style="width:9.74%"><col style="width:9.74%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${diagnosisHeader}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of Facility &amp;<br>Contact Number</th><th colspan="2">Supervised by</th><th rowspan="2">License No /<br>Expiry Date</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
@@ -3023,7 +3242,7 @@
 
       function getNotificationsFiltered() {
         const list = adminNotifications;
-        const term = normalizeText(notificationsSearchInput.value);
+        const term = normalizeText(notificationsSearchInput?.value || "");
         if (!term) return list;
         return list.filter((n) => {
           const blob = [
@@ -3039,25 +3258,82 @@
         });
       }
 
+      function notificationEventMeta(eventType) {
+        const value = String(eventType || "notification").trim().toLowerCase();
+        if (value.includes("approve")) {
+          return { label: "Request approved", icon: "check-circle", tone: "approved" };
+        }
+        if (value.includes("reject")) {
+          return { label: "Request rejected", icon: "times-circle", tone: "rejected" };
+        }
+        if (value.includes("archive")) {
+          return { label: "Notification archived", icon: "box-archive", tone: "archived" };
+        }
+        return {
+          label: value.replace(/[_-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()),
+          icon: "bell",
+          tone: "default",
+        };
+      }
+
+      function formatNotificationDate(value) {
+        return formatAdminTimestamp(value, "No timestamp");
+      }
+
+      function formatAdminTimestamp(value, fallback = "Not available") {
+        const raw = String(value || "").trim();
+        if (!raw) return fallback;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+          return window.formatPortalDate ? window.formatPortalDate(raw) : raw;
+        }
+        if (window.formatPortalDateTime) return window.formatPortalDateTime(raw);
+        const parsed = new Date(raw.replace(" ", "T"));
+        return Number.isNaN(parsed.getTime()) ? raw : parsed.toLocaleString();
+      }
+
       function renderNotifications() {
         const notifications = getNotificationsFiltered();
         notificationsTbody.innerHTML = "";
         notificationsEmpty.style.display = notifications.length
           ? "none"
           : "block";
+        const hasSearch = Boolean(notificationsSearchInput?.value.trim());
+        if (clearNotificationsSearchBtn) clearNotificationsSearchBtn.hidden = !hasSearch;
+        if (notificationsResultsSummary) {
+          const totalLabel = `${adminNotifications.length} notification${adminNotifications.length === 1 ? "" : "s"}`;
+          notificationsResultsSummary.innerHTML = hasSearch
+            ? `<strong>${notifications.length}</strong> of ${totalLabel} shown`
+            : `<strong>${totalLabel}</strong> in ${viewingArchivedNotifications ? "archive" : "active inbox"}`;
+        }
+        if (notificationsEmpty) {
+          notificationsEmpty.textContent = hasSearch
+            ? "No notifications match your search."
+            : `No ${viewingArchivedNotifications ? "archived" : "active"} notifications.`;
+        }
 
         notifications.forEach((notif, index) => {
+          const event = notificationEventMeta(notif.event_type);
+          const notificationId = escapeHtml(notif.id || "");
+          const rowActions = viewingArchivedNotifications
+            ? `<button class="mini-btn" type="button" data-action="restore-notification" data-id="${notificationId}"><i class="fas fa-rotate-left" aria-hidden="true"></i> Restore</button><button class="mini-btn danger" type="button" data-action="delete-archived-notification" data-id="${notificationId}"><i class="fas fa-trash" aria-hidden="true"></i> Delete</button>`
+            : `<button class="mini-btn danger" type="button" data-action="delete-notification" data-id="${notificationId}"><i class="fas fa-box-archive" aria-hidden="true"></i> Archive</button>`;
           const tr = document.createElement("tr");
           tr.innerHTML = `
-          <td>${index + 1}</td>
-          <td>${notif.event_type || ""}</td>
-          <td>${notif.student_id || ""}</td>
-          <td>${notif.procedure_type || ""}</td>
-          <td>${notif.case_no || ""}</td>
-          <td>${notif.message || ""}</td>
-          <td class="action-cell">
-            <button class="mini-btn ${viewingArchivedNotifications ? "" : "danger"}" data-action="${viewingArchivedNotifications ? "restore-notification" : "delete-notification"}" data-id="${notif.id || ""}"><i class="fas fa-${viewingArchivedNotifications ? "rotate-left" : "box-archive"}"></i> ${viewingArchivedNotifications ? "Restore" : "Archive"}</button>
+          <td>
+            <div class="notification-event-cell">
+              <span class="notification-row-number">${index + 1}</span>
+              <span class="notification-event-icon ${event.tone}" aria-hidden="true"><i class="fas fa-${event.icon}"></i></span>
+              <div>
+                <strong>${escapeHtml(event.label)}</strong>
+                <small>${escapeHtml(formatNotificationDate(notif.created_at))}</small>
+              </div>
+            </div>
           </td>
+          <td><span class="notification-student-id">${escapeHtml(notif.student_id || "—")}</span></td>
+          <td>${escapeHtml(notif.procedure_type || "—")}</td>
+          <td><span class="notification-case-number">${escapeHtml(notif.case_no || "—")}</span></td>
+          <td><div class="notification-message">${escapeHtml(notif.message || "No message provided.")}</div></td>
+          <td class="action-cell"><div class="notification-row-actions">${rowActions}</div></td>
         `;
           notificationsTbody.appendChild(tr);
         });
@@ -3075,17 +3351,17 @@
         } catch (error) {
           adminNotifications = [];
           renderNotifications();
-          await showMessageDialog(error.message || "Unable to load activity history.", "Activity Log Error");
+          await showMessageDialog(error.message || "Unable to load notifications.", "Notifications Error");
         }
       }
 
       function deleteNotification(notificationId) {
         (async () => {
-          const confirmed = await showOptionPane("Archive this activity entry?", { title: "Archive Activity", confirmLabel: "Archive" });
+          const confirmed = await showOptionPane("Archive this notification?", { title: "Archive Notification", confirmLabel: "Archive" });
           if (!confirmed) return;
           const result = await ApiClient.archiveNotification(notificationId);
           if (!result?.ok) {
-            await showMessageDialog(result?.message || "Unable to archive activity.", "Archive Failed");
+            await showMessageDialog(result?.message || "Unable to archive notification.", "Archive Failed");
             return;
           }
           await loadAdminNotifications();
@@ -3096,18 +3372,24 @@
       function deleteAllNotifications() {
         (async () => {
           const notifications = [...adminNotifications];
+          const isArchiveView = viewingArchivedNotifications;
+          const actionLabel = isArchiveView ? "Restore" : "Archive";
+          const actionTitle = `${actionLabel} All Notifications`;
           if (!notifications.length) {
-            await showMessageDialog("There are no activity entries to archive.", "Activity Log");
+            await showMessageDialog(`There are no notifications to ${actionLabel.toLowerCase()}.`, "Notifications");
             return;
           }
           const ok = await showOptionPane(
-            `Archive all ${notifications.length} activity entries?`,
-            { title: "Archive All Activity", confirmLabel: "Archive All" },
+            `${actionLabel} all ${notifications.length} notifications?`,
+            { title: actionTitle, confirmLabel: `${actionLabel} All` },
           );
           if (!ok) return;
-          const results = await Promise.all(notifications.map((item) => ApiClient.archiveNotification(item.id)));
+          const action = isArchiveView
+            ? ApiClient.restoreNotification
+            : ApiClient.archiveNotification;
+          const results = await Promise.all(notifications.map((item) => action(item.id)));
           if (results.some((item) => !item?.ok)) {
-            await showMessageDialog("Some activity entries could not be archived.", "Archive Incomplete");
+            await showMessageDialog(`Some notifications could not be ${actionLabel.toLowerCase()}d.`, `${actionLabel} Incomplete`);
           }
           await loadAdminNotifications();
           refreshOverview();
@@ -3116,9 +3398,29 @@
 
       function toggleArchivedNotifications() {
         viewingArchivedNotifications = !viewingArchivedNotifications;
-        if (deleteAllNotificationsBtn) deleteAllNotificationsBtn.style.display = viewingArchivedNotifications ? "none" : "";
-        const archiveToggle = document.getElementById("viewArchivedNotificationsBtn");
-        if (archiveToggle) archiveToggle.textContent = viewingArchivedNotifications ? "View Active" : "View Archive";
+        if (deleteAllNotificationsBtn) {
+          const actionLabel = viewingArchivedNotifications ? "Restore All" : "Archive All";
+          deleteAllNotificationsBtn.innerHTML = viewingArchivedNotifications
+            ? '<i class="fas fa-rotate-left" aria-hidden="true"></i><span>Restore All</span>'
+            : '<i class="fas fa-box-archive" aria-hidden="true"></i><span>Archive All</span>';
+          deleteAllNotificationsBtn.title = actionLabel;
+          deleteAllNotificationsBtn.setAttribute("aria-label", actionLabel);
+        }
+        if (viewArchivedNotificationsBtn) {
+          viewArchivedNotificationsBtn.innerHTML = viewingArchivedNotifications
+            ? '<i class="fas fa-bell" aria-hidden="true"></i><span>View Active</span>'
+            : '<i class="fas fa-box-archive" aria-hidden="true"></i><span>View Archive</span>';
+          const archiveViewLabel = viewingArchivedNotifications
+            ? "View active notifications"
+            : "View archived notifications";
+          viewArchivedNotificationsBtn.title = archiveViewLabel;
+          viewArchivedNotificationsBtn.setAttribute("aria-label", archiveViewLabel);
+        }
+        if (notificationsViewState) {
+          notificationsViewState.innerHTML = viewingArchivedNotifications
+            ? '<i class="fas fa-box-archive" aria-hidden="true"></i> Archive'
+            : '<i class="fas fa-circle" aria-hidden="true"></i> Active';
+        }
         loadAdminNotifications();
       }
 
@@ -3132,6 +3434,24 @@
           refreshOverview();
         })();
       }
+
+      function deleteArchivedNotification(notificationId) {
+        (async () => {
+          const confirmed = await showOptionPane(
+            "Permanently delete this archived notification?",
+            { title: "Delete Archived Notification", confirmLabel: "Delete" },
+          );
+          if (!confirmed) return;
+          const result = await ApiClient.deleteNotification(notificationId);
+          if (!result?.ok) {
+            await showMessageDialog(result?.message || "Unable to delete notification.", "Delete Failed");
+            return;
+          }
+          await loadAdminNotifications();
+          refreshOverview();
+        })();
+      }
+
       function getAvailableSchoolYears() {
         const cases = readJson(CASES_KEY, []);
         return [
@@ -3300,7 +3620,25 @@
         if (yearlyContextTitle) yearlyContextTitle.textContent = (copy[level] || copy.years)[0];
         if (yearlyContextSubtitle) yearlyContextSubtitle.textContent = (copy[level] || copy.years)[1];
         if (yearlyContextIcon) yearlyContextIcon.className = "fas fa-calendar-check";
-        if (yearlyProgressSearchShell) yearlyProgressSearchShell.style.display = "block";
+        if (yearlyProgressSearchShell) {
+          yearlyProgressSearchShell.style.display = "flex";
+          yearlyProgressSearchShell.classList.toggle("yearly-block-level", level === "blocks");
+          yearlyProgressSearchShell.classList.toggle("yearly-year-level", level === "years");
+        }
+        if (yearlyProgressBlockActions) {
+          yearlyProgressBlockActions.style.setProperty(
+            "display",
+            level === "blocks" ? "flex" : "none",
+            "important",
+          );
+        }
+        if (openAddYearlyBlockBtn) {
+          openAddYearlyBlockBtn.style.setProperty(
+            "display",
+            level === "blocks" ? "inline-flex" : "none",
+            "important",
+          );
+        }
         if (yearlyYearPanel)
           yearlyYearPanel.classList.toggle("active", level === "years");
         if (yearlyBlockPanel)
@@ -3556,7 +3894,7 @@
             <td><span class="school-year-count">${blockCount}</span></td>
             <td><span class="school-year-count">${studentCount}</span></td>
             <td><span class="school-year-count">${yearCases.length}</span></td>
-            <td class="action-cell"><button class="mini-btn admin-directory-action school-year-open" type="button" aria-label="View blocks for ${escapeHtml(yearLabel)}"><span>View blocks</span></button></td>
+            <td class="action-cell"><div class="yearly-year-actions"><button class="mini-btn admin-directory-action school-year-open" type="button" aria-label="View blocks for ${escapeHtml(yearLabel)}"><span>View blocks</span></button><button class="mini-btn yearly-year-download" type="button" data-yearly-download="${escapeHtml(yearLabel)}" title="Download records for ${escapeHtml(yearLabel)}"><span>Download</span></button></div></td>
           `;
           if (yearlyYearsTbody) yearlyYearsTbody.appendChild(tr);
         });
@@ -3825,6 +4163,7 @@
         };
         const formatSummaryDate = (value) => {
           if (!value || /^0{4}-0{2}-0{2}$/.test(String(value))) return "-";
+          if (window.formatPortalDate) return window.formatPortalDate(value) || "-";
           const date = new Date(`${String(value).slice(0, 10)}T00:00:00`);
           if (Number.isNaN(date.getTime())) return String(value);
           return date.toLocaleDateString("en-US", {
@@ -3849,7 +4188,7 @@
           const target = targets[procedure] || 1;
           const label = CASE_PROCEDURE_LABELS[procedure] || titleCase(procedure);
           const diagnosisHeader = ["delivery handled", "delivery assisted"].includes(procedure)
-            ? "Complete Diagnosis (Gravida, Para)"
+            ? "Complete Diagnosis(Gravida, Para)"
             : "Complete Diagnosis";
 
           const heading = document.createElement("div");
@@ -3952,12 +4291,12 @@
             <td>${joinLines(record.patient_name, record.patient_address)}</td>
             <td>${prcExportEscape(record.case_no)}</td>
             <td>${prcExportEscape(record.complete_diagnosis)}</td>
-            <td>${prcExportEscape(record.date_time_performed)}</td>
+            <td>${prcExportEscape(formatAdminTimestamp(record.date_time_performed, ""))}</td>
             <td>${joinLines(record.facility_name, record.facility_address, record.facility_contact_number)}</td>
             <td>${joinLines(record.supervisor_printed_name, record.supervisor_contact_number)}</td>
             <td>${prcExportEscape(record.supervisor_position_designation)}</td>
             <td>${prcExportEscape(record.checked_by)}</td>
-            <td>${joinLines(record.supervisor_license_no, record.supervisor_license_expiry_date)}</td>
+            <td>${joinLines(record.supervisor_license_no, window.formatPortalDate ? window.formatPortalDate(record.supervisor_license_expiry_date) : record.supervisor_license_expiry_date)}</td>
           </tr>`;
         }).join("");
         return `<section class="prc-page">
@@ -4012,7 +4351,7 @@
         const rows = records
           .map(
             (record) =>
-              `<w:tr><w:trPr><w:cantSplit/></w:trPr>${adminPrcDocxCell(`${record.patient_name || "-"}${record.patient_address ? `\n${record.patient_address}` : ""}`, widths[0], { align: "left" })}${adminPrcDocxCell(record.case_no || "-", widths[1])}${adminPrcDocxCell(record.complete_diagnosis || "-", widths[2], { align: "left" })}${adminPrcDocxCell(record.date_time_performed || "-", widths[3])}${adminPrcDocxCell(`${record.facility_name || "-"}${record.facility_address ? `\n${record.facility_address}` : ""}${record.facility_contact_number ? `\n${record.facility_contact_number}` : ""}`, widths[4], { align: "left" })}${adminPrcDocxCell(`${record.supervisor_printed_name || "-"}${record.supervisor_contact_number ? `\n${record.supervisor_contact_number}` : ""}`, widths[5], { align: "left" })}${adminPrcDocxCell(record.supervisor_position_designation || "-", widths[6])}${adminPrcDocxCell(record.checked_by || "", widths[7])}${adminPrcDocxCell(`${record.supervisor_license_no || "-"}${record.supervisor_license_expiry_date ? `\n${record.supervisor_license_expiry_date}` : ""}`, widths[8])}</w:tr>`,
+              `<w:tr><w:trPr><w:cantSplit/></w:trPr>${adminPrcDocxCell(`${record.patient_name || "-"}${record.patient_address ? `\n${record.patient_address}` : ""}`, widths[0], { align: "left" })}${adminPrcDocxCell(record.case_no || "-", widths[1])}${adminPrcDocxCell(record.complete_diagnosis || "-", widths[2], { align: "left" })}${adminPrcDocxCell(formatAdminTimestamp(record.date_time_performed, "-"), widths[3])}${adminPrcDocxCell(`${record.facility_name || "-"}${record.facility_address ? `\n${record.facility_address}` : ""}${record.facility_contact_number ? `\n${record.facility_contact_number}` : ""}`, widths[4], { align: "left" })}${adminPrcDocxCell(`${record.supervisor_printed_name || "-"}${record.supervisor_contact_number ? `\n${record.supervisor_contact_number}` : ""}`, widths[5], { align: "left" })}${adminPrcDocxCell(record.supervisor_position_designation || "-", widths[6])}${adminPrcDocxCell(record.checked_by || "", widths[7])}${adminPrcDocxCell(`${record.supervisor_license_no || "-"}${record.supervisor_license_expiry_date ? `\n${window.formatPortalDate ? window.formatPortalDate(record.supervisor_license_expiry_date) : record.supervisor_license_expiry_date}` : ""}`, widths[8])}</w:tr>`,
           )
           .join("");
         return `<w:tbl><w:tblPr><w:tblW w:w="100" w:type="pct"/><w:tblLayout w:type="fixed"/><w:tblBorders><w:top w:val="single" w:sz="8" w:color="000000"/><w:left w:val="single" w:sz="8" w:color="000000"/><w:bottom w:val="single" w:sz="8" w:color="000000"/><w:right w:val="single" w:sz="8" w:color="000000"/><w:insideH w:val="single" w:sz="8" w:color="000000"/><w:insideV w:val="single" w:sz="8" w:color="000000"/></w:tblBorders></w:tblPr><w:tblGrid>${widths.map((width) => `<w:gridCol w:w="${width}"/>`).join("")}</w:tblGrid>${firstHeader}${secondHeader}${rows}</w:tbl>`;
@@ -4169,99 +4508,29 @@
       }
 
       async function exportYearlyPrcForm() {
-        if (!yearlyNav.studentId || !yearlyNav.schoolYear) return;
-        const annualRecords = (await ApiClient.getJoinedCases(yearlyNav.studentId, "", ""))
-          .filter((record) =>
-            String(record.student_id || "").trim() === String(yearlyNav.studentId || "").trim() &&
-            recordMatchesSchoolYear(record, yearlyNav.schoolYear),
-          );
-        return studentPrcExportInstructor({
-          student: {
-            student_id: yearlyNav.studentId,
-            student_name: yearlyNav.studentName,
-            school_year: yearlyNav.schoolYear,
-          },
-          button: exportYearlyPrcBtn,
-          records: annualRecords,
-        });
+        if (!yearlyNav.studentId || !yearlyNav.schoolYear) {
+          await showMessageDialog("Choose an academic year, block, and student before exporting the PRC forms.", "Select a Student");
+          return;
+        }
         setButtonLoading(exportYearlyPrcBtn, true);
         try {
-          const selectedProcedure = procedureLabel(
-            document.getElementById("yearlyProcedureFilter")?.value || "",
-          );
-          let records = (
-            await ApiClient.getJoinedCases(yearlyNav.studentId, "", "")
-          ).filter(
-            (record) =>
-              String(record.student_id || "").trim() ===
-                String(yearlyNav.studentId || "").trim() &&
+          const annualRecords = (await ApiClient.getJoinedCases(yearlyNav.studentId, "", ""))
+            .filter((record) =>
+              String(record.student_id || "").trim() === String(yearlyNav.studentId || "").trim() &&
               recordMatchesSchoolYear(record, yearlyNav.schoolYear),
-          );
-          if (selectedProcedure) {
-            records = records.filter(
-              (record) =>
-                procedureLabel(record.procedure_key || record.procedure_name) ===
-                selectedProcedure,
             );
-          }
-          if (!records.length) {
-            await showOptionPane("No database records are available to export.", {
-              title: "No Records",
-            });
-            return;
-          }
-          const titles = {
-            "delivery handled": "Record of Normal Deliveries Handled",
-            "delivery assisted": "Record of Actual Deliveries Assisted",
-            suturing: "Record of Actual Suturing of Perineal Lacerations",
-            "iv insertion": "Record of Actual Intravenous Fluid Insertions",
-            "internal exam": "Record of Actual Internal Examinations",
-          };
-          const groups = (selectedProcedure
-            ? [[selectedProcedure, records]]
-            : CASE_PROCEDURES.map((key) => [
-                key,
-                records.filter(
-                  (record) =>
-                    procedureLabel(record.procedure_key || record.procedure_name) ===
-                    key,
-                ),
-              ])
-          ).filter(([, groupRecords]) => groupRecords.length);
-          const pages = [];
-          groups.forEach(([key, groupRecords]) => {
-            for (let index = 0; index < groupRecords.length; index += 10) {
-              pages.push({
-                key,
-                title: titles[key] || caseProcedureDisplayName(key),
-                records: groupRecords.slice(index, index + 10),
-                hasNextPage: index + 10 < groupRecords.length,
-              });
-            }
-          });
-          const pageHtml = pages
-            .map((page) =>
-              buildPrcExportPage(
-                page.title,
-                page.key,
-                page.records,
-                page.hasNextPage,
-              ),
-            )
-            .join("");
-          adminPrcPreviewState = {
-            records,
-            selectedProcedure,
+          await studentPrcExportInstructor({
             student: {
               student_id: yearlyNav.studentId,
               student_name: yearlyNav.studentName,
               school_year: yearlyNav.schoolYear,
             },
-          };
-          if (adminPrcPreviewPages) adminPrcPreviewPages.innerHTML = pageHtml;
-          adminPrcPreviewOverlay?.classList.add("is-open");
-          adminPrcPreviewOverlay?.setAttribute("aria-hidden", "false");
-          adminPrcPreviewCloseBtn?.focus();
+            button: exportYearlyPrcBtn,
+            records: annualRecords,
+          });
+        } catch (error) {
+          console.error("Unable to prepare the PRC form preview.", error);
+          await showMessageDialog(`Unable to prepare the PRC form preview. ${error?.message || "Please try again."}`, "Export Failed");
         } finally {
           setButtonLoading(exportYearlyPrcBtn, false);
         }
@@ -4272,11 +4541,11 @@
       }
       let selectedSummaryStudent = null;
       const STUDENT_PRC_DIAGNOSIS_HEADERS = {
-        "delivery-handled": "Complete Diagnosis (Gravida, Para)",
-        "delivery-assisted": "Complete Diagnosis (Gravida, Para)",
+        "delivery-handled": "Complete Diagnosis(Gravida, Para)",
+        "delivery-assisted": "Complete Diagnosis(Gravida, Para)",
         suturing: "Complete Diagnosis",
         "iv-insertion": "Complete Diagnosis",
-        "internal-exam": "Complete Diagnosis",
+        "internal-exam": "Internal Examination (Cervical Dilation,Effacement,BOW,Presentation and Station)",
       };
       const STUDENT_PRC_FORM_TITLES = {
         "delivery-handled": "Record of Normal Deliveries Handled",
@@ -4301,6 +4570,31 @@
         "internal-exam": 20,
         suturing: 5,
         "iv-insertion": 5,
+      };
+      const STUDENT_PRC_PREVIEW_PROCEDURE_ORDER = [
+        "delivery-handled",
+        "delivery-assisted",
+        "suturing",
+        "iv-insertion",
+        "internal-exam",
+      ];
+      const STUDENT_PRC_EXPORT_PAGE_LAYOUT = STUDENT_PRC_PREVIEW_PROCEDURE_ORDER.flatMap((procedureKey) => {
+        const requiredCases = STUDENT_PRC_PROCEDURE_TARGETS[procedureKey] || 0;
+        const pageSize = 10;
+        const pageCount = Math.ceil(requiredCases / pageSize);
+        return Array.from({ length: pageCount }, (_, pageIndex) => ({
+          procedureKey,
+          pageIndex,
+          startIndex: pageIndex * pageSize,
+          rowCount: Math.min(pageSize, requiredCases - pageIndex * pageSize),
+          isFinalPage: pageIndex === pageCount - 1,
+        }));
+      });
+      const STUDENT_PRC_FOOTER_COPY = {
+        noteOne: "(1)The Clinical Instructor should ensure competence of the students in the performance of actual deliveries before signing this form.",
+        noteTwo: "(2) Registered Midwives/ Clinical Instructors who supervise Students/ Graduate Midwives/ Registered Nurses and affix signature in this Form must present a Certificate of Training on Expanded Functions of Midwife (R.A. 7392) pursuant to Board Resolution No. 07, Series of 2017, dated September 8, 2017.",
+        licenseNumber: "RN-0508249/RM-0174915",
+        expiryLine: "______________",
       };
 
       let studentPrcExportStudent = null;
@@ -4327,9 +4621,16 @@
       }
 
       function studentPrcBuildExportTable(procedureKey, records, startIndex = 0, rowCount = STUDENT_PRC_PROCEDURE_TARGETS[procedureKey] || 5) {
+        const geometry = {
+          "delivery-handled": { width: 95.97, columns: [18.87, 4.97, 12.69, 7.17, 16.56, 12.69, 8.83, 9.38, 8.83] },
+          "delivery-assisted": { width: 95.97, columns: [18.87, 4.97, 12.69, 7.17, 16.56, 12.69, 8.83, 9.38, 8.83] },
+          suturing: { width: 99.45, columns: [18.21, 4.79, 12.25, 6.92, 17.56, 11.94, 9.62, 8.66, 10.05] },
+          "iv-insertion": { width: 99.03, columns: [18.30, 4.81, 12.31, 6.95, 17.74, 10.61, 9.66, 9.66, 9.96] },
+          "internal-exam": { width: 99.03, columns: [18.29, 4.82, 16.09, 9.98, 13.69, 11.04, 9.77, 7.96, 8.39] },
+        }[procedureKey] || { width: 95.97, columns: [18.87, 4.97, 12.69, 7.17, 16.56, 12.69, 8.83, 9.38, 8.83] };
         const pageRecords = records.slice(startIndex, startIndex + rowCount);
-        const rows = pageRecords.map((record) => `<tr>
-          <td>${studentPrcExportCell(record.patient_name, record.patient_address)}</td>
+        const rows = pageRecords.map((record, rowIndex) => `<tr>
+          <td>${startIndex + rowIndex + 1}. ${studentPrcExportCell(record.patient_name, record.patient_address)}</td>
           <td>${studentPrcExportCell(record.case_no)}</td>
           <td>${studentPrcExportCell(record.complete_diagnosis)}</td>
           <td>${studentPrcFormatExportDateTime(record.date_time_performed) || "&nbsp;"}</td>
@@ -4340,10 +4641,10 @@
           <td>${studentPrcExportCell(record.supervisor_license_no, studentPrcFormatExportDate(record.supervisor_license_expiry_date))}</td>
         </tr>`).join("");
         const blankRows = Math.max(0, rowCount - pageRecords.length);
-        const emptyRows = Array.from({ length: blankRows }, () => "<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>").join("");
-        return `<table class="prc-export-table">
-          <colgroup><col style="width:18.8%"><col style="width:5%"><col style="width:12.6%"><col style="width:7.2%"><col style="width:16.5%"><col style="width:12.8%"><col style="width:8.7%"><col style="width:9%"><col style="width:9.4%"></colgroup>
-          <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case<br>No.</th><th rowspan="2">${studentPrcGetDiagnosisHeader(procedureKey)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of<br>Facility &amp; Contact Number</th><th colspan="4">Supervised by</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position /<br>Designation</th><th>Signature</th><th>License No /<br>Expiry Date</th></tr></thead>
+        const emptyRows = Array.from({ length: blankRows }, (_, rowIndex) => `<tr><td>${startIndex + pageRecords.length + rowIndex + 1}</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>`).join("");
+        return `<table class="prc-export-table" style="width:${geometry.width}%">
+          <colgroup>${geometry.columns.map((width) => `<col style="width:${width}%">`).join("")}</colgroup>
+          <thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case<br>No.</th><th rowspan="2">${studentPrcGetDiagnosisHeader(procedureKey)}</th><th rowspan="2">Date &amp; Time<br>Performed</th><th rowspan="2">Full Name, Address of<br>Facility &amp; Contact Number</th><th colspan="4">Supervised by</th></tr><tr><th>Printed Name and<br>Contact No.</th><th>Position/<br>Designation</th><th>Signature</th><th>License No /<br>Expiry Date</th></tr></thead>
           <tbody>${rows}${emptyRows}</tbody>
         </table>`;
       }
@@ -4370,17 +4671,52 @@
         return studentPrcLogoDataUrl;
       }
 
+      function studentPrcBuildExportFooter() {
+        return `<div class="prc-export-footer">
+          <div class="prc-export-notes">
+            <strong class="prc-export-note-label">Note:</strong>
+            <div class="prc-export-note-copy">
+              <p><strong>${STUDENT_PRC_FOOTER_COPY.noteOne}</strong></p>
+              <p><strong>${STUDENT_PRC_FOOTER_COPY.noteTwo}</strong></p>
+            </div>
+          </div>
+          <div class="prc-export-affidavit">
+            <p><strong>SUBSCRIBED AND SWORN TO</strong> before me this <span class="prc-export-fill-line prc-export-affidavit-line"></span> at <span class="prc-export-fill-line prc-export-affidavit-line"></span>. Affiant exhibiting to me his/her</p>
+            <p class="prc-export-residence">Residence Certificate No. <span class="prc-export-fill-line prc-export-residence-number"></span> issued at <span class="prc-export-fill-line prc-export-residence-place"></span> on <span class="prc-export-fill-line prc-export-residence-date"></span>.</p>
+          </div>
+          <div class="prc-export-certification-title"><strong>CERTIFIED CORRECT:</strong></div>
+          <div class="prc-export-footer-grid">
+            <div class="prc-export-notary">
+              <span class="prc-export-notary-line"></span>
+              <strong>Administering Officer/Notary Public</strong>
+            </div>
+            <div class="prc-export-stamp">
+              <span>Affix</span>
+              <span>Documentary Stamp</span>
+              <small>To be posted on the last page</small>
+            </div>
+            <div class="prc-export-certified-details">
+              <div class="prc-export-cert-row"><span>Signature:</span><span class="prc-export-fill-line"></span><span>Date:</span><span class="prc-export-fill-line prc-export-date-line"></span></div>
+              <div class="prc-export-cert-row prc-export-cert-row-simple"><span>Printed Name:</span><span class="prc-export-fill-line"></span></div>
+              <div class="prc-export-cert-row prc-export-cert-row-simple"><span>Designation:</span><span class="prc-export-fill-line"></span></div>
+              <div class="prc-export-license-row">License Number: <strong>${STUDENT_PRC_FOOTER_COPY.licenseNumber}</strong> Expiry Date: <span class="prc-export-fill-line prc-export-expiry-line"></span></div>
+            </div>
+          </div>
+        </div>`;
+      }
+
       function studentPrcBuildExportForms(records, logoSource) {
         const studentName = studentPrcExportStudent.student_name || studentPrcExportStudent.name || "";
-        const school = studentPrcExportStudent.school_name || studentPrcExportStudent.school || "";
-        return Object.keys(STUDENT_PRC_PROCEDURE_TARGETS).flatMap((procedureKey) => {
-          const procedureRecords = records.filter((record) => normalizeProcedureKey(record.procedure_name) === procedureKey);
-          const target = STUDENT_PRC_PROCEDURE_TARGETS[procedureKey] || 5;
-          const pageSize = target > 10 ? 10 : target;
-          const pageCount = Math.ceil(target / pageSize);
-          return Array.from({ length: pageCount }, (_, pageIndex) => {
-            const isContinuation = pageIndex > 0;
-            return `<section class="prc-export-form${isContinuation ? " prc-export-continuation" : ""}">
+        const school = studentPrcExportStudent.school_name || studentPrcExportStudent.school || "BOHOL ISLAND STATE UNIVERSITY CALAPE";
+        const recordsByProcedure = STUDENT_PRC_PREVIEW_PROCEDURE_ORDER.reduce((groupedRecords, procedureKey) => {
+          groupedRecords[procedureKey] = records
+            .filter((record) => normalizeProcedureKey(record.procedure_key || record.procedure_name || record.procedureKey || record.procedureName) === procedureKey)
+            .slice(0, STUDENT_PRC_PROCEDURE_TARGETS[procedureKey] || 0);
+          return groupedRecords;
+        }, {});
+        return STUDENT_PRC_EXPORT_PAGE_LAYOUT.map(({ procedureKey, pageIndex, startIndex, rowCount, isFinalPage }) => {
+          const isContinuation = pageIndex > 0;
+          return `<section class="prc-export-form${isContinuation ? " prc-export-continuation" : ""}">
             ${isContinuation ? "" : `
             <div class="prc-export-heading">
               <img class="prc-export-logo" src="${logoSource}" alt="Professional Regulation Commission seal">
@@ -4391,11 +4727,12 @@
               </div>
             </div>
             <h1>${STUDENT_PRC_FORM_TITLES[procedureKey] || studentPrcProcedureNames[procedureKey]}</h1>
-            <p class="prc-export-check">Please check if applicant is: <span class="prc-check-box is-checked">Ã¢Å“â€œ</span> Graduate Midwife <span class="prc-check-box"></span> Registered Nurse</p>
+            <p class="prc-export-check-label">Please check if applicant is:</p>
+            <p class="prc-export-check-options"><span class="prc-check-box is-checked">&#10003;</span> Graduate Midwife <span class="prc-check-box"></span> Registered Nurse</p>
             <p class="prc-export-applicant"><span>Name of Applicant:</span><span class="prc-export-line">${escapeHtml(studentName)}</span><span class="prc-export-school-label">School:</span><span class="prc-export-line prc-export-school">${escapeHtml(school)}</span></p>`}
-            ${studentPrcBuildExportTable(procedureKey, procedureRecords, pageIndex * pageSize, pageSize)}
+            ${studentPrcBuildExportTable(procedureKey, recordsByProcedure[procedureKey] || [], startIndex, rowCount)}
+            ${isFinalPage ? studentPrcBuildExportFooter() : `<div class="prc-export-continued">(continued next page)</div>`}
           </section>`;
-          });
         }).join("");
       }
 
@@ -4626,16 +4963,18 @@
         copiedNodes.forEach((node) => body.insertBefore(node, bodyChildren[endIndex]));
       }
 
-      function studentPrcSetTemplateCell(cell, value) {
+      function studentPrcSetTemplateCell(cell, value, preserveNumbering = false) {
         const paragraph = cell.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "p")[0];
         if (!paragraph) return;
         const cellProperties = studentPrcEnsureWordChild(paragraph.ownerDocument, cell, "tcPr");
         const verticalAlignment = studentPrcEnsureWordChild(paragraph.ownerDocument, cellProperties, "vAlign");
         verticalAlignment.setAttributeNS(STUDENT_PRC_WORD_NS, "w:val", "center");
         const paragraphProperties = studentPrcEnsureWordChild(paragraph.ownerDocument, paragraph, "pPr");
-        Array.from(paragraphProperties.children)
-          .filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "numPr")
-          .forEach((node) => node.remove());
+        if (!preserveNumbering) {
+          Array.from(paragraphProperties.children)
+            .filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "numPr")
+            .forEach((node) => node.remove());
+        }
         let alignment = Array.from(paragraphProperties.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "jc");
         if (!alignment) {
           alignment = paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:jc");
@@ -4704,19 +5043,102 @@
             "",
             [record.supervisor_license_no, studentPrcFormatDocxDate(record.supervisor_license_expiry_date)].filter(Boolean).join("\n"),
           ];
-          cells.forEach((cell, cellIndex) => studentPrcSetTemplateCell(cell, values[cellIndex] || ""));
+          cells.forEach((cell, cellIndex) => studentPrcSetTemplateCell(cell, values[cellIndex] || "", cellIndex === 0));
         });
       }
 
-      function studentPrcSetInternalDiagnosisHeader(table) {
+      function studentPrcSetTemplateText(node, value) {
+        const textNodes = Array.from(node.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "t"));
+        if (!textNodes.length) return;
+        textNodes[0].textContent = value;
+        textNodes[0].setAttributeNS(STUDENT_PRC_XML_NS, "xml:space", "preserve");
+        textNodes.slice(1).forEach((textNode) => { textNode.textContent = ""; });
+      }
+
+      function studentPrcSetTemplateDiagnosisHeader(table, procedureKey) {
         const headerRow = Array.from(table.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "tr");
         const headerCells = headerRow ? Array.from(headerRow.children).filter((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "tc") : [];
         const diagnosisCell = headerCells[2];
         if (!diagnosisCell) return;
-        const textNodes = Array.from(diagnosisCell.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "t"));
-        if (!textNodes.length) return;
-        textNodes[0].textContent = "Complete Diagnosis";
-        textNodes.slice(1).forEach((node) => { node.textContent = ""; });
+        studentPrcSetTemplateText(diagnosisCell, studentPrcGetDiagnosisHeader(procedureKey));
+      }
+
+      function studentPrcSetTemplateFooterLicense(paragraph) {
+        const textNodes = Array.from(paragraph.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "t"));
+        const licenseIndex = textNodes.findIndex((node) => (node.textContent || "").includes("License Number:"));
+        const expiryIndex = textNodes.findIndex((node) => (node.textContent || "").includes("Expiry Date:"));
+        if (licenseIndex < 0 || expiryIndex < 0 || expiryIndex <= licenseIndex) return;
+        const licenseValueNode = textNodes
+          .slice(licenseIndex + 1, expiryIndex)
+          .find((node) => /[_A-Za-z0-9]/.test(node.textContent || ""));
+        const expiryValueNode = textNodes
+          .slice(expiryIndex + 1)
+          .find((node) => /[_A-Za-z0-9]/.test(node.textContent || ""));
+        textNodes[licenseIndex].textContent = "License Number: ";
+        textNodes[expiryIndex].textContent = "Expiry Date: ";
+        if (licenseValueNode) {
+          licenseValueNode.textContent = STUDENT_PRC_FOOTER_COPY.licenseNumber;
+          const run = licenseValueNode.parentElement;
+          if (run?.namespaceURI === STUDENT_PRC_WORD_NS && run.localName === "r") {
+            let runProperties = Array.from(run.children).find((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "rPr");
+            if (!runProperties) {
+              runProperties = paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:rPr");
+              run.insertBefore(runProperties, run.firstChild);
+            }
+            if (!Array.from(runProperties.children).some((node) => node.namespaceURI === STUDENT_PRC_WORD_NS && node.localName === "b")) {
+              runProperties.appendChild(paragraph.ownerDocument.createElementNS(STUDENT_PRC_WORD_NS, "w:b"));
+            }
+          }
+        }
+        if (expiryValueNode) expiryValueNode.textContent = STUDENT_PRC_FOOTER_COPY.expiryLine;
+      }
+
+      function studentPrcSynchronizeTemplateWithPreview(xml) {
+        const paragraphs = Array.from(xml.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "p"));
+        const procedureKeys = [...new Set(STUDENT_PRC_EXPORT_PAGE_LAYOUT.map((page) => page.procedureKey))];
+        const titleParagraphs = paragraphs.filter((paragraph) => /Record of (Normal|Delivery Assisted|Actual Suturing|Actual Intravenous|Actual Internal)/.test(studentPrcWordText(paragraph)));
+        titleParagraphs.slice(0, procedureKeys.length).forEach((paragraph, index) => {
+          studentPrcSetTemplateText(paragraph, STUDENT_PRC_FORM_TITLES[procedureKeys[index]] || "");
+        });
+
+        paragraphs
+          .filter((paragraph) => studentPrcWordText(paragraph).includes("Clinical Instructor should ensure competence"))
+          .forEach((paragraph) => {
+            const textNodes = Array.from(paragraph.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "t"));
+            if (textNodes.length >= 3) {
+              textNodes[0].textContent = "Note: ";
+              textNodes[0].setAttributeNS(STUDENT_PRC_XML_NS, "xml:space", "preserve");
+              textNodes[1].textContent = "(1)";
+              textNodes[2].textContent = STUDENT_PRC_FOOTER_COPY.noteOne.replace(/^\(1\)/, "");
+              textNodes.slice(3).forEach((textNode) => { textNode.textContent = ""; });
+            } else {
+              studentPrcSetTemplateText(paragraph, `Note: ${STUDENT_PRC_FOOTER_COPY.noteOne}`);
+            }
+          });
+        paragraphs
+          .filter((paragraph) => studentPrcWordText(paragraph).includes("Registered Midwives/ Clinical Instructors"))
+          .forEach((paragraph) => studentPrcSetTemplateText(paragraph, STUDENT_PRC_FOOTER_COPY.noteTwo));
+        paragraphs
+          .filter((paragraph) => studentPrcWordText(paragraph).includes("License Number:"))
+          .forEach(studentPrcSetTemplateFooterLicense);
+      }
+
+      function studentPrcEnsureTemplateUniqueDrawingIds(xml) {
+        const drawingNamespace = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
+        const drawingProperties = Array.from(xml.getElementsByTagNameNS(drawingNamespace, "docPr"));
+        const assignedIds = new Set();
+        let nextId = Math.max(0, ...drawingProperties.map((property) => Number(property.getAttribute("id")) || 0)) + 1;
+        drawingProperties.forEach((property) => {
+          const id = Number(property.getAttribute("id"));
+          if (Number.isInteger(id) && id > 0 && !assignedIds.has(id)) {
+            assignedIds.add(id);
+            return;
+          }
+          while (assignedIds.has(nextId)) nextId += 1;
+          property.setAttribute("id", String(nextId));
+          assignedIds.add(nextId);
+          nextId += 1;
+        });
       }
 
       async function studentPrcBuildTemplateDocx(records) {
@@ -4729,7 +5151,9 @@
         const xml = parser.parseFromString(new TextDecoder().decode(documentEntry.data), "application/xml");
         if (xml.querySelector("parsererror")) throw new Error("The PRC Word template could not be read.");
         studentPrcAddDeliveryAssistedSheet(xml);
-        studentPrcSetTemplateLegalTableMargins(xml);
+        studentPrcSynchronizeTemplateWithPreview(xml);
+        studentPrcEnsureTemplateUniqueDrawingIds(xml);
+        // Preserve the supplied DOCX page geometry and table grid exactly.
         const studentName = studentPrcExportStudent.student_name || studentPrcExportStudent.name || "";
         const school = studentPrcExportStudent.school_name || studentPrcExportStudent.school || "";
         Array.from(xml.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "p")).forEach((paragraph) => {
@@ -4749,18 +5173,26 @@
           if (recordsByProcedure[key]) recordsByProcedure[key].push(record);
         });
         const tables = Array.from(xml.getElementsByTagNameNS(STUDENT_PRC_WORD_NS, "tbl"));
-        studentPrcFillTemplateTable(tables[0], recordsByProcedure["delivery-handled"].slice(0, 10));
-        studentPrcFillTemplateTable(tables[1], recordsByProcedure["delivery-handled"].slice(10, 20));
-        studentPrcFillTemplateTable(tables[2], recordsByProcedure["delivery-assisted"].slice(0, 10));
-        studentPrcFillTemplateTable(tables[3], recordsByProcedure["delivery-assisted"].slice(10, 20));
-        studentPrcFillTemplateTable(tables[4], recordsByProcedure.suturing.slice(0, 5));
-        studentPrcFillTemplateTable(tables[5], recordsByProcedure["iv-insertion"].slice(0, 5));
-        studentPrcSetInternalDiagnosisHeader(tables[6]);
-        studentPrcSetInternalDiagnosisHeader(tables[7]);
-        studentPrcFillTemplateTable(tables[6], recordsByProcedure["internal-exam"].slice(0, 10));
-        studentPrcFillTemplateTable(tables[7], recordsByProcedure["internal-exam"].slice(10, 20));
+        if (tables.length < STUDENT_PRC_EXPORT_PAGE_LAYOUT.length) {
+          throw new Error("The PRC Word template is missing one or more form pages.");
+        }
+        STUDENT_PRC_EXPORT_PAGE_LAYOUT.forEach(({ procedureKey, startIndex, rowCount }, tableIndex) => {
+          const table = tables[tableIndex];
+          studentPrcSetTemplateDiagnosisHeader(table, procedureKey);
+          studentPrcFillTemplateTable(table, recordsByProcedure[procedureKey].slice(startIndex, startIndex + rowCount));
+        });
         documentEntry.data = new TextEncoder().encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>${new XMLSerializer().serializeToString(xml.documentElement)}`);
         return new Blob([studentPrcCreateDocxZip(entries)], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+      }
+
+      function studentPrcSetPreviewZoom(percent) {
+        const nextPercent = Math.min(200, Math.max(50, Math.round((Number(percent) || 100) / 10) * 10));
+        const pages = document.getElementById("prcPreviewPages");
+        const range = document.getElementById("prcPreviewZoomRange");
+        const value = document.getElementById("prcPreviewZoomValue");
+        pages?.style.setProperty("--prc-preview-zoom", String(nextPercent / 100));
+        if (range) range.value = String(nextPercent);
+        if (value) value.textContent = `${nextPercent}%`;
       }
 
       function studentPrcClosePreview() {
@@ -4795,10 +5227,20 @@
           const forms = studentPrcBuildExportForms(records, logoSource);
           studentPrcPreviewRecords = records;
           const pages = document.getElementById("prcPreviewPages");
-          if (pages) pages.innerHTML = forms;
+          if (pages) {
+            pages.innerHTML = forms;
+            pages.scrollTop = 0;
+            pages.scrollLeft = 0;
+          }
           const overlay = document.getElementById("prcPreviewOverlay");
           overlay?.classList.add("is-open");
           overlay?.setAttribute("aria-hidden", "false");
+          requestAnimationFrame(() => {
+            if (adminPrcPreviewPages) {
+              adminPrcPreviewPages.scrollTop = 0;
+              adminPrcPreviewPages.scrollLeft = 0;
+            }
+          });
         } catch (error) {
           console.error("Unable to prepare the PRC form preview.", error);
           window.alert("Unable to prepare the PRC form preview. Please try again.");
@@ -4809,11 +5251,18 @@
 
       document.getElementById("prcPreviewCloseBtn")?.addEventListener("click", studentPrcClosePreview);
       document.getElementById("prcPreviewCancelBtn")?.addEventListener("click", studentPrcClosePreview);
+      document.getElementById("prcPreviewZoomRange")?.addEventListener("input", (event) => studentPrcSetPreviewZoom(event.target.value));
+      document.getElementById("prcPreviewZoomOutBtn")?.addEventListener("click", () => studentPrcSetPreviewZoom(Number(document.getElementById("prcPreviewZoomRange")?.value || 100) - 10));
+      document.getElementById("prcPreviewZoomInBtn")?.addEventListener("click", () => studentPrcSetPreviewZoom(Number(document.getElementById("prcPreviewZoomRange")?.value || 100) + 10));
+      document.getElementById("prcPreviewZoomResetBtn")?.addEventListener("click", () => studentPrcSetPreviewZoom(100));
       document.getElementById("prcPreviewOverlay")?.addEventListener("click", (event) => {
         if (event.target === event.currentTarget) studentPrcClosePreview();
       });
       document.getElementById("prcPreviewDownloadBtn")?.addEventListener("click", async () => {
-        if (!studentPrcPreviewRecords.length && !studentPrcExportStudent?.student_id) return;
+        if (!studentPrcExportStudent?.student_id || !document.getElementById("prcPreviewPages")?.children.length) {
+          window.alert("Open the PRC form preview first, then click Download DOCX Form.");
+          return;
+        }
         const button = document.getElementById("prcPreviewDownloadBtn");
         button?.setAttribute("disabled", "disabled");
         try {
@@ -4828,7 +5277,7 @@
           setTimeout(() => URL.revokeObjectURL(fileUrl), 1000);
         } catch (error) {
           console.error("Unable to create the PRC DOCX file.", error);
-          window.alert("Unable to create the PRC DOCX file. Please try again.");
+          window.alert(`Unable to create the PRC DOCX file. ${error?.message || "Please try again."}`);
         } finally {
           button?.removeAttribute("disabled");
         }
@@ -5057,6 +5506,95 @@
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
+      }
+
+      function xlsxXmlEscape(value) {
+        return String(value == null ? "" : value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&apos;")
+          .replace(/\r?\n/g, "&#10;");
+      }
+
+      function buildAdminAnnualXlsx(yearLabel, records) {
+        const headers = ["No.", "Academic Year", "Student ID", "Student Name", "Procedure", "Patient Name", "Patient Address", "Case No.", "Complete Diagnosis", "Date & Time Performed", "Facility Name", "Facility Address", "Facility Contact Number", "Supervisor Printed Name", "Supervisor Contact Number", "Supervisor Position / Designation", "Supervisor License No.", "Supervisor License Expiry Date", "Checked By"];
+        const grouped = new Map();
+        records.forEach((record) => {
+          const key = String(record.student_id || record.student_name || "Unknown Student").trim() || "Unknown Student";
+          if (!grouped.has(key)) grouped.set(key, []);
+          grouped.get(key).push(record);
+        });
+        const usedSheetNames = new Set();
+        const makeSheetName = (recordsForStudent) => {
+          const first = recordsForStudent[0] || {};
+          const base = String(first.student_name || first.student_id || "Student")
+            .replace(/[\\/*?:\[\]]/g, " ").trim().slice(0, 31) || "Student";
+          let name = base;
+          let suffix = 2;
+          while (usedSheetNames.has(name)) {
+            const suffixText = ` (${suffix++})`;
+            name = `${base.slice(0, 31 - suffixText.length)}${suffixText}`;
+          }
+          usedSheetNames.add(name);
+          return name;
+        };
+        const sheetDefinitions = Array.from(grouped.values()).map((studentRecords, index) => ({
+          name: makeSheetName(studentRecords),
+          path: `xl/worksheets/sheet${index + 1}.xml`,
+          records: studentRecords,
+        }));
+        const cell = (value) => `<c t="inlineStr"><is><t xml:space="preserve">${xlsxXmlEscape(value)}</t></is></c>`;
+        const row = (values) => `<row>${values.map(cell).join("")}</row>`;
+        const worksheetXml = (studentRecords) => {
+          const first = studentRecords[0] || {};
+          const dataRows = studentRecords.map((record, index) => row([
+            index + 1, record.academic_year || record.school_year || record.assigned_school_year || yearLabel, record.student_id, record.student_name, record.procedure_name || record.procedure_key, record.patient_name, record.patient_address, record.case_no, record.complete_diagnosis, formatAdminTimestamp(record.date_time_performed, ""), record.facility_name, record.facility_address, record.facility_contact_number, record.supervisor_printed_name, record.supervisor_contact_number, record.supervisor_position_designation, record.supervisor_license_no, record.supervisor_license_expiry_date, record.checked_by,
+          ])).join("");
+          return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>${row(["Student ID", first.student_id || ""])}${row(["Student Name", first.student_name || ""])}${row([])}${row(headers)}${dataRows}</sheetData></worksheet>`;
+        };
+        const workbookSheets = sheetDefinitions.map((sheet, index) => `<sheet name="${xlsxXmlEscape(sheet.name)}" sheetId="${index + 1}" r:id="rId${index + 1}"/>`).join("");
+        const workbookRelationships = sheetDefinitions.map((sheet, index) => `<Relationship Id="rId${index + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${index + 1}.xml"/>`).join("");
+        const contentOverrides = sheetDefinitions.map((sheet, index) => `<Override PartName="/xl/worksheets/sheet${index + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("");
+        const files = [
+          { path: "[Content_Types].xml", content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>${contentOverrides}<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/><Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/></Types>` },
+          { path: "_rels/.rels", content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/></Relationships>` },
+          { path: "xl/workbook.xml", content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${workbookSheets}</sheets></workbook>` },
+          { path: "xl/_rels/workbook.xml.rels", content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${workbookRelationships}</Relationships>` },
+          { path: "docProps/core.xml", content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>Annual Clinical Records - ${xlsxXmlEscape(yearLabel)}</dc:title><dc:creator>Clinical Portal</dc:creator></cp:coreProperties>` },
+          { path: "docProps/app.xml", content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"><Application>Clinical Portal</Application></Properties>` },
+          ...sheetDefinitions.map((sheet) => ({ path: sheet.path, content: worksheetXml(sheet.records) })),
+        ];
+        return new Blob([createZipBlob(files)], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      }
+
+      async function exportAdminAnnualYearToExcel(yearLabel, button) {
+        if (!yearLabel) return;
+        if (button) button.disabled = true;
+        try {
+          const result = await ApiClient.getJoinedCases("", "", "");
+          const records = Array.isArray(result) ? result : [];
+          const yearRecords = records.filter((record) =>
+            recordMatchesSchoolYear(record, yearLabel),
+          );
+
+          if (!yearRecords.length) {
+            showMessageDialog(`No clinical records are available for academic year ${yearLabel}.`, "No Records");
+            return;
+          }
+
+          const blob = buildAdminAnnualXlsx(yearLabel, yearRecords);
+          downloadBlobFile(
+            `annual-records-${String(yearLabel).replace(/[^a-z0-9]+/gi, "-")}.xlsx`,
+            blob,
+          );
+        } catch (error) {
+          console.error(error);
+          showMessageDialog("Unable to download the Excel workbook right now.", "Export Failed");
+        } finally {
+          if (button) button.disabled = false;
+        }
       }
 
       // Render the list of school years inside Case Records
@@ -5589,13 +6127,25 @@
         if (crumb === "students") backToYearlyStudents();
       });
       openAddYearlyBlockBtn?.addEventListener("click", showAddYearlyBlockModal);
+      refreshYearlyBlocksBtn?.addEventListener("click", () => renderYearlyBlocks());
       yearlyYearsTbody?.addEventListener("click", (event) => {
+        const downloadButton = event.target.closest("button[data-yearly-download]");
+        if (downloadButton) {
+          event.preventDefault();
+          event.stopPropagation();
+          exportAdminAnnualYearToExcel(
+            downloadButton.getAttribute("data-yearly-download") || "",
+            downloadButton,
+          );
+          return;
+        }
         const row = event.target.closest("tr[data-year-open]");
         if (!row) return;
         openYearlyReportYear(row.getAttribute("data-year-open") || "");
       });
       yearlyYearsTbody?.addEventListener("keydown", (event) => {
         if (event.key !== "Enter" && event.key !== " ") return;
+        if (event.target.closest("button")) return;
         const row = event.target.closest("tr[data-year-open]");
         if (!row) return;
         event.preventDefault();
@@ -5698,16 +6248,20 @@
         const requests = getEditRequestsFiltered();
         editRequestsTbody.innerHTML = "";
         editRequestsEmpty.style.display = requests.length ? "none" : "block";
+        editRequestsEmpty.textContent = viewingArchivedEditRequests
+          ? "No archived edit requests found."
+          : "No edit requests found.";
 
         requests.forEach((req, index) => {
           const tr = document.createElement("tr");
           const caseNos = Array.isArray(req.caseNumbers)
             ? req.caseNumbers.join(", ")
             : req.caseNumbers || "-";
-          const createdTs = req.createdAt || req.requestedAt || req.requestedAt;
-          const created = createdTs ? new Date(createdTs).toLocaleString() : "-";
-          const statusBadge =
-            req.status === "approved"
+          const createdTs = req.createdAt || req.created_at || req.requestedAt || req.requested_at;
+          const created = formatAdminTimestamp(createdTs, "-");
+          const statusBadge = viewingArchivedEditRequests
+            ? '<span class="edit-request-status archived">Archived</span>'
+            : req.status === "approved"
               ? '<span class="edit-request-status approved">Approved</span>'
               : req.status === "rejected"
                 ? '<span class="edit-request-status rejected">Rejected</span>'
@@ -5722,8 +6276,10 @@
           <td>${created}</td>
           <td class="action-cell">
             <button class="mini-btn" data-action="view-request" data-id="${req.id || ""}">View</button>
-            ${req.status === "pending" ? `<button class="mini-btn success" data-action="approve-request" data-id="${req.id || ""}">Approve</button><button class="mini-btn danger" data-action="reject-request" data-id="${req.id || ""}">Reject</button>` : ""}
-            <button class="mini-btn" data-action="delete-request" data-id="${req.id || ""}">Archive</button>
+            ${!viewingArchivedEditRequests && req.status === "pending" ? `<button class="mini-btn success" data-action="approve-request" data-id="${req.id || ""}">Approve</button><button class="mini-btn danger" data-action="reject-request" data-id="${req.id || ""}">Reject</button>` : ""}
+            ${viewingArchivedEditRequests
+              ? `<button class="mini-btn success" data-action="restore-request" data-id="${req.id || ""}">Restore</button>`
+              : `<button class="mini-btn" data-action="delete-request" data-id="${req.id || ""}">Archive</button>`}
           </td>
         `;
           editRequestsTbody.appendChild(tr);
@@ -5754,7 +6310,8 @@
         const caseNos = Array.isArray(request.caseNumbers)
           ? request.caseNumbers.join(", ")
           : request.caseNumbers || "N/A";
-        const details = `Student ID: ${request.studentId || "N/A"}\nProcedure Type: ${request.type || "N/A"}\nCase Numbers: ${caseNos}\nStatus: ${request.status || "Pending"}\nCreated: ${request.requestedAt ? new Date(request.requestedAt).toLocaleString() : "N/A"}${request.rejection_remarks ? "\nRejection Remarks: " + request.rejection_remarks : ""}`;
+          const requestTimestamp = request.createdAt || request.created_at || request.requestedAt || request.requested_at;
+          const details = `Student ID: ${request.studentId || "N/A"}\nProcedure Type: ${request.type || "N/A"}\nCase Numbers: ${caseNos}\nStatus: ${request.status || "Pending"}\nCreated: ${formatAdminTimestamp(requestTimestamp, "N/A")}${request.rejection_remarks ? "\nRejection Remarks: " + request.rejection_remarks : ""}`;
         await showMessageDialog(details, "Edit Request Details");
       }
 
@@ -5789,6 +6346,20 @@
           const result = await ApiClient.archiveEditRequest(requestId);
           if (!result?.ok) {
             await showMessageDialog(result?.message || "Unable to archive edit request.", "Archive Failed");
+            return;
+          }
+          await loadAdminEditRequests();
+          refreshOverview();
+        })();
+      }
+
+      function restoreEditRequest(requestId) {
+        (async () => {
+          const confirmed = await showOptionPane("Restore this edit request to the active list?", { title: "Restore Edit Request", confirmLabel: "Restore" });
+          if (!confirmed) return;
+          const result = await ApiClient.restoreEditRequest(requestId);
+          if (!result?.ok) {
+            await showMessageDialog(result?.message || "Unable to restore edit request.", "Restore Failed");
             return;
           }
           await loadAdminEditRequests();
@@ -5839,13 +6410,21 @@
 
       async function loadAdminEditRequests() {
         try {
-          adminEditRequests = await ApiClient.getEditRequests();
+          adminEditRequests = await ApiClient.getEditRequests({ archived: viewingArchivedEditRequests });
           if (!Array.isArray(adminEditRequests)) adminEditRequests = [];
           renderEditRequests();
-          const pending = adminEditRequests.filter((request) => request.status === "pending").length;
+          const pending = viewingArchivedEditRequests
+            ? 0
+            : adminEditRequests.filter((request) => request.status === "pending").length;
           if (sidebarCountRequests) {
             sidebarCountRequests.textContent = String(pending);
             sidebarCountRequests.style.display = pending ? "inline-flex" : "none";
+          }
+          if (toggleArchivedEditRequestsBtn) {
+            toggleArchivedEditRequestsBtn.innerHTML = viewingArchivedEditRequests
+              ? '<i class="fas fa-list" aria-hidden="true"></i> View Active'
+              : '<i class="fas fa-box-archive" aria-hidden="true"></i> View Archived';
+            toggleArchivedEditRequestsBtn.setAttribute("aria-pressed", String(viewingArchivedEditRequests));
           }
         } catch (error) {
           adminEditRequests = [];
@@ -5915,7 +6494,9 @@
           "Are you sure you want to logout?",
         );
         if (!confirmed) return;
+        await ApiClient.logout();
         sessionStorage.removeItem(AUTH_KEY);
+        sessionStorage.removeItem("currentAdmin");
         sessionStorage.removeItem("thesis_admin_quick_access");
         window.location.href = "login.html";
       });
@@ -5961,7 +6542,46 @@
         if (action === "toggle-status") toggleInstructorStatus(id, btn.getAttribute("data-next-status") || "inactive");
       });
 
-      document.getElementById("saveAdminPinBtn")?.addEventListener("click", () => {
+      async function openAdminPinEditor() {
+        const response = showOptionPane("", {
+          title: "Edit Administrator Security",
+          confirmLabel: "Save",
+          cancelLabel: "Cancel",
+        });
+        optionPaneMessage.innerHTML = `
+          <form class="admin-settings-edit-form" id="adminSettingsEditForm">
+            <label>Current PIN<input name="currentPin" type="password" inputmode="numeric" autocomplete="current-password"></label>
+            <label>New PIN<input name="newPin" type="password" inputmode="numeric" minlength="6" autocomplete="new-password"></label>
+            <label>Confirm New PIN<input name="confirmPin" type="password" inputmode="numeric" minlength="6" autocomplete="new-password"></label>
+          </form>`;
+        const accepted = await response;
+        if (!accepted) return;
+        const form = document.getElementById("adminSettingsEditForm");
+        const current = form?.querySelector("[name='currentPin']")?.value.trim() || "";
+        const next = form?.querySelector("[name='newPin']")?.value.trim() || "";
+        const confirmation = form?.querySelector("[name='confirmPin']")?.value.trim() || "";
+        if (!/^\d{6,12}$/.test(next)) {
+          await showMessageDialog("New PIN must contain 6 to 12 digits.", "Unable to Update PIN");
+          return;
+        }
+        if (next !== confirmation) {
+          await showMessageDialog("New PIN entries do not match.", "Unable to Update PIN");
+          return;
+        }
+        const result = await ApiClient.updateAdminPin(current, next);
+        if (!result?.ok) {
+          await showMessageDialog(result?.message || "Unable to update the administrator PIN.", "Unable to Update PIN");
+          return;
+        }
+        await addAuditEntry("Administrator PIN updated", "Security credential changed");
+        clearAdminPinChangeRequirement();
+        await showMessageDialog("Administrator PIN updated successfully.", "Settings Saved");
+        window.location.reload();
+      }
+
+      document.getElementById("openAdminPinEditBtn")?.addEventListener("click", openAdminPinEditor);
+
+      document.getElementById("saveAdminPinBtn")?.addEventListener("click", async () => {
         const message = document.getElementById("adminPinSettingsMessage");
         const currentInput = document.getElementById("currentAdminPin");
         const newInput = document.getElementById("newAdminPin");
@@ -5969,12 +6589,7 @@
         const current = currentInput.value.trim();
         const next = newInput.value.trim();
         const confirmation = confirmInput.value.trim();
-        const savedPin = localStorage.getItem("thesis_admin_pin") || "123456";
         message.className = "message error";
-        if (current !== savedPin) {
-          message.textContent = "Current PIN is incorrect.";
-          return;
-        }
         if (!/^\d{6,12}$/.test(next)) {
           message.textContent = "New PIN must contain 6 to 12 digits.";
           return;
@@ -5983,11 +6598,18 @@
           message.textContent = "New PIN entries do not match.";
           return;
         }
-        localStorage.setItem("thesis_admin_pin", next);
+        const result = await ApiClient.updateAdminPin(current, next);
+        if (!result?.ok) {
+          message.textContent = result?.message || "Unable to update the administrator PIN.";
+          return;
+        }
         currentInput.value = newInput.value = confirmInput.value = "";
         message.className = "message success";
         message.textContent = "Administrator PIN updated successfully.";
-        addAuditEntry("Administrator PIN updated", "Security credential changed");
+        await addAuditEntry("Administrator PIN updated", "Security credential changed");
+        clearAdminPinChangeRequirement();
+        await showMessageDialog("Administrator passkey has been saved successfully.", "Passkey Saved");
+        window.location.reload();
       });
       document.getElementById("downloadBackupBtn")?.addEventListener("click", downloadPortalBackup);
       document.getElementById("chooseRestoreBtn")?.addEventListener("click", () => {
@@ -5997,14 +6619,7 @@
         restorePortalBackup(event.target.files?.[0]);
         event.target.value = "";
       });
-      document.getElementById("clearAuditLogBtn")?.addEventListener("click", async () => {
-        if (!await showOptionPane(
-          "Clear the audit log? This action cannot be undone.",
-          { title: "Clear Audit Log", confirmLabel: "Clear" },
-        )) return;
-        writeJson(AUDIT_LOG_KEY, []);
-        renderAuditLog();
-      });
+      document.getElementById("refreshAuditLogBtn")?.addEventListener("click", loadAdminActivityLog);
 
       studentsBreadcrumb?.addEventListener("click", (e) => {
         const btn = e.target.closest("button[data-crumb]");
@@ -6099,12 +6714,17 @@
         if (action === "archive") archiveStudent(studentId);
       });
       async function showArchivedStudents() {
+        if (archivedStudentsPanel.style.display !== "none") {
+          await showActiveStudents();
+          return;
+        }
         const activeSearchRow = studentSearchInput?.closest(".row");
         const activeStudentsTable = studentsTbody?.closest(".table-wrap");
         archivedStudentsPanel.style.display = "block";
         if (activeSearchRow) activeSearchRow.style.display = "none";
         if (activeStudentsTable) activeStudentsTable.style.display = "none";
         if (studentsEmpty) studentsEmpty.style.display = "none";
+        if (archivedStudentsBtnLabel) archivedStudentsBtnLabel.textContent = "Student List";
         await renderArchivedStudents();
       }
 
@@ -6114,12 +6734,12 @@
         const activeStudentsTable = studentsTbody?.closest(".table-wrap");
         if (activeSearchRow) activeSearchRow.style.display = "";
         if (activeStudentsTable) activeStudentsTable.style.display = "";
+        if (archivedStudentsBtnLabel) archivedStudentsBtnLabel.textContent = "Archived Students";
         await renderBlockStudents();
         await renderArchivedStudents();
       }
 
       toggleArchivedStudentsBtn?.addEventListener("click", showArchivedStudents);
-      document.getElementById("backToActiveStudentsBtn")?.addEventListener("click", showActiveStudents);
       archivedStudentsTbody?.addEventListener("click", (e) => {
         const btn = e.target.closest("button[data-restore-student]");
         if (!btn) return;
@@ -6136,7 +6756,7 @@
         const records = await getCasesFiltered();
         const headers = ["Student ID", "Student", "Procedure", "Patient", "Case No.", "Diagnosis", "Date & Time", "Facility", "Supervisor"];
         const csvCell = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
-        const rows = records.map((record) => [record.student_id, record.student_name, record.procedure_name, record.patient_name, record.case_no, record.complete_diagnosis, record.date_time_performed, record.facility_name, record.supervisor_printed_name].map(csvCell).join(","));
+        const rows = records.map((record) => [record.student_id, record.student_name, record.procedure_name, record.patient_name, record.case_no, record.complete_diagnosis, formatAdminTimestamp(record.date_time_performed, ""), record.facility_name, record.supervisor_printed_name].map(csvCell).join(","));
         downloadBlobFile(`clinical-progress-${new Date().toISOString().slice(0, 10)}.csv`, new Blob(["\ufeff" + [headers.map(csvCell).join(","), ...rows].join("\n")], { type: "text/csv;charset=utf-8" }));
       });
       casesSearchInput?.addEventListener("input", renderProgressOverview);
@@ -6169,11 +6789,17 @@
 
       refreshNotificationsBtn?.addEventListener("click", loadAdminNotifications);
       notificationsSearchInput?.addEventListener("input", renderNotifications);
+      clearNotificationsSearchBtn?.addEventListener("click", () => {
+        if (!notificationsSearchInput) return;
+        notificationsSearchInput.value = "";
+        notificationsSearchInput.focus();
+        renderNotifications();
+      });
       deleteAllNotificationsBtn?.addEventListener(
         "click",
         deleteAllNotifications,
       );
-      document.getElementById("viewArchivedNotificationsBtn")?.addEventListener("click", toggleArchivedNotifications);
+      viewArchivedNotificationsBtn?.addEventListener("click", toggleArchivedNotifications);
       notificationsTbody?.addEventListener("click", (e) => {
         const btn = e.target.closest("button[data-action]");
         if (!btn) return;
@@ -6181,9 +6807,14 @@
         const notificationId = btn.getAttribute("data-id");
         if (action === "delete-notification") deleteNotification(notificationId);
         if (action === "restore-notification") restoreNotification(notificationId);
+        if (action === "delete-archived-notification") deleteArchivedNotification(notificationId);
       });
 
       refreshEditRequestsBtn?.addEventListener("click", loadAdminEditRequests);
+      toggleArchivedEditRequestsBtn?.addEventListener("click", async () => {
+        viewingArchivedEditRequests = !viewingArchivedEditRequests;
+        await loadAdminEditRequests();
+      });
       editRequestsSearchInput?.addEventListener("input", renderEditRequests);
       editRequestsStatusFilter?.addEventListener("change", renderEditRequests);
       editRequestsTbody?.addEventListener("click", (e) => {
@@ -6195,6 +6826,7 @@
         if (action === "approve-request") decideEditRequest(requestId, "approve");
         if (action === "reject-request") decideEditRequest(requestId, "reject");
         if (action === "delete-request") deleteEditRequest(requestId);
+        if (action === "restore-request") restoreEditRequest(requestId);
       });
 
       // Delegated fallback keeps navigation available if the sidebar is redrawn.
@@ -6227,19 +6859,6 @@
         "editRequestsCardCollapsed",
       ].forEach((key) => localStorage.removeItem(key));
 
-      renderInstructorAccounts();
-      refreshOverview();
-      setStudentsNavLevel("years");
-      renderSchoolYears();
-      renderArchivedStudents();
-      renderProgressOverview();
-      loadAdminNotifications();
-      loadAdminEditRequests();
-      populateAllSchoolYearSelects();
-      renderYearlyYears();
-      renderAuditLog();
-      renderDashboardRecentActivity();
-
       // Live portal synchronization. The open screen is refreshed in place,
       // while active form fields are left untouched until the user finishes.
       let adminLiveRefreshBusy = false;
@@ -6270,7 +6889,7 @@
 
           if (activeCard === "dashboardCard") {
             await refreshOverview();
-            renderDashboardRecentActivity();
+            await loadAdminActivityLog();
           } else if (activeCard === "instructorsCard") {
             await renderInstructorAccounts();
           } else if (activeCard === "studentsCard") {
@@ -6292,7 +6911,7 @@
           } else if (activeCard === "notificationsCard") {
             await loadAdminNotifications();
           } else if (activeCard === "systemToolsCard") {
-            renderAuditLog();
+            await loadAdminActivityLog();
           }
           requestAnimationFrame(() => {
             window.scrollTo(scrollX, scrollY);
@@ -6305,16 +6924,42 @@
           adminLiveRefreshBusy = false;
         }
       }
-      refreshAdminLiveData();
-      setInterval(refreshAdminLiveData, 5000);
-      window.addEventListener("focus", refreshAdminLiveData);
-      document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) refreshAdminLiveData();
-      });
 
-      // Initialize default landing page on dashboard overview
-      showCard("dashboardCard");
+      let adminDashboardInitialized = false;
+      function startAdminDashboard() {
+        if (adminDashboardInitialized) return;
+        adminDashboardInitialized = true;
+        renderInstructorAccounts();
+        refreshOverview();
+        setStudentsNavLevel("years");
+        renderSchoolYears();
+        renderArchivedStudents();
+        renderProgressOverview();
+        loadAdminNotifications();
+        loadAdminEditRequests();
+        populateAllSchoolYearSelects();
+        renderYearlyYears();
+        loadAdminActivityLog();
+        refreshAdminLiveData();
+        setInterval(refreshAdminLiveData, 5000);
+        window.addEventListener("focus", refreshAdminLiveData);
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden) refreshAdminLiveData();
+        });
+        showCard("dashboardCard");
+      }
+
+      (window.__portalAdminSessionReady || Promise.resolve({ ok: true, role: "admin" }))
+        .then((session) => {
+          if (!session?.ok || session.role !== "admin") return;
+          if (isAdminPinChangeRequired()) {
+            openAdminPinEditor();
+            return;
+          }
+          startAdminDashboard();
+        });
     </script>
-    <script src="assets/js/modern-shell.js?v=20260722-2"></script>
+    <script src="assets/js/modern-shell.js?v=20260902-timestamps-5"></script>
+    <script src="assets/js/site-protection.js?v=20260901-1"></script>
   </body>
 </html>

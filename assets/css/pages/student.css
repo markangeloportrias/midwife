@@ -3216,6 +3216,118 @@ html body.role-student .workspace-header {
   border-bottom: 1px solid var(--admin-line) !important;
 }
 
+/* Use the same yellow boxed icons for Student workspace headers. */
+html body.role-student .student-title-heading {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+html body.role-student .student-title-copy {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+html body.role-student .student-title-icon,
+html body.role-student .chat-directory-icon {
+  display: inline-grid !important;
+  flex: 0 0 38px !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  width: 38px !important;
+  height: 38px !important;
+  border: 1px solid #e6b900 !important;
+  border-radius: 10px !important;
+  background: #ffd500 !important;
+  box-shadow: 0 5px 12px rgba(0, 41, 107, 0.12) !important;
+  color: #00296b !important;
+}
+
+html body.role-student .student-title-icon i,
+html body.role-student .chat-directory-icon i {
+  color: inherit !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+html body.role-student .recent-records-title > .student-title-icon {
+  width: 38px !important;
+  height: 38px !important;
+  flex: 0 0 38px !important;
+}
+
+html body.role-student .recent-records-title > .student-title-icon i {
+  display: inline !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  font-size: 16px !important;
+}
+
+html body.role-student #settingsTab .student-settings-edit-fields,
+html body.role-student #settingsTab .settings-photo-button {
+  display: none !important;
+}
+
+html body.role-student .student-settings-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+html body.role-student .student-settings-summary > div {
+  display: grid;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid var(--admin-line);
+  border-radius: 8px;
+  background: #f8fafc;
+  text-align: left;
+}
+
+html body.role-student .student-settings-summary span {
+  color: var(--admin-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+html body.role-student .student-settings-summary strong {
+  color: var(--admin-navy);
+  font-size: 12px;
+}
+
+html body.role-student .settings-edit-form {
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+html body.role-student .settings-edit-form label {
+  display: grid;
+  gap: 5px;
+  color: var(--admin-navy);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+html body.role-student .settings-edit-form input,
+html body.role-student .settings-edit-form select {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid var(--admin-line);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--admin-navy);
+  font: inherit;
+  font-size: 12px;
+}
+
 /* Admin clinical table geometry and type scale. */
 html body.role-student .clinical-form-table-container {
   padding: 8px !important;
@@ -3937,4 +4049,189 @@ html body.role-student table.prc-procedure-table .case-action-btn {
   border: 1px solid #000 !important;
   border-radius: 0 !important;
   color: #000 !important;
+}
+
+/* Settings categories: keep the read-only page complete without exposing edit fields. */
+html body.role-student #settingsTab .frontend-panel-body {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px !important;
+}
+
+html body.role-student #settingsTab .settings-profile-card {
+  grid-column: 1 / -1;
+  padding: 16px !important;
+  border: 1px solid #d6e2ef !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+}
+
+html body.role-student #settingsTab .settings-category-card {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 154px;
+  padding: 16px !important;
+  border: 1px solid #d6e2ef !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html body.role-student #settingsTab .settings-category-card .workspace-subtitle {
+  max-width: 300px;
+}
+
+html body.role-student #settingsTab .settings-category-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid #edf2f7;
+}
+
+html body.role-student #settingsTab .settings-category-status > i {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 8px;
+  background: #fff7cf;
+  color: #00296b;
+  font-size: 12px;
+}
+
+html body.role-student #settingsTab .settings-category-status > div {
+  display: grid;
+  gap: 2px;
+}
+
+html body.role-student #settingsTab .settings-category-status span {
+  color: #6c82a0;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+html body.role-student #settingsTab .settings-category-status strong {
+  color: #00296b;
+  font-size: 12px;
+}
+
+html body.role-student #settingsTab .settings-category-status small {
+  margin-left: auto;
+  color: #7b8ea9;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  html body.role-student #settingsTab .frontend-panel-body {
+    grid-template-columns: 1fr;
+  }
+
+  html body.role-student #settingsTab .settings-profile-card {
+    grid-column: auto;
+  }
+}
+
+/* Minimal Profile & Settings surface. */
+html body.role-student #settingsTab {
+  padding: 18px 20px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 16px rgba(0, 41, 107, 0.06) !important;
+}
+
+html body.role-student #settingsTab > .workspace-header {
+  align-items: center !important;
+  margin-bottom: 16px !important;
+  padding-bottom: 14px !important;
+}
+
+html body.role-student #settingsTab .settings-profile-card {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-student #settingsTab .profile-panel-top {
+  gap: 13px !important;
+  margin: 0 !important;
+  padding: 0 0 15px !important;
+  border-bottom: 1px solid #e2eaf3 !important;
+}
+
+html body.role-student #settingsTab .settings-avatar-shell {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  border: 1px solid #d6e2ef !important;
+  border-radius: 50% !important;
+  background: #f5f8fc !important;
+  box-shadow: none !important;
+}
+
+html body.role-student #settingsTab .settings-section-heading strong {
+  color: #00296b !important;
+  font-size: 15px !important;
+}
+
+html body.role-student #settingsTab .settings-kicker {
+  color: #6c82a0 !important;
+  font-size: 9px !important;
+}
+
+html body.role-student #settingsTab .student-settings-summary {
+  gap: 0 !important;
+  margin: 15px 0 0 !important;
+  overflow: hidden;
+  border: 1px solid #d6e2ef !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+}
+
+html body.role-student #settingsTab .student-settings-summary > div {
+  min-height: 66px;
+  padding: 12px 14px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #edf2f7 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+html body.role-student #settingsTab .student-settings-summary > div:nth-last-child(-n + 2) {
+  border-bottom: 0 !important;
+}
+
+html body.role-student #settingsTab .student-settings-summary span {
+  color: #6c82a0 !important;
+  font-size: 9px !important;
+}
+
+html body.role-student #settingsTab .student-settings-summary strong {
+  color: #00296b !important;
+  font-size: 12px !important;
+}
+
+html body.role-student #settingsTab .settings-edit-button {
+  min-height: 34px !important;
+  padding: 0 13px !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 640px) {
+  html body.role-student #settingsTab {
+    padding: 15px !important;
+  }
+
+  html body.role-student #settingsTab .student-settings-summary {
+    grid-template-columns: 1fr !important;
+  }
+
+  html body.role-student #settingsTab .student-settings-summary > div:nth-last-child(2) {
+    border-bottom: 1px solid #edf2f7 !important;
+  }
 }

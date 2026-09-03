@@ -1,0 +1,357 @@
+/* PRC export preview: a 1:1 screen proof of the supplied 13 x 8.5 inch
+   legal-landscape form.  The DOCX template uses 0.6in side/bottom margins
+   and a 0.447in top margin. */
+#prcPreviewOverlay .prc-preview-pages {
+  padding: 28px;
+  background: #dceaf5;
+}
+
+/* The preview shell uses the full available viewport; only the document pages
+   remain scrollable inside it. */
+#prcPreviewOverlay {
+  padding: 0 !important;
+}
+
+#prcPreviewOverlay .prc-preview-dialog {
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100vh !important;
+  max-height: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+#prcPreviewOverlay .prc-preview-toolbar-controls,
+#prcPreviewOverlay .prc-preview-zoom-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#prcPreviewOverlay .prc-preview-toolbar-controls {
+  margin-left: auto;
+}
+
+#prcPreviewOverlay .prc-preview-zoom-control {
+  color: #315878;
+  font: 600 12px/1 Inter, sans-serif;
+  white-space: nowrap;
+}
+
+#prcPreviewOverlay .prc-preview-zoom-control input[type="range"] {
+  width: 130px;
+  accent-color: #075dcc;
+  cursor: pointer;
+}
+
+#prcPreviewOverlay .prc-preview-zoom-btn,
+#prcPreviewOverlay .prc-preview-zoom-reset {
+  display: inline-grid;
+  min-width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  place-items: center;
+  border: 1px solid #b9d2e8;
+  border-radius: 7px;
+  color: #07539e;
+  background: #f4f9fd;
+  font: 700 16px/1 Inter, sans-serif;
+  cursor: pointer;
+}
+
+#prcPreviewOverlay .prc-preview-zoom-reset {
+  padding: 0 9px;
+  font-size: 11px;
+}
+
+#prcPreviewOverlay .prc-preview-zoom-btn:hover,
+#prcPreviewOverlay .prc-preview-zoom-reset:hover {
+  border-color: #075dcc;
+  background: #e8f2ff;
+}
+
+#prcPreviewOverlay .prc-preview-zoom-value {
+  min-width: 42px;
+  color: #123e68;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+#prcPreviewOverlay .prc-export-form {
+  position: relative;
+  box-sizing: border-box;
+  width: 1248px;
+  height: 816px;
+  min-height: 816px;
+  margin: 0 auto 28px;
+  padding: 89px 58px 58px;
+  overflow: hidden;
+  color: #000 !important;
+  background: #fff !important;
+  box-shadow: 0 5px 18px rgba(22, 49, 74, .2);
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14.67px;
+  line-height: 1.15;
+  zoom: var(--prc-preview-zoom, 1);
+}
+
+#prcPreviewOverlay .prc-export-form:last-child { margin-bottom: 0; }
+#prcPreviewOverlay .prc-export-form.prc-export-continuation { padding-top: 60px; }
+
+#prcPreviewOverlay .prc-export-heading {
+  position: relative;
+  min-height: 64px;
+  margin: 0;
+}
+
+#prcPreviewOverlay .prc-export-logo {
+  position: absolute;
+  top: 0;
+  left: 242px;
+  width: 97px;
+  height: 95px;
+  object-fit: contain;
+}
+
+#prcPreviewOverlay .prc-export-heading-text {
+  padding-top: 2px;
+  text-align: center;
+}
+
+#prcPreviewOverlay .prc-export-agency,
+#prcPreviewOverlay .prc-export-city,
+#prcPreviewOverlay .prc-export-board,
+#prcPreviewOverlay .prc-export-form h1 {
+  margin: 0 !important;
+  color: #000 !important;
+  font-family: "Times New Roman", Times, serif !important;
+  text-align: center;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+#prcPreviewOverlay .prc-export-agency { font-size: 15.33px; font-weight: 400; }
+#prcPreviewOverlay .prc-export-city,
+#prcPreviewOverlay .prc-export-board { font-size: 15.33px; font-weight: 400; }
+#prcPreviewOverlay .prc-export-board { font-weight: 700; }
+#prcPreviewOverlay .prc-export-form h1 {
+  margin: 0 !important;
+  font-size: 21.33px !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+}
+
+#prcPreviewOverlay .prc-export-check {
+  margin: 0 0 12px !important;
+  color: #000 !important;
+  font: 14.67px/1.15 "Times New Roman", Times, serif !important;
+  text-align: right;
+}
+
+#prcPreviewOverlay .prc-export-check-label,
+#prcPreviewOverlay .prc-export-check-options {
+  color: #000 !important;
+  font: 15.33px/1.15 "Times New Roman", Times, serif !important;
+}
+#prcPreviewOverlay .prc-export-check-label {
+  margin: 0;
+  padding-left: 672px;
+}
+#prcPreviewOverlay .prc-export-check-options {
+  margin: 0 0 8px;
+  padding-left: 768px;
+  white-space: nowrap;
+}
+
+#prcPreviewOverlay .prc-check-box {
+  display: inline-block;
+  width: 39px;
+  height: 24px;
+  box-sizing: border-box;
+  margin: 0 5px 0 12px;
+  border: 1px solid #000;
+  color: #000 !important;
+  font: 15px/22px Arial, sans-serif !important;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#prcPreviewOverlay .prc-export-applicant {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 16px !important;
+  padding-left: 48px;
+  color: #000 !important;
+  font: 14.67px/1.15 "Times New Roman", Times, serif !important;
+  white-space: nowrap;
+}
+
+#prcPreviewOverlay .prc-export-line {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: 4px;
+  border-bottom: 1px solid #000;
+  font-weight: 700;
+}
+
+#prcPreviewOverlay .prc-export-school-label { margin-left: 72px; }
+#prcPreviewOverlay .prc-export-school { flex: 0 1 315px; }
+
+#prcPreviewOverlay .prc-export-table {
+  margin: 0 !important;
+  border: 1px solid #000 !important;
+  outline: 1px solid #000 !important;
+  outline-offset: -1px;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  table-layout: fixed !important;
+  color: #000 !important;
+  background: #fff !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+#prcPreviewOverlay .prc-export-table thead,
+#prcPreviewOverlay .prc-export-table tbody,
+#prcPreviewOverlay .prc-export-table tr { background: #fff !important; }
+
+#prcPreviewOverlay .prc-export-table th,
+#prcPreviewOverlay .prc-export-table td {
+  box-sizing: border-box !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  padding: 2px 4px !important;
+  color: #000 !important;
+  background: #fff !important;
+  vertical-align: middle !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word;
+}
+
+#prcPreviewOverlay .prc-export-table th,
+#prcPreviewOverlay .prc-export-table td {
+  border-color: #000 !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+}
+
+#prcPreviewOverlay .prc-export-table thead th {
+  border-width: 1.5px !important;
+  border-color: #000 !important;
+  border-style: solid !important;
+}
+
+#prcPreviewOverlay .prc-export-table th {
+  height: 29px !important;
+  font: 700 10.67px/1.05 "Times New Roman", Times, serif !important;
+  text-align: center !important;
+}
+
+#prcPreviewOverlay .prc-export-table thead tr:first-child th {
+  height: auto !important;
+}
+
+#prcPreviewOverlay .prc-export-table thead tr:nth-child(2) th {
+  height: 29.33px !important;
+}
+
+#prcPreviewOverlay .prc-export-table td {
+  /* Word template: fixed row height plus paragraph spacing before and after. */
+  height: 35px !important;
+  font: 400 10.67px/1.05 Arial, Helvetica, sans-serif !important;
+  text-align: left !important;
+}
+
+#prcPreviewOverlay .prc-export-continued {
+  margin: 5px 0 0;
+  color: #000 !important;
+  font: 12px/1.1 "Times New Roman", Times, serif !important;
+  text-align: right;
+}
+
+#prcPreviewOverlay .prc-export-footer {
+  margin-top: 5px;
+  color: #000 !important;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 12px;
+  line-height: 1.12;
+}
+
+#prcPreviewOverlay .prc-export-notes {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 0;
+}
+#prcPreviewOverlay .prc-export-note-label { font-weight: 700; }
+#prcPreviewOverlay .prc-export-note-copy p { margin: 0; }
+#prcPreviewOverlay .prc-export-affidavit {
+  margin-top: 34px;
+  text-align: center;
+  white-space: nowrap;
+}
+#prcPreviewOverlay .prc-export-affidavit p { margin: 0; }
+#prcPreviewOverlay .prc-export-residence { margin-top: 3px !important; }
+#prcPreviewOverlay .prc-export-fill-line {
+  display: inline-block;
+  height: .95em;
+  border-bottom: 1px solid #000;
+  vertical-align: baseline;
+}
+#prcPreviewOverlay .prc-export-affidavit-line { width: 230px; }
+#prcPreviewOverlay .prc-export-residence-number { width: 178px; }
+#prcPreviewOverlay .prc-export-residence-place { width: 205px; }
+#prcPreviewOverlay .prc-export-residence-date { width: 210px; }
+#prcPreviewOverlay .prc-export-certification-title {
+  width: 34%;
+  margin: 1px 0 0 auto;
+  text-align: left;
+}
+#prcPreviewOverlay .prc-export-footer-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .82fr 1.32fr;
+  align-items: start;
+  gap: 22px;
+  margin-top: 24px;
+}
+#prcPreviewOverlay .prc-export-notary {
+  padding-top: 16px;
+  text-align: center;
+}
+#prcPreviewOverlay .prc-export-notary-line {
+  display: block;
+  width: 86%;
+  margin: 0 auto 8px;
+  border-top: 1px solid #000;
+}
+#prcPreviewOverlay .prc-export-stamp {
+  display: grid;
+  min-height: 84px;
+  box-sizing: border-box;
+  place-content: center;
+  border: 1px solid #000;
+  font-size: 12px;
+  line-height: 1.1;
+  text-align: center;
+}
+#prcPreviewOverlay .prc-export-stamp small { margin-top: 6px; font-size: 10px; }
+#prcPreviewOverlay .prc-export-certified-details { display: grid; gap: 2px; }
+#prcPreviewOverlay .prc-export-cert-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto 94px;
+  align-items: end;
+  column-gap: 4px;
+  white-space: nowrap;
+}
+#prcPreviewOverlay .prc-export-cert-row-simple { grid-template-columns: auto minmax(0, 1fr); }
+#prcPreviewOverlay .prc-export-date-line { width: 94px; }
+#prcPreviewOverlay .prc-export-license-row { white-space: nowrap; }
+#prcPreviewOverlay .prc-export-expiry-line { width: 88px; }
+
+@media (max-width: 720px) {
+  #prcPreviewOverlay .prc-preview-pages { padding: 14px; }
+  #prcPreviewOverlay .prc-export-form { transform-origin: top left; }
+}

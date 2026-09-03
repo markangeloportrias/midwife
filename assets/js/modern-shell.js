@@ -25,7 +25,7 @@
   });
   sidebar.addEventListener("mouseleave", function () {
     clearTimeout(collapseTimer);
-    collapseTimer = setTimeout(function () { setCollapsed(true); }, 180);
+    collapseTimer = setTimeout(function () { setCollapsed(true); }, 90);
   });
   sidebar.addEventListener("focusin", function () { setCollapsed(false); });
   sidebar.addEventListener("focusout", function (event) {
@@ -108,16 +108,18 @@
   });
 })();
 
-/* Keep database-backed screens honest when XAMPP is stopped. The HTML shell
+/* Keep database-backed screens honest when the Node server is stopped. The HTML shell
    remains available for design testing, but previously rendered database rows
    and totals are removed as soon as the API health check fails. */
-(function monitorXamppDatabase() {
+(function monitorDatabaseHealth() {
   if (!document.querySelector('.app-shell, .dashboard')) return;
 
   var apiBase = location.protocol === 'file:'
-    ? 'http://localhost/THESIS6/api/health'
+    ? 'http://localhost:3000/api/health'
     : 'api/health';
   var wasOnline = null;
+  var failedChecks = 0;
+  var failureThreshold = 3;
 
   function clearDatabaseViews() {
     document.querySelectorAll('tbody').forEach(function (tbody) {
@@ -134,29 +136,51 @@
   }
 
   function setDatabaseState(online) {
+    var recovered = wasOnline === false && online;
     document.documentElement.classList.toggle('database-offline', !online);
     if (!online) clearDatabaseViews();
-    if (wasOnline === false && online) window.location.reload();
     wasOnline = online;
+    if (recovered) {
+      window.dispatchEvent(new CustomEvent('portal-database-restored'));
+    }
   }
 
   async function checkDatabase() {
     try {
-      var response = await fetch(apiBase, { cache: 'no-store', signal: AbortSignal.timeout(1800) });
-      setDatabaseState(response.ok);
+      var response = await fetch(apiBase, { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+      if (response.ok) {
+        failedChecks = 0;
+        setDatabaseState(true);
+        return;
+      }
     } catch (error) {
+      // Count the failed health check below. Brief Supabase/network latency
+      // should not blank the dashboard or force a page navigation.
+    }
+    failedChecks += 1;
+    if (failedChecks >= failureThreshold) {
       setDatabaseState(false);
     }
   }
 
   checkDatabase();
-  window.setInterval(checkDatabase, 4000);
+  window.setInterval(checkDatabase, 15000);
 })();
 
 /* Instructor Progress Overview: mirrors the Admin search -> detail -> back flow. */
 (function instructorProgressOverview() {
   const host = document.getElementById('student-summary-view');
   if (!host || document.getElementById('instructorProgressCopy')) return;
+  // This renderer lives in its own closure, so keep timestamp formatting local
+  // instead of relying on a helper from the shell closure above.
+  const formatRecordDateTime = (value) => {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+      return typeof window.formatPortalDate === 'function' ? window.formatPortalDate(raw) : raw;
+    }
+    return typeof window.formatPortalDateTime === 'function' ? window.formatPortalDateTime(raw) : raw;
+  };
   const containingSection = host.closest('.section');
   const recordsWrapper = host.closest('#mainRecordsWrapper');
   const recordsWrapperParent = recordsWrapper?.parentNode;
@@ -188,6 +212,40 @@
   let students = [];
   const escape = (value) => String(value ?? '').replace(/[&<>'"]/g, (ch) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
   let allRecords = [];
+  let exportContext = null;
+  let exportRequestPending = false;
+
+  async function openExportPreview(button, context = exportContext) {
+    if (exportRequestPending || !context) {
+      if (!context) {
+        window.alert('Select a student before exporting the PRC form.');
+      }
+      return;
+    }
+    if (typeof window.openInstructorPrcExport !== 'function') {
+      console.error('The PRC export handler is not available.');
+      window.alert('The PRC export is still loading. Please refresh the page and try again.');
+      return;
+    }
+
+    exportRequestPending = true;
+    const originalMarkup = button.innerHTML;
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    button.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Preparing preview...';
+    try {
+      await window.openInstructorPrcExport(context.student, button, context.records);
+    } catch (error) {
+      console.error('Unable to open the PRC export preview.', error);
+      window.alert(`Unable to open the PRC export preview. ${error?.message || 'Please try again.'}`);
+    } finally {
+      exportRequestPending = false;
+      button.disabled = false;
+      button.removeAttribute('aria-busy');
+      button.innerHTML = originalMarkup;
+    }
+  }
+
   async function loadStudents() {
     const empty = byId('ipEmpty');
     empty.hidden = false;
@@ -270,23 +328,42 @@
       const fallback = byId('ipStudentInfo').querySelector('[data-ip-profile-initials]');
       if (fallback) fallback.hidden = false;
     });
-    byId('ipExport').addEventListener('click', async (event) => {
-      if (typeof window.openInstructorPrcExport === 'function') {
-        await window.openInstructorPrcExport(student, event.currentTarget, options.records);
-      }
-    });
+    const exportButton = byId('ipExport');
+    exportContext = { student, records };
+    exportButton.style.setProperty('position', 'relative', 'important');
+    exportButton.style.setProperty('z-index', '20', 'important');
+    exportButton.style.setProperty('pointer-events', 'auto', 'important');
+    exportButton.style.setProperty('cursor', 'pointer', 'important');
+    exportButton.disabled = false;
+    exportButton.onclick = () => {
+      void openExportPreview(exportButton, { student, records });
+    };
     const output = byId('ipRecords'); output.innerHTML = '';
     procedureFilters.slice(1).forEach(([filterKey, procedure]) => {
-      const group = records.filter((row) => procedureKey(row.procedure_name) === filterKey);
+      const group = records.filter((row) => procedureKey(row.procedure_name || row.procedure_key) === filterKey);
       const section = document.createElement('section');
       section.className = 'summary-procedure-section';
       section.dataset.ipProcedure = filterKey;
-      const progressHeading = typeof window.createInstructorProcedureProgressHeading === 'function'
-        ? window.createInstructorProcedureProgressHeading(group, filterKey)
-        : null;
-      const rowsHtml = group.length
-        ? group.map((row) => `<tr><td>${escape(row.patient_name || '-')}<br>${escape(row.patient_address || '')}</td><td>${escape(row.case_no || '-')}</td><td>${escape(row.complete_diagnosis || '-')}</td><td>${escape(row.date_time_performed || '-')}</td><td>${escape(row.facility_name || '-')}<br>${escape(row.facility_address || '')}<br>${escape(row.facility_contact_number || '')}</td><td>${escape(row.supervisor_printed_name || '-')}<br>${escape(row.supervisor_contact_number || '')}</td><td>${escape(row.supervisor_position_designation || '-')}</td><td>${escape(row.supervisor_license_no || '-')}<br>${escape(row.supervisor_license_expiry_date || '')}</td></tr>`).join('')
-        : '<tr><td class="ip-no-records" colspan="8">No records for this procedure.</td></tr>';
+
+      // Keep the clinical table visible even if an optional progress widget has
+      // a malformed record or is unavailable on an older cached page.
+      let progressHeading = null;
+      try {
+        if (typeof window.createInstructorProcedureProgressHeading === 'function') {
+          progressHeading = window.createInstructorProcedureProgressHeading(group, filterKey);
+        }
+      } catch (error) {
+        console.warn('Unable to render procedure progress heading.', error);
+      }
+
+      let rowsHtml = '<tr><td class="ip-no-records" colspan="8">No records for this procedure.</td></tr>';
+      try {
+        rowsHtml = group.length
+          ? group.map((row) => `<tr><td>${escape(row.patient_name || '-')}<br>${escape(row.patient_address || '')}</td><td>${escape(row.case_no || '-')}</td><td>${escape(row.complete_diagnosis || '-')}</td><td>${escape(formatRecordDateTime(row.date_time_performed) || '-')}</td><td>${escape(row.facility_name || '-')}<br>${escape(row.facility_address || '')}<br>${escape(row.facility_contact_number || '')}</td><td>${escape(row.supervisor_printed_name || '-')}<br>${escape(row.supervisor_contact_number || '')}</td><td>${escape(row.supervisor_position_designation || '-')}</td><td>${escape(row.supervisor_license_no || '-')}<br>${escape(formatRecordDateTime(row.supervisor_license_expiry_date) || '')}</td></tr>`).join('')
+          : rowsHtml;
+      } catch (error) {
+        console.warn('Unable to render procedure records.', error);
+      }
       const diagnosisHeader = ['delivery-handled', 'delivery-assisted'].includes(filterKey) ? 'Complete Diagnosis<br>(Gravida, Para)' : filterKey === 'internal-exam' ? 'Internal Examination<br>(Cervical Dilation, Effacement, BOW,<br>Presentation and Station)' : 'Complete Diagnosis';
       section.innerHTML = `<div class="ip-table-wrap ip-clinical-table-wrap prc-source-table-wrap"><table class="ip-clinical-table prc-source-table" aria-label="${escape(procedure)} clinical records"><colgroup><col style="width:23.23%"><col style="width:6.11%"><col style="width:15.63%"><col style="width:8.83%"><col style="width:20.38%"><col style="width:15.63%"><col style="width:10.87%"><col style="width:10.87%"></colgroup><thead><tr><th rowspan="2">Name and Address of Patient</th><th rowspan="2">Case No.</th><th rowspan="2">${diagnosisHeader}</th><th rowspan="2">Date &amp; Time Performed</th><th rowspan="2">Full Name, Address of Facility &amp; Contact Number</th><th colspan="3">Supervised by</th></tr><tr><th>Printed Name and Contact No.</th><th>Position/<br>Designation</th><th>License No /<br>Expiry Date</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
       if (progressHeading) {

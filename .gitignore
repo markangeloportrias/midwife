@@ -6,6 +6,10 @@
 # Local/private working files
 vars.txt
 *.backup
+.env
+.env.*
+!.env.example
+node_modules/
 
 # Generated caches and operating-system files
 __pycache__/

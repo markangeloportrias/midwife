@@ -646,6 +646,10 @@ html body.role-instructor #edit-requests-view .request-item-meta > div {
 html body.role-instructor #edit-requests-view .request-item-meta > div:nth-child(1) { grid-column: 2 !important; grid-row: 1 !important; }
 html body.role-instructor #edit-requests-view .request-item-meta > div:nth-child(2) { grid-column: 3 !important; grid-row: 1 !important; }
 html body.role-instructor #edit-requests-view .request-item-meta > div:nth-child(3) { grid-column: 4 !important; grid-row: 1 !important; }
+/* Approved/rejected rows previously added a second metadata block for the
+   decision text. The status badge already shows that decision; hide the extra
+   block so it cannot occupy the procedure column and overlap the row. */
+html body.role-instructor #edit-requests-view .request-item-meta + .request-item-meta { display: none !important; }
 html body.role-instructor #edit-requests-view .request-status {
   position: static !important;
   grid-column: 5 !important;
@@ -881,7 +885,7 @@ html body.role-instructor #settingsView #saveInstructorSettingsBtn {
 html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading {
   margin: 2px 0 12px !important;
   padding-bottom: 12px !important;
-  border-bottom: 1px solid #d9e6f2 !important;
+  border-bottom: 0 !important;
 }
 html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .ip-detail-heading h2 {
   color: #00296b !important;
@@ -1118,6 +1122,10 @@ html body.role-instructor .section.instructor-progress-active #instructorProgres
   box-shadow: 0 5px 11px rgba(0, 80, 157, 0.16) !important;
 }
 html body.role-instructor .section.instructor-progress-active #instructorProgressCopy .student-progress-toolbar .ip-export {
+  position: relative !important;
+  z-index: 2 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
   min-height: 32px !important;
   padding: 0 11px !important;
   border-color: #fdc500 !important;
@@ -1228,13 +1236,43 @@ html body.role-instructor :is(
 
 /* Annual Records button palette. */
 html body.role-instructor #yearly-report-view #yearlyInstructorBackBtn {
-  border-color: #00296b !important;
-  background: #00296b !important;
-  color: #fff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-width: 112px !important;
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 7px 13px !important;
+  border: 1px solid #b8cfe8 !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #003f88 !important;
+  box-shadow: 0 5px 14px rgba(0, 41, 107, 0.08) !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1 !important;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease, transform 150ms ease !important;
 }
 html body.role-instructor #yearly-report-view #yearlyInstructorBackBtn:hover {
-  border-color: #003f88 !important;
-  background: #003f88 !important;
+  border-color: #00509d !important;
+  background: #00509d !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 18px rgba(0, 80, 157, 0.2) !important;
+  transform: translateY(-1px) !important;
+}
+html body.role-instructor #yearly-report-view #yearlyInstructorBackBtn:focus-visible {
+  outline: 3px solid rgba(0, 80, 157, 0.22) !important;
+  outline-offset: 2px !important;
+}
+html body.role-instructor #yearly-report-view #yearlyInstructorBackBtn i {
+  color: inherit !important;
+  font-size: 10px !important;
+  transition: transform 150ms ease !important;
+}
+html body.role-instructor #yearly-report-view #yearlyInstructorBackBtn:hover i {
+  transform: translateX(-2px) !important;
 }
 html body.role-instructor #yearly-report-view .yearly-procedure-nav button {
   border-color: #b8cfe8 !important;
@@ -3811,7 +3849,7 @@ html body.role-instructor #detailModal .detail-group-fields {
 }
 
 html body.role-instructor #detailModal .detail-group-overview .detail-group-fields {
-  grid-template-columns: minmax(130px, 0.42fr) minmax(0, 1.58fr) !important;
+  grid-template-columns: minmax(120px, 0.35fr) minmax(0, 1.2fr) minmax(250px, 1.1fr) !important;
 }
 
 html body.role-instructor #detailModal .detail-group-supervisor .detail-group-fields {
@@ -3855,9 +3893,210 @@ html body.role-instructor #detailModal .detail-value {
   overflow-wrap: anywhere !important;
 }
 
+/* Give the diagnosis enough room for longer text without changing the modal grid. */
+html body.role-instructor #detailModal .detail-group-patient .detail-field-wide .detail-value {
+  min-height: 58px !important;
+  align-items: flex-start !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  line-height: 1.4 !important;
+  white-space: pre-wrap !important;
+}
+
 html body.role-instructor #detailModal .detail-value strong {
   color: #00296b !important;
   font-weight: 800 !important;
+}
+
+html body.role-instructor #detailModal .detail-value-remarks {
+  gap: 10px !important;
+}
+
+html body.role-instructor #detailModal .detail-remarks-text {
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+}
+
+html body.role-instructor #detailModal .detail-view-all-btn {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 25px !important;
+  padding: 0 9px !important;
+  border: 1px solid #9bb9d6 !important;
+  border-radius: 6px !important;
+  background: #eef6ff !important;
+  color: #00509d !important;
+  font: 800 9px/1 "Inter", Arial, sans-serif !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor #detailModal .detail-view-all-btn:hover {
+  border-color: #00509d !important;
+  background: #dceeff !important;
+  color: #003f88 !important;
+}
+
+html body.role-instructor #detailModal .detail-view-all-btn:focus-visible {
+  outline: 2px solid #ffd500 !important;
+  outline-offset: 2px !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay.record-history-open {
+  background: rgba(15, 31, 55, 0.46) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay.record-history-open .option-pane {
+  width: min(92vw, 620px) !important;
+  max-width: 620px !important;
+  padding: 25px 27px 20px !important;
+  border: 1px solid #d5e2ef !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(12, 35, 68, 0.24) !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay.record-history-open .option-pane-title {
+  margin-bottom: 17px !important;
+  color: #15284d !important;
+  font: 800 20px/1.2 "Inter", Arial, sans-serif !important;
+  letter-spacing: -0.025em !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .option-pane-message.record-history-message {
+  max-height: min(450px, calc(100vh - 265px)) !important;
+  margin-bottom: 4px !important;
+  padding: 0 4px 1px 0 !important;
+  overflow-y: auto !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: #b7c9dc transparent !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-list {
+  display: grid !important;
+  gap: 9px !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item {
+  display: grid !important;
+  grid-template-columns: 28px minmax(0, 1fr) !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+  padding: 11px 12px 11px 10px !important;
+  border: 1px solid #e0e9f2 !important;
+  border-radius: 11px !important;
+  background: #fbfdff !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-remark {
+  border-left: 3px solid #2b78bb !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-history {
+  border-left: 3px solid #c5d2df !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-marker {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 8px !important;
+  background: #edf5fc !important;
+  color: #17649e !important;
+  font-size: 11px !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-history .record-history-marker {
+  background: #f1f4f7 !important;
+  color: #637993 !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-content {
+  min-width: 0 !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-header {
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-label {
+  min-width: 0 !important;
+  color: #294a70 !important;
+  font: 800 11px/1.25 "Inter", Arial, sans-serif !important;
+  letter-spacing: 0.02em !important;
+  text-transform: capitalize !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-date {
+  flex: 0 0 auto !important;
+  color: #7a8da5 !important;
+  font: 600 9px/1.2 "Inter", Arial, sans-serif !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-author {
+  margin-top: 3px !important;
+  color: #66809c !important;
+  font: 700 10px/1.3 "Inter", Arial, sans-serif !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-item-body {
+  margin: 7px 0 0 !important;
+  color: #203e64 !important;
+  font: 600 12px/1.5 "Inter", Arial, sans-serif !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay .record-history-state {
+  padding: 28px 14px !important;
+  border: 1px dashed #c7d6e5 !important;
+  border-radius: 10px !important;
+  background: #fbfdff !important;
+  color: #71849b !important;
+  font: 600 12px/1.4 "Inter", Arial, sans-serif !important;
+  text-align: center !important;
+}
+
+html body.role-instructor #globalOptionPaneOverlay.record-history-open .option-pane-actions {
+  margin-top: 17px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid #e4ebf2 !important;
+}
+
+@media (max-width: 480px) {
+  html body.role-instructor #globalOptionPaneOverlay.record-history-open .option-pane {
+    padding: 21px 17px 16px !important;
+    border-radius: 15px !important;
+  }
+
+  html body.role-instructor #globalOptionPaneOverlay.record-history-open .option-pane-title {
+    font-size: 18px !important;
+  }
+
+  html body.role-instructor #globalOptionPaneOverlay .record-history-item-header {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+  }
+
+  html body.role-instructor #globalOptionPaneOverlay .record-history-item-date {
+    white-space: normal !important;
+  }
 }
 
 html body.role-instructor #detailModal .detail-inline-meta {
@@ -3965,6 +4204,12 @@ html body.role-instructor #detailModal .detail-modal-close:focus-visible {
   outline-offset: 2px !important;
 }
 
+html body.role-instructor #detailModal .detail-actions[aria-busy="true"] button,
+html body.role-instructor #detailModal .detail-actions button:disabled {
+  cursor: wait !important;
+  opacity: 0.62 !important;
+}
+
 @media (max-width: 760px) {
   html body.role-instructor #detailModalOverlay {
     padding: 10px !important;
@@ -3990,6 +4235,14 @@ html body.role-instructor #detailModal .detail-modal-close:focus-visible {
   html body.role-instructor #detailModal .detail-group-supervisor .detail-group-fields {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
+
+  html body.role-instructor #detailModal .detail-group-overview .detail-group-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  html body.role-instructor #detailModal .detail-group-overview .detail-field-remarks {
+    grid-column: 1 / -1 !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -4000,6 +4253,10 @@ html body.role-instructor #detailModal .detail-modal-close:focus-visible {
   }
 
   html body.role-instructor #detailModal .detail-field-wide {
+    grid-column: auto !important;
+  }
+
+  html body.role-instructor #detailModal .detail-group-overview .detail-field-remarks {
     grid-column: auto !important;
   }
 
@@ -4131,6 +4388,38 @@ html body.role-instructor .instructor-title-icon i {
   color: inherit !important;
   font-size: 16px !important;
   line-height: 1 !important;
+}
+
+html body.role-instructor #settingsView .settings-photo-direct,
+html body.role-instructor #settingsView .settings-edit-direct {
+  display: none !important;
+}
+
+html body.role-instructor .settings-edit-form {
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+html body.role-instructor .settings-edit-form label {
+  display: grid;
+  gap: 5px;
+  color: var(--portal-navy);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+html body.role-instructor .settings-edit-form input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid var(--portal-line);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--portal-navy);
+  font: inherit;
+  font-size: 12px;
 }
 
 html body.role-instructor .content-section #active-title {
@@ -4524,8 +4813,8 @@ html body.role-instructor #instructor-blocks-table {
 }
 
 html body.role-instructor #instructor-blocks-table .block-number-column { width: 8% !important; }
-html body.role-instructor #instructor-blocks-table .block-count-column { width: 16% !important; }
-html body.role-instructor #instructor-blocks-table .block-action-column { width: 28% !important; }
+html body.role-instructor #instructor-blocks-table .block-count-column { width: 14% !important; }
+html body.role-instructor #instructor-blocks-table .block-action-column { width: 18% !important; }
 
 html body.role-instructor #instructor-blocks-table thead th {
   height: 48px !important;
@@ -5497,7 +5786,7 @@ html body.role-instructor .section.instructor-progress-active #instructorProgres
 html body.role-instructor #instructorStudentProcedureTables {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
   width: 100%;
   margin: 0;
 }
@@ -5558,6 +5847,7 @@ html body.role-instructor #instructorStudentProcedureTables .summary-procedure-p
 html body.role-instructor #instructorStudentProcedureTables .instructor-current-table-wrap {
   box-sizing: border-box;
   width: 100%;
+  margin: 0 !important;
   padding: 12px !important;
   border: 1px solid #c8d9ec !important;
   border-radius: 13px !important;
@@ -6133,4 +6423,352 @@ html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instru
 
 html body.role-instructor #yearly-report-view #yearlyStudentRecordsPanel #instructorYearlyProcedureTables table.ip-clinical-table tbody tr:hover td {
   background: #fff !important;
+}
+
+/* Block directory: keep the four columns stable after removing Edit. */
+html body.role-instructor #instructor-blocks-table {
+  table-layout: fixed !important;
+}
+html body.role-instructor #instructor-blocks-table .action-cell {
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor #instructor-blocks-table .block-directory-actions {
+  justify-content: center !important;
+}
+
+html body.role-instructor #instructor-blocks-table thead th:last-child,
+html body.role-instructor #instructor-blocks-table tbody td:last-child {
+  padding-right: 14px !important;
+  text-align: center !important;
+}
+html body.role-instructor #instructor-blocks-table .block-directory-actions {
+  width: 100% !important;
+}
+html body.role-instructor #instructor-blocks-table .block-open-action {
+  box-sizing: border-box !important;
+  width: 122px !important;
+  min-width: 122px !important;
+}
+
+/* The shared instructor table stylesheet defaults headers to the left. */
+html #instructor-blocks-table thead th:nth-child(4),
+html #instructor-blocks-table tbody td:nth-child(4) {
+  text-align: center !important;
+}
+html #instructor-blocks-table tbody td:nth-child(4) .block-directory-actions {
+  justify-content: center !important;
+}
+
+/* Keep the student roster's action header on the same center line as its buttons. */
+html #instructor-block-students-table thead th:last-child,
+html #instructor-block-students-table tbody td:last-child {
+  text-align: center !important;
+  text-indent: 0 !important;
+}
+html #instructor-block-students-table tbody td:last-child {
+  white-space: nowrap !important;
+}
+
+/* Keep the student controls on one level: actions left, compact search right. */
+html body.role-instructor #instructorStudentsListPanel > .student-panel-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  min-height: 38px !important;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  flex-wrap: nowrap !important;
+}
+html body.role-instructor #instructorStudentsListPanel .student-panel-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+html body.role-instructor #instructorStudentsListPanel .student-search-control {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+  margin-left: auto !important;
+  flex: 0 1 530px !important;
+}
+html body.role-instructor #instructorStudentsListPanel .student-search-control label {
+  flex: 0 0 auto !important;
+  color: #536987 !important;
+  font: 700 11px/1 "Inter", "Poppins", sans-serif !important;
+  white-space: nowrap !important;
+}
+html body.role-instructor #instructorStudentsListPanel .student-search-field {
+  position: relative !important;
+  width: 480px !important;
+  min-width: 0 !important;
+  flex: 0 1 480px !important;
+}
+html body.role-instructor #instructorStudentsListPanel .student-search-field > i {
+  position: absolute !important;
+  top: 50% !important;
+  left: 12px !important;
+  z-index: 1 !important;
+  color: #0a4e91 !important;
+  font-size: 12px !important;
+  pointer-events: none !important;
+  transform: translateY(-50%) !important;
+}
+html body.role-instructor #instructorStudentsListPanel #instructorStudentSearchInput {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 38px !important;
+  margin: 0 !important;
+  padding: 0 12px 0 34px !important;
+  border: 1px solid #bfd5ea !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: #203b68 !important;
+  font: 500 11px/1 "Inter", "Poppins", sans-serif !important;
+}
+html body.role-instructor #instructorStudentsListPanel #instructorStudentSearchInput:focus {
+  border-color: #78a6d7 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 3px rgba(120, 166, 215, .16) !important;
+}
+
+@media (max-width: 700px) {
+  html body.role-instructor #instructorStudentsListPanel > .student-panel-toolbar {
+    align-items: stretch !important;
+    flex-wrap: wrap !important;
+  }
+  html body.role-instructor #instructorStudentsListPanel .student-search-control {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    flex: 1 1 100% !important;
+    margin-left: 0 !important;
+  }
+  html body.role-instructor #instructorStudentsListPanel #instructorStudentSearchInput {
+    flex: 1 1 auto !important;
+  }
+  html body.role-instructor #instructorStudentsListPanel .student-search-field {
+    width: auto !important;
+    flex: 1 1 auto !important;
+  }
+}
+
+/* Progress detail is layout-only; remove the remaining outer edge line. */
+html body.role-instructor .content-section > .section.instructor-progress-active,
+html body.role-instructor .content-section > .section.instructor-progress-active #instructorProgressCopy,
+html body.role-instructor .content-section > .section.instructor-progress-active #instructorProgressCopy .ip-detail {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Minimal Account Settings surface. */
+html body.role-instructor #settingsView .settings-card {
+  padding: 18px 20px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 16px rgba(0, 41, 107, 0.06) !important;
+}
+
+html body.role-instructor #settingsView .settings-card > .section-header-row {
+  align-items: center !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 14px !important;
+}
+
+html body.role-instructor #settingsView .settings-photo-row {
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 16px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #e2eaf3 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #settingsView .settings-avatar-wrap {
+  width: 64px !important;
+  height: 64px !important;
+  flex-basis: 64px !important;
+  border: 1px solid #d6e2ef !important;
+  background: #f5f8fc !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #settingsView .settings-photo-meta strong {
+  color: #00296b !important;
+  font-size: 14px !important;
+}
+
+html body.role-instructor #settingsView .settings-photo-meta span {
+  color: #68809f !important;
+  font-size: 11px !important;
+}
+
+html body.role-instructor #settingsView .settings-section-label {
+  display: block !important;
+  margin: 16px 0 8px !important;
+}
+
+html body.role-instructor #settingsView .settings-section-label > i {
+  display: none !important;
+}
+
+html body.role-instructor #settingsView .settings-section-label span {
+  font-size: 12px !important;
+}
+
+html body.role-instructor #settingsView .settings-section-label small {
+  display: block !important;
+  margin-top: 3px !important;
+  font-size: 10px !important;
+}
+
+html body.role-instructor #settingsView .settings-grid {
+  gap: 0 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+html body.role-instructor #settingsView .settings-grid .form-group {
+  padding: 11px 0 !important;
+  border-bottom: 1px solid #edf2f7 !important;
+}
+
+html body.role-instructor #settingsView .settings-grid .locked-input,
+html body.role-instructor #settingsView .settings-grid .editable-input {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+html body.role-instructor #settingsView .settings-grid .locked-input > i,
+html body.role-instructor #settingsView .settings-grid .editable-input > i {
+  display: none !important;
+}
+
+html body.role-instructor #settingsView .settings-grid input {
+  min-height: 28px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-left: 0 !important;
+  background: transparent !important;
+  color: #00296b !important;
+  font-size: 12px !important;
+}
+
+html body.role-instructor #settingsView .settings-edit-button {
+  min-height: 34px !important;
+  padding: 0 13px !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 700px) {
+  html body.role-instructor #settingsView .settings-grid {
+    gap: 0 !important;
+  }
+}
+
+/* Match the compact horizontal View/Comment controls used in the record list. */
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) table.instructor-current-procedure-table col:last-child,
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) .record-action-cell {
+  width: 150px !important;
+  min-width: 150px !important;
+}
+
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) .record-table-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  flex-wrap: nowrap !important;
+}
+
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) .record-action-btn {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 50px !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  gap: 4px !important;
+  padding: 0 7px !important;
+  border-radius: 6px !important;
+  font: 800 8.5px/1 Inter, Arial, sans-serif !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) .record-view-btn {
+  width: auto !important;
+  min-width: 50px !important;
+  flex-grow: 0 !important;
+  border: 1px solid #00509d !important;
+  outline: 1px solid rgba(0, 80, 157, 0.18) !important;
+  outline-offset: 0 !important;
+}
+
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) .record-comment-btn {
+  width: auto !important;
+  min-width: 64px !important;
+  flex-grow: 0 !important;
+  border: 1px solid #c49d00 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+  box-shadow: none !important;
+  outline: 1px solid rgba(196, 157, 0, 0.22) !important;
+  outline-offset: 0 !important;
+}
+
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) .record-view-btn {
+  border-color: #00509d !important;
+  background: #ffffff !important;
+  color: #00509d !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) .record-view-btn:hover {
+  background: #eaf4ff !important;
+}
+
+html body.role-instructor :is(#instructorStudentProcedureTables, #instructorYearlyProcedureTables) .record-comment-btn:hover {
+  background: #fdc500 !important;
+}
+
+/* Keep action labels prominent and consistent with the dashboard's bold controls. */
+html body.role-instructor :is(
+  #dashboardRecentRecords .recent-record-action,
+  #instructorStudentProcedureTables .record-action-btn,
+  #instructorYearlyProcedureTables .record-action-btn
+) {
+  font-weight: 900 !important;
+}
+
+html body.role-instructor :is(
+  #instructorStudentProcedureTables .record-action-btn,
+  #instructorYearlyProcedureTables .record-action-btn
+) {
+  opacity: 1 !important;
+  -webkit-text-stroke: 0.14px currentColor;
+  text-shadow: 0 0 0.25px currentColor;
+}
+
+html body.role-instructor :is(
+  #instructorStudentProcedureTables .record-action-btn span,
+  #instructorYearlyProcedureTables .record-action-btn span
+) {
+  color: inherit !important;
+  font-weight: 900 !important;
+  opacity: 1 !important;
 }

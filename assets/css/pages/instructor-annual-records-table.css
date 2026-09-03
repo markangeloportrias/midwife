@@ -172,8 +172,31 @@ html body.role-instructor #yearlyProgressLegacyMount.section {
   box-shadow: none !important;
 }
 
+html body.role-instructor #yearlyProgressLegacyMount.section.instructor-progress-active:not([style*="display: none"]) {
+  display: contents !important;
+}
+
 html body.role-instructor #yearlyProgressLegacyMount #instructorProgressCopy.yearly-progress-detail {
   width: 100%;
+  border-top: 0 !important;
+  outline: 0 !important;
+}
+
+/* Remove the faint nested progress surface while preserving its report contents. */
+html body.role-instructor #yearlyProgressLegacyMount > #instructorProgressCopy.yearly-progress-detail.focused,
+html body.role-instructor #yearlyProgressLegacyMount > #instructorProgressCopy.yearly-progress-detail.focused > .ip-detail {
+  display: contents !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body.role-instructor #yearlyProgressLegacyMount #instructorProgressCopy.yearly-progress-detail .ip-detail,
+html body.role-instructor #yearlyProgressLegacyMount #instructorProgressCopy.yearly-progress-detail .ip-detail-heading {
+  border-top: 0 !important;
 }
 
 html body.role-instructor #yearlyProgressLegacyMount #instructorProgressCopy.yearly-progress-detail .ip-detail-actions {
@@ -186,10 +209,9 @@ html body.role-instructor #yearlyProgressLegacyMount #instructorProgressCopy.yea
     width: 100%;
   }
 }
-+
 /* Student dashboard PRC preview styling shared by Instructor Annual Records. */
-#prcPreviewOverlay { position: fixed; inset: 0; z-index: 3000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,37,83,.56); }
-#prcPreviewOverlay.is-open { display: flex !important; }
+#prcPreviewOverlay { position: fixed; inset: 0; z-index: 3000; display: none; visibility: hidden; pointer-events: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,37,83,.56); }
+#prcPreviewOverlay.is-open { display: flex !important; visibility: visible; pointer-events: auto; }
 #prcPreviewOverlay .prc-preview-dialog { display: flex; flex-direction: column; width: min(1480px, 98vw); height: min(930px, 94vh); overflow: hidden; border: 1px solid #9cc4e5; border-radius: 16px; background: #eef6fc; box-shadow: 0 24px 58px rgba(0,28,70,.35); }
 #prcPreviewOverlay .prc-preview-toolbar, #prcPreviewOverlay .prc-preview-actions { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 20px; background: #fff; }
 #prcPreviewOverlay .prc-preview-toolbar { border-bottom: 1px solid #c5ddec; }
@@ -214,7 +236,7 @@ html body.role-instructor #yearlyProgressLegacyMount #instructorProgressCopy.yea
 #prcPreviewOverlay .prc-export-line { flex: 1 1 auto; min-width: 0; margin-left: 4px; border-bottom: 1px solid #000; font-weight: 700; }
 #prcPreviewOverlay .prc-export-school-label { margin-left: 97px; }
 #prcPreviewOverlay .prc-export-school { flex: 0 1 315px; }
-#prcPreviewOverlay .prc-export-table { width: 100% !important; margin: 0 !important; border: 1px solid #000 !important; border-collapse: collapse !important; border-radius: 0 !important; border-spacing: 0 !important; table-layout: fixed !important; color: #000 !important; background: #fff !important; font-family: Cambria, "Times New Roman", serif !important; }
+#prcPreviewOverlay .prc-export-table { margin: 0 !important; border: 1px solid #000 !important; border-collapse: collapse !important; border-radius: 0 !important; border-spacing: 0 !important; table-layout: fixed !important; color: #000 !important; background: #fff !important; font-family: Cambria, "Times New Roman", serif !important; }
 #prcPreviewOverlay .prc-export-table thead, #prcPreviewOverlay .prc-export-table tbody, #prcPreviewOverlay .prc-export-table tr { background: #fff !important; }
 #prcPreviewOverlay .prc-export-table th, #prcPreviewOverlay .prc-export-table td { box-sizing: border-box !important; border: 1px solid #000 !important; border-radius: 0 !important; padding: 3px 5px !important; color: #000 !important; background: #fff !important; font-family: Cambria, "Times New Roman", serif !important; text-transform: none !important; letter-spacing: normal !important; vertical-align: middle !important; word-break: normal !important; }
 #prcPreviewOverlay .prc-export-table th { font-size: 10px !important; font-weight: 700 !important; line-height: 1.08 !important; text-align: center !important; }
@@ -223,3 +245,53 @@ html body.role-instructor #yearlyProgressLegacyMount #instructorProgressCopy.yea
 #prcPreviewOverlay .prc-preview-actions .btn-primary, #prcPreviewOverlay .prc-preview-actions .btn-secondary { min-height: 38px; padding: 0 16px; border-radius: 9px; font: 750 12px/1 Inter, sans-serif; cursor: pointer; }
 #prcPreviewOverlay .prc-preview-actions .btn-secondary { border: 1px solid #0b5cad; color: #064889; background: #fff; }
 #prcPreviewOverlay .prc-preview-actions .btn-primary { border: 1px solid #e4b500; color: #063e7c; background: #ffd500; }
+html body.role-instructor #yearly-report-view #yearlyYearPanel table {
+  min-width: 690px;
+}
+
+html body.role-instructor #yearly-report-view #yearlyYearPanel .yearly-year-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 4px;
+  position: relative;
+  left: -3mm;
+}
+
+html body.role-instructor #yearly-report-view #yearlyYearPanel td.action-cell {
+  width: 230px !important;
+  min-width: 230px !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  white-space: nowrap !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyYearPanel .yearly-year-actions .mini-btn {
+  margin: 0;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  width: calc(50% - 2px) !important;
+  min-width: 0 !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  font-size: 7px !important;
+  letter-spacing: -0.15px;
+}
+
+html body.role-instructor #yearly-report-view #yearlyYearPanel .yearly-year-download {
+  flex: 0 0 72px !important;
+  width: 72px !important;
+  min-width: 72px !important;
+  border-color: #e4b500 !important;
+  background: #ffd500 !important;
+  color: #00296b !important;
+}
+
+html body.role-instructor #yearly-report-view #yearlyYearPanel .yearly-year-download:hover {
+  border-color: #d19f00 !important;
+  background: #fdc500 !important;
+  color: #00296b !important;
+}

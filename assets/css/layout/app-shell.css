@@ -1092,7 +1092,7 @@ body .app-shell .main-content table thead tr:first-child th:last-child {
 }
 
 html.database-offline .main-content::before {
-  content: "Database offline — start XAMPP Apache and MySQL to load records";
+  content: "Database offline — start the Node server to load records";
   display: block;
   margin: 0 0 8px;
   padding: 7px 10px;
@@ -2380,4 +2380,104 @@ body.role-student .record-workspace table.clinical-form-table tbody td {
 @media (max-width: 520px) {
   .record-workspace .search-filter-bar { grid-template-columns: 1fr !important; }
   .record-workspace #recordDateFilter { max-width: none; }
+}
+
+/* Keep the navigation rail responsive.  Several older layout overrides above
+   define 360–420ms transitions, which makes hover expansion feel delayed and
+   keeps the page reflowing long after the pointer has moved. */
+.dashboard,
+.dashboard.sidebar-collapsed {
+  transition: grid-template-columns 180ms cubic-bezier(.22, 1, .36, 1) !important;
+}
+.dashboard > .sidebar,
+.app-shell > .sidebar,
+.dashboard.sidebar-collapsed > .sidebar,
+.app-shell.sidebar-collapsed > .sidebar {
+  transition:
+    width 180ms cubic-bezier(.22, 1, .36, 1),
+    min-width 180ms cubic-bezier(.22, 1, .36, 1),
+    max-width 180ms cubic-bezier(.22, 1, .36, 1),
+    flex-basis 180ms cubic-bezier(.22, 1, .36, 1),
+    padding 180ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 180ms ease !important;
+}
+.dashboard > .main-content,
+.app-shell > .main-content {
+  transition: none !important;
+}
+.sidebar-brand-copy,
+.sidebar-user-copy,
+.sidebar-brand-logos img + img,
+.sidebar .sidebar-nav-item > span,
+.sidebar .sidebar-item .sidebar-label,
+.sidebar .sidebar-count,
+.sidebar .nav-badge,
+.sidebar-collapsed .sidebar-brand-copy,
+.sidebar-collapsed .sidebar-user-copy,
+.sidebar-collapsed .sidebar-brand-logos img + img,
+.sidebar-collapsed .sidebar .sidebar-nav-item > span,
+.sidebar-collapsed .sidebar .sidebar-item .sidebar-label,
+.sidebar-collapsed .sidebar .sidebar-count,
+.sidebar-collapsed .sidebar .nav-badge {
+  transition:
+    opacity 100ms ease,
+    visibility 0s linear 0s,
+    max-width 160ms cubic-bezier(.22, 1, .36, 1),
+    margin 160ms cubic-bezier(.22, 1, .36, 1) !important;
+}
+.sidebar .sidebar-nav-item,
+.sidebar .sidebar-item,
+.sidebar-collapsed .sidebar-nav-item,
+.sidebar-collapsed .sidebar-item {
+  transition:
+    padding 160ms cubic-bezier(.22, 1, .36, 1),
+    gap 160ms cubic-bezier(.22, 1, .36, 1),
+    font-size 120ms cubic-bezier(.22, 1, .36, 1),
+    background-color 120ms ease,
+    border-color 120ms ease !important;
+}
+
+/* Annual-records search: the input is the only visible field.  The icon sits
+   inside its left padding instead of creating a separate outer field. */
+html body.role-admin #yearlyReportsCard .yearly-progress-search,
+html body.role-instructor #yearly-report-view .yearly-progress-search {
+  position: relative !important;
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body.role-admin #yearlyReportsCard .yearly-progress-search > i,
+html body.role-instructor #yearly-report-view .yearly-progress-search > i {
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  z-index: 1 !important;
+  width: 42px !important;
+  height: 42px !important;
+  margin: 0 !important;
+  transform: translateY(-50%) !important;
+  pointer-events: none !important;
+  border: 0 !important;
+}
+html body.role-admin #yearlyReportsCard .yearly-progress-search input,
+html body.role-admin #yearlyReportsCard .yearly-progress-search input:focus,
+html body.role-instructor #yearly-report-view .yearly-progress-search input,
+html body.role-instructor #yearly-report-view .yearly-progress-search input:focus {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: 42px !important;
+  height: 42px !important;
+  margin: 0 !important;
+  padding: 0 14px 0 42px !important;
+  border: 1px solid #bfd5ea !important;
+  border-radius: 10px !important;
+  outline: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+html body.role-admin #yearlyReportsCard .yearly-progress-search input:focus,
+html body.role-instructor #yearly-report-view .yearly-progress-search input:focus {
+  border-color: #78a6d7 !important;
+  box-shadow: 0 0 0 3px rgba(0, 80, 157, .1) !important;
 }
