@@ -13,6 +13,100 @@
     />
     <link rel="stylesheet" href="assets/css/pages/login.css" />
     <link rel="stylesheet" href="assets/css/base/theme.css?v=20260810-21" />
+    <style>
+      /* Intro logo only: modern heartbeat reveal before the login screen. */
+      body:has(.portal-container) .portal-splash-logo-wrap {
+        position: relative;
+        isolation: isolate;
+        border-color: rgba(255, 255, 255, 0.72);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+        box-shadow:
+          0 18px 42px rgba(0, 20, 66, 0.34),
+          0 0 0 7px rgba(255, 255, 255, 0.07),
+          inset 0 1px 0 rgba(255, 255, 255, 0.62);
+        animation: intro-logo-heartbeat 1.25s ease-in-out infinite;
+      }
+
+      .portal-splash-pulse {
+        position: absolute;
+        z-index: -1;
+        inset: -9px;
+        border: 2px solid rgba(255, 213, 0, 0.58);
+        border-radius: 31px;
+        opacity: 0;
+        pointer-events: none;
+        animation: intro-pulse-ring 1.25s ease-out infinite;
+      }
+
+      .portal-splash-pulse-two {
+        animation-delay: 0.28s;
+      }
+
+      body:has(.portal-container) .portal-splash-logo {
+        opacity: 1;
+        filter: drop-shadow(0 9px 14px rgba(0, 24, 77, 0.38));
+        animation: none;
+      }
+
+      .portal-splash-ecg {
+        position: absolute;
+        right: -26px;
+        bottom: 11px;
+        left: -26px;
+        height: 18px;
+        overflow: hidden;
+        color: #ffd500;
+        opacity: 0.92;
+        pointer-events: none;
+      }
+
+      .portal-splash-ecg svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 0 5px rgba(255, 213, 0, 0.7));
+      }
+
+      .portal-splash-ecg path {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 150;
+        stroke-dashoffset: 150;
+        animation: intro-ecg-trace 1.25s linear infinite;
+      }
+
+      @keyframes intro-logo-heartbeat {
+        0%, 28%, 70%, 100% { transform: scale(1); }
+        12% { transform: scale(1.09); }
+        20% { transform: scale(0.985); }
+        36% { transform: scale(1.055); }
+        46% { transform: scale(1); }
+      }
+
+      @keyframes intro-pulse-ring {
+        0%, 8% { opacity: 0; transform: scale(0.88); }
+        18% { opacity: 0.72; }
+        68%, 100% { opacity: 0; transform: scale(1.34); }
+      }
+
+      @keyframes intro-ecg-trace {
+        0% { stroke-dashoffset: 150; opacity: 0; }
+        10% { opacity: 1; }
+        72% { stroke-dashoffset: 0; opacity: 1; }
+        100% { stroke-dashoffset: -150; opacity: 0; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        body:has(.portal-container) .portal-splash-logo-wrap,
+        .portal-splash-pulse,
+        .portal-splash-ecg path {
+          animation: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Logo-first secure portal splash -->
@@ -21,11 +115,18 @@
       <div class="portal-splash-glow portal-splash-glow-two"></div>
       <div class="portal-splash-card">
         <div class="portal-splash-logo-wrap">
+          <span class="portal-splash-pulse portal-splash-pulse-one" aria-hidden="true"></span>
+          <span class="portal-splash-pulse portal-splash-pulse-two" aria-hidden="true"></span>
           <img
             class="portal-splash-logo"
             src="assets/images/portal-mark-cropped.png"
             alt="MIDWIFE Clinical Portal"
           />
+          <span class="portal-splash-ecg" aria-hidden="true">
+            <svg viewBox="0 0 140 18" preserveAspectRatio="none">
+              <path d="M1 10h38l6-1 4-7 7 15 7-13 6 6h70" />
+            </svg>
+          </span>
         </div>
         <span class="portal-splash-eyebrow">BISU College of Midwifery</span>
         <strong class="portal-splash-title">MIDWIFE Clinical Portal</strong>
@@ -383,7 +484,8 @@
     </div>
 
     <!-- SCRIPTS -->
-    <script src="assets/js/api-client.js?v=20260822-1"></script>
+    <script src="assets/js/api-client.js?v=20260902-10"></script>
+    <script src="assets/js/site-protection.js?v=20260901-1"></script>
     <script>
       // DOM Elements Configuration
       const studentIdInput = document.getElementById("studentid");
@@ -850,6 +952,10 @@
           const result = await ApiClient.authenticateAdmin(pin);
           if (result && result.ok) {
             sessionStorage.removeItem("currentInstructor");
+            sessionStorage.setItem(
+              "currentAdmin",
+              JSON.stringify(result.user || { role: "System administrator" }),
+            );
             sessionStorage.setItem("thesis_admin_authenticated", "1");
             showToast(
               "PIN verified. Establishing administrator connection...",
@@ -861,7 +967,14 @@
           } else {
             adminSubmitBtn.classList.remove("is-loading");
             adminSubmitBtn.disabled = false;
-            showToast("Unauthorized PIN. Access denied.", "error");
+            const serverUnavailable =
+              result?.code === "database_unavailable" || Number(result?.status) >= 500;
+            showToast(
+              serverUnavailable
+                ? result?.message || "Database connection unavailable. Try again."
+                : result?.message || "Unauthorized PIN. Access denied.",
+              "error",
+            );
           }
         } catch (error) {
           adminSubmitBtn.classList.remove("is-loading");

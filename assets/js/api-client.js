@@ -1,6 +1,6 @@
 /*
- * MySQL data layer for student, instructor, and case-record flows.
- * Business records live in the XAMPP database. Browser storage is retained
+ * Supabase PostgreSQL data layer for student, instructor, and case-record flows.
+ * Business records live in Supabase. Browser storage is retained
  * only for authentication/session state and harmless UI preferences.
  */
 (function () {
@@ -23,13 +23,6 @@
     ,auditTrail: 'thesis_audit_trail_v1'
   };
 
-  var DEFAULT_INSTRUCTOR_AUTH = {
-    username: 'instructor',
-    password: '123456'
-  };
-  var DEFAULT_ADMIN_PIN = '123456';
-  var LEGACY_ADMIN_PIN = '000000';
-
   function readJson(key, fallback) {
     var raw = localStorage.getItem(key);
     if (!raw) {
@@ -49,6 +42,175 @@
 
   function normalize(text) {
     return (text || '').toString().trim();
+  }
+
+  // Format database date/timestamp values for portal display. Date-only values
+  // stay date-only; timestamp values are shown in the user's local timezone.
+  function formatPortalDate(value) {
+    var raw = normalize(value);
+    if (!raw || /^0{4}-0{2}-0{2}/.test(raw)) return '';
+    var match = raw.match(/^(\d{4}-\d{2}-\d{2})/);
+    var datePart = match ? match[1] : raw;
+    var hasTimeOrTimezone = /T\d{2}:\d{2}/.test(raw) || /(?:Z|[+-]\d{2}:?\d{2})$/.test(raw);
+    var date = new Date(hasTimeOrTimezone ? raw : datePart + 'T00:00:00');
+    if (Number.isNaN(date.getTime())) return raw;
+    return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+  }
+
+  function portalDateInputValue(value) {
+    var raw = normalize(value);
+    if (!raw) return '';
+    var dateOnly = raw.match(/^(\d{4}-\d{2}-\d{2})$/);
+    if (dateOnly) return dateOnly[1];
+    var date = new Date(raw);
+    if (Number.isNaN(date.getTime())) {
+      var prefix = raw.match(/^(\d{4}-\d{2}-\d{2})/);
+      return prefix ? prefix[1] : '';
+    }
+    var pad = function (part) { return String(part).padStart(2, '0'); };
+    return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate());
+  }
+
+  function portalDateTimeLocalValue(value) {
+    var raw = normalize(value);
+    if (!raw) return '';
+    var localValue = raw.match(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2})$/);
+    if (localValue) return localValue[1];
+    var date = new Date(raw);
+    if (Number.isNaN(date.getTime())) {
+      var prefix = raw.match(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2})/);
+      return prefix ? prefix[1] : '';
+    }
+    var pad = function (part) { return String(part).padStart(2, '0'); };
+    return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) +
+      'T' + pad(date.getHours()) + ':' + pad(date.getMinutes());
+  }
+
+  function formatPortalDateTime(value) {
+    var raw = normalize(value);
+    if (!raw) return '';
+    var date = new Date(raw);
+    if (Number.isNaN(date.getTime())) return raw;
+    return date.toLocaleString('en-US', {
+      month: 'short', day: '2-digit', year: 'numeric',
+      hour: 'numeric', minute: '2-digit'
+    });
+  }
+
+  var CONTACT_INPUT_SELECTOR = [
+    'input[type="tel"]',
+    'input[data-contact-number]',
+    'input[id*="contact" i]',
+    'input[name*="contact" i]',
+    'input[id*="phone" i]',
+    'input[name*="phone" i]'
+  ].join(',');
+
+  var portalNetworkLoadingCount = 0;
+  var portalNetworkLoadingTimer = null;
+  var portalNetworkLoadingStartedAt = 0;
+
+  function ensurePortalNetworkLoader() {
+    if (document.getElementById('portalNetworkLoader')) return document.getElementById('portalNetworkLoader');
+    var style = document.createElement('style');
+    style.id = 'portalNetworkLoaderStyles';
+    style.textContent = `
+      #portalNetworkLoader {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: 100000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 132px;
+        justify-content: center;
+        padding: 10px 16px;
+        border: 1px solid rgba(0, 80, 157, .16);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .96);
+        box-shadow: 0 10px 28px rgba(15, 40, 77, .16);
+        color: #174777;
+        font: 700 12px/1.2 Inter, system-ui, sans-serif;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, calc(-50% - 12px));
+        transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+        visibility: hidden;
+      }
+      #portalNetworkLoader.is-visible {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+        visibility: visible;
+      }
+      #portalNetworkLoader .portal-network-spinner {
+        width: 15px;
+        height: 15px;
+        border: 2px solid #c9dced;
+        border-top-color: #0067b1;
+        border-radius: 50%;
+        animation: portalNetworkSpin .72s linear infinite;
+      }
+      @keyframes portalNetworkSpin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) {
+        #portalNetworkLoader .portal-network-spinner { animation-duration: 1.6s; }
+      }
+    `;
+    document.head.appendChild(style);
+    var loader = document.createElement('div');
+    loader.id = 'portalNetworkLoader';
+    loader.setAttribute('role', 'status');
+    loader.setAttribute('aria-live', 'polite');
+    loader.innerHTML = '<span class="portal-network-spinner" aria-hidden="true"></span><span>Loading...</span>';
+    (document.body || document.documentElement).appendChild(loader);
+    return loader;
+  }
+
+  function beginPortalNetworkLoading() {
+    portalNetworkLoadingCount += 1;
+    if (portalNetworkLoadingCount !== 1) return;
+    window.clearTimeout(portalNetworkLoadingTimer);
+    portalNetworkLoadingTimer = window.setTimeout(function () {
+      if (portalNetworkLoadingCount < 1) return;
+      var loader = ensurePortalNetworkLoader();
+      portalNetworkLoadingStartedAt = Date.now();
+      loader.classList.add('is-visible');
+    }, 180);
+  }
+
+  function endPortalNetworkLoading() {
+    portalNetworkLoadingCount = Math.max(0, portalNetworkLoadingCount - 1);
+    if (portalNetworkLoadingCount > 0) return;
+    window.clearTimeout(portalNetworkLoadingTimer);
+    portalNetworkLoadingTimer = null;
+    var loader = document.getElementById('portalNetworkLoader');
+    if (!loader) return;
+    var hide = function () { loader.classList.remove('is-visible'); };
+    var elapsed = portalNetworkLoadingStartedAt ? Date.now() - portalNetworkLoadingStartedAt : 0;
+    window.setTimeout(hide, Math.max(0, 220 - elapsed));
+  }
+
+  function configureContactInput(input) {
+    if (!(input instanceof HTMLInputElement) || !input.matches(CONTACT_INPUT_SELECTOR)) return;
+    input.inputMode = 'numeric';
+    input.maxLength = 11;
+    input.value = input.value.replace(/\D/g, '').slice(0, 11);
+  }
+
+  function configureExistingContactInputs() {
+    document.querySelectorAll(CONTACT_INPUT_SELECTOR).forEach(configureContactInput);
+  }
+
+  document.addEventListener('focusin', function (event) {
+    configureContactInput(event.target);
+  });
+  document.addEventListener('input', function (event) {
+    configureContactInput(event.target);
+  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', configureExistingContactInputs);
+  } else {
+    configureExistingContactInputs();
   }
 
   function canonicalProcedureName(value) {
@@ -80,10 +242,6 @@
       display_name: normalize(displayName) || normalize(username),
       created_at: new Date().toISOString()
     };
-  }
-
-  function getDefaultInstructorAccount() {
-    return makeInstructorAccount(DEFAULT_INSTRUCTOR_AUTH.username, DEFAULT_INSTRUCTOR_AUTH.password, 'Default Instructor');
   }
 
   function getInstructorAccountsInternal() {
@@ -138,18 +296,7 @@
         password: accounts[0].password
       };
     }
-    return {
-      username: DEFAULT_INSTRUCTOR_AUTH.username,
-      password: DEFAULT_INSTRUCTOR_AUTH.password
-    };
-  }
-
-  function getStoredAdminPin() {
-    var pin = normalize(localStorage.getItem(STORAGE_KEYS.adminPin));
-    if (!pin) {
-      return DEFAULT_ADMIN_PIN;
-    }
-    return pin;
+    return { username: '', password: '' };
   }
 
   function findInstructorAccountByCredentials(username, password) {
@@ -169,7 +316,8 @@
   }
 
   function matchesAdminPin(pin) {
-    return normalize(pin) === normalize(getStoredAdminPin());
+    // Browser storage is never an authority for administrator credentials.
+    return false;
   }
 
   var ensureStorageRunning = false;
@@ -215,21 +363,8 @@
       writeJson(STORAGE_KEYS.meta, meta);
     }
 
-    var accounts = getInstructorAccountsInternal();
-    if (!accounts.length) {
-      var legacyAuth = readJson(STORAGE_KEYS.instructorAuth, null);
-      if (legacyAuth && typeof legacyAuth === 'object' && normalize(legacyAuth.username) && normalize(legacyAuth.password)) {
-        accounts = [makeInstructorAccount(legacyAuth.username, legacyAuth.password, legacyAuth.username)];
-      } else {
-        accounts = [getDefaultInstructorAccount()];
-      }
-      saveInstructorAccountsInternal(accounts);
-    }
-
-    var savedAdminPin = normalize(localStorage.getItem(STORAGE_KEYS.adminPin));
-    if (!savedAdminPin || savedAdminPin === LEGACY_ADMIN_PIN) {
-      localStorage.setItem(STORAGE_KEYS.adminPin, DEFAULT_ADMIN_PIN);
-    }
+    // Do not recreate legacy browser-only accounts or PINs. Authentication is
+    // exclusively handled by the Node API below.
 
     var metaForMigration = readJson(STORAGE_KEYS.meta, null);
     if (!metaForMigration || typeof metaForMigration !== 'object') {
@@ -1334,7 +1469,8 @@
       var accounts = getInstructorAccountsInternal().filter(function (account) {
         return !account.archived;
       });
-      var first = accounts[0] || getDefaultInstructorAccount();
+      var first = accounts[0];
+      if (!first) return { ok: false, message: 'Instructor accounts are managed by the server.' };
       return {
         ok: true,
         instructor: {
@@ -1346,33 +1482,7 @@
     },
 
     async saveInstructorAccount(username, password) {
-      ensureStorage();
-      var nextUsername = normalize(username);
-      var nextPassword = normalize(password);
-      if (!nextUsername || !nextPassword) {
-        return { ok: false, message: 'Instructor username and password are required.' };
-      }
-
-      var accounts = getInstructorAccountsInternal();
-      if (!accounts.length) {
-        accounts = [getDefaultInstructorAccount()];
-      }
-      accounts[0] = Object.assign({}, accounts[0], {
-        username: nextUsername,
-        password: nextPassword,
-        display_name: accounts[0].display_name || nextUsername
-      });
-      saveInstructorAccountsInternal(accounts);
-      saveLegacyInstructorAuth(accounts[0].username, accounts[0].password);
-
-      return {
-        ok: true,
-        instructor: {
-          id: accounts[0].id,
-          username: accounts[0].username,
-          display_name: accounts[0].display_name || accounts[0].username
-        }
-      };
+      return { ok: false, message: 'Instructor credentials are managed by the server.' };
     },
 
     async validateAdminPin(pin) {
@@ -1476,7 +1586,7 @@
 
     async validateInstructorPin(pin) {
       ensureStorage();
-      return matchesInstructorCredentials(DEFAULT_INSTRUCTOR_AUTH.username, pin);
+      return false;
     },
 
     async addNotificationHistory(payload) {
@@ -2162,10 +2272,7 @@
 
     authenticateInstructor: function (username, password) {
       ensureStorage();
-      if (arguments.length === 1) {
-        return matchesInstructorCredentials(DEFAULT_INSTRUCTOR_AUTH.username, username);
-      }
-      return matchesInstructorCredentials(username, password);
+      return false;
     },
 
     getInstructorAccount: function () {
@@ -2326,7 +2433,7 @@
 
     validateInstructorPin: function (pin) {
       ensureStorage();
-      return matchesInstructorCredentials(DEFAULT_INSTRUCTOR_AUTH.username, pin);
+      return false;
     },
 
     clearCaseDataOnly: function () {
@@ -2400,7 +2507,7 @@
   }
 
   async function syncLegacyCasesToApi(studentId) {
-    // Legacy data is migrated explicitly through tools/migrate-local-to-mysql.php.
+    // Legacy browser data is migrated through authenticated API calls.
     // Never import browser records silently during normal application use.
     return;
     /* istanbul ignore next */
@@ -2452,17 +2559,62 @@
     localStorage.setItem(syncKey, '1');
   }
 
-  // MySQL-backed API overrides. Browser storage is never a business-data source.
-  async function mysqlRequest(path, options) {
+  // Supabase-backed API overrides. Browser storage is never a business-data source.
+  // Reuse identical in-progress mutations so rapid clicks cannot create duplicate writes.
+  var inFlightMutations = new Map();
+
+  function mutationRequestKey(path, options, token) {
+    var method = String((options && options.method) || 'GET').toUpperCase();
+    if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') return '';
+    var body = options && options.body;
+    if (body && typeof body !== 'string') {
+      try { body = JSON.stringify(body); } catch (error) { body = String(body); }
+    }
+    return [token || 'anonymous', method, path, body || ''].join('\n');
+  }
+
+  function mysqlRequest(path, options) {
     options = options || {};
     var headers = Object.assign({ 'Content-Type': 'application/json' }, options.headers || {});
     var token = sessionStorage.getItem('thesis_api_token') || '';
     if (token) headers.Authorization = 'Bearer ' + token;
-    var apiBase = location.protocol === 'file:' ? 'http://localhost/THESIS6/api/' : 'api/';
-    var response = await fetch(apiBase + path, Object.assign({}, options, { headers: headers, cache: 'no-store' }));
-    var result = await response.json().catch(function () { return {}; });
-    if (!response.ok) throw new Error(result.message || 'Database request failed.');
-    return result;
+    var apiBase = location.protocol === 'file:' ? 'http://localhost:3000/api/' : 'api/';
+    var requestKey = mutationRequestKey(path, options, token);
+    if (requestKey && inFlightMutations.has(requestKey)) {
+      return inFlightMutations.get(requestKey);
+    }
+
+    var showNetworkLoader = options.silent !== true && window.portalSilentNetwork !== true;
+    if (showNetworkLoader) beginPortalNetworkLoading();
+    var pending = fetch(apiBase + path, Object.assign({}, options, { headers: headers, cache: 'no-store' }))
+      .then(async function (response) {
+        var result = await response.json().catch(function () { return {}; });
+        if (response.status === 401 && token) {
+          sessionStorage.removeItem('thesis_api_token');
+          window.dispatchEvent(new CustomEvent('portal-session-expired'));
+        }
+        if (!response.ok) {
+          var requestError = new Error(result.message || 'Database request failed.');
+          requestError.status = response.status;
+          requestError.code = result.code || '';
+          throw requestError;
+        }
+        return result;
+      })
+      .finally(function () {
+        if (showNetworkLoader) endPortalNetworkLoading();
+      });
+
+    if (requestKey) {
+      inFlightMutations.set(requestKey, pending);
+      var clearPending = function () {
+        if (inFlightMutations.get(requestKey) === pending) {
+          inFlightMutations.delete(requestKey);
+        }
+      };
+      pending.then(clearPending, clearPending);
+    }
+    return pending;
   }
 
   async function mysqlLogin(role, credentials) {
@@ -2471,12 +2623,12 @@
       if (result.token) sessionStorage.setItem('thesis_api_token', result.token);
       return result;
     } catch (error) {
-      return { ok: false, message: error.message };
+      return { ok: false, status: error.status || 0, code: error.code || '', message: error.message };
     }
   }
 
-  ApiClient.apiUrl = location.protocol === 'file:' ? 'http://localhost/THESIS6/api' : 'api';
-  ApiClient.storageMode = 'mysql-only';
+  ApiClient.apiUrl = location.protocol === 'file:' ? 'http://localhost:3000/api' : 'api';
+  ApiClient.storageMode = 'supabase-postgresql';
   ApiClient.request = mysqlRequest;
   ApiClient.ensureSchema = async function () { return mysqlRequest('health'); };
   ApiClient.authenticateStudent = async function (studentId, password) {
@@ -2489,6 +2641,46 @@
   };
   ApiClient.authenticateAdmin = async function (pin) {
     return mysqlLogin('admin', { pin_number: normalize(pin) });
+  };
+  ApiClient.getSession = async function () {
+    return mysqlRequest('auth/session');
+  };
+  ApiClient.logout = async function () {
+    try {
+      return await mysqlRequest('auth/logout', { method: 'POST', body: '{}' });
+    } catch (error) {
+      return { ok: false, message: error.message };
+    } finally {
+      sessionStorage.removeItem('thesis_api_token');
+    }
+  };
+  ApiClient.updateAdminPin = async function (currentPin, newPin) {
+    try {
+      return await mysqlRequest('auth/admin-pin', {
+        method: 'PATCH',
+        body: JSON.stringify({ current_pin: currentPin || '', new_pin: newPin || '' })
+      });
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  };
+  ApiClient.createDatabaseBackup = async function () {
+    try {
+      var result = await mysqlRequest('backup');
+      return { ok: !!result.ok, backup: result.backup, message: result.message };
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  };
+  ApiClient.restoreDatabaseBackup = async function (backup) {
+    try {
+      return await mysqlRequest('backup/restore', {
+        method: 'POST',
+        body: JSON.stringify({ confirmation: 'RESTORE', backup: backup || {} })
+      });
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
   };
   ApiClient.getSchoolYears = async function () {
     var result;
@@ -2565,7 +2757,44 @@
           supervisor_license_expiry_date: normalize(caseData.supervisor_license_expiry_date) || null
         })
       });
-      return { ok: !!result.ok, case_id: result.id, message: result.message };
+      return { ok: !!result.ok, case_id: result.id, message: result.message, code: result.code };
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  };
+  ApiClient.updateCaseRecord = async function (caseId, caseData) {
+    try {
+      caseData = caseData || {};
+      var result = await mysqlRequest('cases/' + encodeURIComponent(caseId), {
+        method: 'PATCH',
+        body: JSON.stringify({
+          case_no: normalize(caseData.case_no),
+          complete_diagnosis: normalize(caseData.complete_diagnosis),
+          date_time_performed: normalize(caseData.date_time_performed),
+          patient_name: normalize(caseData.patient_name),
+          patient_address: normalize(caseData.patient_address),
+          facility_name: normalize(caseData.facility_name),
+          facility_address: normalize(caseData.facility_address),
+          facility_contact_number: normalize(caseData.facility_contact_number),
+          supervisor_printed_name: normalize(caseData.supervisor_printed_name),
+          supervisor_contact_number: normalize(caseData.supervisor_contact_number),
+          supervisor_position_designation: normalize(caseData.supervisor_position_designation),
+          supervisor_license_no: normalize(caseData.supervisor_license_no),
+          supervisor_license_expiry_date: normalize(caseData.supervisor_license_expiry_date)
+        })
+      });
+      return { ok: !!result.ok, message: result.message };
+    } catch (error) {
+      return { ok: false, message: error.message };
+    }
+  };
+  ApiClient.getCaseRoleAvailability = async function (procedureName, caseNo, patientName, academicYear) {
+    try {
+      var query = 'case-role-availability?procedure_key=' + encodeURIComponent(canonicalProcedureName(procedureName)) +
+        '&case_no=' + encodeURIComponent(normalize(caseNo)) +
+        '&patient_name=' + encodeURIComponent(normalize(patientName));
+      if (normalize(academicYear)) query += '&academic_year=' + encodeURIComponent(normalize(academicYear));
+      return await mysqlRequest(query);
     } catch (error) {
       return { ok: false, message: error.message };
     }
@@ -2692,12 +2921,16 @@
       return Object.assign({},r,{studentId:r.student_id,type:r.procedure_key,caseNumbers:typeof r.case_numbers==='string'?JSON.parse(r.case_numbers||'[]'):r.case_numbers,requestedAt:r.requested_at});
     });
   };
-  ApiClient.getEditRequests = async function () {
-    var result=await mysqlRequest('edit-requests');
+  ApiClient.getEditRequests = async function (filters) {
+    var query = filters && filters.archived ? '?archived=1' : '';
+    var result=await mysqlRequest('edit-requests' + query);
     return (result.requests||[]).map(function(r){var numbers=r.case_numbers;if(typeof numbers==='string'){try{numbers=JSON.parse(numbers||'[]');}catch(e){numbers=[];}}numbers=Array.isArray(numbers)?numbers:[];return Object.assign({},r,{studentId:r.student_id,type:r.procedure_key,procedureKey:r.procedure_key,procedure:r.procedure_name,caseNumbers:numbers,caseNo:numbers[0]||'',caseKey:String(r.id),requestedAt:r.requested_at});});
   };
   ApiClient.archiveEditRequest = async function (requestId) {
     try{return await mysqlRequest('edit-requests/'+encodeURIComponent(requestId)+'/archive',{method:'PATCH',body:'{}'});}catch(error){return {ok:false,message:error.message};}
+  };
+  ApiClient.restoreEditRequest = async function (requestId) {
+    try{return await mysqlRequest('edit-requests/'+encodeURIComponent(requestId)+'/restore',{method:'PATCH',body:'{}'});}catch(error){return {ok:false,message:error.message};}
   };
   ApiClient.cancelEditRequest = async function (requestId) {
     return ApiClient.archiveEditRequest(requestId);
@@ -2723,6 +2956,10 @@
     catch (error) { return { ok: false, message: error.message }; }
   };  ApiClient.restoreNotification = async function (notificationId) {
     try { return await mysqlRequest('notifications/' + encodeURIComponent(notificationId) + '/restore', { method: 'PATCH', body: '{}' }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
+  ApiClient.deleteNotification = async function (notificationId) {
+    try { return await mysqlRequest('notifications/' + encodeURIComponent(notificationId), { method: 'DELETE' }); }
     catch (error) { return { ok: false, message: error.message }; }
   };
   ApiClient.sendChatMessage = async function (payload) {
@@ -2781,6 +3018,10 @@
   ApiClient.getActivityLog = async function () {
     try {var result=await mysqlRequest('audit');return {ok:true,entries:result.entries||[]};}catch(error){return {ok:false,entries:[],message:error.message};}
   };
+  ApiClient.addActivityLog = async function (payload) {
+    try { return await mysqlRequest('audit', { method: 'POST', body: JSON.stringify(payload || {}) }); }
+    catch (error) { return { ok: false, message: error.message }; }
+  };
   ApiClient.addNotificationHistory = async function (payload) {
     try {var result=await mysqlRequest('notifications',{method:'POST',body:JSON.stringify(payload||{})});return {ok:!!result.ok,notification_id:result.id};}catch(error){return {ok:false,message:error.message};}
   };
@@ -2789,4 +3030,8 @@
   window.SessionCache = SessionCache;
   window.AuthHelper = AuthHelper;
   window.SchemaDB = SchemaDB;
+  window.formatPortalDate = formatPortalDate;
+  window.portalDateInputValue = portalDateInputValue;
+  window.portalDateTimeLocalValue = portalDateTimeLocalValue;
+  window.formatPortalDateTime = formatPortalDateTime;
 })();
